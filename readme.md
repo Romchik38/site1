@@ -7,14 +7,15 @@ This is a test repository
 
 ## Folders
 
-server/             all server files
-app/                all app files
-    config/         config files
-    code/
-public/             public files
-    index.php/      entry point
-    media/          static files
-        js/
-        img/
-        css/
-        other/
+app/                all app files  
+    config/         config files  
+    code/  
+nginx/              nginx files
+public/             public files  
+    index.php/      entry point  
+    media/          static files  
+        js/  
+        img/  
+        css/  
+        other/  
+server/             all server files  
