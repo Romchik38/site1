@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9559988b2d44eb1a7d6431bd2c447d65",
+    "content-hash": "c1982b29ddafd0433305aade959e80aa",
     "packages": [
         {
             "name": "psr/container",
@@ -61,23 +61,20 @@
         },
         {
             "name": "romchik38/php-container",
-            "version": "v1.0.0",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Romchik38/php-container.git",
-                "reference": "c30b74c81d2ab57837eb1044384d5a9f71bc1a18"
+                "reference": "e6b39ba27e4491c76c2db9b7d02eac0e37a1e407"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Romchik38/php-container/zipball/c30b74c81d2ab57837eb1044384d5a9f71bc1a18",
-                "reference": "c30b74c81d2ab57837eb1044384d5a9f71bc1a18",
+                "url": "https://api.github.com/repos/Romchik38/php-container/zipball/e6b39ba27e4491c76c2db9b7d02eac0e37a1e407",
+                "reference": "e6b39ba27e4491c76c2db9b7d02eac0e37a1e407",
                 "shasum": ""
             },
             "require": {
                 "psr/container": "^2.0"
-            },
-            "require-dev": {
-                "magento/magento-coding-standard": "^32.0"
             },
             "type": "library",
             "autoload": {
@@ -85,11 +82,21 @@
                     "Romchik38\\": "src/"
                 }
             },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Serhii Romanenko",
+                    "homepage": "https://github.com/Romchik38"
+                }
+            ],
+            "description": "PSR-11: Container interface",
             "support": {
-                "source": "https://github.com/Romchik38/php-container/tree/v1.0.0",
+                "source": "https://github.com/Romchik38/php-container/tree/v1.0.1",
                 "issues": "https://github.com/Romchik38/php-container/issues"
             },
-            "time": "2024-05-24T08:19:34+00:00"
+            "time": "2024-05-24T08:34:48+00:00"
         }
     ],
     "packages-dev": [],
