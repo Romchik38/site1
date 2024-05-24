@@ -7,9 +7,10 @@ This is a test repository
 
 ## Folders
 
+```txt
 app/                all app files  
     config/         config files  
-    code/  
+    code/           app code
 nginx/              nginx files
 public/             public files  
     index.php/      entry point  
@@ -19,3 +20,4 @@ public/             public files
         css/  
         other/  
 server/             all server files  
+```
