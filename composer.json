@@ -1,5 +1,16 @@
 {
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Romchik38/php-container"
+        }
+    ],
+
     "autoload": {
         "psr-4": {"Romchik38\\Server\\": "server/"}
+    },
+
+    "require": {
+        "romchik38/php-container": "1.0.0"
     }
 }
