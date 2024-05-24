@@ -2,19 +2,12 @@
 
 declare(strict_types=1);
 
-require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-use Romchik38\Server\TestClass;
+use Romchik38\Server\Server1;
 
-echo '<pre>';
-print_r($_SERVER);
-echo '</pre>';
+$container = require_once __DIR__ . '/../app/bootstrap.php';
 
+$server = new Server1($container);
 
-echo '<pre>';
-print_r($_GET);
-echo '</pre>';
-
-$t1 = new TestClass();
-
-echo $t1->hello;
+$server->run();
