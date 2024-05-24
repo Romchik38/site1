@@ -21,3 +21,7 @@ public/             public files
         other/  
 server/             all server files  
 ```
+
+## Concept
+
+Uses MVC

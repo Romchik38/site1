@@ -6,12 +6,8 @@ namespace Romchik38\Server;
 
 use Romchik38\Container;
 
-class Server1 implements Api\Server
+class Server1 extends DefaultServer
 {
-    public function __construct(
-        private Container $container
-    ) {
-    }
 
     public function run()
     {
