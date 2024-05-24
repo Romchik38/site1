@@ -11,6 +11,6 @@
     },
 
     "require": {
-        "romchik38/php-container": "1.0.0"
+        "romchik38/php-container": "1.0.*"
     }
 }
