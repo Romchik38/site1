@@ -9,8 +9,8 @@ use Romchik38\Container;
 class Server1 extends DefaultServer
 {
 
-    public function run()
-    {
-        echo $this->container->get('resp');
-    }
+    // public function run()
+    // {
+    //     echo $this->container->get('resp');
+    // }
 }
