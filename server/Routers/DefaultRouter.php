@@ -5,14 +5,23 @@ declare(strict_types=1);
 namespace Romchik38\Server\Routers;
 
 use Romchik38\Server\Api\Router;
-use Romchik38\Server\Results\DefaultRouterResult;
 use Romchik38\Server\Api\RouterResult;
+use Romchik38\Server\Api\Controller;
 
 class DefaultRouter implements Router
 {
     public function __construct(
-        protected DefaultRouterResult $routerResult
+        protected RouterResult $routerResult
     ) {
+    }
+
+    public function addController(
+        string $method,
+        string $url,
+        Controller $controller
+    ): DefaultRouter{
+        
+        return $this;
     }
 
     public function execute(): RouterResult
