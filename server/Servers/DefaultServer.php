@@ -21,7 +21,7 @@ class DefaultServer implements Server
         }
     }
 
-    public function run()
+    public function run(): void
     {
         try {
             $router = $this->container->get(DefaultRouter::class);

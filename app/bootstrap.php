@@ -11,7 +11,7 @@ use Romchik38\Site1\Stubs\EchoLogger;
 $container = new Container();
 $container->add(
     DefaultRouter::class, 
-    new DefaultRouter(new DefaultRouterResult())
+    new DefaultRouter(new DefaultRouterResult(/** defaults response, headers, statusCode */))
 );
 $container->add(Server::CONTAINER_LOGGER_FILED, new EchoLogger());
 
