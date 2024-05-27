@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server;
+namespace Romchik38\Server\Servers;
 
 use Romchik38\{Container, NotFoundException};
 use Romchik38\Server\Routers\DefaultRouter;
+use Romchik38\Server\Api\Server;
 
-class DefaultServer implements Api\Server
+class DefaultServer implements Server
 {
     protected $logger = null;
 
@@ -24,10 +25,10 @@ class DefaultServer implements Api\Server
     {
         try {
             $router = $this->container->get(DefaultRouter::class);
-            $result = $router->execute();                   // Result
-            $response = 'hello';                // Result->getResponse()    string   def '';
-            $headres = [['asd'], ['asd', true, 200]];                  // Result->getHeaders()  []
-            $statusCode = 200;                               //Result->getStatus();  def = 0;
+            $result = $router->execute();
+            $response = $result->getResponse();
+            $headres = $result->getHeaders();
+            $statusCode = $result->getStatusCode();
             foreach ($headres as $header) {
                 header(...$header);
             }

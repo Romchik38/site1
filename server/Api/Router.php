@@ -6,4 +6,5 @@ namespace Romchik38\Server\Api;
 
 interface Router
 {
+    public function execute();
 }
