@@ -6,7 +6,7 @@ namespace Romchik38\Server\Results;
 
 use Romchik38\Server\Api\ControllerResult;
 
-class DefaultRouterResult extends DefaultResult implements ControllerResult
+class DefaultControllerResult extends DefaultResult implements ControllerResult
 {
    
 }

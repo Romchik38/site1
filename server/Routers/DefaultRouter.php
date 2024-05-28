@@ -26,12 +26,13 @@ class DefaultRouter implements Router
     ): DefaultRouter{
         $controllersByMethod = $this->controllers[$method];
         $controllersByMethod[$url] = $controller;
+        $this->controllers[$method] = $controllersByMethod;
         return $this;
     }
 
     public function execute(): RouterResult
     {
-        // method check 
+        // 1. method check 
         $method = $_SERVER['REQUEST_METHOD'];
         if (array_key_exists($method, $this->controllers) === false) {
             $this->routerResult->setResponse('Method Not Allowed');
@@ -44,23 +45,29 @@ class DefaultRouter implements Router
 
         [$url] = explode('?', $_SERVER['REQUEST_URI']);
 
-        // looking for exact url - / , redirect or static page 
+        // 2. looking for exact url - / , redirect or static page 
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
+        $controller = null;
         if (array_key_exists($url, $controllersByMethod) === true) {
             $controller = $controllersByMethod[$url];
-            return $controller->execute();
+            $controllerResult = $controller->execute();
+            $this->routerResult->setResponse($controllerResult->getResponse());
+            $this->routerResult->setStatusCode($controllerResult->getStatusCode());
+            $this->routerResult->setHeaders($controllerResult->getHeaders());
+            return $this->routerResult;
         };
 
-        // looking for exact route
+        // 3. looking for exact route
         // ...
         // ...
 
-        // Any maches 
-        // check for 404 page
+        // 4. Any maches 
+        // 4.1 check for 404 page
         // ...
         // ...
 
-        // 404 not found, so send default result
+        
+        // 4.2 404 not found, so send default result
         return $this->routerResult;
     }
 
