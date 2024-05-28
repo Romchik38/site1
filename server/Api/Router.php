@@ -9,6 +9,9 @@ use Romchik38\Server\Api\Controller;
 
 interface Router
 {
+    const REQUEST_METHOD_GET = 'GET';
+    const REQUEST_METHOD_POST = 'POST';
+    
     public function addController(
         string $method,
         string $url,

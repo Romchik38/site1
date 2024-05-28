@@ -45,6 +45,7 @@ Uses MVC
 
 ### Controller
 
-- return array with fields
-  - response -  ControllerResult
-  - headers - array of arrays [ [string, true/false, int], ... ]
+- method `execute` returns `ControllerResult`
+  - Result->getResponse() returns `string` ( default `empty string` )
+  - Result->getHeaders()  returns `[[string, true/false, int], ...]`
+  - Result->getStatus()   returns `int` ( default `0` )
