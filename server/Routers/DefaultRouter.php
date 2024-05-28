@@ -42,16 +42,25 @@ class DefaultRouter implements Router
             return $this->routerResult;
         } 
 
+        [$url] = explode('?', $_SERVER['REQUEST_URI']);
 
-        [$uri] = explode('?', $_SERVER['REQUEST_URI']);
-        if ($uri === '/') {
-            $controller = $this->controllers[$_SERVER['REQUEST_METHOD']];
-        }
-        $controller = explode('/', $uri);
-        var_dump($controller);
+        // looking for exact url - / , redirect or static page 
+        $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
+        if (array_key_exists($url, $controllersByMethod) === true) {
+            $controller = $controllersByMethod[$url];
+            return $controller->execute();
+        };
 
+        // looking for exact route
+        // ...
+        // ...
 
-        $this->routerResult->setResponse('<h1>Hello world!</h1>');
+        // Any maches 
+        // check for 404 page
+        // ...
+        // ...
+
+        // 404 not found, so send default result
         return $this->routerResult;
     }
 
