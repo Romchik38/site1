@@ -60,11 +60,10 @@ class DefaultRouter implements Router
                 . $_SERVER['HTTP_HOST'] . $redirectUrl
                 , true, 301]
             ]);
+            $this->routerResult->setResponse('');
+            $this->routerResult->setStatusCode(301);
             return $this->routerResult;
         }
-        //...
-        //...
-        //...
 
         // 3. looking for exact url - / , redirect or static page 
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
