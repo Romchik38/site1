@@ -15,7 +15,18 @@ class Index implements Controller
     }
     public function execute(): ControllerResult
     {
-        $this->controllerResult->setResponse('<h1>Home page</h1>');
+        [$url] = explode('?', $_SERVER['REQUEST_URI']);
+        $baseName = pathinfo($url)['basename'];
+
+        if ($baseName === '') {
+            $this->controllerResult->setResponse('<h1>Home page</h1>');
+        } else if ($baseName === 'about') {
+            $this->controllerResult->setResponse('<h1>About page</h1>');
+        } else {
+            $this->controllerResult->setResponse('From controller - 404 Error page not found');
+            $this->controllerResult->setStatusCode(404);
+        }
+
         return $this->controllerResult;
     }
 }

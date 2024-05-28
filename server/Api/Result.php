@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Romchik38\Server\Api;
 
 interface Result {
-    const DEFAULT_RESPONSE = '';
+    const DEFAULT_RESPONSE = '404 Error - Page not found';
     const DEFAULT_HEADERS = [];
-    const DEFAULT_STATUS_CODE = 0;
+    const DEFAULT_STATUS_CODE = 404;
 
     public function getResponse(): string;
     public function getHeaders(): array;
