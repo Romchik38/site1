@@ -30,6 +30,7 @@ class DefaultServer implements Server
             $headres = $result->getHeaders();
             $statusCode = $result->getStatusCode();
             foreach ($headres as $header) {
+                var_dump($header);
                 header(...$header);
             }
             if ($statusCode > 0) {

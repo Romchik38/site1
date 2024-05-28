@@ -31,8 +31,28 @@ class DefaultRouter implements Router
 
     public function execute(): RouterResult
     {
-        
+        // method check 
+        $method = $_SERVER['REQUEST_METHOD'];
+        if (array_key_exists($method, $this->controllers) === false) {
+            $this->routerResult->setResponse('Method Not Allowed');
+            $this->routerResult->setStatusCode(405);
+            $this->routerResult->setHeaders([
+                ['Allow:' . implode(', ', array_keys($this->controllers))]
+            ]);
+            return $this->routerResult;
+        } 
+
+
+        [$uri] = explode('?', $_SERVER['REQUEST_URI']);
+        if ($uri === '/') {
+            $controller = $this->controllers[$_SERVER['REQUEST_METHOD']];
+        }
+        $controller = explode('/', $uri);
+        var_dump($controller);
+
+
         $this->routerResult->setResponse('<h1>Hello world!</h1>');
         return $this->routerResult;
     }
+
 }
