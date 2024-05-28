@@ -48,21 +48,36 @@ class DefaultRouter implements Router
             return $this->routerResult;
         }
 
-        [$url] = explode('?', $_SERVER['REQUEST_URI']);
+        $requestUrl = $_SERVER['REQUEST_URI'];
+        [$url] = explode('?', $requestUrl);
         $dirName = pathinfo($url)['dirname'];
+        $baseName = pathinfo($url)['basename'];
+        // 2. Redirect from /route/basename/ to /route/basename
+        if ($baseName !== '' && str_ends_with($url, '/')) {
+            $redirectUrl = substr($requestUrl, 0, strlen($requestUrl) - 1);
+            $this->routerResult->setHeaders([
+                ['Location: ' . $_SERVER['REQUEST_SCHEME'] . '://' 
+                . $_SERVER['HTTP_HOST'] . $redirectUrl
+                , true, 301]
+            ]);
+            return $this->routerResult;
+        }
+        //...
+        //...
+        //...
 
-        // 2. looking for exact url - / , redirect or static page 
+        // 3. looking for exact url - / , redirect or static page 
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
         $controller = null;
         if (array_key_exists($url, $controllersByMethod) === true) {
             $controller = $controllersByMethod[$url];
         } else if (array_key_exists($dirName, $controllersByMethod) === true) {
-            // 3. looking for exact route
+            // 4. looking for exact route
             
             $controller = $controllersByMethod[$dirName];
         } else if ($this->notFoundController !== null) {
-            // 4. Any maches 
-            // 4.1 check for 404 page
+            // 5. Any maches 
+            // 5.1 check for 404 page
             $controller = $this->notFoundController;
         }
         
@@ -73,7 +88,7 @@ class DefaultRouter implements Router
             $this->routerResult->setHeaders($controllerResult->getHeaders());
             return $this->routerResult;
         }
-        // 4.2 404 not found, so send default result
+        // 5.2 404 not found, so send default result
         return $this->routerResult;
     }
 }
