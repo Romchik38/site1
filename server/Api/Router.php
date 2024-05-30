@@ -15,7 +15,7 @@ interface Router
     public function addController(
         string $method,
         string $url,
-        Controller $controller
+        string $controller
     ): Router;
     public function execute(): RouterResult;
 }

@@ -7,6 +7,7 @@ namespace Romchik38\Server\Routers;
 use Romchik38\Server\Api\Router;
 use Romchik38\Server\Api\RouterResult;
 use Romchik38\Server\Api\Controller;
+use Romchik38\Container;
 
 class DefaultRouter implements Router
 {
@@ -15,7 +16,8 @@ class DefaultRouter implements Router
 
     public function __construct(
         protected RouterResult $routerResult,
-        array $controllers
+        array $controllers,
+        protected Container $container
     ) {
         $this->controllers[$this::REQUEST_METHOD_GET] = [];
         $this->controllers[$this::REQUEST_METHOD_POST] = [];
@@ -28,7 +30,7 @@ class DefaultRouter implements Router
     public function addController(
         string $method,
         string $url,
-        Controller $controller
+        string $controller
     ): DefaultRouter {
         $controllersByMethod = $this->controllers[$method];
         $controllersByMethod[$url] = $controller;
@@ -72,20 +74,21 @@ class DefaultRouter implements Router
 
         // 3. looking for exact url - / , redirect or static page 
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
-        $controller = null;
+        $controllerClassName = '';
         if (array_key_exists($url, $controllersByMethod) === true) {
-            $controller = $controllersByMethod[$url];
+            $controllerClassName = $controllersByMethod[$url];
         } else if (array_key_exists($dirName, $controllersByMethod) === true) {
             // 4. looking for exact route
             
-            $controller = $controllersByMethod[$dirName];
+            $controllerClassName = $controllersByMethod[$dirName];
         } else if ($this->notFoundController !== null) {
             // 5. Any maches 
             // 5.1 check for 404 page
-            $controller = $this->notFoundController;
+            $controllerClassName = $this->notFoundController;
         }
         
-        if ($controller !== null) {
+        if ($controllerClassName !== '') {
+            $controller = $this->container->get($controllerClassName);
             $controllerResult = $controller->execute();
             $this->routerResult->setResponse($controllerResult->getResponse());
             $this->routerResult->setStatusCode($controllerResult->getStatusCode());
