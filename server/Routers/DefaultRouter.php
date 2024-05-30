@@ -14,10 +14,15 @@ class DefaultRouter implements Router
     protected Controller | null $notFoundController = null;
 
     public function __construct(
-        protected RouterResult $routerResult
+        protected RouterResult $routerResult,
+        array $controllers
     ) {
         $this->controllers[$this::REQUEST_METHOD_GET] = [];
         $this->controllers[$this::REQUEST_METHOD_POST] = [];
+
+        foreach ($controllers as [$method, $url, $controller]) {
+            $this->addController($method, $url, $controller);
+        }
     }
 
     public function addController(
