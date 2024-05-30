@@ -11,18 +11,18 @@ use Romchik38\Site1\Stubs\EchoLogger;
 $container = new Container();
 
 // ROUTER
-$router = new DefaultRouter(
-    new DefaultRouterResult(
-        /** default response, headers, statusCode */
-    )
-);
+$container->add(DefaultRouterResult::class, new DefaultRouterResult(
+    /** default response, headers, statusCode */
+));
 
 $controllers = require_once(__DIR__ . '/code/Controllers/controllers.php');
-foreach ($controllers as [$method, $url, $controller]) {
-    $router->addController($method, $url, $controller);
-}
 
-$container->add(DefaultRouter::class, $router);
+$container->add(
+    DefaultRouter::class, new DefaultRouter(
+            $container->get(DefaultRouterResult::class),
+            $controllers
+    )
+);
 
 // SERVER
 $container->add(Server::CONTAINER_LOGGER_FILED, new EchoLogger());
