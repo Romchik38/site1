@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1982b29ddafd0433305aade959e80aa",
+    "content-hash": "a5e94d57b0f35feceddb038299d50dec",
     "packages": [
         {
             "name": "psr/container",
@@ -61,20 +61,23 @@
         },
         {
             "name": "romchik38/php-container",
-            "version": "v1.0.1",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Romchik38/php-container.git",
-                "reference": "e6b39ba27e4491c76c2db9b7d02eac0e37a1e407"
+                "reference": "571135975c3c24ec770d5249084d797c830e60af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Romchik38/php-container/zipball/e6b39ba27e4491c76c2db9b7d02eac0e37a1e407",
-                "reference": "e6b39ba27e4491c76c2db9b7d02eac0e37a1e407",
+                "url": "https://api.github.com/repos/Romchik38/php-container/zipball/571135975c3c24ec770d5249084d797c830e60af",
+                "reference": "571135975c3c24ec770d5249084d797c830e60af",
                 "shasum": ""
             },
             "require": {
                 "psr/container": "^2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.1"
             },
             "type": "library",
             "autoload": {
@@ -93,10 +96,10 @@
             ],
             "description": "PSR-11: Container interface",
             "support": {
-                "source": "https://github.com/Romchik38/php-container/tree/v1.0.1",
+                "source": "https://github.com/Romchik38/php-container/tree/v1.1.0",
                 "issues": "https://github.com/Romchik38/php-container/issues"
             },
-            "time": "2024-05-24T08:34:48+00:00"
+            "time": "2024-05-30T16:09:44+00:00"
         }
     ],
     "packages-dev": [],
