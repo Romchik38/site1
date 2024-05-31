@@ -87,7 +87,7 @@ class DefaultRouter implements Router
             // 5.1 check for 404 page
             $controllerClassName = $this->notFoundController;
         }
-        
+        // Execute Controller       
         if ($controllerClassName !== '') {
             $controller = $this->container->get($controllerClassName);
             $controllerResult = $controller->execute();

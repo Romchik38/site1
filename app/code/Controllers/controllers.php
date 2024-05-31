@@ -17,7 +17,8 @@ function controllers($container) {
         \Romchik38\Site1\Controllers\GET\Main\Index::class, 
         function($container){
             return new \Romchik38\Site1\Controllers\GET\Main\Index(
-                $container->get(\Romchik38\Server\Results\DefaultControllerResult::class)
+                $container->get(\Romchik38\Server\Results\DefaultControllerResult::class),
+                $container->get(\Romchik38\Site1\Views\Main\Index::class)
             );
         }
     );
