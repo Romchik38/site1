@@ -55,10 +55,12 @@ class DefaultRouter implements Router
             return $this->routerResult;
         }
 
+        // parse url
         $requestUrl = $_SERVER['REQUEST_URI'];
         [$url] = explode('?', $requestUrl);
         $dirName = pathinfo($url)['dirname'];
         $baseName = pathinfo($url)['basename'];
+
         // 2. Redirect from /route/basename/ to /route/basename
         if ($baseName !== '' && str_ends_with($url, '/')) {
             $redirectUrl = substr($requestUrl, 0, strlen($requestUrl) - 1);
@@ -79,7 +81,6 @@ class DefaultRouter implements Router
             $controllerClassName = $controllersByMethod[$url];
         } else if (array_key_exists($dirName, $controllersByMethod) === true) {
             // 4. looking for exact route
-            
             $controllerClassName = $controllersByMethod[$dirName];
         } else if ($this->notFoundController !== null) {
             // 5. Any maches 
@@ -90,12 +91,16 @@ class DefaultRouter implements Router
         if ($controllerClassName !== '') {
             $controller = $this->container->get($controllerClassName);
             $controllerResult = $controller->execute();
-            $this->routerResult->setResponse($controllerResult->getResponse());
-            $this->routerResult->setStatusCode($controllerResult->getStatusCode());
-            $this->routerResult->setHeaders($controllerResult->getHeaders());
+            $this->routerResult
+                ->setResponse($controllerResult->getResponse())
+                ->setStatusCode($controllerResult->getStatusCode())
+                ->setHeaders($controllerResult->getHeaders());
             return $this->routerResult;
         }
         // 5.2 404 not found, so send default result
+        $this->routerResult->setStatusCode(404)
+            ->setResponse('Error 404 - Page not found');
         return $this->routerResult;
     }
+
 }

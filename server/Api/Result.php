@@ -13,7 +13,7 @@ interface Result {
     public function getHeaders(): array;
     public function getStatusCode(): int;
 
-    public function setResponse(string $response): void;
-    public function setHeaders(array $headers): void;
-    public function setStatusCode(int $statusCode): void;
+    public function setResponse(string $response): Result;
+    public function setHeaders(array $headers): Result;
+    public function setStatusCode(int $statusCode): Result;
 }

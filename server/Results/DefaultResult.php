@@ -28,17 +28,20 @@ class DefaultResult implements Result
         return $this->statusCode;
     }
 
-    public function setResponse(string $response): void
+    public function setResponse(string $response): Result
     {
         $this->response = $response;
+        return $this;
     }
 
-    public function setHeaders(array $headers): void
+    public function setHeaders(array $headers): Result
     {
         $this->headers = $headers;
+        return $this;
     }
-    public function setStatusCode(int $statusCode): void
+    public function setStatusCode(int $statusCode): Result
     {
         $this->statusCode = $statusCode;
+        return $this;
     }
 }
