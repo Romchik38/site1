@@ -11,6 +11,11 @@ interface View
      */
     const TITLE = 'title';
 
+    /**
+     * Templates
+     */
+    const DEFAULT_WRAPPER = '1-column';
+
     public function setControllerData(string $data): View;
     public function setMetadata(string $key, string $value): View;
     public function toString(): string;
