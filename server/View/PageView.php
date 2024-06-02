@@ -15,7 +15,7 @@ class PageView implements View
     {
     }
 
-    public function prepareMetaData(): void{
+    protected function prepareMetaData(): void{
         /** use this for add info to metaData */
     }
 

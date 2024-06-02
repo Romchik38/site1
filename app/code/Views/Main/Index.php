@@ -8,28 +8,41 @@ use Romchik38\Server\View\PageView;
 
 class Index extends PageView
 {
-    public function prepareMetaData(): void
+    protected function createFooter()
     {
-        /** Header */
+        $this->metaData[$this::FOOTER_DATA] = [
+            'copyrights' => '© 2024, Site1.com, LLC.' 
+        ];
+    }
+
+    protected function createNav()
+    {
         $this->metaData[$this::NAV_DATA] = [
             [
-                'name' => 'Home', 
-                'url' => '/', 
+                'name' => 'Home',
+                'url' => '/',
                 'alt' => 'To Home Page'
             ],
             [
-                'name' => 'About', 
-                'url' => '/about', 
+                'name' => 'About',
+                'url' => '/about',
                 'alt' => 'To About Page'
             ],
             [
-                'name' => 'Some Page', 
-                'url' => '#', 
+                'name' => 'Some Page',
+                'url' => '#',
                 'alt' => 'To Some Page'
             ]
         ];
-        /** Menu */
+    }
 
+    protected function prepareMetaData(): void
+    {
+        /** Header */
+
+        /** Menu */
+        $this->createNav();
         /** Footer */
+        $this->createFooter();
     }
 }

@@ -5,6 +5,8 @@
 
 header.main {
     border-color: pink;
+    display: flex;
+    justify-content: center;
 }
 
 footer.main {
@@ -24,4 +26,9 @@ section.main {
 .menu li {
     list-style: none;
     margin-right: 10px;
+}
+
+/* Footer */
+.copyrights {
+    text-align: center;
 }
