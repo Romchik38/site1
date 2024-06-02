@@ -15,6 +15,10 @@ class PageView implements View
     {
     }
 
+    public function prepareMetaData(): void{
+        /** use this for add info to metaData */
+    }
+
     public function setControllerData(string $data): View
     {
         $this->controllerData = $data;
@@ -34,6 +38,8 @@ class PageView implements View
 
     protected function build(): string
     {
+
+        $this->prepareMetaData();
 
         $html = call_user_func(
             $this->generateTemplate,
