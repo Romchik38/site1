@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html;
 
-return function (array $blocks, ...$args) {
-
-    [$metaData, $data] = $args;
+return function (array $blocks, $metaData, $data) {
 
     $header = $blocks['header'];
     $headerHtml = $header($metaData);
+
+    $nav = $blocks['nav'];
+    $navHtml = $nav($metaData);
 
     $footer = $blocks['footer'];
     $footerHtml = $footer($metaData);
@@ -19,6 +20,7 @@ return function (array $blocks, ...$args) {
 
     return <<<ONECOLUMN
         {$headerHtml}
+        {$navHtml}
         {$sectionHtml}
         {$footerHtml}
     ONECOLUMN;

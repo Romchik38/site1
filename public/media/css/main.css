@@ -1,0 +1,27 @@
+.main {
+    border-width: 1px;
+    border-style: solid;
+}
+
+header.main {
+    border-color: pink;
+}
+
+footer.main {
+    border-color: forestgreen;
+}
+
+section.main {
+    border-color: blue;
+    min-height: 500px;
+}
+
+/* Menu */
+.menu {
+    display: flex;
+}
+
+.menu li {
+    list-style: none;
+    margin-right: 10px;
+}

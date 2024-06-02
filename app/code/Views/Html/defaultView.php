@@ -29,6 +29,7 @@ function defaultView(
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="/media/css/bootstrap.min.css" rel="stylesheet">
+            <link href="/media/css/main.css" rel="stylesheet">
             <title>{$metaData[View::TITLE]}</title>
         </head>
         <body>
