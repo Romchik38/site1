@@ -26,8 +26,8 @@ $container->add(
 );
 
 // VIEWS
-require_once(__DIR__ . '/code/Views/views.php');
-Romchik38\Site1\Views\views($container);
+$views = require_once(__DIR__ . '/code/Views/views.php');
+$views($container);
 
 // CONTROLLERS
 require_once(__DIR__ . '/code/Controllers/controllers.php');
