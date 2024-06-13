@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Model;
+namespace Romchik38\Server\Models;
 
-use Romchik38\Server\Api\Model\RepositoryInterface;
-use Romchik38\Server\Api\Model\DatabaseInterface;
-use Romchik38\Server\Api\Model\ModelInterface;
-use Romchik38\Server\Api\Model\ModelFactoryInterface;
-use Romchik38\Server\Model\Errors\{NoSuchEntityException, CouldNotDeleteException, CouldNotSaveException, QueryExeption};
+use Romchik38\Server\Api\Models\RepositoryInterface;
+use Romchik38\Server\Api\Models\DatabaseInterface;
+use Romchik38\Server\Api\Models\ModelInterface;
+use Romchik38\Server\Api\Models\ModelFactoryInterface;
+use Romchik38\Server\Models\Errors\{NoSuchEntityException, CouldNotDeleteException, CouldNotSaveException, QueryExeption};
 
 class Repository implements RepositoryInterface
 {

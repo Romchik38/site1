@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Model;
+namespace Romchik38\Server\Models;
 
-use Romchik38\Server\Api\Model\DatabaseInterface;
-use Romchik38\Server\Model\Errors\CreateConnectionExeption;
-use Romchik38\Server\Model\Errors\QueryExeption;
+use Romchik38\Server\Api\Models\DatabaseInterface;
+use Romchik38\Server\Models\Errors\CreateConnectionExeption;
+use Romchik38\Server\Models\Errors\QueryExeption;
 
 class DatabasePostgresql implements DatabaseInterface
 {

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Model;
+namespace Romchik38\Server\Models;
 
-use Romchik38\Server\Api\Model\ModelFactoryInterface;
-use Romchik38\Server\Api\Model\ModelInterface;
-use Romchik38\Server\Model\Model;
+use Romchik38\Server\Api\Models\ModelFactoryInterface;
+use Romchik38\Server\Api\Models\ModelInterface;
+use Romchik38\Server\Models\Model;
 
 class ModelFactory implements ModelFactoryInterface {
 

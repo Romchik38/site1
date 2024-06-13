@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Model;
+namespace Romchik38\Server\Models;
 
-use Romchik38\Server\Api\Model\ModelInterface;
+use Romchik38\Server\Api\Models\ModelInterface;
 
 class Model implements ModelInterface {
     protected array $data = [];
