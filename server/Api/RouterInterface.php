@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Api;
 
-interface Router
+interface RouterInterface
 {
     const REQUEST_METHOD_GET = 'GET';
     const REQUEST_METHOD_POST = 'POST';
@@ -13,6 +13,7 @@ interface Router
         string $method,
         string $url,
         string $controller
-    ): Router;
-    public function execute(): RouterResultInterface;
+    ): RouterInterface;
+
+    public function execute(): ResultInterface;
 }

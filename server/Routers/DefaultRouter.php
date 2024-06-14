@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Routers;
 
-use Romchik38\Server\Api\Router;
+use Romchik38\Server\Api\RouterInterface;
 use Romchik38\Server\Api\RouterResultInterface;
+use Romchik38\Server\Api\ResultInterface;
 use Romchik38\Server\Api\ControllerInterface;
+use Romchik38\Server\Api\RedirectControllerInterface;
 use Romchik38\Container;
 
-class DefaultRouter implements Router
+class DefaultRouter implements RouterInterface
 {
     protected array $controllers = [];
-    protected ControllerInterface | null $notFoundController = null;
-    protected ControllerInterface | null $redirectController = null;
+    protected string $notFoundController = '';
+    protected string $redirectController = '';
 
     public function __construct(
         protected RouterResultInterface $routerResult,
@@ -39,24 +41,26 @@ class DefaultRouter implements Router
         return $this;
     }
 
-    public function addNotFoundController($controllerName)
+    public function addNotFoundController($controllerName): RouterInterface
     {
-        $this->notFoundController = $this->container->get($controllerName);
+        $this->notFoundController = $controllerName;
+        return $this;
     }
 
-    public function addRedirectController($controllerName)
+    public function addRedirectController($controllerName): RouterInterface
     {
-        $this->redirectController = $this->container->get($controllerName);
+        $this->redirectController = $controllerName;
+        return $this;
     }
 
-    public function execute(): RouterResultInterface
+    public function execute(): ResultInterface
     {
         // 1. method check 
         $method = $_SERVER['REQUEST_METHOD'];
         if (array_key_exists($method, $this->controllers) === false) {
-            $this->routerResult->setResponse('Method Not Allowed');
-            $this->routerResult->setStatusCode(405);
-            $this->routerResult->setHeaders([
+            $this->routerResult->setResponse('Method Not Allowed')
+                ->setStatusCode(405)
+                ->setHeaders([
                 ['Allow:' . implode(', ', array_keys($this->controllers))]
             ]);
             return $this->routerResult;
@@ -83,8 +87,11 @@ class DefaultRouter implements Router
 
         // 3. looking for exact url - / , redirect or static page 
         if ($this->redirectController !== null) {
-            $controllerResult = $this->redirectController->execute();
-            if ($controllerResult->getResponse());
+            $controller = $this->container->get($this->redirectController);
+            $controllerResult = $controller->execute();
+            if ($controller->isRedirect()) {
+                return $controllerResult;
+            }
         } 
 
         // 4. Routes
@@ -102,11 +109,7 @@ class DefaultRouter implements Router
         if ($controllerClassName !== '') {
             $controller = $this->container->get($controllerClassName);
             $controllerResult = $controller->execute();
-            $this->routerResult
-                ->setResponse($controllerResult->getResponse())
-                ->setStatusCode($controllerResult->getStatusCode())
-                ->setHeaders($controllerResult->getHeaders());
-            return $this->routerResult;
+            return $controllerResult;
         }
         // 5.2 404 not found, so send default result
         $this->routerResult->setStatusCode(404)
