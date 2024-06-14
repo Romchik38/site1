@@ -6,7 +6,6 @@ namespace Romchik38\Site1\Controllers\GET\Main;
 
 use Romchik38\Server\Api\Controller;
 use Romchik38\Server\Api\ControllerResult;
-use Romchik38\Server\Models\Repository;
 use Romchik38\Site1\Views\Main\Index as View;
 use Romchik38\Site1\Models\PageRepository;
 
@@ -31,7 +30,7 @@ class Index implements Controller
         $arr = $this->pageRepository->list(' WHERE url = $1', [$baseName]);
 
         if (count($arr) === 0) {
-            $this->controllerResult->setResponse('From controller - 404 Error page not found');
+            $this->controllerResult->setResponse('From main controller - 404 Error page not found');
             $this->controllerResult->setStatusCode(404);
         } else {
             $page = $arr[0];

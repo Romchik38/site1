@@ -64,6 +64,7 @@ class DefaultRouter implements Router
         // 2. Redirect from /route/basename/ to /route/basename
         if ($baseName !== '' && str_ends_with($url, '/')) {
             $redirectUrl = substr($requestUrl, 0, strlen($requestUrl) - 1);
+            //$redirectUrl = $requestUrl . 'index';
             $this->routerResult->setHeaders([
                 ['Location: ' . $_SERVER['REQUEST_SCHEME'] . '://' 
                 . $_SERVER['HTTP_HOST'] . $redirectUrl
@@ -99,7 +100,7 @@ class DefaultRouter implements Router
         }
         // 5.2 404 not found, so send default result
         $this->routerResult->setStatusCode(404)
-            ->setResponse('Error 404 - Page not found');
+            ->setResponse('Error 404 from router - Page not found');
         return $this->routerResult;
     }
 
