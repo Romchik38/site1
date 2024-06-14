@@ -86,7 +86,7 @@ class DefaultRouter implements RouterInterface
         }
 
         // 3. looking for exact url - / , redirect or static page 
-        if ($this->redirectController !== null) {
+        if ($this->redirectController !== '') {
             $controller = $this->container->get($this->redirectController);
             $controllerResult = $controller->execute();
             if ($controller->isRedirect()) {
@@ -100,7 +100,7 @@ class DefaultRouter implements RouterInterface
         // 4.1 looking for exact routes
         if (array_key_exists($dirName, $controllersByMethod) === true) {   
             $controllerClassName = $controllersByMethod[$dirName];
-        } else if ($this->notFoundController !== null) {
+        } else if ($this->notFoundController !== '') {
             // 5. Any maches 
             // 5.1 check for 404 page
             $controllerClassName = $this->notFoundController;
