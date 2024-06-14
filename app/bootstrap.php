@@ -14,13 +14,11 @@ $container = new Container();
 $container->add(DefaultRouterResult::class, new DefaultRouterResult(
     /** default response, headers, statusCode */
 ));
-
-$controllers = require_once(__DIR__ . '/code/Controllers/controllersList.php');
-
+$controllersList = require_once(__DIR__ . '/code/Controllers/controllersList.php');
 $container->add(
     DefaultRouter::class, new DefaultRouter(
             $container->get(DefaultRouterResult::class),
-            $controllers,
+            $controllersList,
             $container
     )
 );
