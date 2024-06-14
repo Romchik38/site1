@@ -6,13 +6,16 @@ namespace Romchik38\Site1\Controllers\GET\Main;
 
 use Romchik38\Server\Api\Controller;
 use Romchik38\Server\Api\ControllerResult;
+use Romchik38\Server\Models\Repository;
 use Romchik38\Site1\Views\Main\Index as View;
+use Romchik38\Site1\Models\PageRepository;
 
 class Index implements Controller
 {
     public function __construct(
         protected ControllerResult $controllerResult,
-        protected View $view
+        protected View $view,
+        protected PageRepository $pageRepository
     ) {
     }
     public function execute(): ControllerResult
@@ -20,18 +23,24 @@ class Index implements Controller
         [$url] = explode('?', $_SERVER['REQUEST_URI']);
         $baseName = pathinfo($url)['basename'];
 
+
         if ($baseName === '') {
-            $this->view->setMetadata(View::TITLE, 'Home Page')
-                ->setControllerData('<h1>Home page</h1>');            
-            $this->controllerResult->setResponse($this->view->toString());
-        } else if ($baseName === 'about') {
-            $this->view->setMetadata(View::TITLE, 'About Page')
-            ->setControllerData('<h1>About page</h1>');  
-            $this->controllerResult->setResponse($this->view->toString()); 
-        } else {
+            $baseName = 'index';
+        }
+
+        $arr = $this->pageRepository->list(' WHERE url = $1', [$baseName]);
+
+        if (count($arr) === 0) {
             $this->controllerResult->setResponse('From controller - 404 Error page not found');
             $this->controllerResult->setStatusCode(404);
+        } else {
+            $page = $arr[0];
+            $this->view
+                ->setMetadata(View::TITLE, $page->getData('name'))
+                ->setControllerData($page->getData('content'));            
+            $this->controllerResult->setResponse($this->view->toString());
         }
+
         return $this->controllerResult;
     }
 }
