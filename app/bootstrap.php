@@ -34,8 +34,8 @@ $models = require_once(__DIR__ . '/code/Models/models.php');
 $models($container);
 
 // CONTROLLERS
-require_once(__DIR__ . '/code/Controllers/controllers.php');
-Romchik38\Site1\Controllers\controllers($container);
+$controllers = require_once(__DIR__ . '/code/Controllers/controllers.php');
+$controllers($container);
 
 // SERVER
 $container->add(Server::CONTAINER_LOGGER_FILED, new EchoLogger());

@@ -2,9 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Controllers;
-
-function controllers($container) {
+return function ($container) {
     $container->add(
         \Romchik38\Server\Results\DefaultControllerResult::class,
         new \Romchik38\Server\Results\DefaultControllerResult()
