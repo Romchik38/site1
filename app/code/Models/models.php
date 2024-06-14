@@ -19,6 +19,10 @@ return function ($container) {
         Romchik38\Site1\Models\PageFactory::class,
         new Romchik38\Site1\Models\PageFactory()
     );
+    $container->add(
+        Romchik38\Site1\Models\Redirects\RedirectFactory::class,
+        new Romchik38\Site1\Models\Redirects\RedirectFactory()
+    );
 
     // REPOSITORIES
     $container->add(
@@ -29,6 +33,18 @@ return function ($container) {
                 $container->get(\Romchik38\Site1\Models\PageFactory::class),
                 'pages',
                 'page_id'
+            );
+        }
+    );
+
+    $container->add(
+        \Romchik38\Site1\Models\Redirects\RedirectRepository::class,
+        function($container){
+            return new \Romchik38\Site1\Models\Redirects\RedirectRepository(
+                $container->get(\Romchik38\Server\Models\DatabasePostgresql::class),
+                $container->get(\Romchik38\Site1\Models\Redirects\RedirectFactory::class),
+                'redirects',
+                'redirect_id'
             );
         }
     );

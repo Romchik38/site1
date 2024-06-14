@@ -6,13 +6,14 @@ namespace Romchik38\Server\Routers;
 
 use Romchik38\Server\Api\Router;
 use Romchik38\Server\Api\RouterResult;
-use Romchik38\Server\Api\Controller;
+use Romchik38\Server\Api\ControllerInterface;
 use Romchik38\Container;
 
 class DefaultRouter implements Router
 {
     protected array $controllers = [];
-    protected Controller | null $notFoundController = null;
+    protected ControllerInterface | null $notFoundController = null;
+    protected ControllerInterface | null $redirectController = null;
 
     public function __construct(
         protected RouterResult $routerResult,
@@ -38,8 +39,14 @@ class DefaultRouter implements Router
         return $this;
     }
 
-    public function addNotFoundController()
+    public function addNotFoundController($controllerName)
     {
+        $this->notFoundController = $this->container->get($controllerName);
+    }
+
+    public function addRedirectController($controllerName)
+    {
+        $this->redirectController = $this->container->get($controllerName);
     }
 
     public function execute(): RouterResult
@@ -68,19 +75,23 @@ class DefaultRouter implements Router
                 ['Location: ' . $_SERVER['REQUEST_SCHEME'] . '://' 
                 . $_SERVER['HTTP_HOST'] . $redirectUrl
                 , true, 301]
-            ]);
-            $this->routerResult->setResponse('');
-            $this->routerResult->setStatusCode(301);
+            ])
+                ->routerResult->setResponse('')
+                ->routerResult->setStatusCode(301);
             return $this->routerResult;
         }
 
         // 3. looking for exact url - / , redirect or static page 
+        if ($this->redirectController !== null) {
+            $controllerResult = $this->redirectController->execute();
+            if ($controllerResult->getResponse())
+        } 
+
+        // 4. Routes
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
         $controllerClassName = '';
-        if (array_key_exists($url, $controllersByMethod) === true) {
-            $controllerClassName = $controllersByMethod[$url];
-        } else if (array_key_exists($dirName, $controllersByMethod) === true) {
-            // 4. looking for exact route
+        // 4.1 looking for exact routes
+        if (array_key_exists($dirName, $controllersByMethod) === true) {   
             $controllerClassName = $controllersByMethod[$dirName];
         } else if ($this->notFoundController !== null) {
             // 5. Any maches 

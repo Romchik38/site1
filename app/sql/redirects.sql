@@ -1,13 +1,15 @@
 CREATE table redirects 
 (
+    redirect_id serial PRIMARY KEY,
     url text NOT NULL, 
     redirect_to text NOT NULL,
     redirect_code smallint DEFAULT 301,
-    PRIMARY KEY (url, redirect_to)
+    UNIQUE (url, redirect_to)
 );
 
-INSERT INTO redirects VALUES
-    ('/login', '/login/index')
+INSERT INTO redirects (url, redirect_to)
+    VALUES
+        ('/login', '/login/index')
 ;
 
 SELECT * FROM redirects;

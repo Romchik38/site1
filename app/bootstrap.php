@@ -7,8 +7,13 @@ use Romchik38\Server\Routers\DefaultRouter;
 use Romchik38\Server\Results\DefaultRouterResult;
 use Romchik38\Server\Api\Server;
 use Romchik38\Site1\Stubs\EchoLogger;
+use Romchik38\Site1\Models\Redirects\RedirectRepository;
 
 $container = new Container();
+
+// MODELS
+$models = require_once(__DIR__ . '/code/Models/models.php');
+$models($container);
 
 // ROUTER
 $container->add(DefaultRouterResult::class, new DefaultRouterResult(
@@ -19,17 +24,14 @@ $container->add(
     DefaultRouter::class, new DefaultRouter(
             $container->get(DefaultRouterResult::class),
             $controllersList,
-            $container
+            $container,
+            $container->get(RedirectRepository::class)
     )
 );
 
 // VIEWS
 $views = require_once(__DIR__ . '/code/Views/views.php');
 $views($container);
-
-// MODELS
-$models = require_once(__DIR__ . '/code/Models/models.php');
-$models($container);
 
 // CONTROLLERS
 $controllers = require_once(__DIR__ . '/code/Controllers/controllers.php');
