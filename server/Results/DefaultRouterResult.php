@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Results;
 
-use Romchik38\Server\Api\RouterResult;
+use Romchik38\Server\Api\RouterResultInterface;
 
-class DefaultRouterResult extends DefaultResult implements RouterResult
+class DefaultRouterResult extends DefaultResult implements RouterResultInterface
 {
    
 }

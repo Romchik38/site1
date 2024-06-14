@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Results;
 
-use Romchik38\Server\Api\Result;
+use Romchik38\Server\Api\ResultInterface;
 
-class DefaultResult implements Result
+class DefaultResult implements ResultInterface
 {
     public function __construct(
-        protected string $response = Result::DEFAULT_RESPONSE,
-        protected array $headers = Result::DEFAULT_HEADERS,
-        protected int $statusCode = Result::DEFAULT_STATUS_CODE,
+        protected string $response = ResultInterface::DEFAULT_RESPONSE,
+        protected array $headers = ResultInterface::DEFAULT_HEADERS,
+        protected int $statusCode = ResultInterface::DEFAULT_STATUS_CODE,
     )
     {
     }
@@ -28,18 +28,18 @@ class DefaultResult implements Result
         return $this->statusCode;
     }
 
-    public function setResponse(string $response): Result
+    public function setResponse(string $response): ResultInterface
     {
         $this->response = $response;
         return $this;
     }
 
-    public function setHeaders(array $headers): Result
+    public function setHeaders(array $headers): ResultInterface
     {
         $this->headers = $headers;
         return $this;
     }
-    public function setStatusCode(int $statusCode): Result
+    public function setStatusCode(int $statusCode): ResultInterface
     {
         $this->statusCode = $statusCode;
         return $this;

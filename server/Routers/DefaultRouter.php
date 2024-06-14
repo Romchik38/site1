@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Server\Routers;
 
 use Romchik38\Server\Api\Router;
-use Romchik38\Server\Api\RouterResult;
+use Romchik38\Server\Api\RouterResultInterface;
 use Romchik38\Server\Api\ControllerInterface;
 use Romchik38\Container;
 
@@ -16,7 +16,7 @@ class DefaultRouter implements Router
     protected ControllerInterface | null $redirectController = null;
 
     public function __construct(
-        protected RouterResult $routerResult,
+        protected RouterResultInterface $routerResult,
         array $controllers,
         protected Container $container
     ) {
@@ -49,7 +49,7 @@ class DefaultRouter implements Router
         $this->redirectController = $this->container->get($controllerName);
     }
 
-    public function execute(): RouterResult
+    public function execute(): RouterResultInterface
     {
         // 1. method check 
         $method = $_SERVER['REQUEST_METHOD'];
@@ -84,7 +84,7 @@ class DefaultRouter implements Router
         // 3. looking for exact url - / , redirect or static page 
         if ($this->redirectController !== null) {
             $controllerResult = $this->redirectController->execute();
-            if ($controllerResult->getResponse())
+            if ($controllerResult->getResponse());
         } 
 
         // 4. Routes
