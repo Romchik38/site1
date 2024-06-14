@@ -64,7 +64,6 @@ class DefaultRouter implements Router
         // 2. Redirect from /route/basename/ to /route/basename
         if ($baseName !== '' && str_ends_with($url, '/')) {
             $redirectUrl = substr($requestUrl, 0, strlen($requestUrl) - 1);
-            //$redirectUrl = $requestUrl . 'index';
             $this->routerResult->setHeaders([
                 ['Location: ' . $_SERVER['REQUEST_SCHEME'] . '://' 
                 . $_SERVER['HTTP_HOST'] . $redirectUrl

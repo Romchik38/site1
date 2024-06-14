@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Results;
 
-use Romchik38\Server\Api\ControllerResult;
+use Romchik38\Server\Api\ControllerResultInterface;
 
-class DefaultControllerResult extends DefaultResult implements ControllerResult
+class DefaultControllerResult extends DefaultResult implements ControllerResultInterface
 {
    
 }

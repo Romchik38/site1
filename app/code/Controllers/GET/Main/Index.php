@@ -4,20 +4,20 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\GET\Main;
 
-use Romchik38\Server\Api\Controller;
-use Romchik38\Server\Api\ControllerResult;
+use Romchik38\Server\Api\ControllerInterface;
+use Romchik38\Server\Api\ControllerResultInterface;
 use Romchik38\Site1\Views\Main\Index as View;
 use Romchik38\Site1\Models\PageRepository;
 
-class Index implements Controller
+class Index implements ControllerInterface
 {
     public function __construct(
-        protected ControllerResult $controllerResult,
+        protected ControllerResultInterface $controllerResult,
         protected View $view,
         protected PageRepository $pageRepository
     ) {
     }
-    public function execute(): ControllerResult
+    public function execute(): ControllerResultInterface
     {
         [$url] = explode('?', $_SERVER['REQUEST_URI']);
         $baseName = pathinfo($url)['basename'];
