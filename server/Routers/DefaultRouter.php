@@ -75,14 +75,13 @@ class DefaultRouter implements RouterInterface
         // 2. Redirect from /route/basename/ to /route/basename
         if ($baseName !== '' && str_ends_with($url, '/')) {
             $redirectUrl = substr($requestUrl, 0, strlen($requestUrl) - 1);
-            $this->routerResult->setHeaders([
+            return $this->routerResult
+                ->setHeaders([
                 ['Location: ' . $_SERVER['REQUEST_SCHEME'] . '://' 
                 . $_SERVER['HTTP_HOST'] . $redirectUrl
                 , true, 301]
             ])
-                ->routerResult->setResponse('')
-                ->routerResult->setStatusCode(301);
-            return $this->routerResult;
+                ->setStatusCode(301);
         }
 
         // 3. looking for exact url - / , redirect or static page 
