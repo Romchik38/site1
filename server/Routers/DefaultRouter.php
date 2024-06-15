@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Romchik38\Server\Routers;
 
 use Romchik38\Server\Api\RouterInterface;
-use Romchik38\Server\Api\RouterResultInterface;
-use Romchik38\Server\Api\ResultInterface;
-use Romchik38\Server\Api\ControllerInterface;
-use Romchik38\Server\Api\RedirectControllerInterface;
+use Romchik38\Server\Api\Results\RouterResultInterface;
+use Romchik38\Server\Api\Results\ResultInterface;
+use Romchik38\Server\Api\Controllers\{ControllerInterface, RedirectControllerInterface};
 use Romchik38\Container;
 
 class DefaultRouter implements RouterInterface

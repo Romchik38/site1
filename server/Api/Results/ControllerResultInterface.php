@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Api;
+namespace Romchik38\Server\Api\Results;
 
 interface ControllerResultInterface extends ResultInterface {
 }

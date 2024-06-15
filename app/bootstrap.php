@@ -7,7 +7,6 @@ use Romchik38\Server\Routers\DefaultRouter;
 use Romchik38\Server\Results\DefaultRouterResult;
 use Romchik38\Server\Api\Server;
 use Romchik38\Site1\Stubs\EchoLogger;
-use Romchik38\Site1\Models\Redirects\RedirectRepository;
 
 $container = new Container();
 

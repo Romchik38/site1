@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Results;
 
-use Romchik38\Server\Api\ResultInterface;
+use Romchik38\Server\Api\Results\ResultInterface;
 
 class DefaultResult implements ResultInterface
 {

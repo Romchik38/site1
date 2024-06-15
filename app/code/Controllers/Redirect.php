@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers;
 
-use Romchik38\Server\Api\ControllerResultInterface;
-use Romchik38\Server\Api\RedirectControllerInterface;
+use Romchik38\Server\Api\Results\ControllerResultInterface;
+use Romchik38\Server\Api\Controllers\RedirectControllerInterface;
 use Romchik38\Server\Api\Models\RedirectRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 

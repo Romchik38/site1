@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Api;
+namespace Romchik38\Server\Api\Results;
 
 interface ResultInterface {
     const DEFAULT_RESPONSE = '';
