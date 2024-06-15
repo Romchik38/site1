@@ -42,18 +42,6 @@ class DefaultRouter implements RouterInterface
         return $this;
     }
 
-    // public function addNotFoundController($controllerName): RouterInterface
-    // {
-    //     $this->notFoundController = $controllerName;
-    //     return $this;
-    // }
-
-    // public function addRedirectController($controllerName): RouterInterface
-    // {
-    //     $this->redirectController = $controllerName;
-    //     return $this;
-    // }
-
     public function execute(): ResultInterface
     {
         // 1. method check 
@@ -62,8 +50,8 @@ class DefaultRouter implements RouterInterface
             $this->routerResult->setResponse('Method Not Allowed')
                 ->setStatusCode(405)
                 ->setHeaders([
-                ['Allow:' . implode(', ', array_keys($this->controllers))]
-            ]);
+                    ['Allow:' . implode(', ', array_keys($this->controllers))]
+                ]);
             return $this->routerResult;
         }
 
@@ -78,36 +66,38 @@ class DefaultRouter implements RouterInterface
             $redirectUrl = substr($requestUrl, 0, strlen($requestUrl) - 1);
             return $this->routerResult
                 ->setHeaders([
-                ['Location: ' . $_SERVER['REQUEST_SCHEME'] . '://' 
-                . $_SERVER['HTTP_HOST'] . $redirectUrl
-                , true, 301]
-            ])
+                    [
+                        'Location: ' . $_SERVER['REQUEST_SCHEME'] . '://'
+                            . $_SERVER['HTTP_HOST'] . $redirectUrl, true, 301
+                    ]
+                ])
                 ->setStatusCode(301);
         }
 
         // 3. looking for exact url - / , redirect or static page 
         if ($this->redirectController !== null) {
-            $controllerResult = $this->redirectController->execute();
+            $controllerResult = $this->redirectController->execute($url);
             if ($this->redirectController->isRedirect() === true) {
                 return $controllerResult;
             }
-        } 
+        }
 
         // 4. Routes
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
         $controllerClassName = '';
         // 4.1 looking for exact routes
-        if (array_key_exists($dirName, $controllersByMethod) === true) {   
+        if (array_key_exists($dirName, $controllersByMethod) === true) {
             $controllerClassName = $controllersByMethod[$dirName];
-        } else if ($this->notFoundController !== '') {
+        } else if ($this->notFoundController !== null) {
             // 5. Any maches 
             // 5.1 check for 404 page
             $controllerClassName = $this->notFoundController;
         }
         // Execute Controller       
         if ($controllerClassName !== '') {
+            /** @var ControllerInterface $controller */
             $controller = $this->container->get($controllerClassName);
-            $controllerResult = $controller->execute();
+            $controllerResult = $controller->execute($baseName);
             return $controllerResult;
         }
         // 5.2 404 not found, so send default result
@@ -115,5 +105,4 @@ class DefaultRouter implements RouterInterface
             ->setResponse('Error 404 from router - Page not found');
         return $this->routerResult;
     }
-
 }

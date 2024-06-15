@@ -17,17 +17,13 @@ class Index implements ControllerInterface
         protected PageRepository $pageRepository
     ) {
     }
-    public function execute(): ControllerResultInterface
+    public function execute($action): ControllerResultInterface
     {
-        [$url] = explode('?', $_SERVER['REQUEST_URI']);
-        $baseName = pathinfo($url)['basename'];
-
-
-        if ($baseName === '') {
-            $baseName = 'index';
+        if ($action === '') {
+            $action = 'index';
         }
 
-        $arr = $this->pageRepository->list(' WHERE url = $1', [$baseName]);
+        $arr = $this->pageRepository->list(' WHERE url = $1', [$action]);
 
         if (count($arr) === 0) {
             $this->controllerResult->setResponse('From main controller - 404 Error page not found');
@@ -36,7 +32,7 @@ class Index implements ControllerInterface
             $page = $arr[0];
             $this->view
                 ->setMetadata(View::TITLE, $page->getData('name'))
-                ->setControllerData($page->getData('content'));            
+                ->setControllerData($page->getData('content'));
             $this->controllerResult->setResponse($this->view->toString());
         }
 

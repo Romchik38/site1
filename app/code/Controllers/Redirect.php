@@ -20,20 +20,19 @@ class Redirect implements RedirectControllerInterface
     ) {
     }
 
-    public function execute(): ControllerResultInterface
+    public function execute($action): ControllerResultInterface
     {
-        [$url] = explode('?', $_SERVER['REQUEST_URI']);
         try {
-            $redirectUrl = $this->redirectRepository->checkUrl($url);
+            $redirectUrl = $this->redirectRepository->checkUrl($action);
             if ($redirectUrl !== '') {
                 $this->redirect = true;
                 $this->controllerResult
                     ->setHeaders([
                         [
                             'Location: ' . $_SERVER['REQUEST_SCHEME'] . '://'
-                                . $_SERVER['HTTP_HOST'] 
-                                . $redirectUrl->getRedirectTo(), 
-                            true, 
+                                . $_SERVER['HTTP_HOST']
+                                . $redirectUrl->getRedirectTo(),
+                            true,
                             $redirectUrl->getRedirectCode()
                         ]
                     ])
