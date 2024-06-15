@@ -7,7 +7,7 @@ return function ($container) {
         \Romchik38\Server\Results\DefaultControllerResult::class,
         new \Romchik38\Server\Results\DefaultControllerResult()
     );
-
+    // /
     $container->add(
         \Romchik38\Site1\Controllers\GET\Main\Index::class, 
         function($container){
@@ -18,7 +18,7 @@ return function ($container) {
             );
         }
     );
-
+    // /login
     $container->add(
         \Romchik38\Site1\Controllers\GET\Login\Index::class, 
         function($container){
@@ -28,6 +28,15 @@ return function ($container) {
             );
         }
     );
-
+    // redirect
+    $container->add(
+        \Romchik38\Site1\Controllers\Redirect::class, 
+        function($container){
+            return new \Romchik38\Site1\Controllers\Redirect(
+                $container->get(\Romchik38\Server\Results\DefaultControllerResult::class),
+                $container->get(\Romchik38\Site1\Models\Redirects\RedirectRepository::class)
+            );
+        }
+    );
     return $container;
 };

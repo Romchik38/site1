@@ -14,8 +14,8 @@ class Repository implements RepositoryInterface
 {
 
     public function __construct(
-        private DatabaseInterface $database,
-        private ModelFactoryInterface $modelFactory,
+        protected DatabaseInterface $database,
+        protected ModelFactoryInterface $modelFactory,
         protected string $table,
         protected string $primaryFieldName
     ) {

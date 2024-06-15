@@ -14,13 +14,14 @@ use Romchik38\Container;
 class DefaultRouter implements RouterInterface
 {
     protected array $controllers = [];
-    protected string $notFoundController = '';
-    protected string $redirectController = '';
 
     public function __construct(
         protected RouterResultInterface $routerResult,
         array $controllers,
-        protected Container $container
+        protected Container $container,
+        protected ControllerInterface | null $notFoundController = null,
+        protected RedirectControllerInterface|null $redirectController = null
+
     ) {
         $this->controllers[$this::REQUEST_METHOD_GET] = [];
         $this->controllers[$this::REQUEST_METHOD_POST] = [];
@@ -41,17 +42,17 @@ class DefaultRouter implements RouterInterface
         return $this;
     }
 
-    public function addNotFoundController($controllerName): RouterInterface
-    {
-        $this->notFoundController = $controllerName;
-        return $this;
-    }
+    // public function addNotFoundController($controllerName): RouterInterface
+    // {
+    //     $this->notFoundController = $controllerName;
+    //     return $this;
+    // }
 
-    public function addRedirectController($controllerName): RouterInterface
-    {
-        $this->redirectController = $controllerName;
-        return $this;
-    }
+    // public function addRedirectController($controllerName): RouterInterface
+    // {
+    //     $this->redirectController = $controllerName;
+    //     return $this;
+    // }
 
     public function execute(): ResultInterface
     {
@@ -85,10 +86,9 @@ class DefaultRouter implements RouterInterface
         }
 
         // 3. looking for exact url - / , redirect or static page 
-        if ($this->redirectController !== '') {
-            $controller = $this->container->get($this->redirectController);
-            $controllerResult = $controller->execute();
-            if ($controller->isRedirect()) {
+        if ($this->redirectController !== null) {
+            $controllerResult = $this->redirectController->execute();
+            if ($this->redirectController->isRedirect() === true) {
                 return $controllerResult;
             }
         } 

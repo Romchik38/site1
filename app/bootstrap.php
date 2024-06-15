@@ -15,6 +15,14 @@ $container = new Container();
 $models = require_once(__DIR__ . '/code/Models/models.php');
 $models($container);
 
+// VIEWS
+$views = require_once(__DIR__ . '/code/Views/views.php');
+$views($container);
+
+// CONTROLLERS
+$controllers = require_once(__DIR__ . '/code/Controllers/controllers.php');
+$controllers($container);
+
 // ROUTER
 $container->add(DefaultRouterResult::class, new DefaultRouterResult(
     /** default response, headers, statusCode */
@@ -25,17 +33,10 @@ $container->add(
             $container->get(DefaultRouterResult::class),
             $controllersList,
             $container,
-            $container->get(RedirectRepository::class)
+            null,
+            $container->get(Romchik38\Site1\Controllers\Redirect::class)
     )
 );
-
-// VIEWS
-$views = require_once(__DIR__ . '/code/Views/views.php');
-$views($container);
-
-// CONTROLLERS
-$controllers = require_once(__DIR__ . '/code/Controllers/controllers.php');
-$controllers($container);
 
 // SERVER
 $container->add(Server::CONTAINER_LOGGER_FILED, new EchoLogger());

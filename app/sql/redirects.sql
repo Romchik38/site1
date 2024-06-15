@@ -9,7 +9,8 @@ CREATE table redirects
 
 INSERT INTO redirects (url, redirect_to)
     VALUES
-        ('/login', '/login/index')
+        ('/login', '/login/index'),
+        ('/index', '/')
 ;
 
 SELECT * FROM redirects;
