@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Controllers\GET\Main;
+namespace Romchik38\Site1\Controllers\Main;
 
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Results\ControllerResultInterface;
