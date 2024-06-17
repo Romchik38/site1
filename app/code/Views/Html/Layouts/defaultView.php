@@ -6,8 +6,7 @@ namespace Romchik38\Site1\Views\Html;
 
 use Romchik38\Server\Api\View;
 
-
-function defaultView(
+return function (
     array $metaData,
     string $data,
     string $wrapperName = View::DEFAULT_WRAPPER
@@ -16,7 +15,7 @@ function defaultView(
     $wrapper = require_once(__DIR__ . '/wrappers/' . $wrapperName . '.php');
     
     // getting blocks
-    $blocks = readBlocks();
+    $blocks = readBlocks(1);
     
     // creating inner Html
     $wrapperHtml = $wrapper($blocks, $metaData, $data);
@@ -37,7 +36,7 @@ function defaultView(
         </body>
     </html>
     HTML;
-}
+};
 
 /**
  * returns an array of filename => function(){}

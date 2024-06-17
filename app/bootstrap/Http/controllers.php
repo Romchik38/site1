@@ -13,7 +13,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Controllers\Main\Index(
                 $container->get(\Romchik38\Server\Results\DefaultControllerResult::class),
-                $container->get(\Romchik38\Site1\Views\Main\Index::class),
+                $container->get(\Romchik38\Site1\Views\Html\Classes\Main\Index::class),
                 $container->get(\Romchik38\Site1\Models\Page\PageRepository::class)
             );
         }
@@ -24,7 +24,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Controllers\Login\Index(
                 $container->get(\Romchik38\Server\Results\DefaultControllerResult::class),
-                $container->get(\Romchik38\Site1\Views\Main\Index::class)
+                $container->get(\Romchik38\Site1\Views\Html\Classes\Main\Index::class)
             );
         }
     );

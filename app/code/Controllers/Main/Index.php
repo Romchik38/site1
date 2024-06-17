@@ -6,7 +6,7 @@ namespace Romchik38\Site1\Controllers\Main;
 
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Results\ControllerResultInterface;
-use Romchik38\Site1\Views\Main\Index as View;
+use Romchik38\Server\Api\View as View;
 use Romchik38\Site1\Models\Page\PageRepository;
 
 class Index implements ControllerInterface

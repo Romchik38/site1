@@ -15,18 +15,18 @@ $models = require_once(__DIR__ . '/code/Models/models.php');
 $models($container);
 
 // VIEWS
-$views = require_once(__DIR__ . '/code/Views/views.php');
+$views = require_once(__DIR__ . '/code/Views/Html/views.php');
 $views($container);
 
 // CONTROLLERS
-$controllers = require_once(__DIR__ . '/code/Controllers/controllers.php');
+$controllers = require_once(__DIR__ . '/bootstrap/Http/controllers.php');
 $controllers($container);
 
 // ROUTER
 $container->add(DefaultRouterResult::class, new DefaultRouterResult(
     /** default response, headers, statusCode */
 ));
-$controllersList = require_once(__DIR__ . '/code/Controllers/controllersList.php');
+$controllersList = require_once(__DIR__ . '/bootstrap/Http/controllersList.php');
 $container->add(
     DefaultRouter::class, new DefaultRouter(
             $container->get(DefaultRouterResult::class),
