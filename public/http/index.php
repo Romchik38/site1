@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Romchik38\Server\Servers\DefaultServer;
 
-$container = require_once __DIR__ . '/../app/bootstrap_http.php';
+$container = require_once __DIR__ . '/../../app/bootstrap_http.php';
 
 $server = new DefaultServer($container);
 
