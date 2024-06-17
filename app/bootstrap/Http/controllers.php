@@ -30,9 +30,9 @@ return function ($container) {
     );
     // redirect
     $container->add(
-        \Romchik38\Site1\Controllers\Redirect::class, 
+        \Romchik38\Server\Controllers\Redirect::class, 
         function($container){
-            return new \Romchik38\Site1\Controllers\Redirect(
+            return new \Romchik38\Server\Controllers\Redirect(
                 $container->get(\Romchik38\Server\Results\DefaultControllerResult::class),
                 $container->get(\Romchik38\Site1\Models\Redirect\RedirectRepository::class)
             );

@@ -33,7 +33,7 @@ $container->add(
             $controllersList,
             $container,
             null,
-            $container->get(Romchik38\Site1\Controllers\Redirect::class)
+            $container->get(Romchik38\Server\Controllers\Redirect::class)
     )
 );
 
