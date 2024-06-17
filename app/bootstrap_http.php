@@ -22,6 +22,16 @@ $views($container);
 $controllers = require_once(__DIR__ . '/bootstrap/Http/controllers.php');
 $controllers($container);
 
+// SERVICES
+$container->add(
+    \Romchik38\Server\Services\Redirect::class, 
+    function($container){
+        return new \Romchik38\Server\Services\Redirect(
+            $container->get(\Romchik38\Site1\Models\Redirect\RedirectRepository::class)
+        );
+    }
+);
+
 // ROUTER
 $container->add(DefaultRouterResult::class, new DefaultRouterResult(
     /** default response, headers, statusCode */
@@ -33,7 +43,7 @@ $container->add(
             $controllersList,
             $container,
             null,
-            $container->get(Romchik38\Server\Controllers\Redirect::class)
+            $container->get(Romchik38\Server\Services\Redirect::class)
     )
 );
 

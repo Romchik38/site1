@@ -8,16 +8,16 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Results\ControllerResultInterface;
 use Romchik38\Server\Api\View as View;
 use Romchik38\Site1\Api\Models\PageRepositoryInterface;
+use Romchik38\Server\Controllers\Errors\NotFoundException;
 
 class Index implements ControllerInterface
 {
     public function __construct(
-        protected ControllerResultInterface $controllerResult,
         protected View $view,
         protected PageRepositoryInterface $pageRepository
     ) {
     }
-    public function execute($action): ControllerResultInterface
+    public function execute($action): string
     {
         if ($action === '') {
             $action = 'index';
@@ -26,16 +26,13 @@ class Index implements ControllerInterface
         $arr = $this->pageRepository->list(' WHERE url = $1', [$action]);
 
         if (count($arr) === 0) {
-            $this->controllerResult->setResponse('From main controller - 404 Error page not found');
-            $this->controllerResult->setStatusCode(404);
+            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         } else {
             $page = $arr[0];
             $this->view
                 ->setMetadata(View::TITLE, $page->getData('name'))
                 ->setControllerData($page->getData('content'));
-            $this->controllerResult->setResponse($this->view->toString());
+            return $this->view->toString();
         }
-
-        return $this->controllerResult;
     }
 }

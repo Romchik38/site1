@@ -8,5 +8,5 @@ use Romchik38\Server\Api\Results\ControllerResultInterface;
 
 interface ControllerInterface
 {
-    public function execute(string $action): ControllerResultInterface;
+    public function execute(string $action): string;
 }

@@ -7,8 +7,10 @@ namespace Romchik38\Server\Routers;
 use Romchik38\Server\Api\RouterInterface;
 use Romchik38\Server\Api\Results\RouterResultInterface;
 use Romchik38\Server\Api\Results\ResultInterface;
-use Romchik38\Server\Api\Controllers\{ControllerInterface, RedirectControllerInterface};
+use Romchik38\Server\Api\Controllers\ControllerInterface;
+use Romchik38\Server\Api\Services\RedirectInterface;
 use Romchik38\Container;
+use Romchik38\Server\Controllers\Errors\NotFoundException;
 
 class DefaultRouter implements RouterInterface
 {
@@ -19,7 +21,7 @@ class DefaultRouter implements RouterInterface
         array $controllers,
         protected Container $container,
         protected ControllerInterface | null $notFoundController = null,
-        protected RedirectControllerInterface|null $redirectController = null
+        protected RedirectInterface|null $redirectService = null
 
     ) {
         $this->controllers[$this::REQUEST_METHOD_GET] = [];
@@ -74,10 +76,17 @@ class DefaultRouter implements RouterInterface
         }
 
         // 3. looking for exact url - / , redirect or static page 
-        if ($this->redirectController !== null) {
-            $controllerResult = $this->redirectController->execute($url);
-            if ($this->redirectController->isRedirect() === true) {
-                return $controllerResult;
+        if ($this->redirectService !== null) {
+            $this->redirectService->execute($url);
+            if ($this->redirectService->isRedirect() === true) {
+                return $this->routerResult
+                    ->setHeaders([
+                        [
+                            $this->redirectService->getRedirectLocation(),
+                            true,
+                            $this->redirectService->getStatusCode()
+                        ]
+                    ]);
             }
         }
 
@@ -96,8 +105,19 @@ class DefaultRouter implements RouterInterface
         if ($controllerClassName !== '') {
             /** @var ControllerInterface $controller */
             $controller = $this->container->get($controllerClassName);
-            $controllerResult = $controller->execute($baseName);
-            return $controllerResult;
+            $statusCode = ResultInterface::DEFAULT_STATUS_CODE;
+            $response = ResultInterface::DEFAULT_RESPONSE;
+            try {
+                $response = $controller->execute($baseName);
+                $statusCode = 200;
+            } catch (NotFoundException $e) {
+                $statusCode = 404;
+                $response = htmlentities($e->getMessage());
+            } finally {
+                $this->routerResult->setStatusCode($statusCode)
+                    ->setResponse($response);
+                return $this->routerResult;
+            }
         }
         // 5.2 404 not found, so send default result
         $this->routerResult->setStatusCode(404)
