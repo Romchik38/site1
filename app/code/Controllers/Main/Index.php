@@ -7,14 +7,14 @@ namespace Romchik38\Site1\Controllers\Main;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Results\ControllerResultInterface;
 use Romchik38\Server\Api\View as View;
-use Romchik38\Site1\Models\Page\PageRepository;
+use Romchik38\Site1\Api\Models\PageRepositoryInterface;
 
 class Index implements ControllerInterface
 {
     public function __construct(
         protected ControllerResultInterface $controllerResult,
         protected View $view,
-        protected PageRepository $pageRepository
+        protected PageRepositoryInterface $pageRepository
     ) {
     }
     public function execute($action): ControllerResultInterface
