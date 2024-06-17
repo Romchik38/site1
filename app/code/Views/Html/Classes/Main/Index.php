@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html\Classes\Main;
 
-use Romchik38\Server\View\PageView;
+use Romchik38\Server\Views\PageView;
 
 class Index extends PageView
 {

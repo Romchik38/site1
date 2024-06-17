@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\View;
+namespace Romchik38\Server\Views;
 
 use \Romchik38\Server\Api\View;
 
