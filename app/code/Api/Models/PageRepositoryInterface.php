@@ -7,5 +7,5 @@ namespace Romchik38\Site1\Api\Models;
 use Romchik38\Server\Api\Models\RepositoryInterface;
 
 interface PageRepositoryInterface extends RepositoryInterface {
-
+    public function getByUrl(string $url): array;
 }

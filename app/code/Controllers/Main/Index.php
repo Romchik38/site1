@@ -22,7 +22,7 @@ class Index implements ControllerInterface
             $action = 'index';
         }
 
-        $arr = $this->pageRepository->list(' WHERE url = $1', [$action]);
+        $arr = $this->pageRepository->getByUrl($action);
 
         if (count($arr) === 0) {
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
