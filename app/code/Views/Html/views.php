@@ -9,7 +9,8 @@ return function ($container) {
             function(...$args){
                 $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
                 return call_user_func($defaultView, ...$args);
-            }
+            },
+            require_once(__DIR__ . '/Tamplates/Main/index.php')
         )
     );
 

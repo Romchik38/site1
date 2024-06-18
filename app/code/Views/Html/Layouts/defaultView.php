@@ -15,7 +15,7 @@ return function (
     $wrapper = require_once(__DIR__ . '/wrappers/' . $wrapperName . '.php');
     
     // getting blocks
-    $blocks = readBlocks(1);
+    $blocks = readBlocks();
     
     // creating inner Html
     $wrapperHtml = $wrapper($blocks, $metaData, $data);

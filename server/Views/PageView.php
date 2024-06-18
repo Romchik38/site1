@@ -11,7 +11,10 @@ class PageView implements View
     protected string $controllerData = '';
     protected array $metaData = [];
 
-    public function __construct(protected $generateTemplate)
+    public function __construct(
+        protected $generateTemplate,
+        protected $controllerTemplate
+        )
     {
     }
 
@@ -21,7 +24,7 @@ class PageView implements View
 
     public function setControllerData(string $data): View
     {
-        $this->controllerData = $data;
+        $this->controllerData = call_user_func($this->controllerTemplate, $data);
         return $this;
     }
 
