@@ -29,9 +29,9 @@ class DefaultPageView extends PageView
                 'alt' => 'To About Page'
             ],
             [
-                'name' => 'Some Page',
-                'url' => '#',
-                'alt' => 'To Some Page'
+                'name' => 'Login',
+                'url' => '/login/index',
+                'alt' => 'To Login Page'
             ]
         ];
     }
