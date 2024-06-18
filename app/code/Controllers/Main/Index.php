@@ -5,15 +5,14 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Controllers\Main;
 
 use Romchik38\Server\Api\Controllers\ControllerInterface;
-use Romchik38\Server\Api\Results\ControllerResultInterface;
-use Romchik38\Server\Api\View as View;
+use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Site1\Api\Models\PageRepositoryInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 
 class Index implements ControllerInterface
 {
     public function __construct(
-        protected View $view,
+        protected ViewInterface $view,
         protected PageRepositoryInterface $pageRepository
     ) {
     }
@@ -30,7 +29,7 @@ class Index implements ControllerInterface
         } else {
             $page = $arr[0];
             $this->view
-                ->setMetadata(View::TITLE, $page->getData('name'))
+                ->setMetadata(ViewInterface::TITLE, $page->getData('name'))
                 ->setControllerData($page);
             return $this->view->toString();
         }

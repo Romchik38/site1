@@ -8,7 +8,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Main\Index::class, 
         function($container){
             return new \Romchik38\Site1\Controllers\Main\Index(
-                $container->get(\Romchik38\Site1\Views\Html\Classes\DefaultPageView::class),
+                $container->get(\Romchik38\Site1\Views\Html\Classes\Main\Index::class),
                 $container->get(\Romchik38\Site1\Models\Page\PageRepository::class)
             );
         }

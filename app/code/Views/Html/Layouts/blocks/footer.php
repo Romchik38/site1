@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use Romchik38\Server\Api\View;
+use Romchik38\Server\Api\Views\ViewInterface;
 
 return function(array $data = []){
 
-    if (!isset($data[View::FOOTER_DATA])) {
+    if (!isset($data[ViewInterface::FOOTER_DATA])) {
         return '';
     }
     
-    $footerData = $data[View::FOOTER_DATA];
+    $footerData = $data[ViewInterface::FOOTER_DATA];
 
     $copyrights = $footerData['copyrights'];
 

@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Views;
 
-use \Romchik38\Server\Api\View;
+use \Romchik38\Server\Api\Views\ViewInterface;
 
-class PageView implements View
+class PageView implements ViewInterface
 {
     protected string $controllerData = '';
     protected array $metaData = [];
@@ -22,13 +22,13 @@ class PageView implements View
         /** use this for add info to metaData */
     }
 
-    public function setControllerData($data): View
+    public function setControllerData($data): ViewInterface
     {
         $this->controllerData = call_user_func($this->controllerTemplate, $data);
         return $this;
     }
 
-    public function setMetadata(string $key, string $value): View
+    public function setMetadata(string $key, string $value): ViewInterface
     {
         $this->metaData[$key] = $value;
         return $this;

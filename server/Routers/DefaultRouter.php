@@ -113,11 +113,10 @@ class DefaultRouter implements RouterInterface
             } catch (NotFoundException $e) {
                 $statusCode = 404;
                 $response = htmlentities($e->getMessage());
-            } finally {
-                $this->routerResult->setStatusCode($statusCode)
+            } // we do not catch \Exception because it catched on the server level
+            $this->routerResult->setStatusCode($statusCode)
                     ->setResponse($response);
-                return $this->routerResult;
-            }
+            return $this->routerResult;
         }
         // 5.2 404 not found, so send default result
         $this->routerResult->setStatusCode(404)
