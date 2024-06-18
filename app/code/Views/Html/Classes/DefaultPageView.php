@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Views\Html\Classes\Main;
+namespace Romchik38\Site1\Views\Html\Classes;
 
 use Romchik38\Server\Views\PageView;
 
-class Index extends PageView
+class DefaultPageView extends PageView
 {
     protected function createFooter()
     {
