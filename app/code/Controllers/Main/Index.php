@@ -31,7 +31,7 @@ class Index implements ControllerInterface
             $page = $arr[0];
             $this->view
                 ->setMetadata(View::TITLE, $page->getData('name'))
-                ->setControllerData($page->getContent());
+                ->setControllerData($page);
             return $this->view->toString();
         }
     }

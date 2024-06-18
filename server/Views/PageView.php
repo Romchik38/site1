@@ -22,7 +22,7 @@ class PageView implements View
         /** use this for add info to metaData */
     }
 
-    public function setControllerData(string $data): View
+    public function setControllerData($data): View
     {
         $this->controllerData = call_user_func($this->controllerTemplate, $data);
         return $this;
