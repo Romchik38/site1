@@ -11,7 +11,7 @@ use Romchik38\Site1\Stubs\EchoLogger;
 $container = new Container();
 
 // MODELS
-$models = require_once(__DIR__ . '/code/Models/models.php');
+$models = require_once(__DIR__ . '/bootstrap/models.php');
 $models($container);
 
 // VIEWS
