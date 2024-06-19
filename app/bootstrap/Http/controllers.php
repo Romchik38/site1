@@ -18,7 +18,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Login\Index::class, 
         function($container){
             return new \Romchik38\Site1\Controllers\Login\Index(
-                $container->get(\Romchik38\Site1\Views\Html\Classes\DefaultPageView::class)
+                $container->get(\Romchik38\Site1\Views\Html\Classes\Login\Index::class)
             );
         }
     );
