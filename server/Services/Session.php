@@ -16,43 +16,21 @@ class Session implements SessionInterface
 
     public function __construct(string $logoutRedirect)
     {
-        // 1. start
         session_start();
-        // 2. check time
-        if(isset($_SESSION[SessionInterface::SESSION_LAST_VISIT_TIME_FILED])) {
-
-                $lastVisitTime = $_SESSION[SessionInterface::SESSION_LAST_VISIT_TIME_FILED];
-                $currentTime = time();  
-                if (($currentTime - $lastVisitTime) > SessionInterface::SESSION_MAX_TIME_TO_LOGOUT) {
-                    $this->logout();
-                    header('Location: ' . $logoutRedirect);
-                    exit(0);
-                } else {
-                    $_SESSION[SessionInterface::SESSION_LAST_VISIT_TIME_FILED] = $currentTime;
-                }
-
-        } else {
-            $_SESSION[SessionInterface::SESSION_LAST_VISIT_TIME_FILED] = time();
-        }
-    }
-
-    public function getLastVisiTime(): int {
-        return $_SESSION[SessionInterface::SESSION_LAST_VISIT_TIME_FILED];
     }
 
     public function getUserId(): int
     {
         return $this->userId;
     }
+
     public function logout()
     {
-            unset($_SESSION[SessionInterface::SESSION_LAST_VISIT_TIME_FILED]);
-            unset($_SESSION[SessionInterface::SESSION_USER_ID_FIELD]);
-            if (isset($_COOKIE[session_name()])) {
-                setcookie(session_name(), '', time() - 86400, '/');
-            }
-
-            session_destroy();
-
+        unset($_SESSION[SessionInterface::SESSION_USER_ID_FIELD]);
+        $_SESSION = [];
+        if (isset($_COOKIE[session_name()])) {
+            setcookie(session_name(), '', time() - SessionInterface::SESSION_MAX_TIME_TO_LOGOUT, '/');
+        }
+        session_destroy();
     }
 }
