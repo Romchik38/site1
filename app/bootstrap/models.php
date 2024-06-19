@@ -20,6 +20,11 @@ return function ($container) {
         new Romchik38\Site1\Models\Redirect\RedirectFactory()
     );
 
+    $container->add(
+        Romchik38\Site1\Models\DTO\LoginDtoFactory::class,
+        new Romchik38\Site1\Models\DTO\LoginDtoFactory()
+    );
+
     // REPOSITORIES
     $container->add(
         \Romchik38\Site1\Models\Page\PageRepository::class,

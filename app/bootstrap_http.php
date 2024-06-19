@@ -10,6 +10,11 @@ use Romchik38\Site1\Stubs\EchoLogger;
 
 $container = new Container();
 
+// SESSION 
+$container->add(\Romchik38\Server\Services\Session::class,
+    new \Romchik38\Server\Services\Session()
+);
+
 // MODELS
 $models = require_once(__DIR__ . '/bootstrap/models.php');
 $models($container);

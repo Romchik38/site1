@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Login;
+namespace Romchik38\Server\Services;
 
 use \Romchik38\Server\Api\Services\SessionInterface;
 
@@ -14,7 +14,7 @@ class Session implements SessionInterface
     // session_regenerate_id() 
     // and redirect the user to another page or reload the same one.
 
-    public function __construct(string $logoutRedirect)
+    public function __construct()
     {
         session_start();
     }
