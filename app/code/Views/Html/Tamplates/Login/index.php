@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-/** @param \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface $data */
-return function($data) {
+use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
+
+return function(LoginDTOInterface $data) {
 
     $action = $data->getActionName();
 
