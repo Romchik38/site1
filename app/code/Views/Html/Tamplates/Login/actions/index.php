@@ -10,13 +10,13 @@ return function(LoginDTOInterface $data){
     if ($data->getUserId() === 0) {
         $html = <<<HTML
         <h2>Provide Login Credentials</h2>
-        <form action="/login/auth" mathod="post">
+        <form action="/login/auth" method="post">
             <label for="name">Enter your name: </label>
             <input type="text" name="name" id="name" required />
             <input type="password" name="password" id="password" required />
             <input type="submit" value="Log In" />
         </form>
-        <p>Or visit <a href="#">Registration Page</a></p>
+        <p>Or visit <a href="/login/register">Registration Page</a></p>
         HTML;
     } else {
         $html = 'Welcome User';
