@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Server\Views;
 
 use \Romchik38\Server\Api\Views\ViewInterface;
+use \Romchik38\Server\Api\Models\DTOInterface;
 
 class PageView implements ViewInterface
 {
@@ -22,7 +23,7 @@ class PageView implements ViewInterface
         /** use this for add info to metaData */
     }
 
-    public function setControllerData($data): ViewInterface
+    public function setControllerData(DTOInterface $data): ViewInterface
     {
         $this->controllerData = call_user_func($this->controllerTemplate, $data);
         return $this;
