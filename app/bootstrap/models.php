@@ -21,8 +21,8 @@ return function ($container) {
     );
 
     $container->add(
-        Romchik38\Site1\Models\DTO\LoginDtoFactory::class,
-        new Romchik38\Site1\Models\DTO\LoginDtoFactory()
+        Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class,
+        new Romchik38\Site1\Models\DTO\Login\LoginDTOFactory()
     );
 
     // REPOSITORIES
