@@ -25,6 +25,11 @@ return function ($container) {
         new Romchik38\Site1\Models\DTO\Login\LoginDTOFactory()
     );
 
+    $container->add(
+        Romchik38\Site1\Models\DTO\Main\MainDTOFactory::class,
+        new Romchik38\Site1\Models\DTO\Main\MainDTOFactory()
+    );
+
     // REPOSITORIES
     $container->add(
         \Romchik38\Site1\Models\Page\PageRepository::class,

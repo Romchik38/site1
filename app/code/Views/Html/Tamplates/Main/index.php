@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-/** @param Romchik38\Site1\Api\Models\PageModelInterface $data */
-return function($data) {
-    $content = $data->getContent();
-    $name = htmlentities($data->getName());
+use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
+
+return function(MainDTOInterface $data) {
+    $page = $data->getPage();
+    $content = $page->getContent();
+    $name = htmlentities($page->getName());
     $html = <<<HTML
     <article>
         <h1>{$name}</h1>

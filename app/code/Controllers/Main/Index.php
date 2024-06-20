@@ -8,12 +8,14 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Site1\Api\Models\PageRepositoryInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
+use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
 
 class Index implements ControllerInterface
 {
     public function __construct(
         protected ViewInterface $view,
-        protected PageRepositoryInterface $pageRepository
+        protected PageRepositoryInterface $pageRepository,
+        protected MainDTOFactoryInterface $mainDTOFactory
     ) {
     }
     public function execute($action): string
@@ -28,9 +30,10 @@ class Index implements ControllerInterface
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         } else {
             $page = $arr[0];
+            $mainDTO = $this->mainDTOFactory->create()->setPage($page);
             $this->view
                 ->setMetadata(ViewInterface::TITLE, $page->getData('name'))
-                ->setControllerData($page);
+                ->setControllerData($mainDTO);
             return $this->view->toString();
         }
     }
