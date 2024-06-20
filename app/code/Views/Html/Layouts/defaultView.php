@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Views\Html;
+namespace Romchik38\Site1\Views\Html\Layouts;
 
 use Romchik38\Server\Api\Views\ViewInterface;
 
@@ -15,7 +15,7 @@ return function (
     $wrapper = require_once(__DIR__ . '/wrappers/' . $wrapperName . '.php');
     
     // getting blocks
-    $blocks = readBlocks();
+    $blocks = readBlocks(__DIR__ . '/blocks');
     
     // creating inner Html
     $wrapperHtml = $wrapper($blocks, $metaData, $data);
@@ -41,9 +41,8 @@ return function (
 /**
  * returns an array of filename => function(){}
  */
-function readBlocks(){
+function readBlocks(string $path){
     $files = [];
-    $path = __DIR__ . '/blocks';
     $handle = opendir($path);
     while (false !== ($entry = readdir($handle))) {
         if (is_file($path . '/' . $entry)){

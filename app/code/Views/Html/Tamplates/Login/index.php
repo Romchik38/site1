@@ -2,11 +2,20 @@
 
 declare(strict_types=1);
 
+namespace Romchik38\Site1\Views\Html\Tamplates\Login;
+
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 
 return function(LoginDTOInterface $data) {
-
+    
+    $actions = ['index'];
+    $actionHtml = '';
     $action = $data->getActionName();
+
+    if (array_search($action, $actions) !== false) {
+        $fn = require_once(__DIR__ . '/actions/' . $action . '.php');
+        $actionHtml = $fn($data);
+    }
 
     $html = <<<HTML
     <article>
@@ -17,7 +26,7 @@ return function(LoginDTOInterface $data) {
             <p>We offer many benefits to registered users, so let's register and log in if you haven't done so yet.</p>
         </div>
         <div class="action">
-            {$action}
+            {$actionHtml}
         </div>
     </article>
     HTML;
