@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
+namespace Romchik38\Site1\Controllers\Auth;
+
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 
-class Auth implements ControllerInterface {
+class Index implements ControllerInterface {
     private array $methods = [
         'index'
     ];
@@ -33,6 +35,9 @@ class Auth implements ControllerInterface {
         // 1. Get Request Data
         $password = $this->request->getPassword();
         $userName = $this->request->getUserName();
+        if ($userName = 'ser' && $password = '123') {
+            return 'Authentication  success';
+        }
         // 2. Get User Repository
         // 3. Check
 
