@@ -10,17 +10,24 @@ use Romchik38\Site1\Stubs\EchoLogger;
 
 $container = new Container();
 
+// MODELS
+$models = require_once(__DIR__ . '/bootstrap/models.php');
+$models($container);
+
 // SERVICES 
 $container->add(\Romchik38\Server\Services\Session::class,
     new \Romchik38\Server\Services\Session()
 );
 
 $container->add(\Romchik38\Server\Services\Request::class,
-    new \Romchik38\Server\Services\Request());
+    new \Romchik38\Server\Services\Request()
+);
 
-// MODELS
-$models = require_once(__DIR__ . '/bootstrap/models.php');
-$models($container);
+$container->add(\Romchik38\Server\Services\PasswordCheck::class,
+    new \Romchik38\Server\Services\PasswordCheck(
+        $container->get(\Romchik38\Site1\Models\User\UserRepository::class)
+    )
+);
 
 // VIEWS
 $views = require_once(__DIR__ . '/code/Views/Html/views.php');

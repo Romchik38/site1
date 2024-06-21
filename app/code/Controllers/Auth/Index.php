@@ -7,8 +7,10 @@ namespace Romchik38\Site1\Controllers\Auth;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
+use Romchik38\Server\Api\Services\PasswordCheckInterface;
 
-class Index implements ControllerInterface {
+class Index implements ControllerInterface
+{
     private array $methods = [
         'index'
     ];
@@ -17,10 +19,9 @@ class Index implements ControllerInterface {
     private $failedMessage = 'Authentication failed';
 
     public function __construct(
-        private RequestInterface $request
-    )
-    {
-        
+        private RequestInterface $request,
+        private PasswordCheckInterface $passwordCheck
+    ) {
     }
 
     public function execute(string $action): string
@@ -32,23 +33,26 @@ class Index implements ControllerInterface {
         }
     }
 
-    private function index(){
+    private function index()
+    {
         // 1. Get Request Data
         $password = $this->request->getPassword();
         $userName = $this->request->getUserName();
         if ($userName === '' || $password === '') {
             return $this->failedMessage;
-        } 
+        }
 
-               
-        // 2. Get User Repository
-        // 3. Check
-
+        $result = $this->passwordCheck->checkCredentials($userName, $password);
+        if ($result) {
+            return $this->successMessage;
+        } else {
+            return $this->failedMessage;
+        }
         // Passed
-            // 1. set Session userId
-            // 2. redirect to /login/index
+        // 1. set Session userId
+        // 2. redirect to /login/index
 
         // Not passed
-            // 1. redirect to /login/index with error message
+        // 1. redirect to /login/index with error message
     }
 }
