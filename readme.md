@@ -47,6 +47,7 @@ Uses MVC
 /login/index    main page
                 shows login/password form for guests
 /login/register shows register form
+/login/logout   log out
 
 **POST**
 /auth/index     login/password check
