@@ -36,16 +36,19 @@ Uses MVC
   - make site do not crush
   - also logs error if there was a logger in a container
 
-### Router
+### Routing list
 
-- method `execute` returns `RouterResult`
-  - Result->getResponse() returns `string` ( default `empty string` )
-  - Result->getHeaders()  returns `[[string, true/false, int], ...]`
-  - Result->getStatus()   returns `int` ( default `0` )
+**GET**
+/               page controller
+/some_page
+/index          equal /
 
-### Controller
+/login          login controller
+/login/index    main page
+                shows login/password form for guests
+/login/register shows register form
 
-- method `execute` returns `ControllerResult`
-  - Result->getResponse() returns `string` ( default `empty string` )
-  - Result->getHeaders()  returns `[[string, true/false, int], ...]`
-  - Result->getStatus()   returns `int` ( default `0` )
+**POST**
+/auth/index     login/password check
+                redirect to /login/index
+/auth/register  register from check
