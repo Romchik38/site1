@@ -8,6 +8,13 @@ use Romchik38\Server\Api\Services\RequestInterface;
 
 class Request implements RequestInterface {
 
+    public function getMessage(): string
+    {
+        return $_GET[RequestInterface::MESSAGE_FIELD] 
+            ?? $_POST[RequestInterface::MESSAGE_FIELD]
+            ?? '';
+    }
+
     public function getPassword(): string
     {
         return $_POST[RequestInterface::PASSWORD_FIELD] ?? '';

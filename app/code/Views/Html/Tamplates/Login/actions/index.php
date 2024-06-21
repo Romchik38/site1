@@ -9,11 +9,13 @@ return function(LoginDTOInterface $data){
 
     $userName = RequestInterface::USERNAME_FIELD;
     $password = RequestInterface::PASSWORD_FIELD;
+    $message = $data->getMessage() ?? '';
 
     $html = '';
     if ($data->getUserId() === 0) {
         $html = <<<HTML
         <h2>Provide Login Credentials</h2>
+        <p class="error_message">{$message}<p>
         <form action="/auth/index" method="post">
             <label for="{$userName}">Enter your user name: </label>
             <input type="text" name="{$userName}" id="{$userName}" required /><br>

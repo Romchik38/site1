@@ -8,8 +8,10 @@ use Romchik38\Site1\Api\Models\DTO\ActionDTOInterface;
 interface LoginDTOInterface extends DTOInterface, ActionDTOInterface {
 
     public function getActionName(): string;
+    public function getMessage(): string;
     public function getUserId(): int;
     
     public function setActionName(string $action): LoginDTOInterface;
+    public function setMessage(string $message): LoginDTOInterface;
     public function setUserId(int $userId): LoginDTOInterface;
 }

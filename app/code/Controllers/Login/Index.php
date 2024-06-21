@@ -10,6 +10,7 @@ use Romchik38\Server\Api\Services\SessionInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
+use Romchik38\Server\Api\Services\RequestInterface;
 
 class Index implements ControllerInterface
 {
@@ -19,7 +20,8 @@ class Index implements ControllerInterface
     public function __construct(
         protected ViewInterface $view,
         protected SessionInterface $session,
-        protected LoginDTOFactoryInterface $loginDtoFactory
+        protected LoginDTOFactoryInterface $loginDtoFactory,
+        protected RequestInterface $request
     ) {
     }
     public function execute($action): string
@@ -27,6 +29,7 @@ class Index implements ControllerInterface
         /** @var LoginDTOInterface $loginDTO */
         $loginDTO = $this->loginDtoFactory->create();
         $loginDTO->setActionName($action);
+        $loginDTO->setMessage($this->request->getMessage());
 
         if (array_search($action, $this->methods) !== false) {
             $this->$action($loginDTO);

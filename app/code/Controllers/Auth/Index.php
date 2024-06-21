@@ -13,7 +13,7 @@ class Index implements ControllerInterface {
         'index'
     ];
 
-    private $successMessage = 'Authentication  success';
+    private $successMessage = 'Authentication success';
     private $failedMessage = 'Authentication failed';
 
     public function __construct(

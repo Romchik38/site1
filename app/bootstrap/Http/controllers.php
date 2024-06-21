@@ -21,7 +21,8 @@ return function ($container) {
             return new \Romchik38\Site1\Controllers\Login\Index(
                 $container->get(\Romchik38\Site1\Views\Html\Classes\Login\Index::class),
                 $container->get(\Romchik38\Server\Services\Session::class),
-                $container->get(\Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class)
+                $container->get(\Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class),
+                $container->get(\Romchik38\Server\Services\Request::class)
             );
         }
     );

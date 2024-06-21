@@ -32,3 +32,9 @@ section.main {
 .copyrights {
     text-align: center;
 }
+
+/* Errors*/
+.error_message {
+    color: red;
+    font-weight: 400;
+}
