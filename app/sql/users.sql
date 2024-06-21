@@ -1,16 +1,16 @@
 CREATE table users 
 (
     user_id serial PRIMARY KEY, 
-    login text UNIQUE NOT NULL,
+    user_name text UNIQUE NOT NULL,
     first_name text NOT NULL,
     last_name text NOT NULL,
-    pass text NOT NULL,
+    password text NOT NULL,
     active boolean DEFAULT FALSE
 );
 
-INSERT INTO users (login, first_name, last_name, pass, active)
+INSERT INTO users (user_name, first_name, last_name, password, active)
     VALUES
-    ('ser', 'Serhii', 'Romanenko', 'qwerty', TRUE)
+    ('ser', 'Serhii', 'Romanenko', '123', TRUE)
 ;
 
 SELECT * FROM users;
