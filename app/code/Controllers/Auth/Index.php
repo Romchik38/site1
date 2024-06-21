@@ -36,11 +36,11 @@ class Index implements ControllerInterface {
         // 1. Get Request Data
         $password = $this->request->getPassword();
         $userName = $this->request->getUserName();
-        if ($userName === 'ser' && $password === '123') {
-            return $this->successMessage;
-        } else {
+        if ($userName === '' || $password === '') {
             return $this->failedMessage;
-        }
+        } 
+
+               
         // 2. Get User Repository
         // 3. Check
 

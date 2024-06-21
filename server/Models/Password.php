@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Login;
+namespace Romchik38\Server\Models;
 
-use Romchik38\Server\Api\LoginInterface;
-
-class Login implements LoginInterface
+class Password
 {
 
     const MIN_LENGTH = 8;
