@@ -14,7 +14,8 @@ interface RouterInterface
     public function addController(
         string $method,
         string $url,
-        string $controller
+        string $controller,
+        callable|null $callback
     ): RouterInterface;
 
     public function execute(): ResultInterface;

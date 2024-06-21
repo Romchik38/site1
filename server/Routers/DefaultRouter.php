@@ -27,18 +27,19 @@ class DefaultRouter implements RouterInterface
         $this->controllers[$this::REQUEST_METHOD_GET] = [];
         $this->controllers[$this::REQUEST_METHOD_POST] = [];
 
-        foreach ($controllers as [$method, $url, $controller]) {
-            $this->addController($method, $url, $controller);
+        foreach ($controllers as [$method, $url, $controller, $callback]) {
+            $this->addController($method, $url, $controller, $callback);
         }
     }
 
     public function addController(
         string $method,
         string $url,
-        string $controller
+        string $controller,
+        callable|null $callback
     ): DefaultRouter {
         $controllersByMethod = $this->controllers[$method];
-        $controllersByMethod[$url] = $controller;
+        $controllersByMethod[$url] = [$controller, $callback];
         $this->controllers[$method] = $controllersByMethod;
         return $this;
     }
@@ -93,13 +94,14 @@ class DefaultRouter implements RouterInterface
         // 4. Routes
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
         $controllerClassName = '';
+        $callback = null;
         // 4.1 looking for exact routes
         if (array_key_exists($dirName, $controllersByMethod) === true) {
-            $controllerClassName = $controllersByMethod[$dirName];
+            [$controllerClassName, $callback] = $controllersByMethod[$dirName];
         } else if ($this->notFoundController !== null) {
             // 5. Any maches 
             // 5.1 check for 404 page
-            $controllerClassName = $this->notFoundController;
+            [$controllerClassName, $callback] = $this->notFoundController;
         }
         // Execute Controller       
         if ($controllerClassName !== '') {
@@ -116,6 +118,10 @@ class DefaultRouter implements RouterInterface
             } // we do not catch \Exception because it catched on the server level
             $this->routerResult->setStatusCode($statusCode)
                     ->setResponse($response);
+            // pass result to callback to set custom headers        
+            if (is_callable($callback)) {
+                $callback($this->routerResult);
+            }
             return $this->routerResult;
         }
         // 5.2 404 not found, so send default result
