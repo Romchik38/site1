@@ -22,7 +22,8 @@ return function ($container) {
                 $container->get(\Romchik38\Site1\Views\Html\Classes\Login\Index::class),
                 $container->get(\Romchik38\Server\Services\Session::class),
                 $container->get(\Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class),
-                $container->get(\Romchik38\Server\Services\Request::class)
+                $container->get(\Romchik38\Server\Services\Request::class),
+                $container->get(\Romchik38\Site1\Models\User\UserRepository::class)
             );
         }
     );
@@ -33,7 +34,8 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Controllers\Auth\Index(
                 $container->get(\Romchik38\Server\Services\Request::class),
-                $container->get(\Romchik38\Server\Services\PasswordCheck::class)
+                $container->get(\Romchik38\Server\Services\PasswordCheck::class),
+                $container->get(\Romchik38\Server\Services\Session::class)
             );
         }
     );

@@ -12,7 +12,9 @@ return function(LoginDTOInterface $data){
     $message = $data->getMessage() ?? '';
 
     $html = '';
-    if ($data->getUserId() === 0) {
+    $user = $data->getUser();
+    // Visitor is a guest
+    if ($user === null) {
         $html = <<<HTML
         <h2>Provide Login Credentials</h2>
         <p class="error_message">{$message}<p>
@@ -26,7 +28,28 @@ return function(LoginDTOInterface $data){
         <p>Or visit <a href="/login/register">Registration Page</a></p>
         HTML;
     } else {
-        $html = 'Welcome User';
+    // Visitor is registered user
+        $html = <<<HTML
+        <h2> {$user->getFirstName()} {$user->getLastName()} </h2>
+        <table class="table">
+            <thead>
+                <td>Field</td>
+                <td>Information</td>
+            </thead>
+            <tr>
+                <td>User name</td>
+                <td>{$user->getUserName()}</td>
+            </tr>
+            <tr>
+                <td>First name</td>
+                <td>{$user->getFirstName()}</td>
+            </tr>
+            <tr>
+                <td>Last Name</td>
+                <td>{$user->getLastName()}</td>
+            </tr>
+        </table>
+        HTML;
     }
     return $html;
 };

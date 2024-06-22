@@ -6,5 +6,5 @@ namespace Romchik38\Server\Api\Services;
 
 interface PasswordCheckInterface
 {
-    public function checkCredentials(string $userName, string $password): bool;
+    public function checkCredentials(string $userName, string $password): int;
 }

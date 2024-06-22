@@ -11,6 +11,9 @@ use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Api\Services\RequestInterface;
+use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
+
 
 class Index implements ControllerInterface
 {
@@ -21,7 +24,8 @@ class Index implements ControllerInterface
         protected ViewInterface $view,
         protected SessionInterface $session,
         protected LoginDTOFactoryInterface $loginDtoFactory,
-        protected RequestInterface $request
+        protected RequestInterface $request,
+        protected UserRepositoryInterface $userRepository
     ) {
     }
     public function execute($action): string
@@ -44,6 +48,12 @@ class Index implements ControllerInterface
 
     private function index(LoginDTOInterface $dto): void
     {
-        $dto->setUserId($this->session->getUserId());
+        try {
+            $user = $this->userRepository->getById($this->session->getUserId());
+            $dto->setUser($user);
+        } catch(NoSuchEntityException) {
+            // $dto->getUser will be null
+        }
+        
     }
 }

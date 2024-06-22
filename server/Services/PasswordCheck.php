@@ -16,16 +16,16 @@ class PasswordCheck implements PasswordCheckInterface {
     {
         
     }
-    public function checkCredentials(string $userName, string $password): bool {
+    public function checkCredentials(string $userName, string $password): int {
         try {
             $user = $this->userRepository->getByUserName($userName);
             if ($password === $user->getPassword()) {
-                return true;
+                return $user->getId();
             } else {
-                return false; 
+                return 0; 
             }
         } catch (NoSuchEntityException $e) {
-            return false;
+            return 0;
         }
     }
 }

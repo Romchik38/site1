@@ -8,7 +8,6 @@ use \Romchik38\Server\Api\Services\SessionInterface;
 
 class Session implements SessionInterface
 {
-    protected int $userId = 0;
 
     // htmlentities($_SESSION['name'])
     // session_regenerate_id() 
@@ -21,7 +20,7 @@ class Session implements SessionInterface
 
     public function getUserId(): int
     {
-        return $this->userId;
+        return $_SESSION[SessionInterface::SESSION_USER_ID_FIELD] ?? 0;
     }
 
     public function logout()
@@ -32,5 +31,10 @@ class Session implements SessionInterface
             setcookie(session_name(), '', time() - SessionInterface::SESSION_MAX_TIME_TO_LOGOUT, '/');
         }
         session_destroy();
+    }
+
+    public function setUserId(int $id): void
+    {
+        $_SESSION[SessionInterface::SESSION_USER_ID_FIELD] = $id;
     }
 }

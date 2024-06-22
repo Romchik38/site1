@@ -15,4 +15,9 @@ interface SessionInterface {
      * @return int [0 if there isn't user id]
      */
     public function getUserId(): int;
+
+    /**
+     * Set User Id
+     */
+    public function setUserId(int $id): void;
 }

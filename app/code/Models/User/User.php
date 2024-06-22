@@ -11,7 +11,7 @@ class User extends Model implements UserModelInterface
 {
     public function getId(): int
     {
-        return $this->getData(UserModelInterface::USER_ID_FIELD);
+        return (int)$this->getData(UserModelInterface::USER_ID_FIELD);
     }
 
     public function getUserName(): string

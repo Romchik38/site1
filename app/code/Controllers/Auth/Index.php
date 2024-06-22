@@ -8,6 +8,7 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Api\Services\PasswordCheckInterface;
+use Romchik38\Server\Api\Services\SessionInterface;
 
 class Index implements ControllerInterface
 {
@@ -20,7 +21,8 @@ class Index implements ControllerInterface
 
     public function __construct(
         private RequestInterface $request,
-        private PasswordCheckInterface $passwordCheck
+        private PasswordCheckInterface $passwordCheck,
+        private SessionInterface $session
     ) {
     }
 
@@ -42,17 +44,12 @@ class Index implements ControllerInterface
             return $this->failedMessage;
         }
 
-        $result = $this->passwordCheck->checkCredentials($userName, $password);
-        if ($result) {
+        $userId = $this->passwordCheck->checkCredentials($userName, $password);
+        if ($userId > 0) {
+            $this->session->setUserId($userId);
             return $this->successMessage;
         } else {
             return $this->failedMessage;
         }
-        // Passed
-        // 1. set Session userId
-        // 2. redirect to /login/index
-
-        // Not passed
-        // 1. redirect to /login/index with error message
     }
 }

@@ -6,6 +6,7 @@ use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Server\Models\Model;
 use Romchik38\Server\Api\Services\SessionInterface;
 use Romchik38\Server\Api\Services\RequestInterface;
+use Romchik38\Site1\Api\Models\User\UserModelInterface;
 
 class LoginDTO extends Model implements LoginDTOInterface {
     public function getActionName(): string {
@@ -16,8 +17,8 @@ class LoginDTO extends Model implements LoginDTOInterface {
         return $this->getData(RequestInterface::MESSAGE_FIELD);
     }
 
-    public function getUserId(): int {
-        return $this->getData(SessionInterface::SESSION_USER_ID_FIELD);
+    public function getUser(): UserModelInterface|null {
+        return $this->getData(LoginDTOInterface::USER_FIELD);
     }
 
     public function setActionName(string $action): LoginDTOInterface
@@ -32,8 +33,8 @@ class LoginDTO extends Model implements LoginDTOInterface {
         return $this;
     }
 
-    public function setUserId(int $userId): LoginDTOInterface {
-        $this->setData(SessionInterface::SESSION_USER_ID_FIELD, $userId);
+    public function setUser(UserModelInterface $user): LoginDTOInterface {
+        $this->setData(LoginDTOInterface::USER_FIELD, $user);
         return $this;
     }
 }
