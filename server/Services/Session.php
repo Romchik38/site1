@@ -23,7 +23,7 @@ class Session implements SessionInterface
         return $_SESSION[SessionInterface::SESSION_USER_ID_FIELD] ?? 0;
     }
 
-    public function logout()
+    public function logout(): void
     {
         unset($_SESSION[SessionInterface::SESSION_USER_ID_FIELD]);
         $_SESSION = [];

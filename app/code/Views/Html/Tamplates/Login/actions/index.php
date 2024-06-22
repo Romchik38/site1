@@ -52,7 +52,9 @@ return function(LoginDTOInterface $data){
                 <td>{$userLastName}</td>
             </tr>
         </table>
-        <p><a href="/login/logout">Log out</a></p>
+        <form action="/auth/logout" method="post">
+            <input type="submit" value="Log out"/>
+        </form>
         HTML;
     }
     return $html;

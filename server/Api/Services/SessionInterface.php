@@ -17,6 +17,11 @@ interface SessionInterface {
     public function getUserId(): int;
 
     /**
+     * Destroy a session
+     */
+    public function logout(): void;
+
+    /**
      * Set User Id
      */
     public function setUserId(int $id): void;

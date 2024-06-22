@@ -13,11 +13,14 @@ use Romchik38\Server\Api\Services\SessionInterface;
 class Index implements ControllerInterface
 {
     private array $methods = [
-        'index'
+        'index',
+        'logout'
     ];
 
     private $successMessage = 'Authentication success';
     private $failedMessage = 'Authentication failed';
+    private $logoutMessageSuccess = 'You have loged out';
+    private $logoutMessageFailed = 'You must be loged in before log out';
 
     public function __construct(
         private RequestInterface $request,
@@ -51,5 +54,16 @@ class Index implements ControllerInterface
         } else {
             return $this->failedMessage;
         }
+    }
+
+    private function logout(){
+        $userId = $this->session->getUserId();
+            
+        if ($userId > 0) {
+            $this->session->logout();
+            return $this->logoutMessageSuccess;
+        }
+
+        return $this->logoutMessageFailed;
     }
 }
