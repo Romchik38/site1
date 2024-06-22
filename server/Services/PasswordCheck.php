@@ -12,14 +12,16 @@ class PasswordCheck implements PasswordCheckInterface {
 
     public function __construct(
         private UserRepositoryInterface $userRepository
-    )
-    {
-        
+    ) {  
     }
+
+    /**
+     * Return User Id or 0 on fail
+     */
     public function checkCredentials(string $userName, string $password): int {
         try {
             $user = $this->userRepository->getByUserName($userName);
-            if ($password === $user->getPassword()) {
+            if (password_verify($password, $user->getPassword()) === true) {
                 return $user->getId();
             } else {
                 return 0; 

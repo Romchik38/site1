@@ -13,9 +13,6 @@ return function(LoginDTOInterface $data){
 
     $html = '';
     $user = $data->getUser();
-    $userFirstName = htmlentities($user->getFirstName());
-    $userLastName = htmlentities($user->getLastName());
-    $userName = htmlentities($user->getUserName());
     // Visitor is a guest
     if ($user === null) {
         $html = <<<HTML
@@ -31,6 +28,9 @@ return function(LoginDTOInterface $data){
         <p>Or visit <a href="/login/register">Registration Page</a></p>
         HTML;
     } else {
+        $userFirstName = htmlentities($user->getFirstName());
+        $userLastName = htmlentities($user->getLastName());
+        $userName = htmlentities($user->getUserName());        
     // Visitor is registered user
         $html = <<<HTML
         <h2> {$userFirstName} {$userLastName} </h2>

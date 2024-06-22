@@ -10,7 +10,7 @@ CREATE table users
 
 INSERT INTO users (user_name, first_name, last_name, password, active)
     VALUES
-    ('ser', 'Serhii', 'Romanenko', '123', TRUE)
+    ('ser', 'Serhii', 'Romanenko', '$2y$10$FpQOZIj2P7uyxejlqbc5jeC4YBSJo3U5Ue70amobO4gLOECs0TxQa', TRUE)
 ;
 
 SELECT * FROM users;
