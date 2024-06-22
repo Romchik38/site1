@@ -22,7 +22,7 @@ return function(LoginDTOInterface $data){
             <label for="{$userName}">Enter your user name: </label>
             <input type="text" name="{$userName}" id="{$userName}" required /><br>
             <label for="{$password}">Enter {$password}: </label>
-            <input type="{$password}" name="{$password}" id="{$password}" required /><br>
+            <input type="password" name="{$password}" id="{$password}" required /><br>
             <input type="submit" value="Log In" />
         </form>
         <p>Or visit <a href="/login/register">Registration Page</a></p>

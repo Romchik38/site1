@@ -18,8 +18,10 @@ use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 class Index implements ControllerInterface
 {
     private array $methods = [
-        'index'
+        'index',
+        'register'
     ];
+    
     public function __construct(
         protected ViewInterface $view,
         protected SessionInterface $session,
@@ -55,5 +57,10 @@ class Index implements ControllerInterface
             // $dto->getUser will be null
         }
         
+    }
+
+    private function register(LoginDTOInterface $dto){
+        $this->index($dto);
+        return $dto;
     }
 }
