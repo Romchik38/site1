@@ -13,6 +13,9 @@ return function(LoginDTOInterface $data){
 
     $html = '';
     $user = $data->getUser();
+    $userFirstName = htmlentities($user->getFirstName());
+    $userLastName = htmlentities($user->getLastName());
+    $userName = htmlentities($user->getUserName());
     // Visitor is a guest
     if ($user === null) {
         $html = <<<HTML
@@ -30,7 +33,7 @@ return function(LoginDTOInterface $data){
     } else {
     // Visitor is registered user
         $html = <<<HTML
-        <h2> {$user->getFirstName()} {$user->getLastName()} </h2>
+        <h2> {$userFirstName} {$userLastName} </h2>
         <table class="table">
             <thead>
                 <td>Field</td>
@@ -38,17 +41,18 @@ return function(LoginDTOInterface $data){
             </thead>
             <tr>
                 <td>User name</td>
-                <td>{$user->getUserName()}</td>
+                <td>{$userName}</td>
             </tr>
             <tr>
                 <td>First name</td>
-                <td>{$user->getFirstName()}</td>
+                <td>{$userFirstName}</td>
             </tr>
             <tr>
                 <td>Last Name</td>
-                <td>{$user->getLastName()}</td>
+                <td>{$userLastName}</td>
             </tr>
         </table>
+        <p><a href="/login/logout">Log out</a></p>
         HTML;
     }
     return $html;
