@@ -11,6 +11,7 @@ return function(LoginDTOInterface $data){
     $password = RequestInterface::PASSWORD_FIELD;
     $firstName = RequestInterface::FIRST_NAME_FIELD;
     $lastName = RequestInterface::LAST_NAME_FIELD;
+    $email = RequestInterface::EMAIL_FIELD;
 
     $user = $data->getUser();
 
@@ -21,12 +22,12 @@ return function(LoginDTOInterface $data){
     if ($user === null) {
         $html = 
         <<<HTML
-            <h2>Provide Login Credentials</h2>
+            <h2>User Information</h2>
             <p class="error_message">{$message}<p>
             <form action="/auth/register" method="post">
-                <label for="{$userName}">Enter your user name: </label>
+                <label for="{$userName}">User name: </label>
                 <input type="text" name="{$userName}" id="{$userName}" required /><br>
-                <label for="{$password}">Enter {$password}: </label>
+                <label for="{$password}">Password: </label>
                 <input type="password" name="{$password}" id="{$password}" required /><br>
                 <label for="repeat_password">Repeat password: </label>
                 <input type="password" name="repeat_password" id="repeat_password" required /><br>
@@ -34,6 +35,8 @@ return function(LoginDTOInterface $data){
                 <input type="text" name="{$firstName}" id="{$firstName}" required /><br>
                 <label for="{$lastName}">Last name: </label>
                 <input type="text" name="{$lastName}" id="{$lastName}" required /><br>
+                <label for="{$email}">Email: </label>
+                <input type="email" name="{$email}" id="{$email}" pattern="\w+@[a-zA-Z0-9]+\.[a-zA-Z]+$" required /><br>
                 <input type="submit" value="Register" />
             </form>
             <p>Already have an account? <a href="/login/index">Log In</a></p>
