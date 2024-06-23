@@ -30,10 +30,12 @@ return function(LoginDTOInterface $data){
     } else {
         $userFirstName = htmlentities($user->getFirstName());
         $userLastName = htmlentities($user->getLastName());
-        $userName = htmlentities($user->getUserName());        
+        $userName = htmlentities($user->getUserName());
+        $userEmail = htmlentities($user->getEmail());
     // Visitor is registered user
         $html = <<<HTML
         <h2> {$userFirstName} {$userLastName} </h2>
+        <p class="error_message">{$message}<p>
         <table class="table">
             <thead>
                 <td>Field</td>
@@ -50,6 +52,10 @@ return function(LoginDTOInterface $data){
             <tr>
                 <td>Last Name</td>
                 <td>{$userLastName}</td>
+            </tr>
+            <tr>
+                <td>Email</td>
+                <td>{$userEmail}</td>
             </tr>
         </table>
         <form action="/auth/logout" method="post">

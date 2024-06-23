@@ -9,19 +9,25 @@ use Romchik38\Server\Models\Model;
 
 class User extends Model implements UserModelInterface
 {
-    public function getId(): int
+
+    public function getActive(): bool
     {
-        return (int)$this->getData(UserModelInterface::USER_ID_FIELD);
+        return $this->getData(UserModelInterface::ACTIVE_FIELD);
     }
 
-    public function getUserName(): string
+    public function getEmail(): string
     {
-        return $this->getData(UserModelInterface::USER_NAME_FIELD);
+        return $this->getData(UserModelInterface::EMAIL_FIELD);
     }
 
     public function getFirstName(): string
     {
         return $this->getData(UserModelInterface::FIRST_NAME_FIELD);
+    }
+
+    public function getId(): int
+    {
+        return (int)$this->getData(UserModelInterface::USER_ID_FIELD);
     }
 
     public function getLastName(): string
@@ -34,26 +40,32 @@ class User extends Model implements UserModelInterface
         return $this->getData(UserModelInterface::PASSWORD_FIELD);
     }
 
-    public function getactive(): bool
+    public function getUserName(): string
     {
-        return $this->getData(UserModelInterface::ACTIVE_FIELD);
+        return $this->getData(UserModelInterface::USER_NAME_FIELD);
     }
 
-    public function setId(int $id): UserModelInterface
+    public function setActive(bool $active): UserModelInterface
     {
-        $this->setData(UserModelInterface::USER_ID_FIELD, $id);
+        $this->setData(UserModelInterface::ACTIVE_FIELD, $active);
         return $this;
     }
 
-    public function setUserName(string $userName): UserModelInterface
+    public function SetEmail(string $email): UserModelInterface
     {
-        $this->setData(UserModelInterface::USER_NAME_FIELD, $userName);
+        $this->setData(UserModelInterface::EMAIL_FIELD, $email);
         return $this;
     }
 
     public function setFirstName(string $firstName): UserModelInterface
     {
         $this->setData(UserModelInterface::FIRST_NAME_FIELD, $firstName);
+        return $this;
+    }
+
+    public function setId(int $id): UserModelInterface
+    {
+        $this->setData(UserModelInterface::USER_ID_FIELD, $id);
         return $this;
     }
 
@@ -69,9 +81,10 @@ class User extends Model implements UserModelInterface
         return $this;
     }
 
-    public function setactive(bool $active): UserModelInterface
+    public function setUserName(string $userName): UserModelInterface
     {
-        $this->setData(UserModelInterface::ACTIVE_FIELD, $active);
+        $this->setData(UserModelInterface::USER_NAME_FIELD, $userName);
         return $this;
     }
+
 }
