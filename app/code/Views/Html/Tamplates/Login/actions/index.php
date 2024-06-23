@@ -20,10 +20,10 @@ return function(LoginDTOInterface $data){
         <p class="error_message">{$message}<p>
         <form action="/auth/index" method="post">
             <label for="{$userName}">Enter your user name: </label>
-            <input type="text" name="{$userName}" id="{$userName}" required /><br>
+            <input class="form-control" type="text" name="{$userName}" id="{$userName}" required /><br>
             <label for="{$password}">Enter {$password}: </label>
-            <input type="password" name="{$password}" id="{$password}" required /><br>
-            <input type="submit" value="Log In" />
+            <input class="form-control" type="password" name="{$password}" id="{$password}" required /><br>
+            <input class="btn btn-primary" type="submit" value="Log In" />
         </form>
         <p>Or visit <a href="/login/register">Registration Page</a></p>
         HTML;
