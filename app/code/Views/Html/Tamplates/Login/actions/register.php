@@ -26,21 +26,21 @@ return function(LoginDTOInterface $data){
             <p class="error_message">{$message}<p>
             <form action="/auth/register" method="post">
                 <label for="{$userName}">User name: </label>
-                <input type="text" name="{$userName}" id="{$userName}" required /><br>
+                <input class="form-control" type="text" name="{$userName}" id="{$userName}" required /><br>
                 <label for="{$password}">Password: </label>
-                <input type="password" name="{$password}" id="{$password}" required /><br>
+                <input class="form-control" type="password" name="{$password}" id="{$password}" required /><br>
                 <label for="repeat_password">Repeat password: </label>
-                <input type="password" name="repeat_password" id="repeat_password" required /><br>
+                <input class="form-control" type="password" name="repeat_password" id="repeat_password" required /><br>
                 <label for="{$firstName}">First name: </label>
-                <input type="text" name="{$firstName}" id="{$firstName}" required /><br>
+                <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required /><br>
                 <label for="{$lastName}">Last name: </label>
-                <input type="text" name="{$lastName}" id="{$lastName}" required /><br>
+                <input class="form-control" type="text" name="{$lastName}" id="{$lastName}" required /><br>
                 <label for="{$email}">Email: </label>
-                <input type="email" name="{$email}" id="{$email}" pattern="\w+@[a-zA-Z0-9]+\.[a-zA-Z]+$" required /><br>
-                <input type="submit" value="Register" />
+                <input class="form-control" type="email" name="{$email}" id="{$email}" pattern="\w+@[a-zA-Z0-9]+\.[a-zA-Z]+$" required /><br>
+                <button class="btn btn-outline-secondary" type="submit">Register</button>
             </form>
             <p>Already have an account? <a href="/login/index">Log In</a></p>
-            <script src="/media/js/login/register/checkForm.js" async></script>
+            <script src="/media/js/login/register/checkForm.js" defer></script>
         HTML;
     } else {
         $html = 

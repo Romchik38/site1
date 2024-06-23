@@ -1,3 +1,12 @@
 'use strict';
 
-console.log('hello regixter form');
+(()=>{
+
+    var errorField = document.getElementsByClassName('error_message');
+
+    console.log(errorField);
+
+
+})();
+
+
