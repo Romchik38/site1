@@ -29,24 +29,25 @@ return function(LoginDTOInterface $data){
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$userName}">User name: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$userName}" id="{$userName}" required placeholder="Enter user name"/><br>
+                        <input id="input-username" class="form-control" type="text" name="{$userName}" id="{$userName}" required placeholder="Enter username" pattern="[A-Za-z0-9_]{3,20}$"/>
+                        <div id="usernameHelpBlock" class="form-text">Username must be 3-20 characters long, cat contain lowercase, uppercase letter, number and underscore</div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$password}">Password: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="{$password}" id="{$password}" required placeholder="Enter a password" aria-describedby="passwordHelpBlock"/><br>
-                        <div id="passwordHelpBlock" class="form-text">Your password must be at least 8 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.</div>
+                        <input id="input-password" class="form-control" type="password" name="{$password}" id="{$password}" required placeholder="Enter a password" pattern="^(?=.*[_`$%^*'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*']{8,}$"/>
+                        <div id="passwordHelpBlock" class="form-text">Password must be at least 8 characters long, contain at least one lowercase, uppercase letter, number and a specal character from _`$%^*'</div>
                     </div>  
                     <label class="col-sm-2 form-label" for="repeat_password">Repeat password: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="password" name="repeat_password" id="repeat_password" required placeholder="Repeat password"/><br>
+                        <input id="input-repeat-password" class="form-control" type="password" name="repeat_password" id="repeat_password" required placeholder="Repeat password"/><br>
                     </div>                  
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$firstName}">First name: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name"/><br>
+                        <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name" pattern="\w+/u"/><br>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -61,7 +62,7 @@ return function(LoginDTOInterface $data){
                         <input class="form-control" type="email" name="{$email}" id="{$email}" pattern="\w+@[a-zA-Z0-9]+\.[a-zA-Z]+$" required placeholder="Enter email"/><br>
                     </div>
                 </div>
-                <button class="btn btn-primary" type="submit">Register</button>
+                <button id="register-button" class="btn btn-primary" type="submit">Register</button>
                 </fieldset>
             </form>
             <div class="container">
