@@ -40,6 +40,7 @@ return function(LoginDTOInterface $data){
                 <input type="submit" value="Register" />
             </form>
             <p>Already have an account? <a href="/login/index">Log In</a></p>
+            <script src="/media/js/login/register/checkForm.js" async></script>
         HTML;
     } else {
         $html = 
