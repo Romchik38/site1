@@ -30,7 +30,7 @@
         if (inputPassword.value.length > 0 && inputRepeatPassword.value.length > 0) {
             if (inputPassword.value === inputRepeatPassword.value) {
                 // do request
-                console.log('do request');
+                return;
             } else {
                 errorField.innerText = "Passwords doesn't mutch";
                 setTimeout(()=>{
@@ -38,7 +38,7 @@
                 }, 3000);
             }
         }
-
+        console.log('prevent');
         e.preventDefault();
     });
 })();
