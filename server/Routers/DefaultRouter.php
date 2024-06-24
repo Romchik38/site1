@@ -120,7 +120,7 @@ class DefaultRouter implements RouterInterface
                     ->setResponse($response);
             // pass result to callback to set custom headers        
             if (is_callable($callback)) {
-                $callback($this->routerResult);
+                $callback($this->routerResult, $baseName);
             }
             return $this->routerResult;
         }

@@ -76,14 +76,31 @@ return function(LoginDTOInterface $data){
             <script src="/media/js/login/register/checkForm.js" defer></script>
         HTML;
     } else {
-        $html = 
-        <<<HTML
-        <div>
-            <form action="/auth/logout" method="post">You already signed in. Please
-            <input type="submit" value="Log out"/> first
-        </form>
-        </div>
-        HTML;
+        if ($message === '') {
+            $html = 
+            <<<HTML
+            <div>
+                <form action="/auth/logout" method="post">You already signed in. Please
+                    <input type="submit" value="Log out"/> first
+                </form>
+            </div>
+            HTML;
+        } else {
+            $html = 
+            <<<HTML
+            <div>
+                <p>You successfully registered and already signed in.</p>
+                <ul>Please visit:
+                    <li><a href="/">Main page</a> to start using our site.</li>
+                    <li><a href="/login/index">Login page</a> to see your registration info</li>
+                </ul>
+                <form action="/auth/logout" method="post">Or you can log out now
+                    <input type="submit" value="Log out"/>
+                </form>
+            </div>
+            HTML;
+        }
+
     }
 
     return $html;
