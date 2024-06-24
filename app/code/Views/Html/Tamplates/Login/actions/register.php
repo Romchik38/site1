@@ -29,14 +29,14 @@ return function(LoginDTOInterface $data){
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$userName}">User name: </label>
                     <div class="col-sm-10">
-                        <input id="input-username" class="form-control" type="text" name="{$userName}" id="{$userName}" required placeholder="Enter username" pattern="[A-Za-z0-9_]{3,20}$"/>
+                        <input id="input-username" class="form-control" type="text" name="{$userName}" id="{$userName}" required placeholder="Enter username" pattern="[A-Za-z0-9_]{3,20}$" title="Please enter a valid username"/>
                         <div id="usernameHelpBlock" class="form-text">Username must be 3-20 characters long, cat contain lowercase, uppercase letter, number and underscore</div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$password}">Password: </label>
                     <div class="col-sm-10">
-                        <input id="input-password" class="form-control" type="password" name="{$password}" id="{$password}" required placeholder="Enter a password" pattern="^(?=.*[_`$%^*'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*']{8,}$"/>
+                        <input id="input-password" class="form-control" type="password" name="{$password}" id="{$password}" required placeholder="Enter a password" pattern="^(?=.*[_`$%^*'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*']{8,}$" title="Please enter a valid password"/>
                         <div id="passwordHelpBlock" class="form-text">Password must be at least 8 characters long, contain at least one lowercase, uppercase letter, number and a specal character from _`$%^*'</div>
                     </div>  
                     <label class="col-sm-2 form-label" for="repeat_password">Repeat password: </label>
@@ -47,25 +47,28 @@ return function(LoginDTOInterface $data){
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$firstName}">First name: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name" pattern="\w+/u"/><br>
+                        <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name" maxlength="30" pattern="^[\p{L}]{3,30}$" title="Please enter a valid first name. Use only letters"/><br>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$lastName}">Last name: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$lastName}" id="{$lastName}" required placeholder="Enter last name"/><br>
+                        <input class="form-control" type="text" name="{$lastName}" id="{$lastName}" required placeholder="Enter last name" maxlength="30" pattern="^[\p{L}]{3,30}$" title="Please enter a valid first name. Use only letters"/><br>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$email}">Email: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="email" name="{$email}" id="{$email}" pattern="\w+@[a-zA-Z0-9]+\.[a-zA-Z]+$" required placeholder="Enter email"/><br>
+                        <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" required placeholder="Enter email"/><br>
                     </div>
                 </div>
                 <button id="register-button" class="btn btn-primary" type="submit">Register</button>
                 </fieldset>
             </form>
             <div class="container">
+                <div class="row">
+                    <p id="error_button" class="error_message"><p>
+                </div>   
                 <div class="row">
                     <div class="col">Already have an account? <a href="/login/index">Log In</a></div>
                 </div>

@@ -15,7 +15,7 @@
 
 (()=>{
 
-    var errorField = document.getElementsByClassName('error_message');
+    var errorField = document.getElementById('error_button');
     var registerButton = document.getElementById('register-button');
     
     /** 
@@ -26,9 +26,21 @@
     var inputPassword = document.getElementById('input-password');
     var inputRepeatPassword = document.getElementById('input-repeat-password');
 
-    console.log(inputRepeatPassword);
+    registerButton.addEventListener('click', (e)=>{
+        if (inputPassword.value.length > 0 && inputRepeatPassword.value.length > 0) {
+            if (inputPassword.value === inputRepeatPassword.value) {
+                // do request
+                console.log('do request');
+            } else {
+                errorField.innerText = "Passwords doesn't mutch";
+                setTimeout(()=>{
+                    errorField.innerText = '';
+                }, 3000);
+            }
+        }
 
-
+        e.preventDefault();
+    });
 })();
 
 
