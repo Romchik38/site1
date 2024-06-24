@@ -38,7 +38,6 @@
                 }, 3000);
             }
         }
-        console.log('prevent');
         e.preventDefault();
     });
 })();

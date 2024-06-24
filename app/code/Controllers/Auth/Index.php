@@ -14,7 +14,8 @@ class Index implements ControllerInterface
 {
     private array $methods = [
         'index',
-        'logout'
+        'logout',
+        'register'
     ];
 
     private $successMessage = 'Authentication success';
@@ -38,6 +39,9 @@ class Index implements ControllerInterface
         }
     }
 
+    /**
+    * Action /auth/index
+    */
     private function index()
     {
         // 1. Get Request Data
@@ -56,6 +60,9 @@ class Index implements ControllerInterface
         }
     }
 
+    /**
+    * Action /auth/logout
+    */
     private function logout(){
         $userId = $this->session->getUserId();
             
@@ -65,5 +72,12 @@ class Index implements ControllerInterface
         }
 
         return $this->logoutMessageFailed;
+    }
+
+    /**
+    * Action /auth/logout
+    */
+    public function register(){
+        return 'Bad request';
     }
 }
