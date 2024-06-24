@@ -32,13 +32,14 @@
                 // do request
                 return;
             } else {
+                e.preventDefault();
                 errorField.innerText = "Passwords doesn't mutch";
                 setTimeout(()=>{
                     errorField.innerText = '';
                 }, 3000);
             }
         }
-        e.preventDefault();
+        
     });
 })();
 
