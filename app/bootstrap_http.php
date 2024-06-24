@@ -19,8 +19,8 @@ $container->add(\Romchik38\Server\Services\Session::class,
     new \Romchik38\Server\Services\Session()
 );
 
-$container->add(\Romchik38\Server\Services\Request::class,
-    new \Romchik38\Server\Services\Request()
+$container->add(\Romchik38\Site1\Services\Http\Request::class,
+    new \Romchik38\Site1\Services\Http\Request()
 );
 
 $container->add(\Romchik38\Site1\Services\PasswordCheck::class,

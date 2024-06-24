@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
-use \Romchik38\Server\Api\Services\RequestInterface;
+use \Romchik38\Site1\Api\Services\RequestInterface;
 
 return function(LoginDTOInterface $data){
 

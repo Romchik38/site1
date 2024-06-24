@@ -4,8 +4,7 @@ namespace Romchik38\Site1\Models\DTO\Login;
 
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Server\Models\Model;
-use Romchik38\Server\Api\Services\SessionInterface;
-use Romchik38\Server\Api\Services\RequestInterface;
+use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;
 
 class LoginDTO extends Model implements LoginDTOInterface {

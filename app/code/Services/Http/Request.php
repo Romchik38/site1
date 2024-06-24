@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Services;
+namespace Romchik38\Site1\Services\Http;
 
-use Romchik38\Server\Api\Services\RequestInterface;
+use Romchik38\Site1\Api\Services\RequestInterface;
 
 class Request implements RequestInterface {
 
