@@ -78,6 +78,12 @@ class Index implements ControllerInterface
     * Action /auth/logout
     */
     public function register(){
+        // 1 Перевірити можливість реєстрації
+
+        // 2 Якщо помилка
+
+        // 3 Якщо все ок
+        
         return 'Bad request';
     }
 }

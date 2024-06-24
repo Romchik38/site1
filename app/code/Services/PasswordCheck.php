@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Services;
+namespace Romchik38\Site1\Services;
 
 use Romchik38\Server\Api\Services\PasswordCheckInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;

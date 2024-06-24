@@ -23,8 +23,8 @@ $container->add(\Romchik38\Server\Services\Request::class,
     new \Romchik38\Server\Services\Request()
 );
 
-$container->add(\Romchik38\Server\Services\PasswordCheck::class,
-    new \Romchik38\Server\Services\PasswordCheck(
+$container->add(\Romchik38\Site1\Services\PasswordCheck::class,
+    new \Romchik38\Site1\Services\PasswordCheck(
         $container->get(\Romchik38\Site1\Models\User\UserRepository::class)
     )
 );
