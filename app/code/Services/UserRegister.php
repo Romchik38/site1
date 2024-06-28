@@ -14,10 +14,10 @@ class UserRegister implements UserRegisterInterface {
 
     protected array $patterns = [
         RequestInterface::USERNAME_FIELD => '[A-Za-z0-9_]{3,20}$',
-        RequestInterface::PASSWORD_FIELD => ^(?=.*[_`$%^*'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*']{8,}$',
-        RequestInterface::FIRST_NAME_FIELD => '',
-        RequestInterface::LAST_NAME_FIELD => '',
-        RequestInterface::EMAIL_FIELD => ''
+        RequestInterface::PASSWORD_FIELD => '^(?=.*[_`$%^*\'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*\']{8,}$',
+        RequestInterface::FIRST_NAME_FIELD => '^[\p{L}]{3,30}$',
+        RequestInterface::LAST_NAME_FIELD => '^[\p{L}]{3,30}$',
+        RequestInterface::EMAIL_FIELD => '[A-Za-z0-9.]+@[A-Za-z0-9]\.[a-z]{2,}'
     ];
 
     public function __construct(
