@@ -20,6 +20,11 @@ class Request implements RequestInterface {
         return $_POST[RequestInterface::PASSWORD_FIELD] ?? '';
     }
 
+    /**
+     * Returns username or ''
+     *
+     * @return string
+     */
     public function getUserName(): string
     {
         return $_POST[RequestInterface::USERNAME_FIELD] ?? '';

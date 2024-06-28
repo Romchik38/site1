@@ -35,7 +35,8 @@ return function ($container) {
             return new \Romchik38\Site1\Controllers\Auth\Index(
                 $container->get(\Romchik38\Site1\Services\Http\Request::class),
                 $container->get(\Romchik38\Site1\Services\PasswordCheck::class),
-                $container->get(\Romchik38\Server\Services\Session::class)
+                $container->get(\Romchik38\Server\Services\Session::class),
+                $container->get(\Romchik38\Site1\Services\UserRegister::class)
             );
         }
     );

@@ -29,6 +29,12 @@ $container->add(\Romchik38\Site1\Services\PasswordCheck::class,
     )
 );
 
+$container->add(\Romchik38\Site1\Services\UserRegister::class,
+    new \Romchik38\Site1\Services\UserRegister(
+        $container->get(\Romchik38\Site1\Models\User\UserRepository::class)
+    )
+);
+
 // VIEWS
 $views = require_once(__DIR__ . '/code/Views/Html/views.php');
 $views($container);

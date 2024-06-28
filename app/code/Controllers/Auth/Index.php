@@ -9,6 +9,7 @@ use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Services\PasswordCheckInterface;
 use Romchik38\Server\Api\Services\SessionInterface;
+use Romchik38\Site1\Api\Services\UserRegisterInterface;
 
 class Index implements ControllerInterface
 {
@@ -26,7 +27,8 @@ class Index implements ControllerInterface
     public function __construct(
         private RequestInterface $request,
         private PasswordCheckInterface $passwordCheck,
-        private SessionInterface $session
+        private SessionInterface $session,
+        private UserRegisterInterface $userRegister
     ) {
     }
 
@@ -75,11 +77,18 @@ class Index implements ControllerInterface
     }
 
     /**
-    * Action /auth/logout
+    * Action /auth/register
     */
     public function register(){
         // 1 Перевірити можливість реєстрації
-
+        $userName = $this->request->getUserName();
+        if ($userName === '') {
+            return 'Bad request (username not present)';
+        }
+        $isAvailable = $this->userRegister->checkAvailableUsername($userName);
+        if ($isAvailable === false) {
+            return 'Sorry, username ' . $userName . '  already in use';
+        }
         // 2 Якщо помилка
 
         // 3 Якщо все ок

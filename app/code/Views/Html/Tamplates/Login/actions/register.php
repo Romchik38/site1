@@ -15,7 +15,7 @@ return function(LoginDTOInterface $data){
 
     $user = $data->getUser();
 
-    $message = $data->getMessage() ?? '';
+    $message = htmlentities($data->getMessage()) ?? '';
 
     $html = '';
 
