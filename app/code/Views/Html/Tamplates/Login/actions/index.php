@@ -25,6 +25,7 @@ return function(LoginDTOInterface $data){
             <input class="form-control" type="password" name="{$password}" id="{$password}" required /><br>
             <input class="btn btn-primary" type="submit" value="Log In" />
         </form>
+        <br>
         <p>Or visit <a href="/login/register">Registration Page</a></p>
         HTML;
     } else {

@@ -14,12 +14,12 @@ return function(array $data = []){
 
     $menuHtml = '';
     foreach ($menu as $value) {
-        $menuItem = "<li><a href=\"{$value['url']}\" alt=\"{$value['alt']}\">{$value['name']}</a></li>"; 
+        $menuItem = "<li><a class=\"nav-link\" href=\"{$value['url']}\" alt=\"{$value['alt']}\">{$value['name']}</a></li>"; 
         $menuHtml = $menuHtml . $menuItem;
     }
 
     return <<<NAV
-    <nav>
+    <nav class="navbar">
         <ul class="menu">
             {$menuHtml}
         </ul>

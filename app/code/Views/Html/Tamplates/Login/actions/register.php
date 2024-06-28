@@ -65,14 +65,9 @@ return function(LoginDTOInterface $data){
                 <button id="register-button" class="btn btn-primary" type="submit">Register</button>
                 </fieldset>
             </form>
-            <div class="container">
-                <div class="row">
-                    <p id="error_button" class="error_message"><p>
-                </div>   
-                <div class="row">
-                    <div class="col">Already have an account? <a href="/login/index">Log In</a></div>
-                </div>
-            </div>
+            <br>
+            <p id="error_button" class="error_message"><p>
+            <p class="col">Already have an account? <a href="/login/index">Log In</a><p>
             <script src="/media/js/login/register/checkForm.js" defer></script>
         HTML;
     } else {

@@ -10,8 +10,8 @@ return function(MainDTOInterface $data) {
     $name = htmlentities($page->getName());
     $html = <<<HTML
     <article>
-        <h1>{$name}</h1>
-        <div class="content">
+        <h1 class="text-center">{$name}</h1>
+        <div class="container">
             {$content}
         </div>
     </article>

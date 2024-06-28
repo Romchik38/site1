@@ -15,7 +15,7 @@ return function(array $data = []){
     $copyrights = $footerData['copyrights'];
 
     return <<<FOOTER
-    <footer class="main">
+    <footer class="container border">
         <div class="copyrights">{$copyrights}</div>
     </footer>
     FOOTER;
