@@ -20,7 +20,9 @@ $container->add(\Romchik38\Server\Services\Session::class,
 );
 
 $container->add(\Romchik38\Site1\Services\Http\Request::class,
-    new \Romchik38\Site1\Services\Http\Request()
+    new \Romchik38\Site1\Services\Http\Request(
+        $container->get(\Romchik38\Site1\Models\DTO\UserRegisterDTOFactory::class)
+    )
 );
 
 $container->add(\Romchik38\Site1\Services\PasswordCheck::class,

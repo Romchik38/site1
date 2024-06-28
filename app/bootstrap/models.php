@@ -35,6 +35,11 @@ return function ($container) {
         new Romchik38\Site1\Models\DTO\Main\MainDTOFactory()
     );
 
+    $container->add(
+        Romchik38\Site1\Models\DTO\UserRegisterDTOFactory::class,
+        new Romchik38\Site1\Models\DTO\UserRegisterDTOFactory()
+    );
+
     // REPOSITORIES
     $container->add(
         \Romchik38\Site1\Models\Page\PageRepository::class,
