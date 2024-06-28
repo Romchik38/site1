@@ -80,7 +80,7 @@ class Index implements ControllerInterface
     * Action /auth/register
     */
     public function register(){
-        // 1 Check if username is available
+        // 1 Check username availability
         $userName = $this->request->getUserName();
         if ($userName === '') {
             return 'Bad request (username not present)';
@@ -91,6 +91,7 @@ class Index implements ControllerInterface
         }
         // 2 If Error
         $userRegisterDTO = $this->request->getUserRegisterData();
+        $this->userRegister->checkUserInformation($userRegisterDTO);
         // 3 Ok
         
         return 'Bad request';

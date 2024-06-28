@@ -7,8 +7,18 @@ namespace Romchik38\Site1\Services;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Api\Models\DTO\RegisterDTOInterface;
+use Romchik38\Site1\Api\Services\RequestInterface;
 
 class UserRegister implements UserRegisterInterface {
+
+    protected array $patterns = [
+        RequestInterface::USERNAME_FIELD => '[A-Za-z0-9_]{3,20}$',
+        RequestInterface::PASSWORD_FIELD => ^(?=.*[_`$%^*'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*']{8,}$',
+        RequestInterface::FIRST_NAME_FIELD => '',
+        RequestInterface::LAST_NAME_FIELD => '',
+        RequestInterface::EMAIL_FIELD => ''
+    ];
 
     public function __construct(
         protected UserRepositoryInterface $userRepository
@@ -19,7 +29,7 @@ class UserRegister implements UserRegisterInterface {
      * check if username is available
      *
      * @param string $username
-     * @return boolean [false not availible, true - availablr]
+     * @return boolean [false not availible, true - available]
      */
     public function checkAvailableUsername(string $username): bool
     {
@@ -33,9 +43,10 @@ class UserRegister implements UserRegisterInterface {
         }
     }
 
-    public function checkUserInformation(): void
+    public function checkUserInformation(RegisterDTOInterface $userRegisterDTO): void
     {
-        
+        $providedUserData = $userRegisterDTO->getAllData();
+
     }
 
     public function register(): void
