@@ -10,7 +10,7 @@ interface RequestInterface {
 
     const EMAIL_FIELD = 'email';
     const EMAIL_PATTERN = '^[A-Za-z0-9.]{2,}@[A-Za-z0-9.]{2,}\.[a-z]{2,}$';
-    const EMAIL_ERROR_MESSAGE = 'Local Part cat contain latin characters and a dot. Domain can contain latin characters and a dot, must end minimun with 2 characters after a dot';
+    const EMAIL_ERROR_MESSAGE = 'Email Local Part can contain latin characters and a dot. Domain can contain latin characters and a dot, must end minimun with 2 characters after a dot';
 
     const FIRST_NAME_FIELD = 'first_name';
     const FIRST_NAME_PATTERN = '^[\p{L}]{3,30}$';
