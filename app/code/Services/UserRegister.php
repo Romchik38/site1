@@ -9,6 +9,7 @@ use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\RegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 
 class UserRegister implements UserRegisterInterface {
 
@@ -17,7 +18,7 @@ class UserRegister implements UserRegisterInterface {
         RequestInterface::PASSWORD_FIELD => '^(?=.*[_`$%^*\'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*\']{8,}$',
         RequestInterface::FIRST_NAME_FIELD => '^[\p{L}]{3,30}$',
         RequestInterface::LAST_NAME_FIELD => '^[\p{L}]{3,30}$',
-        RequestInterface::EMAIL_FIELD => '[A-Za-z0-9.]+@[A-Za-z0-9]\.[a-z]{2,}'
+        RequestInterface::EMAIL_FIELD => '/[A-Za-z0-9.]{2,}@[A-Za-z0-9]{2,}\.[a-z]{2,}$/'
     ];
 
     public function __construct(
@@ -43,9 +44,16 @@ class UserRegister implements UserRegisterInterface {
         }
     }
 
+    /** 
+     * Check provided user information. 
+     * throws error if a check doesn't pass
+     * 
+     * @throws IncorrectFieldError
+     */
     public function checkUserInformation(RegisterDTOInterface $userRegisterDTO): void
     {
         $providedUserData = $userRegisterDTO->getAllData();
+        // preg_match($pattern, 's1@w1.cam_');
 
     }
 
