@@ -10,6 +10,7 @@ use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Services\PasswordCheckInterface;
 use Romchik38\Server\Api\Services\SessionInterface;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
+use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 
 class Index implements ControllerInterface
 {
@@ -91,9 +92,13 @@ class Index implements ControllerInterface
         }
         // 2 If Error
         $userRegisterDTO = $this->request->getUserRegisterData();
-        $this->userRegister->checkUserInformation($userRegisterDTO);
+        try {
+            $this->userRegister->checkUserInformation($userRegisterDTO);
+        } catch (IncorrectFieldError $e) {
+            return $e->getMessage();
+        }
         // 3 Ok
         
-        return 'Bad request';
+        return 'Test passed';
     }
 }

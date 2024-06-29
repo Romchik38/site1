@@ -8,10 +8,20 @@ use \Romchik38\Site1\Api\Services\RequestInterface;
 return function(LoginDTOInterface $data){
 
     $userName = RequestInterface::USERNAME_FIELD;
+    $userNameErrorMessage = RequestInterface::USERNAME_ERROR_MESSAGE;
+    $userNamePattern = RequestInterface::USERNAME_PATTERN;
     $password = RequestInterface::PASSWORD_FIELD;
+    $passwordErrorMessage = RequestInterface::PASSWORD_ERROR_MESSAGE;
+    $passwordPattern = RequestInterface::PASSWORD_PATTERN;
     $firstName = RequestInterface::FIRST_NAME_FIELD;
+    $firstNameErrorMessage = RequestInterface::FIRST_NAME_ERROR_MESSAGE;
+    $firstNamePattern = RequestInterface::FIRST_NAME_PATTERN;
     $lastName = RequestInterface::LAST_NAME_FIELD;
+    $lastNameErrorMessage = RequestInterface::LAST_NAME_ERROR_MESSAGE;
+    $lastNamePattern = RequestInterface::LAST_NAME_PATTERN;
     $email = RequestInterface::EMAIL_FIELD;
+    $emailPattern = RequestInterface::EMAIL_PATTERN;
+    $emailErrorMessage = RequestInterface::EMAIL_ERROR_MESSAGE;
 
     $user = $data->getUser();
 
@@ -29,37 +39,40 @@ return function(LoginDTOInterface $data){
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$userName}">User name: </label>
                     <div class="col-sm-10">
-                        <input id="input-username" class="form-control" type="text" name="{$userName}" required placeholder="Enter username" pattern="[A-Za-z0-9_]{3,20}$" title="Please enter a valid username"/>
-                        <div id="usernameHelpBlock" class="form-text">Username must be 3-20 characters long, cat contain lowercase, uppercase letter, number and underscore</div>
+                        <input id="input-username" class="form-control" type="text" name="{$userName}" required placeholder="Enter username" pattern="{$userNamePattern}" title="Please enter a valid username"/>
+                        <div id="usernameHelpBlock" class="form-text">{$userNameErrorMessage}</div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$password}">Password: </label>
                     <div class="col-sm-10">
-                        <input id="input-password" class="form-control" type="password" name="{$password}" required placeholder="Enter a password" pattern="^(?=.*[_`$%^*'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*']{8,}$" title="Please enter a valid password"/>
-                        <div id="passwordHelpBlock" class="form-text">Password must be at least 8 characters long, contain at least one lowercase, uppercase letter, number and a specal character from _`$%^*'</div>
+                        <input id="input-password" class="form-control" type="password" name="{$password}" required placeholder="Enter a password" pattern="{$passwordPattern}" title="Please enter a valid password"/>
+                        <div id="passwordHelpBlock" class="form-text">{$passwordErrorMessage}</div>
                     </div>  
                     <label class="col-sm-2 form-label" for="repeat_password">Repeat password: </label>
                     <div class="col-sm-10">
-                        <input id="input-repeat-password" class="form-control" type="password" name="repeat_password" required placeholder="Repeat password"/><br>
+                        <input id="input-repeat-password" class="form-control" type="password" name="repeat_password" required placeholder="Repeat password"/>
                     </div>                  
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$firstName}">First name: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name" maxlength="30" pattern="^[\p{L}]{3,30}$" title="Please enter a valid first name. Use only letters"/><br>
+                        <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name" maxlength="30" pattern="{$firstNamePattern}" title="Please enter a valid first name. Use only letters"/>
+                        <div id="emailHelpBlock" class="form-text">{$firstNameErrorMessage}</div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$lastName}">Last name: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$lastName}" id="{$lastName}" required placeholder="Enter last name" maxlength="30" pattern="^[\p{L}]{3,30}$" title="Please enter a valid first name. Use only letters"/><br>
+                        <input class="form-control" type="text" name="{$lastName}" id="{$lastName}" required placeholder="Enter last name" maxlength="30" pattern="{$lastNamePattern}" title="Please enter a valid first name. Use only letters"/>
+                        <div id="emailHelpBlock" class="form-text">{$lastNameErrorMessage}</div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-2 form-label" for="{$email}">Email: </label>
                     <div class="col-sm-10">
-                        <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" placeholder="Enter email"/><br>
+                        <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPattern}"/>
+                        <div id="emailHelpBlock" class="form-text">{$emailErrorMessage}</div>
                     </div>
                 </div>
                 <button id="register-button" class="btn btn-primary" type="submit">Register</button>
