@@ -10,6 +10,7 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\RegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
+use Romchik38\Site1\Api\Models\User\UserModelInterface;
 
 class UserRegister implements UserRegisterInterface {
 
@@ -83,7 +84,7 @@ class UserRegister implements UserRegisterInterface {
         // 3. any errors user sent correct data
     }
 
-    public function register(RegisterDTOInterface $userRegisterDTO): void
+    public function register(RegisterDTOInterface $userRegisterDTO): UserModelInterface
     {
 
         $newUser = $this->userRepository->create();
@@ -96,7 +97,6 @@ class UserRegister implements UserRegisterInterface {
             ->setLastName($providedUserData[RequestInterface::LAST_NAME_FIELD])
             ->SetEmail($providedUserData[RequestInterface::EMAIL_FIELD]);
         
-
-        $this->userRepository->add($newUser);
+        return $this->userRepository->add($newUser);
     }
 }

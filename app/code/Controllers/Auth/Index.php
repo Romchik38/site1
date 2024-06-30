@@ -100,7 +100,8 @@ class Index implements ControllerInterface
         }
         // 3 Ok
         try {
-            $this->userRegister->register($userRegisterDTO);
+            $user = $this->userRegister->register($userRegisterDTO);
+            $this->session->setUserId($user->getId());
             return 'You are successfully registered. Please login';
         } catch (CouldNotSaveException $e) {
             // do  some log
