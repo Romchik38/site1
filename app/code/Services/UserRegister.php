@@ -83,8 +83,20 @@ class UserRegister implements UserRegisterInterface {
         // 3. any errors user sent correct data
     }
 
-    public function register(): void
+    public function register(RegisterDTOInterface $userRegisterDTO): void
     {
+
+        $newUser = $this->userRepository->create();
+        $providedUserData = $userRegisterDTO->getAllData();
+        $password = $providedUserData[RequestInterface::PASSWORD_FIELD];
+        $newUser
+            ->setUserName($providedUserData[RequestInterface::USERNAME_FIELD])
+            ->setPassword(password_hash($password, PASSWORD_DEFAULT))
+            ->setFirstName($providedUserData[RequestInterface::FIRST_NAME_FIELD])
+            ->setLastName($providedUserData[RequestInterface::LAST_NAME_FIELD])
+            ->SetEmail($providedUserData[RequestInterface::EMAIL_FIELD]);
         
+
+        $this->userRepository->add($newUser);
     }
 }

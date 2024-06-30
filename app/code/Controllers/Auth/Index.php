@@ -9,6 +9,7 @@ use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Services\PasswordCheckInterface;
 use Romchik38\Server\Api\Services\SessionInterface;
+use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 
@@ -98,7 +99,14 @@ class Index implements ControllerInterface
             return $e->getMessage();
         }
         // 3 Ok
-        
-        return 'Test passed';
+        try {
+            $this->userRegister->register($userRegisterDTO);
+            return 'You are successfully registered. Please login';
+        } catch (CouldNotSaveException $e) {
+            // do  some log
+            
+            // send answer
+            return 'Could not register. Please try later';
+        }
     }
 }

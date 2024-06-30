@@ -8,5 +8,5 @@ interface UserRegisterInterface
 {
     public function checkAvailableUsername(string $username): bool;
     public function checkUserInformation(RegisterDTOInterface $userRegisterDTO): void;
-    public function register(): void;
+    public function register(RegisterDTOInterface $userRegisterDTO): void;
 }
