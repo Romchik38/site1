@@ -87,9 +87,9 @@ return function(LoginDTOInterface $data){
         if ($message === '') {
             $html = 
             <<<HTML
-            <div>
+            <div class="col my-3">
                 <form action="/auth/logout" method="post">You already signed in. Please
-                    <input type="submit" value="Log out"/> first
+                    <button class="btn btn-outline-primary" type="submit">Log out</button>
                 </form>
             </div>
             HTML;

@@ -6,7 +6,7 @@ CREATE table users
     last_name text NOT NULL,
     password text NOT NULL,
     active boolean DEFAULT FALSE,
-    email text NOT NULL
+    email text UNIQUE NOT NULL 
 );
 
 INSERT INTO users (user_name, first_name, last_name, password, active, email)

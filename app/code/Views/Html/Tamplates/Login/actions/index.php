@@ -59,9 +59,11 @@ return function(LoginDTOInterface $data){
                 <td>{$userEmail}</td>
             </tr>
         </table>
-        <form action="/auth/logout" method="post">
-            <input type="submit" value="Log out"/>
-        </form>
+        <div class="col my-3">
+            <form action="/auth/logout" method="post">
+                <button class="btn btn-outline-primary" type="submit">Log out</button>
+            </form>
+        </div>
         HTML;
     }
     return $html;
