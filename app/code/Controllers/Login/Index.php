@@ -19,7 +19,8 @@ class Index implements ControllerInterface
 {
     private array $methods = [
         'index',
-        'register'
+        'register',
+        'recovery'
     ];
     
     public function __construct(
@@ -57,6 +58,16 @@ class Index implements ControllerInterface
             // $dto->getUser will be null
         }
         
+    }
+
+    /**
+     * Action /login/recovery
+     *
+     * @return void
+     */
+    public  function recovery(LoginDTOInterface $dto){
+        $this->index($dto);
+        return $dto;
     }
 
     private function register(LoginDTOInterface $dto){

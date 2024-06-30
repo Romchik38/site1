@@ -26,7 +26,8 @@ return function(LoginDTOInterface $data){
             <input class="btn btn-primary" type="submit" value="Log In" />
         </form>
         <br>
-        <p>Or visit <a href="/login/register">Registration Page</a></p>
+        <p>Forgot a password? Use <a href="/login/recovery">Password recovery Page</a>.</p>
+        <p>New user? Please, visit <a href="/login/register">Registration Page</a>.</p>
         HTML;
     } else {
         $userFirstName = htmlentities($user->getFirstName());
