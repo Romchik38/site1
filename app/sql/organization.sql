@@ -6,8 +6,8 @@ CREATE table organization_entity
 
 CREATE table organization_entity_text
 (
-    organization_id int REFERENCES organization_entity ( organization_id ),
     field_name text PRIMARY KEY, 
+    organization_id int REFERENCES organization_entity ( organization_id ),
     value text NOT NULL
 );
 
