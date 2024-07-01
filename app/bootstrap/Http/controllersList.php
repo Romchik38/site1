@@ -19,6 +19,7 @@ return [
                 'index' => '/login/index?message=' . $result->getResponse(),
                 'logout' => '/login/index?message=' . $result->getResponse(),
                 'register' => '/login/register?message=' . $result->getResponse(),
+                'recovery' => '/login/recovery?message=' . $result->getResponse(),
             ];
             $url = $arr[$action];
             $result->setHeaders([                   

@@ -18,7 +18,8 @@ class Index implements ControllerInterface
     private array $methods = [
         'index',
         'logout',
-        'register'
+        'register',
+        'recovery'
     ];
 
     private $successMessage = 'Authentication success';
@@ -76,6 +77,13 @@ class Index implements ControllerInterface
         }
 
         return $this->logoutMessageFailed;
+    }
+
+    /**
+     * Action /auth/recovery
+     */
+    public function recovery(){
+        return 'recovery begin';
     }
 
     /**

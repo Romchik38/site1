@@ -13,15 +13,20 @@ return function(LoginDTOInterface $data){
     $emailPattern = RequestInterface::EMAIL_PATTERN;
     $emailErrorMessage = RequestInterface::EMAIL_ERROR_MESSAGE;
 
+    $message = $data->getMessage();
+
     if ($user === null) {
-        $html = 
+        $html = $html . 
         <<<HTML
         <div class="container my-3">
+            <div class="row">
+                <p class="fs-3 error_message text-center">{$message}</p>
+            </div>
             <div class="row">
                 <div class="col-sm-6">
                     <h2>Password recovery section</h2>
                     <p>Please, provide email address. We send a message to your with recovery link (confirm for 10 minutes).</p>
-                    <p>Have a questions? Contact <a href="#">User Service</a> 24/7</p>
+                    <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
                 </div>
                 <div class="col-sm-6">
                     <form action="/auth/recovery" method="post">
@@ -31,6 +36,22 @@ return function(LoginDTOInterface $data){
                         <button class="btn btn-primary" type="submit">Reset</button>
                     </form>
                 </div>
+            </div>
+        </div>
+        HTML;
+    } else {
+        $html = $html .
+        <<<HTML
+        <div class="container my-3">
+            <div class="row">
+                <h2>You already signed in.</h2>
+                <ul>Please visit:
+                    <li><a href="/">Main page</a> to start using our site.</li>
+                    <li><a href="/login/index">Login page</a> to see your registration info</li>
+                </ul>
+                <form action="/auth/logout" method="post">Or you can <button class="btn btn-primary" type="submit">Log out</button> now and then start recovery process.
+                    
+                </form>
             </div>
         </div>
         HTML;
