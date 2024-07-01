@@ -96,14 +96,18 @@ class Repository implements RepositoryInterface
     {
         $keys = [];
         $values = [];
+        $params = [];
+        $count = 0;
         foreach ($user->getAllData() as $key => $value) {
+            $count++;
+            $params[] = '$' . $count;
             $keys[] = $key;
-            $values[] = "'$value'";
+            $values[] = "$value";
         }
 
         $query = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $keys) . ') VALUES ('
-            . implode(', ', $values) . ') RETURNING *';
-        $arr = $this->database->queryParams($query, []);
+            . implode(', ', $params) . ') RETURNING *';
+        $arr = $this->database->queryParams($query, $values);
         $row = $arr[0];
         return $this->create($row);
     }
