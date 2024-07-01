@@ -15,6 +15,11 @@ class Request implements RequestInterface {
     ) {  
     }
 
+    public function getEmail(): string
+    {
+        return $_POST[RequestInterface::EMAIL_FIELD] ?? '';
+    }
+
     public function getMessage(): string
     {
         return $_GET[RequestInterface::MESSAGE_FIELD] 

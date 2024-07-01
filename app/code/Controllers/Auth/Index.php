@@ -12,6 +12,7 @@ use Romchik38\Server\Api\Services\SessionInterface;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
+use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 
 class Index implements ControllerInterface
 {
@@ -31,7 +32,8 @@ class Index implements ControllerInterface
         private RequestInterface $request,
         private PasswordCheckInterface $passwordCheck,
         private SessionInterface $session,
-        private UserRegisterInterface $userRegister
+        private UserRegisterInterface $userRegister,
+        private UserRecoveryEmailInterface $userRecoveryEmail
     ) {
     }
 
@@ -45,8 +47,8 @@ class Index implements ControllerInterface
     }
 
     /**
-    * Action /auth/index
-    */
+     * Action /auth/index
+     */
     private function index()
     {
         // 1. Get Request Data
@@ -66,11 +68,12 @@ class Index implements ControllerInterface
     }
 
     /**
-    * Action /auth/logout
-    */
-    private function logout(){
+     * Action /auth/logout
+     */
+    private function logout()
+    {
         $userId = $this->session->getUserId();
-            
+
         if ($userId > 0) {
             $this->session->logout();
             return $this->logoutMessageSuccess;
@@ -82,14 +85,23 @@ class Index implements ControllerInterface
     /**
      * Action /auth/recovery
      */
-    public function recovery(){
-        return 'recovery begin';
+    public function recovery()
+    {
+        $email = $this->request->getEmail();
+        if ($email === '') {
+            return 'Bad request (email not present)';
+        }
+
+        $this->userRecoveryEmail->sendRecoveryLink($email);
+
+        return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
     }
 
     /**
-    * Action /auth/register
-    */
-    public function register(){
+     * Action /auth/register
+     */
+    public function register()
+    {
         // 1 Check username availability
         $userName = $this->request->getUserName();
         if ($userName === '') {
@@ -113,7 +125,7 @@ class Index implements ControllerInterface
             return 'You are successfully registered. Please login';
         } catch (CouldNotSaveException $e) {
             // do  some log
-            
+
             // send answer
             return 'Could not register. Please try later';
         }

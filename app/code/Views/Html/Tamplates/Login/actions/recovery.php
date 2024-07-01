@@ -20,7 +20,7 @@ return function(LoginDTOInterface $data){
         <<<HTML
         <div class="container my-3">
             <div class="row">
-                <p class="fs-3 error_message text-center">{$message}</p>
+                <p class="fs-4 error_message text-center">{$message}</p>
             </div>
             <div class="row">
                 <div class="col-sm-6">
