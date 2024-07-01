@@ -13,8 +13,8 @@ class EntityRepository implements EntityRepositoryInterface
     public function __construct(
         protected DatabaseInterface $database,
         protected ModelFactoryInterface $modelFactory,
-        protected string $mainTable,
-        protected string $table,
+        protected string $entityId,
+        protected array $tableNames,
         protected string $primaryFieldName
     )
     {

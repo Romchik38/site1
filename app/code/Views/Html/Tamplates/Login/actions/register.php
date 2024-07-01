@@ -96,14 +96,14 @@ return function(LoginDTOInterface $data){
         } else {
             $html = 
             <<<HTML
-            <div>
-                <p>You successfully registered and already signed in.</p>
+            <div class="container my-3">
+                <h2>You successfully registered and already signed in.</h2>
                 <ul>Please visit:
                     <li><a href="/">Main page</a> to start using our site.</li>
                     <li><a href="/login/index">Login page</a> to see your registration info</li>
                 </ul>
-                <form action="/auth/logout" method="post">Or you can log out now
-                    <input type="submit" value="Log out"/>
+                <form action="/auth/logout" method="post">Or you can <button class="btn btn-outline-primary" type="submit">Log out</button> now.
+                    
                 </form>
             </div>
             HTML;

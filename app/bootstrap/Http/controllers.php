@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Romchik38\Container;
+
 return function ($container) {
     // /
     $container->add(
@@ -36,7 +38,8 @@ return function ($container) {
                 $container->get(\Romchik38\Site1\Services\Http\Request::class),
                 $container->get(\Romchik38\Site1\Services\PasswordCheck::class),
                 $container->get(\Romchik38\Server\Services\Session::class),
-                $container->get(\Romchik38\Site1\Services\UserRegister::class)
+                $container->get(\Romchik38\Site1\Services\UserRegister::class),
+                $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class)
             );
         }
     );

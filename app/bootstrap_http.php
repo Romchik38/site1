@@ -37,6 +37,10 @@ $container->add(\Romchik38\Site1\Services\UserRegister::class,
     )
 );
 
+$container->add(\Romchik38\Site1\Services\UserRecoveryEmail::class,
+    new \Romchik38\Site1\Services\UserRecoveryEmail()
+);
+
 // VIEWS
 $views = require_once(__DIR__ . '/code/Views/Html/views.php');
 $views($container);
