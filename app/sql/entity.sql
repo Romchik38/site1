@@ -4,18 +4,20 @@ CREATE table entities
     name text NOT NULL UNIQUE
 );
 
-CREATE table entity_text
+CREATE table entity_field
 (
-    field_name text PRIMARY KEY, 
-    entity_id int REFERENCES entities ( entity_id ),
+    field_id serial PRIMARY KEY,
+    field_name text NOT NULL, 
+    entity_id int REFERENCES entities ( entity_id ) ON DELETE CASCADE,
     value text NOT NULL,
-    type text CHECK ( type IN ('int', 'float', 'string') )
+    type text CHECK ( type IN ('int', 'float', 'string') ),
+    CONSTRAINT unique_entity_field UNIQUE ( field_name, entity_id )
 );
 
 --INFORMATION 
 INSERT INTO entities VALUES (1, 'Company Site1');
 
-INSERT INTO entity_text 
+INSERT INTO entity_field (field_name, entity_id, value, type)
     VALUES 
         ('email_contact_recovery', 1, 'ser@ozone.com.ua', 'string'),
         ('email_contact_main', 1, 'office@ozone.com.ua', 'string'),
