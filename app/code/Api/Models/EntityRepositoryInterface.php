@@ -12,6 +12,7 @@ interface EntityRepositoryInterface {
     public function deleteById(int $id): void;
     public function deleteFields(array $fields, EntityModelInterface $entity): EntityModelInterface;
     public function getById(int $id): EntityModelInterface;
-    public function list(string $expression, array $params): array;
+    public function listByEntities(string $expression, array $params): array;
+    public function  listByFields(string $expression, array $params): array;
     public function save(EntityModelInterface $model): EntityModelInterface;
 }
