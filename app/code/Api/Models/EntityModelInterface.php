@@ -9,7 +9,16 @@ interface EntityModelInterface {
     const TYPE_STRING = 'string';
     const TYPE_FLOAT = 'float';
 
-    public function getAllData(): array;
-    public function getId(): int;
+    const ID_FIELD = 'entity_id';
+    const NAME_FIELD = 'name';
+
+    /** FIELDS */
+    public function getFieldsData(): array;
+
+    /** ENTITY */
+    public function getEntityId(): int;
     public function getName(): string;
+
+    public function getEntityData(string $key): int|string|float;
+    public function setEntityData(string $key, $value): EntityModelInterface;
 }
