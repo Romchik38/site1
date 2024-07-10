@@ -88,7 +88,7 @@ return function(LoginDTOInterface $data){
                 </div>
                 <div class="col-sm-6">
                     <h2>Special offer for new users</h2>
-                    <p class="my-3">After success registration, please login into site.</p>
+                    <p class="my-3">After success registration, please log in to the website.</p>
                     <p class="my-3">Then buy any product and get one time <span class="bg-danger text-white px-1">discount -10%</span> on next purchase. You must use the discount withing 1 year before it expires.</p>
                     <p>Hurry up. The offer is valid for one month.</p>
                 </div>

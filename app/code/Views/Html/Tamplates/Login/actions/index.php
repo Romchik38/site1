@@ -80,7 +80,7 @@ return function(LoginDTOInterface $data){
                         This is your user information. Please ensure that all information is provided correctly. If you have any questions regarding the registration data, contact the support service.
                     </p>
                     <p>
-                        Your personal discount is - 10%                        
+                        Your personal <span class="text-white bg-success px-2">discount - 10%</span>
                     </p>
                 </div>
             </div>

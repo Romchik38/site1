@@ -16,7 +16,7 @@ return function(array $data = []){
                 <p class="h5 mt-3">0-800-500-00-00</p>
             </div>
             <div class="col-sm-3">
-                <div class="mt-3">free from cellular</div>
+                <div class="mt-3">free from mobile</div>
             </div>
         </header>
     HEADER;
