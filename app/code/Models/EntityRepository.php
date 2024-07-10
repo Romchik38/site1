@@ -25,6 +25,10 @@ class EntityRepository implements EntityRepositoryInterface
     {
     }
 
+    public function addFields(array $fields, EntityModelInterface $entity): EntityModelInterface {
+
+    }
+
     /**
      * create an empty entity
      *
@@ -54,8 +58,8 @@ class EntityRepository implements EntityRepositoryInterface
     {
         // 1. find an entity
         $query = 'SELECT * FROM '
-        . $this->entityTable
-        . ' WHERE ' . $this->primaryEntityFieldName . ' = $1';
+            . $this->entityTable
+            . ' WHERE ' . $this->primaryEntityFieldName . ' = $1';
         $params = [$id];
         $arr = $this->database->queryParams($query, $params);
         if (count($arr) === 0) {
@@ -83,26 +87,28 @@ class EntityRepository implements EntityRepositoryInterface
      */
     public function listByEntities(string $expression, array $params): array
     {
-        $entities = [];
-
         // 1 select entities
         $query = 'SELECT ' . $this->entityTable . '.* FROM ' . $this->entityTable . ' ' . $expression;
         $arr = $this->database->queryParams($query, $params);
 
         // 2. select fields
-        foreach ($arr as $entityRow) {
-            $queryFields = 'SELECT ' . $this->fieldsTable . '.* FROM ' 
-                . $this->fieldsTable . ' WHERE ' . $this->primaryEntityFieldName . ' = ' 
-                . $entityRow[$this->primaryEntityFieldName];
-            $fieldsRow = $this->database->queryParams($queryFields, []);
-            $entities[] = $this->createFromRow($entityRow, $fieldsRow);
-        }
-
+        $entities = $this->selectFields($arr);
         return $entities;
     }
 
     public function  listByFields(string $expression, array $params): array {
+        // select distinct entity_id from entity_field where field_name like '%defa%';
 
+        // 1. select entities
+        $query = 'SELECT ' . $this->entityTable . '.* FROM ' . $this->entityTable 
+            . ' WHERE ' . $this->primaryEntityFieldName 
+            . ' IN (SELECT DISTINCT ' . $this->fieldsTable . '.' . $this->primaryEntityFieldName
+            . 'FROM ' . $this->fieldsTable . $expression;
+        $arr = $this->database->queryParams($query, $params);
+        
+        // 2. select fields
+        $entities = $this->selectFields($arr);
+        return $entities;
     }
 
     public function save(EntityModelInterface $model): EntityModelInterface
@@ -128,5 +134,23 @@ class EntityRepository implements EntityRepositoryInterface
         }
 
         return $entity;
+    }
+
+    /**
+     * create entities by given array with entity id
+     * 
+     * @param array $arr [array of raw entites got from entity primary table]
+     * @return EntityModelInterface[] [array of entites]
+     */
+    protected function selectFields(array $arr): array {
+        $entities = [];
+        foreach ($arr as $entityRow) {
+            $queryFields = 'SELECT ' . $this->fieldsTable . '.* FROM ' 
+                . $this->fieldsTable . ' WHERE ' . $this->primaryEntityFieldName . ' = ' 
+                . $entityRow[$this->primaryEntityFieldName];
+            $fieldsRow = $this->database->queryParams($queryFields, []);
+            $entities[] = $this->createFromRow($entityRow, $fieldsRow);
+        }
+        return $entities;
     }
 }

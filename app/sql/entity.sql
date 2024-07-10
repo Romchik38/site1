@@ -16,10 +16,27 @@ CREATE table entity_field
 
 --INFORMATION 
 INSERT INTO entities VALUES (1, 'Company Site1');
+INSERT INTO entities VALUES (2, 'Html');
 
 INSERT INTO entity_field (field_name, entity_id, value, type)
     VALUES 
         ('email_contact_recovery', 1, 'ser@ozone.com.ua', 'string'),
         ('email_contact_main', 1, 'office@ozone.com.ua', 'string'),
-        ('min_order_sum', 1, '100', 'int');
+        ('min_order_sum', 1, '100', 'int'),
+        ('default_phone_number', 1, '0-800-500-00-00', 'string');
+;
+
+INSERT INTO entity_field (field_name, entity_id, value, type)
+    VALUES 
+        ('default_company', 2, '1', 'int'),
+        ('default_layout', 2, 'column1', 'string')
+;
+
+--for listByFields
+SELECT entities.* FROM entities 
+    WHERE entity_id IN 
+        (SELECT DISTINCT entity_field.entity_id 
+            FROM entity_field 
+            WHERE field_name 
+                LIKE '%defa%')
 ;
