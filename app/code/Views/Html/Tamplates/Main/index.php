@@ -9,12 +9,14 @@ return function(MainDTOInterface $data) {
     $content = $page->getContent();
     $name = htmlentities($page->getName());
     $html = <<<HTML
-    <article>
-        <h1 class="text-center">{$name}</h1>
-        <div class="container">
-            {$content}
-        </div>
-    </article>
+    <div class="row">
+        <article>
+            <h1 class="text-center">{$name}</h1>
+            <div class="container">
+                {$content}
+            </div>
+        </article>
+    </div>
     HTML;
     return $html;
 };

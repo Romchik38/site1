@@ -19,19 +19,11 @@ return function (array $blocks, $metaData, $data) {
     $sectionHtml = $section($metaData, $data);
 
     return <<<ONECOLUMN
-        <div class="container">
-            <div class="row">
-                {$headerHtml}
-            </div>
-            <div class="row">
-                {$navHtml}
-            </div>
-            <div class="row">
-                {$sectionHtml}
-            </div>
-            <div class="row">
-                {$footerHtml}
-            </div>
+        <div class="container-flex">
+            {$headerHtml}
+            {$navHtml}
+            {$sectionHtml}
+            {$footerHtml}
         </div>
     ONECOLUMN;
 };

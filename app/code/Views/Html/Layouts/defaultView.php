@@ -33,6 +33,7 @@ return function (
         </head>
         <body>
             {$wrapperHtml}
+            <script src="/media/js/bootstrap.min.js"></script>
         </body>
     </html>
     HTML;

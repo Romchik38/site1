@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 return function(array $metaData, string $data){
     return <<<SECTION
-    <section class="container">
-        <div class="row">
-            {$data}
+        <div class="row my-3">
+            <section class="container">
+                {$data}
+            </section>
         </div>
-    </section>
     SECTION;
 };
