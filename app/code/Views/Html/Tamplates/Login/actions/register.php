@@ -32,56 +32,68 @@ return function(LoginDTOInterface $data){
     if ($user === null) {
         $html = 
         <<<HTML
-            <h2>Enter User Information</h2>
-            <p class="error_message">{$message}<p>
-            <form action="/auth/register" method="post">
-                <fieldset>
-                <div class="row mb-3">
-                    <label class="col-sm-2 form-label" for="{$userName}">User name: </label>
-                    <div class="col-sm-10">
-                        <input id="input-username" class="form-control" type="text" name="{$userName}" required placeholder="Enter username" pattern="{$userNamePattern}" title="Please enter a valid username"/>
-                        <div id="usernameHelpBlock" class="form-text">{$userNameErrorMessage}</div>
-                    </div>
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Enter User Information</h2>
+                    <p class="error_message">{$message}<p>
+                    <form action="/auth/register" method="post">
+                        <fieldset>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 form-label" for="{$userName}">User name: </label>
+                            <div class="col-sm-10">
+                                <input id="input-username" class="form-control" type="text" name="{$userName}" required placeholder="Enter username" pattern="{$userNamePattern}" title="Please enter a valid username"/>
+                                <div id="usernameHelpBlock" class="form-text">{$userNameErrorMessage}</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 form-label" for="{$password}">Password: </label>
+                            <div class="col-sm-10">
+                                <input id="input-password" class="form-control" type="password" name="{$password}" required placeholder="Enter a password" pattern="{$passwordPattern}" title="Please enter a valid password"/>
+                                <div id="passwordHelpBlock" class="form-text">{$passwordErrorMessage}</div>
+                            </div>  
+                            <label class="col-sm-2 form-label" for="repeat_password">Repeat password: </label>
+                            <div class="col-sm-10">
+                                <input id="input-repeat-password" class="form-control" type="password" name="repeat_password" required placeholder="Repeat password"/>
+                            </div>                  
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 form-label" for="{$firstName}">First name: </label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name" maxlength="30" pattern="{$firstNamePattern}" title="Please enter a valid first name. Use only letters"/>
+                                <div id="emailHelpBlock" class="form-text">{$firstNameErrorMessage}</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 form-label" for="{$lastName}">Last name: </label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="text" name="{$lastName}" id="{$lastName}" required placeholder="Enter last name" maxlength="30" pattern="{$lastNamePattern}" title="Please enter a valid first name. Use only letters"/>
+                                <div id="emailHelpBlock" class="form-text">{$lastNameErrorMessage}</div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label class="col-sm-2 form-label" for="{$email}">Email: </label>
+                            <div class="col-sm-10">
+                                <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPattern}"/>
+                                <div id="emailHelpBlock" class="form-text">{$emailErrorMessage}</div>
+                            </div>
+                        </div>
+                        <button id="register-button" class="btn btn-primary" type="submit">Register</button>
+                        </fieldset>
+                    </form>
+                    <br>
+                    <p id="error_button" class="error_message"><p>
+                    <p class="col">Already have an account? <a href="/login/index">Log In</a><p>
+                    <script src="/media/js/login/register/checkForm.js" defer></script>
                 </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 form-label" for="{$password}">Password: </label>
-                    <div class="col-sm-10">
-                        <input id="input-password" class="form-control" type="password" name="{$password}" required placeholder="Enter a password" pattern="{$passwordPattern}" title="Please enter a valid password"/>
-                        <div id="passwordHelpBlock" class="form-text">{$passwordErrorMessage}</div>
-                    </div>  
-                    <label class="col-sm-2 form-label" for="repeat_password">Repeat password: </label>
-                    <div class="col-sm-10">
-                        <input id="input-repeat-password" class="form-control" type="password" name="repeat_password" required placeholder="Repeat password"/>
-                    </div>                  
+                <div class="col-sm-6">
+                    <h2>Special offer for new users</h2>
+                    <p class="my-3">After success registration, please login into site.</p>
+                    <p class="my-3">Then buy any product and get one time <span class="bg-danger text-white px-1">discount -10%</span> on next purchase. You must use the discount withing 1 year before it expires.</p>
+                    <p>Hurry up. The offer is valid for one month.</p>
                 </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 form-label" for="{$firstName}">First name: </label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$firstName}" id="{$firstName}" required placeholder="Enter your name" maxlength="30" pattern="{$firstNamePattern}" title="Please enter a valid first name. Use only letters"/>
-                        <div id="emailHelpBlock" class="form-text">{$firstNameErrorMessage}</div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 form-label" for="{$lastName}">Last name: </label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="text" name="{$lastName}" id="{$lastName}" required placeholder="Enter last name" maxlength="30" pattern="{$lastNamePattern}" title="Please enter a valid first name. Use only letters"/>
-                        <div id="emailHelpBlock" class="form-text">{$lastNameErrorMessage}</div>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label class="col-sm-2 form-label" for="{$email}">Email: </label>
-                    <div class="col-sm-10">
-                        <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPattern}"/>
-                        <div id="emailHelpBlock" class="form-text">{$emailErrorMessage}</div>
-                    </div>
-                </div>
-                <button id="register-button" class="btn btn-primary" type="submit">Register</button>
-                </fieldset>
-            </form>
-            <br>
-            <p id="error_button" class="error_message"><p>
-            <p class="col">Already have an account? <a href="/login/index">Log In</a><p>
-            <script src="/media/js/login/register/checkForm.js" defer></script>
+            </div>
+        </div>
         HTML;
     } else {
         if ($message === '') {
