@@ -26,7 +26,7 @@ return function(LoginDTOInterface $data){
                         <input class="form-control" type="text" name="{$userName}" id="{$userName}" required /><br>
                         <label for="{$password}">Enter {$password}: </label>
                         <input class="form-control" type="password" name="{$password}" id="{$password}" required /><br>
-                        <input class="btn btn-primary" type="submit" value="Log In" />
+                        <input class="btn btn-secondary" type="submit" value="Log In" />
                     </form>
                     <br>
                     <p>Forgot a password? Use <a href="/login/recovery">Password recovery Page</a>.</p>
@@ -71,7 +71,7 @@ return function(LoginDTOInterface $data){
                     </table>
                     <div class="col my-3">
                         <form action="/auth/logout" method="post">
-                            <button class="btn btn-outline-primary" type="submit">Log out</button>
+                            <button class="btn btn-outline-secondary" type="submit">Log out</button>
                         </form>
                     </div>
                 </div>
