@@ -23,7 +23,7 @@ return function(array $data = []){
                     <div class="col-sm-4 p-5">
                         <div class="row">
                             <div class="col-6">
-                                <h5>Links</h5>
+                                <h5 class="fw-bold">Links</h5>
                                 <ul class="list-unstyled">
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Home</a></li>
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">About</a></li>
@@ -35,7 +35,7 @@ return function(array $data = []){
                                   </ul>
                             </div>
                             <div class="col-6">
-                                <h5>Customer</h5>
+                                <h5 class="fw-bold">Customer</h5>
                                 <ul class="list-unstyled">
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Log In</a></li>
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Register</a></li>
@@ -50,7 +50,7 @@ return function(array $data = []){
                     <div class="col-sm-4 p-5">
                         <div class="row">
                             <div class="col-6">
-                                <h5>Links</h5>
+                                <h5 class="fw-bold">Links</h5>
                                 <ul class="list-unstyled">
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Home</a></li>
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">About</a></li>

@@ -29,7 +29,7 @@ return function(LoginDTOInterface $data){
                     <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
                 </div>
                 <div class="col-sm-6">
-                    <form action="/auth/recovery" method="post">
+                    <form class="border rounded-3 bg-light p-4" action="/auth/recovery" method="post">
                         <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPattern}"/>
                         <div id="emailHelpBlock" class="form-text">Input your email</div>
                         <br>

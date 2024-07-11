@@ -37,7 +37,7 @@ return function(LoginDTOInterface $data){
                 <div class="col-sm-6">
                     <h2>Enter User Information</h2>
                     <p class="error_message">{$message}<p>
-                    <form action="/auth/register" method="post">
+                    <form class="border rounded-3 bg-light p-4" action="/auth/register" method="post">
                         <fieldset>
                         <div class="row mb-3">
                             <label class="col-sm-2 form-label" for="{$userName}">User name: </label>

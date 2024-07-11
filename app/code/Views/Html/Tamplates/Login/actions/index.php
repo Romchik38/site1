@@ -18,10 +18,10 @@ return function(LoginDTOInterface $data){
         $html = <<<HTML
         <div class="container mt-3">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-4">
                     <h2>Provide Login Credentials</h2>
                     <p class="error_message">{$message}<p>
-                    <form action="/auth/index" method="post">
+                    <form class="border rounded-3 bg-light p-4" action="/auth/index" method="post">
                         <label for="{$userName}">Enter your user name: </label>
                         <input class="form-control" type="text" name="{$userName}" id="{$userName}" required /><br>
                         <label for="{$password}">Enter {$password}: </label>
