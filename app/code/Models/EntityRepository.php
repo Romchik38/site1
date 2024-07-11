@@ -111,8 +111,30 @@ class EntityRepository implements EntityRepositoryInterface
         return $entities;
     }
 
+    /**
+     * Save existing entity. Use add method if you wish to save a new one
+     * 
+     * @param EntityModelInterface $model
+     * @return EntityModelInterface
+     */
     public function save(EntityModelInterface $model): EntityModelInterface
     {
+        $keys = [];
+        $values = [];
+        $params = [];
+        $count = 0;
+        foreach ($user->getAllData() as $key => $value) {
+            $count++;
+            $params[] = '$' . $count;
+            $keys[] = $key;
+            $values[] = "$value";
+        }
+
+        $query = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $keys) . ') VALUES ('
+            . implode(', ', $params) . ') RETURNING *';
+        $arr = $this->database->queryParams($query, $values);
+        $row = $arr[0];
+        return $this->create($row);
     }
 
     /**

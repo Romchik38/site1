@@ -32,16 +32,16 @@ class EntityModel implements EntityModelInterface {
     /**
      * returns entity id
      */
-    public function getEntityId(): int {
-        return (int)$this->entityData[EntityModelInterface::ID_FIELD];
-    }
+    // public function getEntityId(): int {
+    //     return (int)$this->entityData[EntityModelInterface::ID_FIELD];
+    // }
 
     /** 
      * returns entity name
      */
-    public function getName(): string {
-        return $this->entityData[EntityModelInterface::NAME_FIELD];
-    }
+    // public function getName(): string {
+    //     return $this->entityData[EntityModelInterface::NAME_FIELD];
+    // }
 
     /**
      * get a value by provided field name
