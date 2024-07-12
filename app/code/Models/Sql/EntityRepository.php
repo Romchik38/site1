@@ -9,6 +9,8 @@ use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Site1\Api\Models\EntityFactoryInterface;
 use Romchik38\Site1\Api\Models\EntityModelInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Server\Models\Errors\QueryExeption;
+use Romchik38\Server\Models\Errors\CouldNotSaveException;
 
 class EntityRepository implements EntityRepositoryInterface
 {
@@ -112,29 +114,63 @@ class EntityRepository implements EntityRepositoryInterface
     }
 
     /**
-     * Save existing entity. Use add method if you wish to save a new one
+     * Save existing entity. Use add method if you want to save a new one
      * 
      * @param EntityModelInterface $model
      * @return EntityModelInterface
      */
     public function save(EntityModelInterface $model): EntityModelInterface
     {
-        $keys = [];
-        $values = [];
+        // 1 save an entity
         $params = [];
+        $fields = [];
         $count = 0;
-        foreach ($user->getAllData() as $key => $value) {
+        foreach ($model->getAllEntityData() as $key => $value) {
+            if ($key === $this->primaryEntityFieldName) {
+                continue;
+            }
             $count++;
-            $params[] = '$' . $count;
-            $keys[] = $key;
-            $values[] = "$value";
+            $param = '$' . $count;
+            $params[] = $value;
+            $fields[] = $key . ' = ' . $param;
         }
 
-        $query = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $keys) . ') VALUES ('
-            . implode(', ', $params) . ') RETURNING *';
-        $arr = $this->database->queryParams($query, $values);
-        $row = $arr[0];
-        return $this->create($row);
+        $query = 'UPDATE ' . $this->entityTable . ' SET ' . implode(', ', $fields) 
+            . ' WHERE ' . $this->entityTable . '.' . $this->primaryEntityFieldName 
+            . ' = ' . ++$count . ' RETURNING *';
+        
+        $params[] = $this->primaryEntityFieldName;
+
+        try {
+            $arr = $this->database->queryParams($query, $params);
+            $entityRow = $arr[0];
+            // 2 save entity fields
+            $params2 = [];
+            $fields2 = [];
+            $count2 = 0;
+            foreach ($model->getFieldsData() as $key2 => $value2) {
+                $count2++;
+                $param2 = '$' . $count2;
+                $params2[] = $value2;
+                $fields2[] = $key2 . ' = ' . $param2;
+            }
+
+            $query2 = 'UPDATE ' . $this->fieldsTable . ' SET ' . implode(', ', $fields2) 
+            . ' WHERE ' . $this->fieldsTable . '.' . $this->primaryEntityFieldName 
+            . ' = ' . ++$count . ' RETURNING *';
+
+            $params2[] = $this->primaryEntityFieldName;
+
+            try {
+                $fieldsRow = $this->database->queryParams($query2, $params2);
+            } catch (QueryExeption $e) {
+                throw new CouldNotSaveException($e->getMessage());
+            }  
+            // 3 return saved entity
+            return $this->createFromRow($entityRow, $fieldsRow);
+        } catch (QueryExeption $e) {
+            throw new CouldNotSaveException($e->getMessage());
+        }
     }
 
     /**

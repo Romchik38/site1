@@ -21,4 +21,5 @@ interface EntityModelInterface {
 
     public function getEntityData(string $key): int|string|float;
     public function setEntityData(string $key, $value): EntityModelInterface;
+    public function getAllEntityData(): array;
 }

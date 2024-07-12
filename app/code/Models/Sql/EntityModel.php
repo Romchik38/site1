@@ -61,6 +61,10 @@ class EntityModel implements EntityModelInterface {
         $this->data[$field] = $val;
     }
 
+    public function getAllEntityData(): array {
+        return $this->entityData;
+    }
+
     public function getEntityData(string $key): int|string|float {
         return $this->entityData[$key];
     }
@@ -69,4 +73,5 @@ class EntityModel implements EntityModelInterface {
         $this->entityData[$key] = $value;
         return $this;
     }
+
 }
