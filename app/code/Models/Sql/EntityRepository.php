@@ -61,6 +61,14 @@ class EntityRepository implements EntityRepositoryInterface
         }
     }
 
+    /**
+     * Delete entity fields. 
+     * Fields are values of $this->entityFieldName table
+     * 
+     * @param string[] $fields
+     * @param EntityModelInterface $entity
+     * @throws CouldNotDeleteException
+     */
     public function deleteFields(array $fields, EntityModelInterface $entity): EntityModelInterface
     {
         $count = 0;
@@ -75,10 +83,12 @@ class EntityRepository implements EntityRepositoryInterface
         $query = 'DELETE FROM ' . $this->fieldsTable . ' WHERE (' . implode(" OR ", $values) 
         . ') AND ' . $this->primaryEntityFieldName . ' = $1';
 
-        $params[] = $entity->getEntityData($this->primaryEntityFieldName);
+        $entityId = $entity->getEntityData($this->primaryEntityFieldName);
+        $params[] = $entityId;
 
         try {
             $this->database->queryParams($query, [$params]);
+            return $this->getById($entityId);
         } catch (QueryExeption $e) {
             throw new CouldNotDeleteException($e->getMessage());
         }
