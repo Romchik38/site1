@@ -9,14 +9,14 @@ use Romchik38\Site1\Api\Models\EntityModelInterface;
 class EntityModel implements EntityModelInterface {
 
     /**
-     * stores entity id and entity name
+     * stores entity primary fields
      */
     private array $entityData = [];
 
     /**
      * stores field/values of the entity
      * 
-     * $data string|int|float[]
+     * $fieldsData string[]
      */
     private array $fieldsData = [];
 
@@ -28,20 +28,6 @@ class EntityModel implements EntityModelInterface {
     public function getFieldsData(): array {
         return $this->fieldsData;
     }
-
-    /**
-     * returns entity id
-     */
-    // public function getEntityId(): int {
-    //     return (int)$this->entityData[EntityModelInterface::ID_FIELD];
-    // }
-
-    /** 
-     * returns entity name
-     */
-    // public function getName(): string {
-    //     return $this->entityData[EntityModelInterface::NAME_FIELD];
-    // }
 
     /**
      * get a value by provided field name

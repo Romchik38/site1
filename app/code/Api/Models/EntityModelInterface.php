@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Api\Models;
 
 interface EntityModelInterface {
-    // const ID_FIELD = 'entity_id';                       << MOVE THIS TO SPECIFIC ENTITY
-    // const NAME_FIELD = 'name';
 
     /** FIELDS */
     public function getFieldsData(): array;
