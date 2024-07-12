@@ -97,7 +97,15 @@ class EntityRepository implements EntityRepositoryInterface
     }
 
     public function addFields(array $fields, EntityModelInterface $entity): EntityModelInterface {
-
+        // $count = 0;
+        // $values = [];
+        // $params = [];
+        // foreach($fields as $field) {
+        //     ++$count;
+        //     $values[] = $this->entityFieldName . ' = ' . '$' . $count;
+        //     $params[] = $field;
+        // }
+        
     }
 
     /**
