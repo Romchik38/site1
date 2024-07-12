@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Models;
+namespace Romchik38\Site1\Models\Sql;
 
 use Romchik38\Site1\Api\Models\EntityRepositoryInterface;
 use Romchik38\Server\Api\Models\DatabaseInterface;
