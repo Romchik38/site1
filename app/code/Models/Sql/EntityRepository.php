@@ -60,16 +60,16 @@ class EntityRepository implements EntityRepositoryInterface
                 $fullValue = '(';
                 // field
                 $count2++;
-                $params2[] = '$' . $count2;
-                $fullValue += '\'' . $key2 . '\', \'';
+                $params2[] = $key2;
+                $fullValue += '$' . $count2;
                 // value
                 $count2++;
-                $params2[] = '$' . $count2;
-                $fullValue += $value2 . '\', \'';
+                $params2[] = $value2;
+                $fullValue += ', $' . $count2;
                 // entity id
                 $count2++;
-                $params2[] = '$' . $count2;
-                $fullValue += $entityId . '\')';
+                $params2[] = $entityId;
+                $fullValue += ', $' . $count2 . ')';
                 // finish
                 $values2[] = $fullValue;
 
