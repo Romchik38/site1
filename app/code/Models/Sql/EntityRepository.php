@@ -55,57 +55,30 @@ class EntityRepository implements EntityRepositoryInterface
 
             // 2 add fields data
             $entityId = $entityRow[$this->primaryEntityFieldName];
-            $values2 = [];
-            $params2 = [];
-            $count2 = 0;                    
-                                        
-            foreach ($model->getFieldsData() as $key2 => $value2) {
-                $fullValue = '(';
-                // field
-                $count2++;
-                $params2[] = $key2;
-                $fullValue += '$' . $count2;
-                // value
-                $count2++;
-                $params2[] = $value2;
-                $fullValue += ', $' . $count2;
-                // entity id
-                $count2++;
-                $params2[] = $entityId;
-                $fullValue += ', $' . $count2 . ')';
-                // finish
-                $values2[] = $fullValue;
+            $fields = $model->getFieldsData();
 
-            }
-
-            $query = 'INSERT INTO ' . $this->fieldsTable 
-                . ' (' . $this->entityFieldName 
-                . ', ' . $this->entityValueName 
-                . ', ' . $this->primaryEntityFieldName 
-                . ') VALUES ('
-            . implode(', ', $values2) . ') RETURNING *';
-
-            try {
-                $fieldsRow = $this->database->queryParams($query, $params2);
-                return $this->createFromRow($entityRow, $fieldsRow);
-            } catch (QueryExeption $e) {
-                throw new CouldNotAddException($e->getMessage());
-            }
+            // @throws CouldNotAddException
+            $fieldsRow = $this->insertFields($fields, $entityId);
+            return $this->createFromRow($entityRow, $fieldsRow);
         } catch (QueryExeption $e) {
             throw new CouldNotAddException($e->getMessage());
         }
     }
 
+    /**
+     * Add fields to existing entity
+     * 
+     * @param array $fields [field_name => field_value, ...]
+     * @param int $entityId 
+     * @throws CouldNotAddException
+     * @return EntityModelInterface [a fresh copy of given entity with new fields]
+     */
     public function addFields(array $fields, EntityModelInterface $entity): EntityModelInterface {
-        // $count = 0;
-        // $values = [];
-        // $params = [];
-        // foreach($fields as $field) {
-        //     ++$count;
-        //     $values[] = $this->entityFieldName . ' = ' . '$' . $count;
-        //     $params[] = $field;
-        // }
-        
+        $entityRow = $entity->getAllEntityData();
+        $entityId = $entityRow[$this->primaryEntityFieldName];
+        // @throws CouldNotAddException
+        $fieldsRow = $this->insertFields($fields, $entityId);
+        return $this->createFromRow($entityRow, $fieldsRow);   
     }
 
     /**
@@ -315,6 +288,51 @@ class EntityRepository implements EntityRepositoryInterface
         }
 
         return $entity;
+    }
+
+    /**
+     * insert rows into fields table by provided id
+     * 
+     * @param array $fields [field_name => field_value, ...]
+     * @param int $entityId 
+     * @throws CouldNotAddException
+     */
+    protected function insertFields(array $fields, int $entityId): array {
+        $values = [];
+        $params = [];
+        $count = 0;                    
+                                    
+        foreach ($fields as $key => $value) {
+            $fullValue = '(';
+            // field
+            $count++;
+            $params2[] = $key;
+            $fullValue += '$' . $count;
+            // value
+            $count++;
+            $params2[] = $value;
+            $fullValue += ', $' . $count;
+            // entity id
+            $count++;
+            $params[] = $entityId;
+            $fullValue += ', $' . $count . ')';
+            // finish
+            $values[] = $fullValue;
+        }
+
+        $query = 'INSERT INTO ' . $this->fieldsTable 
+            . ' (' . $this->entityFieldName 
+            . ', ' . $this->entityValueName 
+            . ', ' . $this->primaryEntityFieldName 
+            . ') VALUES ('
+        . implode(', ', $values) . ') RETURNING *';
+
+        try {
+            $fieldsRow = $this->database->queryParams($query, $params2);
+            return $fieldsRow;
+        } catch (QueryExeption $e) {
+            throw new CouldNotAddException($e->getMessage());
+        }
     }
 
     /**
