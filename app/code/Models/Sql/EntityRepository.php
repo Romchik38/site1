@@ -9,7 +9,8 @@ use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Site1\Api\Models\EntityFactoryInterface;
 use Romchik38\Site1\Api\Models\EntityModelInterface;
 use Romchik38\Server\Models\Errors\{ 
-    NoSuchEntityException, QueryExeption, CouldNotSaveException, CouldNotDeleteException 
+    NoSuchEntityException, QueryExeption, CouldNotSaveException, 
+    CouldNotDeleteException, CouldNotAddException
 };
 
 class EntityRepository implements EntityRepositoryInterface
@@ -24,8 +25,38 @@ class EntityRepository implements EntityRepositoryInterface
     ) {
     }
 
+    /**
+     * 
+     * @throws CouldNotAddException
+     */
     public function add(EntityModelInterface $model): EntityModelInterface
     {
+        $fieldsRow = $model->getFieldsData();
+
+        // 1 add entity data
+        $keys = [];
+        $values = [];
+        $params = [];
+        $count = 0;
+        foreach ($model->getAllEntityData() as $key => $value) {
+            $count++;
+            $params[] = '$' . $count;
+            $keys[] = $key;
+            $values[] = $value;
+        }
+
+        $query = 'INSERT INTO ' . $this->entityTable . ' (' . implode(', ', $keys) . ') VALUES ('
+            . implode(', ', $params) . ') RETURNING *';
+        try {
+            $arr = $this->database->queryParams($query, $values);
+            $entityRow = $arr[0];
+
+
+
+            return $this->createFromRow($entityRow, $fieldsRow);
+        } catch (QueryExeption $e) {
+            throw new CouldNotAddException($e->getMessage());
+        }
     }
 
     public function addFields(array $fields, EntityModelInterface $entity): EntityModelInterface {
