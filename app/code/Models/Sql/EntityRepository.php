@@ -52,14 +52,27 @@ class EntityRepository implements EntityRepositoryInterface
 
             // 2 add fields data
             $entityId = $entityRow[$this->primaryEntityFieldName];
-            $keys2 = [];
             $values2 = [];
             $params2 = [];
-            $count2 = 0;
+            $count2 = 0;                    
+                                         // ('email_num' , 'some@email')
             foreach ($model->getFieldsData() as $key2 => $value2) {
+                $fullValue = '(';
+                // field
                 $count2++;
                 $params2[] = '$' . $count2;
-                $values2[] = '(' . $key2 . ', ' . $value2 . ', ' . $entityId . ')';
+                $fullValue += '\'' . $key2 . '\', \'';
+                // value
+                $count2++;
+                $params2[] = '$' . $count2;
+                $fullValue += $value2 . '\', \'';
+                // entity id
+                $count2++;
+                $params2[] = '$' . $count2;
+                $fullValue += $entityId . '\')';
+                // finish
+                $values2[] = $fullValue;
+
             }
 
             $query = 'INSERT INTO ' . $this->fieldsTable 
@@ -71,7 +84,6 @@ class EntityRepository implements EntityRepositoryInterface
 
             try {
                 $fieldsRow = $this->database->queryParams($query, $params2);
-
                 return $this->createFromRow($entityRow, $fieldsRow);
             } catch (QueryExeption $e) {
                 throw new CouldNotAddException($e->getMessage());
