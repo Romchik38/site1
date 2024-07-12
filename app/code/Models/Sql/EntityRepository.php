@@ -27,8 +27,11 @@ class EntityRepository implements EntityRepositoryInterface
     }
 
     /**
+     * Saves in a database new entity with fields
      * 
+     * @param EntityModelInterface $model [new entity without id]
      * @throws CouldNotAddException
+     * @return EntityModelInterface [fresh entity copy already with id]
      */
     public function add(EntityModelInterface $model): EntityModelInterface
     {
