@@ -8,9 +8,9 @@ use Romchik38\Site1\Api\Models\EntityRepositoryInterface;
 use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Site1\Api\Models\EntityFactoryInterface;
 use Romchik38\Site1\Api\Models\EntityModelInterface;
-use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Server\Models\Errors\QueryExeption;
-use Romchik38\Server\Models\Errors\CouldNotSaveException;
+use Romchik38\Server\Models\Errors\{ 
+    NoSuchEntityException, QueryExeption, CouldNotSaveException, CouldNotDeleteException 
+};
 
 class EntityRepository implements EntityRepositoryInterface
 {
@@ -41,8 +41,23 @@ class EntityRepository implements EntityRepositoryInterface
         return $this->entityFactory->create();
     }
 
+    /**
+     * Delete an entity from database. 
+     * Fields from $this->fieldsTable will be deleteted auto via sql ON DELETE CASCADE
+     * 
+     * @param int $id [an entity id]
+     * @throws CouldNotDeleteException
+     * @return void
+     */
     public function deleteById(int $id): void
     {
+        $query = 'DELETE FROM ' . $this->entityTable . ' WHERE '
+        . $this->primaryEntityFieldName . ' = $1';
+        try {
+            $this->database->queryParams($query, [$id]);
+        } catch (QueryExeption $e) {
+            throw new CouldNotDeleteException($e->getMessage());
+        }
     }
 
     public function deleteFields(array $fields, EntityModelInterface $entity): EntityModelInterface
