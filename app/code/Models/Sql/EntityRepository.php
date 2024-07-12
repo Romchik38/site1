@@ -67,7 +67,9 @@ class EntityRepository implements EntityRepositoryInterface
      * 
      * @param string[] $fields
      * @param EntityModelInterface $entity
-     * @throws CouldNotDeleteException
+     * @throws CouldNotDeleteException [when some errors occures]
+     * @throws NoSuchEntityException [if given entity doesn't present]
+     * @return EntityModelInterface [a fresh copy of the entity already without given fields]
      */
     public function deleteFields(array $fields, EntityModelInterface $entity): EntityModelInterface
     {
