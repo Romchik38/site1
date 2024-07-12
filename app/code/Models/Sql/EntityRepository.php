@@ -21,7 +21,8 @@ class EntityRepository implements EntityRepositoryInterface
         protected string $entityTable,
         protected string $fieldsTable,
         protected string $primaryEntityFieldName,
-        protected string $entityFieldName
+        protected string $entityFieldName,
+        protected string $entityValueName
     ) {
     }
 
@@ -58,15 +59,23 @@ class EntityRepository implements EntityRepositoryInterface
             foreach ($model->getFieldsData() as $key2 => $value2) {
                 $count2++;
                 $params2[] = '$' . $count2;
-                $keys2[] = $key2;
-                $values2[] = $value2;
+                $values2[] = '(' . $key2 . ', ' . $value2 . ', ' . $entityId . ')';
             }
 
-            $query = 'INSERT INTO ' . $this->fieldsTable . ' (' . implode(', ', $keys2) . ') VALUES ('
-            . implode(', ', $params) . ') RETURNING *';
+            $query = 'INSERT INTO ' . $this->fieldsTable 
+                . ' (' . $this->entityFieldName 
+                . ', ' . $this->entityValueName 
+                . ', ' . $this->primaryEntityFieldName 
+                . ') VALUES ('
+            . implode(', ', $values2) . ') RETURNING *';
 
+            try {
+                $fieldsRow = $this->database->queryParams($query, $params2);
 
-            return $this->createFromRow($entityRow, $fieldsRow);
+                return $this->createFromRow($entityRow, $fieldsRow);
+            } catch (QueryExeption $e) {
+                throw new CouldNotAddException($e->getMessage());
+            }
         } catch (QueryExeption $e) {
             throw new CouldNotAddException($e->getMessage());
         }
