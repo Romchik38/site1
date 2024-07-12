@@ -55,7 +55,7 @@ class EntityRepository implements EntityRepositoryInterface
             $values2 = [];
             $params2 = [];
             $count2 = 0;                    
-                                         // ('email_num' , 'some@email')
+                                        
             foreach ($model->getFieldsData() as $key2 => $value2) {
                 $fullValue = '(';
                 // field
