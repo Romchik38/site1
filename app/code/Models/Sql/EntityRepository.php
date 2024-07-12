@@ -31,8 +31,6 @@ class EntityRepository implements EntityRepositoryInterface
      */
     public function add(EntityModelInterface $model): EntityModelInterface
     {
-        $fieldsRow = $model->getFieldsData();
-
         // 1 add entity data
         $keys = [];
         $values = [];
@@ -51,6 +49,21 @@ class EntityRepository implements EntityRepositoryInterface
             $arr = $this->database->queryParams($query, $values);
             $entityRow = $arr[0];
 
+            // 2 add fields data
+            $entityId = $entityRow[$this->primaryEntityFieldName];
+            $keys2 = [];
+            $values2 = [];
+            $params2 = [];
+            $count2 = 0;
+            foreach ($model->getFieldsData() as $key2 => $value2) {
+                $count2++;
+                $params2[] = '$' . $count2;
+                $keys2[] = $key2;
+                $values2[] = $value2;
+            }
+
+            $query = 'INSERT INTO ' . $this->fieldsTable . ' (' . implode(', ', $keys2) . ') VALUES ('
+            . implode(', ', $params) . ') RETURNING *';
 
 
             return $this->createFromRow($entityRow, $fieldsRow);
