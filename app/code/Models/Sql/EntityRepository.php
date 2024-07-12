@@ -19,7 +19,8 @@ class EntityRepository implements EntityRepositoryInterface
         protected EntityFactoryInterface $entityFactory,
         protected string $entityTable,
         protected string $fieldsTable,
-        protected string $primaryEntityFieldName
+        protected string $primaryEntityFieldName,
+        protected string $entityFieldName
     ) {
     }
 
@@ -62,6 +63,25 @@ class EntityRepository implements EntityRepositoryInterface
 
     public function deleteFields(array $fields, EntityModelInterface $entity): EntityModelInterface
     {
+        $count = 0;
+        $values = [];
+        $params = [];
+        foreach($fields as $field) {
+            ++$count;
+            $values[] = $this->entityFieldName . ' = ' . '$' . $count;
+            $params[] = $field;
+        }
+        
+        $query = 'DELETE FROM ' . $this->fieldsTable . ' WHERE (' . implode(" OR ", $values) 
+        . ') AND ' . $this->primaryEntityFieldName . ' = $1';
+
+        $params[] = $entity->getEntityData($this->primaryEntityFieldName);
+
+        try {
+            $this->database->queryParams($query, [$params]);
+        } catch (QueryExeption $e) {
+            throw new CouldNotDeleteException($e->getMessage());
+        }
     }
 
     /**
