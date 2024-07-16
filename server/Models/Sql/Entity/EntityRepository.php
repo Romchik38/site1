@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Models\Sql;
+namespace Romchik38\Server\Models\Sql\Entity;
 
-use Romchik38\Server\Api\Models\EntityRepositoryInterface;
+use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Server\Api\Models\DatabaseInterface;
-use Romchik38\Server\Api\Models\EntityFactoryInterface;
-use Romchik38\Server\Api\Models\EntityModelInterface;
+use Romchik38\Server\Api\Models\Entity\EntityFactoryInterface;
+use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Models\Errors\{ 
     NoSuchEntityException, QueryExeption, CouldNotSaveException, 
     CouldNotDeleteException, CouldNotAddException
