@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Models\Sql;
+namespace Romchik38\Server\Models\Sql\Entity;
 
-use Romchik38\Site1\Api\Models\EntityModelInterface;
+use Romchik38\Server\Api\Models\EntityModelInterface;
 
 class EntityModel implements EntityModelInterface {
 

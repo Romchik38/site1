@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Api\Models;
+namespace Romchik38\Server\Api\Models\Entity;
 
-use Romchik38\Site1\Api\Models\EntityModelInterface;
+use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 
 interface EntityRepositoryInterface {
     public function add(EntityModelInterface $model): EntityModelInterface;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Models\Sql;
+namespace Romchik38\Server\Models\Sql;
 
-use Romchik38\Site1\Api\Models\EntityFactoryInterface;
-use Romchik38\Site1\Models\Sql\EntityModel;
+use Romchik38\Server\Api\Models\EntityFactoryInterface;
+use Romchik38\Server\Models\Sql\Entity\EntityModel;
 
 class EntityFactory implements EntityFactoryInterface
 {

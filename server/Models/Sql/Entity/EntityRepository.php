@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Models\Sql;
 
-use Romchik38\Site1\Api\Models\EntityRepositoryInterface;
+use Romchik38\Server\Api\Models\EntityRepositoryInterface;
 use Romchik38\Server\Api\Models\DatabaseInterface;
-use Romchik38\Site1\Api\Models\EntityFactoryInterface;
-use Romchik38\Site1\Api\Models\EntityModelInterface;
+use Romchik38\Server\Api\Models\EntityFactoryInterface;
+use Romchik38\Server\Api\Models\EntityModelInterface;
 use Romchik38\Server\Models\Errors\{ 
     NoSuchEntityException, QueryExeption, CouldNotSaveException, 
     CouldNotDeleteException, CouldNotAddException
