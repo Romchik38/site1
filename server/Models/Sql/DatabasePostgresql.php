@@ -10,7 +10,7 @@ use Romchik38\Server\Models\Errors\QueryExeption;
 
 class DatabasePostgresql implements DatabaseInterface
 {
-    private \PgSql\Connection|false $connection;
+    private \PgSql\Connection|false $connection = false;
 
     public function __construct(string $config)
     {
