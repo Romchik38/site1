@@ -7,6 +7,8 @@ use Romchik38\Server\Models\Sql\Entity\EntityRepository;
 use Romchik38\Server\Models\Sql\DatabasePostgresql;
 use Romchik38\Server\Models\Sql\Entity\EntityFactory;
 use Romchik38\Server\Models\Sql\Entity\EntityModel;
+use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Server\Models\Errors\CouldNotAddException;
 
 
 class EntityRepositoryTest extends TestCase
@@ -50,13 +52,18 @@ class EntityRepositoryTest extends TestCase
         $this->assertSame($entity, $repository->create());
     }
 
+    /**
+     * getById with Existing Id
+     */
     public function testGetById()
     {
         $repository = $this->createRepository();
         $id = 1;
         $fieldNameEmail = 'email_contact_recovery';
         $fieldValueEmail = 'some@mail.com';
-        $entityRow = ['entity_id' => '1', 'name' => 'Company Site1'];
+        $entityRow = [
+            ['entity_id' => '1', 'name' => 'Company Site1']
+        ];
         $fieldsRow = [
             [
                 'field_name' => $fieldNameEmail,
@@ -71,21 +78,32 @@ class EntityRepositoryTest extends TestCase
 
         ];
 
-        // $query = 'SELECT * FROM ' . $this->entityTable 
-        //     . ' WHERE ' . $this->primaryEntityFieldName . ' = $1';
-
-        // $queryFields = 'SELECT * FROM '
-        //     . $this->fieldsTable . ' WHERE ' . $this->primaryEntityFieldName . ' = $1';
-
         $this->database->expects($this->exactly(2))->method('queryParams')
-            ->willReturn([$entityRow], $fieldsRow);
+            ->willReturn($entityRow, $fieldsRow);
 
         $entity = new EntityModel();
         $this->factory->method('create')->willReturn($entity);
 
         $result = $repository->getById($id);
 
-        echo ($result->email_contact_recovery);
-        var_dump($result->getFieldsData());
+        $this->assertSame($fieldValueEmail, $result->email_contact_recovery);
     }
+
+    /**
+    * getById with not existing Id
+    */ 
+    public function testGetByIdNotFound()
+    {
+        $repository = $this->createRepository();
+        $id = 1;
+
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([]);
+
+        $this->expectException(NoSuchEntityException::class);
+
+        $repository->getById($id);
+
+    }
+
 }
