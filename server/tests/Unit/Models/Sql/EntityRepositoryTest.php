@@ -3,10 +3,10 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Romchik38\Site1\Models\Sql\EntityRepository;
+use Romchik38\Server\Models\Sql\Entity\EntityRepository;
 use Romchik38\Server\Models\Sql\DatabasePostgresql;
-use Romchik38\Site1\Models\Sql\EntityFactory;
-use Romchik38\Site1\Models\Sql\EntityModel;
+use Romchik38\Server\Models\Sql\Entity\EntityFactory;
+use Romchik38\Server\Models\Sql\Entity\EntityModel;
 
 
 class EntityRepositoryTest extends TestCase {
@@ -37,8 +37,13 @@ class EntityRepositoryTest extends TestCase {
         );
     }
 
+    /**
+     * Testing method create
+     */
     public function testCreate() {
         $repository = $this->createRepository();
-
+        $entity = new EntityModel();
+        $this->factory->method('create')->willReturn($entity);
+        $this->assertSame($entity, $repository->create());
     }
 }
