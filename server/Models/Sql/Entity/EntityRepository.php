@@ -54,7 +54,7 @@ class EntityRepository implements EntityRepositoryInterface
             $entityRow = $arr[0];
 
             // 2 add fields data
-            $entityId = $entityRow[$this->primaryEntityFieldName];
+            $entityId = (int)$entityRow[$this->primaryEntityFieldName];
             $fields = $model->getFieldsData();
 
             // @throws CouldNotAddException
@@ -309,15 +309,15 @@ class EntityRepository implements EntityRepositoryInterface
             // field
             $count++;
             $params2[] = $key;
-            $fullValue += '$' . $count;
+            $fullValue = $fullValue . '$' . $count;
             // value
             $count++;
             $params2[] = $value;
-            $fullValue += ', $' . $count;
+            $fullValue = $fullValue . ', $' . $count;
             // entity id
             $count++;
             $params[] = $entityId;
-            $fullValue += ', $' . $count . ')';
+            $fullValue = $fullValue . ', $' . $count . ')';
             // finish
             $values[] = $fullValue;
         }

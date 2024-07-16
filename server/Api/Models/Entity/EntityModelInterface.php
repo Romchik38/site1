@@ -13,7 +13,7 @@ interface EntityModelInterface {
     // public function getEntityId(): int;                  << MOVE THIS TO SPECIFIC ENTITY
     // public function getName(): string;
 
-    public function getEntityData(string $key): mixed;
+    public function getEntityData(string $key);
     public function setEntityData(string $key, $value): EntityModelInterface;
     public function getAllEntityData(): array;
 }

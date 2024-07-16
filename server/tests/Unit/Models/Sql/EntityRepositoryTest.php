@@ -21,11 +21,16 @@ class EntityRepositoryTest extends TestCase
     private $primaryEntityFieldName = 'entity_id';
     private $entityFieldName = 'field_name';
     private $entityValueName = 'value';
+    private $entityRow;
 
     public function setUp(): void
     {
         $this->database = $this->createMock(DatabasePostgresql::class);
         $this->factory = $this->createMock(EntityFactory::class);
+
+        $this->entityRow = [
+            [$this->primaryEntityFieldName => '1', 'name' => 'Company Site1']
+        ];
     }
 
     protected function createRepository(): EntityRepository
@@ -61,9 +66,7 @@ class EntityRepositoryTest extends TestCase
         $id = 1;
         $fieldNameEmail = 'email_contact_recovery';
         $fieldValueEmail = 'some@mail.com';
-        $entityRow = [
-            ['entity_id' => '1', 'name' => 'Company Site1']
-        ];
+
         $fieldsRow = [
             [
                 'field_name' => $fieldNameEmail,
@@ -79,7 +82,7 @@ class EntityRepositoryTest extends TestCase
         ];
 
         $this->database->expects($this->exactly(2))->method('queryParams')
-            ->willReturn($entityRow, $fieldsRow);
+            ->willReturn($this->entityRow, $fieldsRow);
 
         $entity = new EntityModel();
         $this->factory->method('create')->willReturn($entity);
@@ -104,6 +107,36 @@ class EntityRepositoryTest extends TestCase
 
         $repository->getById($id);
 
+    }
+
+    /**
+     * Add method
+     */
+
+    public function testAdd(){
+        $repository = $this->createRepository();
+        $entity = new EntityModel();
+
+        $this->factory->method('create')->willReturn(new EntityModel());
+
+        $entity->email_contact_recovery = 'some@email';
+        
+        $fieldsRow = [
+            ['field_name' => 'email_contact_recovery', 
+            'value' => 'some@email']
+        ];
+
+        $this->database->expects($this->exactly(2))->method('queryParams')
+            ->willReturn($this->entityRow, $fieldsRow);
+
+        $result = $repository->add($entity);
+
+        $this->assertSame(
+            $this->entityRow[$this->primaryEntityFieldName],
+            $result->getEntityData($this->primaryEntityFieldName)
+        );
+
+        
     }
 
 }

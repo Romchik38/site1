@@ -50,7 +50,7 @@ class EntityModel implements EntityModelInterface {
         return $this->entityData;
     }
 
-    public function getEntityData(string $key): int|string|float {
+    public function getEntityData(string $key) {
         return $this->entityData[$key];
     }
 
