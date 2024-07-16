@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Romchik38\Container;
-
 return function ($container) {
     // /
     $container->add(
@@ -11,7 +9,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Controllers\Main\Index(
                 $container->get(\Romchik38\Site1\Views\Html\Classes\Main\Index::class),
-                $container->get(\Romchik38\Site1\Models\Page\PageRepository::class),
+                $container->get(\Romchik38\Site1\Models\Sql\Page\PageRepository::class),
                 $container->get(\Romchik38\Site1\Models\DTO\Main\MainDTOFactory::class)
             );
         }
@@ -25,7 +23,7 @@ return function ($container) {
                 $container->get(\Romchik38\Server\Services\Session::class),
                 $container->get(\Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class),
                 $container->get(\Romchik38\Site1\Services\Http\Request::class),
-                $container->get(\Romchik38\Site1\Models\User\UserRepository::class)
+                $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
             );
         }
     );

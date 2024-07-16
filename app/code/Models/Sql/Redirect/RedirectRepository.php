@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Models\Redirect;
+namespace Romchik38\Site1\Models\Sql\Redirect;
 
-use Romchik38\Server\Models\Repository;
+use Romchik38\Server\Models\Sql\Repository;
 use Romchik38\Server\Api\Models\RedirectRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\RedirectModelInterface;

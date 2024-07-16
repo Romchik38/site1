@@ -7,22 +7,22 @@ return function ($container) {
 
     // DATABASES
     $container->add(
-        Romchik38\Server\Models\DatabasePostgresql::class,
-        new Romchik38\Server\Models\DatabasePostgresql($config)
+        Romchik38\Server\Models\Sql\DatabasePostgresql::class,
+        new Romchik38\Server\Models\Sql\DatabasePostgresql($config)
     );
     // FACTORIES
     $container->add(
-        Romchik38\Site1\Models\Page\PageFactory::class,
-        new Romchik38\Site1\Models\Page\PageFactory()
+        Romchik38\Site1\Models\Sql\Page\PageFactory::class,
+        new Romchik38\Site1\Models\Sql\Page\PageFactory()
     );
     $container->add(
-        Romchik38\Site1\Models\Redirect\RedirectFactory::class,
-        new Romchik38\Site1\Models\Redirect\RedirectFactory()
+        Romchik38\Site1\Models\Sql\Redirect\RedirectFactory::class,
+        new Romchik38\Site1\Models\Sql\Redirect\RedirectFactory()
     );
 
     $container->add(
-        Romchik38\Site1\Models\User\UserFactory::class,
-        new Romchik38\Site1\Models\User\UserFactory()
+        Romchik38\Site1\Models\Sql\User\UserFactory::class,
+        new Romchik38\Site1\Models\Sql\User\UserFactory()
     );
 
     $container->add(
@@ -42,11 +42,11 @@ return function ($container) {
 
     // REPOSITORIES
     $container->add(
-        \Romchik38\Site1\Models\Page\PageRepository::class,
+        \Romchik38\Site1\Models\Sql\Page\PageRepository::class,
         function($container){
-            return new \Romchik38\Site1\Models\Page\PageRepository(
-                $container->get(\Romchik38\Server\Models\DatabasePostgresql::class),
-                $container->get(\Romchik38\Site1\Models\Page\PageFactory::class),
+            return new \Romchik38\Site1\Models\Sql\Page\PageRepository(
+                $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class),
+                $container->get(\Romchik38\Site1\Models\Sql\Page\PageFactory::class),
                 'pages',
                 'page_id'
             );
@@ -54,11 +54,11 @@ return function ($container) {
     );
 
     $container->add(
-        \Romchik38\Site1\Models\Redirect\RedirectRepository::class,
+        \Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class,
         function($container){
-            return new \Romchik38\Site1\Models\Redirect\RedirectRepository(
-                $container->get(\Romchik38\Server\Models\DatabasePostgresql::class),
-                $container->get(\Romchik38\Site1\Models\Redirect\RedirectFactory::class),
+            return new \Romchik38\Site1\Models\Sql\Redirect\RedirectRepository(
+                $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class),
+                $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectFactory::class),
                 'redirects',
                 'redirect_id'
             );
@@ -66,11 +66,11 @@ return function ($container) {
     );
     
     $container->add(
-        \Romchik38\Site1\Models\User\UserRepository::class,
+        \Romchik38\Site1\Models\Sql\User\UserRepository::class,
         function($container){
-            return new \Romchik38\Site1\Models\User\UserRepository(
-                $container->get(\Romchik38\Server\Models\DatabasePostgresql::class),
-                $container->get(\Romchik38\Site1\Models\User\UserFactory::class),
+            return new \Romchik38\Site1\Models\Sql\User\UserRepository(
+                $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class),
+                $container->get(\Romchik38\Site1\Models\Sql\User\UserFactory::class),
                 'users',
                 'user_id'
             );

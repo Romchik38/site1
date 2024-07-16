@@ -27,13 +27,13 @@ $container->add(\Romchik38\Site1\Services\Http\Request::class,
 
 $container->add(\Romchik38\Site1\Services\PasswordCheck::class,
     new \Romchik38\Site1\Services\PasswordCheck(
-        $container->get(\Romchik38\Site1\Models\User\UserRepository::class)
+        $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
     )
 );
 
 $container->add(\Romchik38\Site1\Services\UserRegister::class,
     new \Romchik38\Site1\Services\UserRegister(
-        $container->get(\Romchik38\Site1\Models\User\UserRepository::class)
+        $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
     )
 );
 
@@ -54,7 +54,7 @@ $container->add(
     \Romchik38\Server\Services\Redirect::class, 
     function($container){
         return new \Romchik38\Server\Services\Redirect(
-            $container->get(\Romchik38\Site1\Models\Redirect\RedirectRepository::class)
+            $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class)
         );
     }
 );
