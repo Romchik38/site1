@@ -32,10 +32,9 @@ class EntityModel implements EntityModelInterface {
     /**
      * get a value by provided field name
      * 
-     * @return string|int|float
      */
-    public function __get(string $field): string|int|float {
-        return $this->data[$field];
+    public function __get(string $field) {
+        return $this->fieldsData[$field];
     }
 
     /**
@@ -44,7 +43,7 @@ class EntityModel implements EntityModelInterface {
      *  @return void
      */
     public function __set(string $field, $val): void {
-        $this->data[$field] = $val;
+        $this->fieldsData[$field] = $val;
     }
 
     public function getAllEntityData(): array {

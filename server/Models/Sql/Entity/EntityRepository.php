@@ -283,7 +283,9 @@ class EntityRepository implements EntityRepositoryInterface
             $entity->setEntityData($key, $value);
         }
 
-        foreach ($fieldsRow as $key => $value) {
+        foreach ($fieldsRow as $field) {
+            $key = $field[$this->entityFieldName];
+            $value = $field[$this->entityValueName];
             $entity->$key = $value;
         }
 
