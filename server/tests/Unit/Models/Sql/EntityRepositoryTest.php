@@ -10,6 +10,7 @@ use Romchik38\Server\Models\EntityModel;
 use Romchik38\Server\Models\Errors\QueryExeption;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
+use Romchik38\Server\Models\Errors\CouldNotDeleteException;
 
 
 class EntityRepositoryTest extends TestCase
@@ -212,5 +213,18 @@ class EntityRepositoryTest extends TestCase
         $this->assertSame($entity, $repository->create());
     }
 
-    
+    /**
+     * deleteById
+     * throw error
+     */
+
+    public function testDeleteById(){
+        $repository = $this->createRepository();
+
+        $this->database->method('queryParams')->willThrowException(new QueryExeption('some database error'));
+        $this->expectException(CouldNotDeleteException::class);
+
+        $repository->deleteById(1);
+
+    }
 }
