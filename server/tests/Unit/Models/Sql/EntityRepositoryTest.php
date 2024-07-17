@@ -43,17 +43,6 @@ class EntityRepositoryTest extends TestCase
     }
 
     /**
-     * Testing method create
-     */
-    public function testCreate()
-    {
-        $repository = $this->createRepository();
-        $entity = new EntityModel();
-        $this->factory->method('create')->willReturn($entity);
-        $this->assertSame($entity, $repository->create());
-    }
-
-    /**
      * getById with Existing Id
      */
     public function testGetById()
@@ -93,8 +82,8 @@ class EntityRepositoryTest extends TestCase
     }
 
     /**
-    * getById with not existing Id
-    */ 
+     * getById with not existing Id
+     */
     public function testGetByIdNotFound()
     {
         $repository = $this->createRepository();
@@ -106,22 +95,24 @@ class EntityRepositoryTest extends TestCase
         $this->expectException(NoSuchEntityException::class);
 
         $repository->getById($id);
-
     }
 
     /**
      * Add new Entity
      * pass
      */
-    public function testAdd(){
+    public function testAdd()
+    {
         $repository = $this->createRepository();
         $entity = new EntityModel();
         $entity->setEntityData('name', 'Test Entity for add method');
         $entity->email_contact_recovery = 'some@email';
 
         $fieldsRow = [
-            ['field_name' => 'email_contact_recovery', 
-            'value' => 'some@email']
+            [
+                'field_name' => 'email_contact_recovery',
+                'value' => 'some@email'
+            ]
         ];
 
         $entityRow = [
@@ -144,14 +135,14 @@ class EntityRepositoryTest extends TestCase
             $fieldsRow[0][$this->entityValueName],
             $result->email_contact_recovery
         );
-        
     }
 
     /**
      * Add new Entity
      * entity data is empty, so throw an error
-    */
-    public function testAddEntityDataEmptyThrowError(){
+     */
+    public function testAddEntityDataEmptyThrowError()
+    {
         $repository = $this->createRepository();
         $entity = new EntityModel();
 
@@ -164,7 +155,8 @@ class EntityRepositoryTest extends TestCase
      * Add new Entity
      * database throw an error
      */
-    public function testAddDatabaseThrowError(){
+    public function testAddDatabaseThrowError()
+    {
         $repository = $this->createRepository();
         $entity = new EntityModel();
         $entity->setEntityData('name', 'Test Entity for add method');
@@ -181,7 +173,8 @@ class EntityRepositoryTest extends TestCase
      * Add fields to existing entity
      * pass
      */
-    public function testAddFields(){
+    public function testAddFields()
+    {
         $repository = $this->createRepository();
         $entity = new EntityModel();
         $entity->setEntityData($this->primaryEntityFieldName, 1);
@@ -192,12 +185,14 @@ class EntityRepositoryTest extends TestCase
         ];
 
         $fieldsRow = [
-            ['field_name' => 'email_contact_recovery', 
-            'value' => 'some@email']
+            [
+                'field_name' => 'email_contact_recovery',
+                'value' => 'some@email'
+            ]
         ];
 
         $this->database->expects($this->once())->method('queryParams')
-        ->willReturn($fieldsRow);
+            ->willReturn($fieldsRow);
 
         $this->factory->method('create')->willReturn(new EntityModel());
 
@@ -205,4 +200,17 @@ class EntityRepositoryTest extends TestCase
 
         $this->assertSame('some@email', $result->email_contact_recovery);
     }
+
+    /**
+     * Testing method create
+     */
+    public function testCreate()
+    {
+        $repository = $this->createRepository();
+        $entity = new EntityModel();
+        $this->factory->method('create')->willReturn($entity);
+        $this->assertSame($entity, $repository->create());
+    }
+
+    
 }
