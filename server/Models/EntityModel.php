@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Models\Sql\Entity;
+namespace Romchik38\Server\Models;
 
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 
