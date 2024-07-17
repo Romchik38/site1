@@ -137,11 +137,11 @@ class EntityRepository implements EntityRepositoryInterface
             $params[] = $field;
         }
         
-        $query = 'DELETE FROM ' . $this->fieldsTable . ' WHERE (' . implode(" OR ", $values) 
-        . ') AND ' . $this->primaryEntityFieldName . ' = $1';
-
         $entityId = $entity->getEntityData($this->primaryEntityFieldName);
         $params[] = $entityId;
+
+        $query = 'DELETE FROM ' . $this->fieldsTable . ' WHERE (' . implode(" OR ", $values) 
+        . ') AND ' . $this->primaryEntityFieldName . ' = $' . ++$count;
 
         try {
             $this->database->queryParams($query, [$params]);
