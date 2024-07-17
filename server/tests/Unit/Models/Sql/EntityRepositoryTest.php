@@ -214,10 +214,9 @@ class EntityRepositoryTest extends TestCase
     }
 
     /**
-     * deleteById
+     * deleteById method
      * throw error
      */
-
     public function testDeleteById(){
         $repository = $this->createRepository();
 
@@ -225,6 +224,49 @@ class EntityRepositoryTest extends TestCase
         $this->expectException(CouldNotDeleteException::class);
 
         $repository->deleteById(1);
+    }
 
+    /**
+     * deleteFields method
+     * pass
+     * queries checks
+     */
+    public function testDeleteFields(){
+        $repository = $this->createRepository();
+        $entity = new EntityModel();
+        $entity->setEntityData($this->primaryEntityFieldName, 1);
+        $entity->email_contact_recovery = 'some@email';
+
+        $fields = ['email_contact_recovery'];
+
+        $deleteQuery = 'DELETE FROM entity_field WHERE (field_name = $1) AND entity_id = $2';
+        $selectEntityQuery = 'SELECT * FROM entities WHERE entity_id = $1';
+        $selectFieldQuery = 'SELECT * FROM entity_field WHERE entity_id = $1';
+
+        $this->factory->method('create')->willReturn(new EntityModel());
+
+        $fieldsRow = [];
+
+        $entityRow = [
+            [$this->primaryEntityFieldName => '1']
+        ];
+
+        $this->database->expects($this->exactly(3))->method('queryParams')
+            ->willReturn([], $entityRow, $fieldsRow)
+            ->with($this->callback(
+                function($param) use ($deleteQuery, $selectEntityQuery, $selectFieldQuery){
+                if ($param === $deleteQuery || 
+                    $param === $selectEntityQuery ||
+                    $param === $selectFieldQuery
+                ) {
+                    return true;
+                }
+                return false;
+            }));
+            
+        $result = $repository->deleteFields($fields, $entity);
+
+        $deletedField = $result->email_contact_recovery ?? null;
+        $this->assertSame(null, $deletedField);    
     }
 }
