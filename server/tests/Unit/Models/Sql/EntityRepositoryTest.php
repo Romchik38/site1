@@ -176,4 +176,33 @@ class EntityRepositoryTest extends TestCase
 
         $repository->add($entity);
     }
+
+    /**
+     * Add fields to existing entity
+     * pass
+     */
+    public function testAddFields(){
+        $repository = $this->createRepository();
+        $entity = new EntityModel();
+        $entity->setEntityData($this->primaryEntityFieldName, 1);
+        $entity->setEntityData('name', 'Test Entity for add method');
+
+        $fields = [
+            ['email_contact_recovery' => 'some@email']
+        ];
+
+        $fieldsRow = [
+            ['field_name' => 'email_contact_recovery', 
+            'value' => 'some@email']
+        ];
+
+        $this->database->expects($this->once())->method('queryParams')
+        ->willReturn($fieldsRow);
+
+        $this->factory->method('create')->willReturn(new EntityModel());
+
+        $result = $repository->addFields($fields, $entity);
+
+        $this->assertSame('some@email', $result->email_contact_recovery);
+    }
 }

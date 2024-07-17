@@ -314,11 +314,11 @@ class EntityRepository implements EntityRepositoryInterface
             $fullValue = '(';
             // field
             $count++;
-            $params2[] = $key;
+            $params[] = $key;
             $fullValue = $fullValue . '$' . $count;
             // value
             $count++;
-            $params2[] = $value;
+            $params[] = $value;
             $fullValue = $fullValue . ', $' . $count;
             // entity id
             $count++;
@@ -336,7 +336,7 @@ class EntityRepository implements EntityRepositoryInterface
         . implode(', ', $values) . ' RETURNING *';
 
         try {
-            $fieldsRow = $this->database->queryParams($query, $params2);
+            $fieldsRow = $this->database->queryParams($query, $params);
             return $fieldsRow;
         } catch (QueryExeption $e) {
             throw new CouldNotAddException($e->getMessage());
