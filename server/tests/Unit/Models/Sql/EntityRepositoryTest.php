@@ -7,6 +7,7 @@ use Romchik38\Server\Models\Sql\Entity\EntityRepository;
 use Romchik38\Server\Models\Sql\DatabasePostgresql;
 use Romchik38\Server\Models\EntityFactory;
 use Romchik38\Server\Models\EntityModel;
+use Romchik38\Server\Models\Errors\QueryExeption;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
 
@@ -110,15 +111,11 @@ class EntityRepositoryTest extends TestCase
 
     /**
      * Add new Entity
-     * 
+     * pass
      */
-
     public function testAdd(){
         $repository = $this->createRepository();
         $entity = new EntityModel();
-
-        $this->factory->method('create')->willReturn(new EntityModel());
-
         $entity->setEntityData('name', 'Test Entity for add method');
         $entity->email_contact_recovery = 'some@email';
 
@@ -127,18 +124,16 @@ class EntityRepositoryTest extends TestCase
             'value' => 'some@email']
         ];
 
-
         $entityRow = [
             [$this->primaryEntityFieldName => '1', 'name' => 'Test Entity for add method']
         ];
+
+        $this->factory->method('create')->willReturn(new EntityModel());
 
         $this->database->expects($this->exactly(2))->method('queryParams')
             ->willReturn($entityRow, $fieldsRow);
 
         $result = $repository->add($entity);
-
-        $res1 = $entityRow[$this->primaryEntityFieldName];
-        $res2 = $result->getEntityData($this->primaryEntityFieldName);
 
         $this->assertSame(
             $entityRow[0][$this->primaryEntityFieldName],
@@ -152,4 +147,33 @@ class EntityRepositoryTest extends TestCase
         
     }
 
+    /**
+     * Add new Entity
+     * entity data is empty, so throw an error
+    */
+    public function testAddEntityDataEmptyThrowError(){
+        $repository = $this->createRepository();
+        $entity = new EntityModel();
+
+        $this->expectException(CouldNotAddException::class);
+
+        $repository->add($entity);
+    }
+
+    /**
+     * Add new Entity
+     * database throw an error
+     */
+    public function testAddDatabaseThrowError(){
+        $repository = $this->createRepository();
+        $entity = new EntityModel();
+        $entity->setEntityData('name', 'Test Entity for add method');
+        $entity->email_contact_recovery = 'some@email';
+
+        $this->factory->method('create')->willReturn(new EntityModel());
+        $this->database->method('queryParams')->willThrowException(new QueryExeption('some database error'));
+        $this->expectException(CouldNotAddException::class);
+
+        $repository->add($entity);
+    }
 }
