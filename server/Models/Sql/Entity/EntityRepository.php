@@ -35,11 +35,17 @@ class EntityRepository implements EntityRepositoryInterface
      */
     public function add(EntityModelInterface $model): EntityModelInterface
     {
+        $allEntityData = $model->getAllEntityData();
+        if (count($allEntityData) === 0) {
+            // no entity data specified, so throw error
+            throw new CouldNotAddException('No entity data specified');
+        }
         // 1 add entity data
         $keys = [];
         $values = [];
         $params = [];
         $count = 0;
+
         foreach ($model->getAllEntityData() as $key => $value) {
             $count++;
             $params[] = '$' . $count;
@@ -326,8 +332,8 @@ class EntityRepository implements EntityRepositoryInterface
             . ' (' . $this->entityFieldName 
             . ', ' . $this->entityValueName 
             . ', ' . $this->primaryEntityFieldName 
-            . ') VALUES ('
-        . implode(', ', $values) . ') RETURNING *';
+            . ') VALUES '
+        . implode(', ', $values) . ' RETURNING *';
 
         try {
             $fieldsRow = $this->database->queryParams($query, $params2);

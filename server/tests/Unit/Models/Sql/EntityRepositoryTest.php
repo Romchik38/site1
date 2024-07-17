@@ -5,8 +5,8 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Romchik38\Server\Models\Sql\Entity\EntityRepository;
 use Romchik38\Server\Models\Sql\DatabasePostgresql;
-use Romchik38\Server\Models\Sql\Entity\EntityFactory;
-use Romchik38\Server\Models\Sql\Entity\EntityModel;
+use Romchik38\Server\Models\EntityFactory;
+use Romchik38\Server\Models\EntityModel;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
 
@@ -21,16 +21,11 @@ class EntityRepositoryTest extends TestCase
     private $primaryEntityFieldName = 'entity_id';
     private $entityFieldName = 'field_name';
     private $entityValueName = 'value';
-    private $entityRow;
 
     public function setUp(): void
     {
         $this->database = $this->createMock(DatabasePostgresql::class);
         $this->factory = $this->createMock(EntityFactory::class);
-
-        $this->entityRow = [
-            [$this->primaryEntityFieldName => '1', 'name' => 'Company Site1']
-        ];
     }
 
     protected function createRepository(): EntityRepository
@@ -81,8 +76,12 @@ class EntityRepositoryTest extends TestCase
 
         ];
 
+        $entityRow = [
+            [$this->primaryEntityFieldName => '1', 'name' => 'Test Entity for getById method']
+        ];
+
         $this->database->expects($this->exactly(2))->method('queryParams')
-            ->willReturn($this->entityRow, $fieldsRow);
+            ->willReturn($entityRow, $fieldsRow);
 
         $entity = new EntityModel();
         $this->factory->method('create')->willReturn($entity);
@@ -110,7 +109,8 @@ class EntityRepositoryTest extends TestCase
     }
 
     /**
-     * Add method
+     * Add new Entity
+     * 
      */
 
     public function testAdd(){
@@ -119,23 +119,36 @@ class EntityRepositoryTest extends TestCase
 
         $this->factory->method('create')->willReturn(new EntityModel());
 
+        $entity->setEntityData('name', 'Test Entity for add method');
         $entity->email_contact_recovery = 'some@email';
-        
+
         $fieldsRow = [
             ['field_name' => 'email_contact_recovery', 
             'value' => 'some@email']
         ];
 
+
+        $entityRow = [
+            [$this->primaryEntityFieldName => '1', 'name' => 'Test Entity for add method']
+        ];
+
         $this->database->expects($this->exactly(2))->method('queryParams')
-            ->willReturn($this->entityRow, $fieldsRow);
+            ->willReturn($entityRow, $fieldsRow);
 
         $result = $repository->add($entity);
 
+        $res1 = $entityRow[$this->primaryEntityFieldName];
+        $res2 = $result->getEntityData($this->primaryEntityFieldName);
+
         $this->assertSame(
-            $this->entityRow[$this->primaryEntityFieldName],
+            $entityRow[0][$this->primaryEntityFieldName],
             $result->getEntityData($this->primaryEntityFieldName)
         );
 
+        $this->assertSame(
+            $fieldsRow[0][$this->entityValueName],
+            $result->email_contact_recovery
+        );
         
     }
 
