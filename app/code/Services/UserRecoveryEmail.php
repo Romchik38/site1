@@ -53,4 +53,8 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             throw new CantSendRecoveryLinkException('Email can not be send via technical issues');
         }
     }
+
+    protected function createLink(): string {
+        return base64_encode(random_bytes(20));
+    }
 }
