@@ -187,7 +187,7 @@ class EntityRepository implements EntityRepositoryInterface
      *
      * @param string $expression [use entity id or name]
      * @param array $params
-     * @return array
+     * @return EntityModelInterface[]
      */
     public function listByEntities(string $expression, array $params): array
     {

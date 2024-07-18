@@ -211,7 +211,7 @@ class EntityRepositoryTest extends TestCase
             
         $result = $repository->deleteFields($fields, $entity);
 
-        $deletedField = $result->email_contact_recovery ?? null;
+        $deletedField = $result->email_contact_recovery;
         $this->assertSame(null, $deletedField);    
     }
 
@@ -268,5 +268,52 @@ class EntityRepositoryTest extends TestCase
         $this->expectException(NoSuchEntityException::class);
 
         $repository->getById($id);
+    }
+
+    // listByEntities
+    // listByFields
+    // save
+
+    /**
+     * listByEntities
+     * pass
+     * query checks
+     */
+    public function testListByEntities(){
+        $repository = $this->createRepository();
+        $expression = 'WHERE ' . $this->primaryEntityFieldName . ' = $1';
+        $params = [1];
+        $listQuery = 'SELECT entities.* FROM entities WHERE entity_id = $1';
+        $fieldsQuery = 'SELECT entity_field.* FROM entity_field WHERE entity_id = 1';
+
+        $this->factory->method('create')->willReturn(new EntityModel());
+
+        $fieldsRow = [
+            [ 
+                $this->entityFieldName => 'email_contact_recovery', 
+                $this->entityValueName => 'some@email'
+            ]
+        ];
+
+        $entityRow = [
+            [$this->primaryEntityFieldName => '1']
+        ];
+
+        $this->database->method('queryParams')->willReturn($entityRow, $fieldsRow)
+            ->with($this->callback(
+                function($param) use ($listQuery, $fieldsQuery){
+                if ($param === $listQuery || 
+                    $param === $fieldsQuery
+                ) {
+                    return true;
+                }
+                return false;
+            }));
+
+        $entities = $repository->listByEntities($expression, $params);
+        $entity = $entities[0];
+
+        $this->assertSame('1', $entity->getEntityData($this->primaryEntityFieldName));
+        $this->assertSame('some@email', $entity->email_contact_recovery);
     }
 }
