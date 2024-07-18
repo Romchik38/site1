@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Romchick38\Site1\Models\Sql\EntityModel;
 
-use Romchik38\Site1\Models\Sql\EntityModel;
-use Romchik38\Site1\Api\Models\EntityModelInterface;
+use Romchik38\Server\Models\EntityModel;
+use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 
 class BasicEntityModel extends EntityModel{
     const ID_FIELD = 'entity_id';
