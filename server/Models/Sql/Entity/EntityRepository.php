@@ -219,7 +219,7 @@ class EntityRepository implements EntityRepositoryInterface
      * Save existing entity. Use add method if you want to save a new one
      * 
      * @param EntityModelInterface $model
-     * @return EntityModelInterface
+     * @return EntityModelInterface [a fresh copy of given entity]
      */
     public function save(EntityModelInterface $model): EntityModelInterface
     {
@@ -239,13 +239,18 @@ class EntityRepository implements EntityRepositoryInterface
 
         $query = 'UPDATE ' . $this->entityTable . ' SET ' . implode(', ', $fields) 
             . ' WHERE ' . $this->entityTable . '.' . $this->primaryEntityFieldName 
-            . ' = ' . ++$count . ' RETURNING *';
+            . ' = $' . ++$count . ' RETURNING *';
         
         $params[] = $this->primaryEntityFieldName;
 
         try {
-            $arr = $this->database->queryParams($query, $params);
-            $entityRow = $arr[0];
+            if (count($fields) > 0) {
+                $arr = $this->database->queryParams($query, $params);
+                $entityRow = $arr[0];
+            } else {
+                // only entity_id was provided with entity data, so no query needed
+                $entityRow = $model->getAllEntityData();
+            }
             // 2 save entity fields
             $params2 = [];
             $fields2 = [];
@@ -259,7 +264,7 @@ class EntityRepository implements EntityRepositoryInterface
 
             $query2 = 'UPDATE ' . $this->fieldsTable . ' SET ' . implode(', ', $fields2) 
             . ' WHERE ' . $this->fieldsTable . '.' . $this->primaryEntityFieldName 
-            . ' = ' . ++$count . ' RETURNING *';
+            . ' = $' . ++$count2 . ' RETURNING *';
 
             $params2[] = $this->primaryEntityFieldName;
 
