@@ -44,61 +44,6 @@ class EntityRepositoryTest extends TestCase
     }
 
     /**
-     * getById with Existing Id
-     */
-    public function testGetById()
-    {
-        $repository = $this->createRepository();
-        $id = 1;
-        $fieldNameEmail = 'email_contact_recovery';
-        $fieldValueEmail = 'some@mail.com';
-
-        $fieldsRow = [
-            [
-                'field_name' => $fieldNameEmail,
-                'entity_id' => '1',
-                'value' => $fieldValueEmail
-            ],
-            [
-                'field_name' => 'min_order_sum',
-                'entity_id' => '1',
-                'value' => '100'
-            ],
-
-        ];
-
-        $entityRow = [
-            [$this->primaryEntityFieldName => '1', 'name' => 'Test Entity for getById method']
-        ];
-
-        $this->database->expects($this->exactly(2))->method('queryParams')
-            ->willReturn($entityRow, $fieldsRow);
-
-        $entity = new EntityModel();
-        $this->factory->method('create')->willReturn($entity);
-
-        $result = $repository->getById($id);
-
-        $this->assertSame($fieldValueEmail, $result->email_contact_recovery);
-    }
-
-    /**
-     * getById with not existing Id
-     */
-    public function testGetByIdNotFound()
-    {
-        $repository = $this->createRepository();
-        $id = 1;
-
-        $this->database->expects($this->once())->method('queryParams')
-            ->willReturn([]);
-
-        $this->expectException(NoSuchEntityException::class);
-
-        $repository->getById($id);
-    }
-
-    /**
      * Add new Entity
      * pass
      */
@@ -268,5 +213,60 @@ class EntityRepositoryTest extends TestCase
 
         $deletedField = $result->email_contact_recovery ?? null;
         $this->assertSame(null, $deletedField);    
+    }
+
+        /**
+     * getById with Existing Id
+     */
+    public function testGetById()
+    {
+        $repository = $this->createRepository();
+        $id = 1;
+        $fieldNameEmail = 'email_contact_recovery';
+        $fieldValueEmail = 'some@mail.com';
+
+        $fieldsRow = [
+            [
+                'field_name' => $fieldNameEmail,
+                'entity_id' => '1',
+                'value' => $fieldValueEmail
+            ],
+            [
+                'field_name' => 'min_order_sum',
+                'entity_id' => '1',
+                'value' => '100'
+            ],
+
+        ];
+
+        $entityRow = [
+            [$this->primaryEntityFieldName => '1', 'name' => 'Test Entity for getById method']
+        ];
+
+        $this->database->expects($this->exactly(2))->method('queryParams')
+            ->willReturn($entityRow, $fieldsRow);
+
+        $entity = new EntityModel();
+        $this->factory->method('create')->willReturn($entity);
+
+        $result = $repository->getById($id);
+
+        $this->assertSame($fieldValueEmail, $result->email_contact_recovery);
+    }
+
+    /**
+     * getById with not existing Id
+     */
+    public function testGetByIdNotFound()
+    {
+        $repository = $this->createRepository();
+        $id = 1;
+
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([]);
+
+        $this->expectException(NoSuchEntityException::class);
+
+        $repository->getById($id);
     }
 }
