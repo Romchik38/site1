@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Server\Services;
 
 use \Romchik38\Server\Api\Services\SessionInterface;
+use \Romchik38\Server\Services\Errors\SessionDoesnWorkException;
 
 class Session implements SessionInterface
 {
@@ -16,6 +17,10 @@ class Session implements SessionInterface
     public function __construct()
     {
         session_start();
+        $sessionId = session_id();
+        if (($sessionId === false) || ($sessionId === '')) {
+            throw new SessionDoesnWorkException('Session does\'t work correctly');
+        } 
     }
 
     public function getUserId(): int
