@@ -360,4 +360,51 @@ class EntityRepositoryTest extends TestCase
         $this->assertSame('1', $entity->getEntityData($this->primaryEntityFieldName));
         $this->assertSame('some@email', $entity->email_contact_recovery);
     }
+
+    /**
+     * save method for existing entity
+     * pass
+     * query check
+     */
+    public function testSave(){
+        $repository = $this->createRepository();
+        $entity = new EntityModel();
+        $entity->setEntityData($this->primaryEntityFieldName, 1);
+        $entity->setEntityData('name', 'Some name for Save method');
+        $entity->email_contact_recovery = 'some@email';
+
+        $updateEntityQuery = 'UPDATE entities SET name = $1 WHERE entities.entity_id = $2 RETURNING *';
+        $updateFieldsQuery = 'UPDATE entity_field SET email_contact_recovery = $1 WHERE entity_field.entity_id = $2 RETURNING *';
+        $selectQuery = 'SELECT entity_field.* FROM entity_field WHERE entity_id = 1';
+
+        $this->factory->method('create')->willReturn(new EntityModel());
+
+        $entityRow = [
+            [$this->primaryEntityFieldName => '1', 'name' => 'Some name for Save method']
+        ];
+
+        $fieldsRow = [
+            [ 
+                $this->entityFieldName => 'email_contact_recovery', 
+                $this->entityValueName => 'some@email'
+            ]
+        ];
+
+        $this->database->method('queryParams')->willReturn($entityRow, $fieldsRow)
+        ->with($this->callback(
+            function($param) use ($updateEntityQuery, $updateFieldsQuery, $selectQuery){
+            if ($param === $updateEntityQuery || 
+                $param === $updateFieldsQuery || 
+                $param === $selectQuery
+            ) {
+                return true;
+            }
+            return false;
+        }));
+
+        $savedEntity = $repository->save($entity);
+
+        $this->assertSame('1', $savedEntity->getEntityData($this->primaryEntityFieldName));
+        $this->assertSame('some@email', $savedEntity->email_contact_recovery);
+    }
 }
