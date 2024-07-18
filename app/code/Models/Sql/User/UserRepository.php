@@ -43,6 +43,22 @@ class UserRepository extends Repository implements UserRepositoryInterface
         return $entity;
     }
 
+    public function getByEmail(string $email): UserModelInterface
+    {
+        $arr = $this->list(
+            'WHERE ' 
+            . UserModelInterface::EMAIL_FIELD
+            .' = $1', 
+            [$email]
+        );
+        if (count($arr) === 0) {
+            throw new NoSuchEntityException('row with email ' . $email
+                . ' do not present in the ' . $this->table . ' table');
+        }
+
+        return array_shift($arr);
+    }
+
     public function getByUserName(string $userName): UserModelInterface
     {
         $arr = $this->list(

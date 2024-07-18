@@ -10,10 +10,12 @@ use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Services\PasswordCheckInterface;
 use Romchik38\Server\Api\Services\SessionInterface;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
+use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Error\UserRecoveryEmail\CantSendRecoveryLinkException;
+use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 
 class Index implements ControllerInterface
 {
@@ -34,7 +36,8 @@ class Index implements ControllerInterface
         private PasswordCheckInterface $passwordCheck,
         private SessionInterface $session,
         private UserRegisterInterface $userRegister,
-        private UserRecoveryEmailInterface $userRecoveryEmail
+        private UserRecoveryEmailInterface $userRecoveryEmail,
+        private UserRepositoryInterface $userRepository
     ) {
     }
 
@@ -92,10 +95,16 @@ class Index implements ControllerInterface
         if ($email === '') {
             return 'Bad request (email not present)';
         }
-
+        // check if email is present in the database
+        try {
+            $this->userRepository->getByEmail($email);
+        } catch(NoSuchEntityException $e) {
+            return $this->weWillSend($email);
+        }
+        // send email
         try {
             $this->userRecoveryEmail->sendRecoveryLink($email);
-            return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
+            return $this->weWillSend($email);
         } catch (CantSendRecoveryLinkException $e) {
             return 'Error: ' . $e->getMessage();
         }
@@ -134,5 +143,9 @@ class Index implements ControllerInterface
             // send answer
             return 'Could not register. Please try later';
         }
+    }
+
+    protected function weWillSend($email): string {
+        return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
     }
 }
