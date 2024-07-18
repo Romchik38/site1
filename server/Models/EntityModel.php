@@ -32,9 +32,10 @@ class EntityModel implements EntityModelInterface {
     /**
      * get a value by provided field name
      * 
+     * @return mixed|null [value or null on failure]
      */
     public function __get(string $field) {
-        return $this->fieldsData[$field];
+        return $this->fieldsData[$field] ?? null;
     }
 
     /**
