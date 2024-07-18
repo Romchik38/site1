@@ -207,7 +207,7 @@ class EntityRepository implements EntityRepositoryInterface
         $query = 'SELECT ' . $this->entityTable . '.* FROM ' . $this->entityTable 
             . ' WHERE ' . $this->primaryEntityFieldName 
             . ' IN (SELECT DISTINCT ' . $this->fieldsTable . '.' . $this->primaryEntityFieldName
-            . 'FROM ' . $this->fieldsTable . $expression;
+            . ' FROM ' . $this->fieldsTable . ' ' . $expression . ')';
         $arr = $this->database->queryParams($query, $params);
         
         // 2. select fields

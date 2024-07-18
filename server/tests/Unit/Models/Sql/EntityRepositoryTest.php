@@ -316,4 +316,48 @@ class EntityRepositoryTest extends TestCase
         $this->assertSame('1', $entity->getEntityData($this->primaryEntityFieldName));
         $this->assertSame('some@email', $entity->email_contact_recovery);
     }
+
+       /**
+     * listByFields
+     * pass
+     * query checks
+     */
+    public function testListByFields(){
+        $repository = $this->createRepository();
+        $expression = 'WHERE ' . $this->entityFieldName . ' = $1';
+        $params = ['email_contact_recovery'];
+        
+        $listQuery = 'SELECT entities.* FROM entities WHERE entity_id IN (SELECT DISTINCT entity_field.entity_id FROM entity_field WHERE field_name = $1)';
+        $fieldsQuery = 'SELECT entity_field.* FROM entity_field WHERE entity_id = 1';
+
+        $this->factory->method('create')->willReturn(new EntityModel());
+
+        $fieldsRow = [
+            [ 
+                $this->entityFieldName => 'email_contact_recovery', 
+                $this->entityValueName => 'some@email'
+            ]
+        ];
+
+        $entityRow = [
+            [$this->primaryEntityFieldName => '1']
+        ];
+
+        $this->database->method('queryParams')->willReturn($entityRow, $fieldsRow)
+            ->with($this->callback(
+                function($param) use ($listQuery, $fieldsQuery){
+                if ($param === $listQuery || 
+                    $param === $fieldsQuery
+                ) {
+                    return true;
+                }
+                return false;
+            }));
+
+        $entities = $repository->listByFields($expression, $params);
+        $entity = $entities[0];
+
+        $this->assertSame('1', $entity->getEntityData($this->primaryEntityFieldName));
+        $this->assertSame('some@email', $entity->email_contact_recovery);
+    }
 }
