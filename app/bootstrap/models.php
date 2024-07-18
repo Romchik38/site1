@@ -40,6 +40,11 @@ return function ($container) {
         new Romchik38\Site1\Models\DTO\UserRegisterDTOFactory()
     );
 
+    $container->add(
+        Romchik38\Server\Models\EntityFactory::class,
+        new Romchik38\Server\Models\EntityFactory()
+    );
+
     // REPOSITORIES
     $container->add(
         \Romchik38\Site1\Models\Sql\Page\PageRepository::class,
@@ -77,6 +82,20 @@ return function ($container) {
         }
     );
 
+    $container->add(
+        \Romchik38\Server\Models\Sql\Entity\EntityRepository::class,
+        function($container){
+            return new \Romchik38\Server\Models\Sql\Entity\EntityRepository(
+                $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class),
+                $container->get(Romchik38\Server\Models\EntityFactory::class),
+                'entities',
+                'entity_field',
+                'entity_id',
+                'field_name',
+                'value'
+            );
+        }
+    );
 
     return $container;
 };

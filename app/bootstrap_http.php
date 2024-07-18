@@ -38,7 +38,11 @@ $container->add(\Romchik38\Site1\Services\UserRegister::class,
 );
 
 $container->add(\Romchik38\Site1\Services\UserRecoveryEmail::class,
-    new \Romchik38\Site1\Services\UserRecoveryEmail()
+    new \Romchik38\Site1\Services\UserRecoveryEmail(
+       $container->get(\Romchik38\Server\Models\Sql\Entity\EntityRepository::class),
+       1,
+       'email_contact_recovery' 
+    )
 );
 
 // VIEWS
