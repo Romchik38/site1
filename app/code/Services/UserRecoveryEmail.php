@@ -34,10 +34,11 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         }
 
         $subject = 'Recovery link to create a new password';
-        $message = 'Hello, user. This is recovery email. Link below. <br><a>Click here to recovery password</a>';
+        $message = 'Hello, user. This is recovery email. Link below. <br><a href="#">Click here to recovery password</a>';
         $headers = array(
             'From' => $recoverySender,
             'Reply-To' => $recoverySender,
+            'Content-type' => 'text/html',
             'X-Mailer' => 'PHP/' . phpversion()
         );
 
