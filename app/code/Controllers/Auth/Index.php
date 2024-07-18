@@ -13,6 +13,7 @@ use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
+use Romchik38\Site1\Services\Error\UserRecoveryEmail\CantSendRecoveryLinkException;
 
 class Index implements ControllerInterface
 {
@@ -92,9 +93,13 @@ class Index implements ControllerInterface
             return 'Bad request (email not present)';
         }
 
-        $this->userRecoveryEmail->sendRecoveryLink($email);
-
-        return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
+        try {
+            $this->userRecoveryEmail->sendRecoveryLink($email);
+            return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
+        } catch (CantSendRecoveryLinkException $e) {
+            return 'Error: ' . $e->getMessage();
+        }
+        
     }
 
     /**
