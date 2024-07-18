@@ -3,3 +3,4 @@ vendor/
 .vscode/
 todo.md
 testsomecode/
+.phpunit.result.cache
