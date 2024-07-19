@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
-use Romchik38\Site1\Api\Models\DTO\RegisterDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Server\Api\Models\DTOFactoryInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOFactoryInterface;
 
 class Request implements RequestInterface {
 
     public function __construct(
-        protected DTOFactoryInterface $userDTOFactory
+        protected UserRegisterDTOFactoryInterface $userRegisterDTOFactory
     ) {  
     }
 
@@ -35,19 +35,17 @@ class Request implements RequestInterface {
     /**
      * Returns DTO with register data for next checks
      *
-     * @return RegisterDTOInterface
+     * @return UserRegisterDTOInterface
      */
-    public function getUserRegisterData(): RegisterDTOInterface
+    public function getUserRegisterData(): UserRegisterDTOInterface
     {
-        /** @var RegisterDTOInterface $userRegisterDTO */
-        $userRegisterDTO = $this->userDTOFactory->create();
-        $fieldNames = $userRegisterDTO->getFieldsNames();
-        $fields = [];
-        foreach ($fieldNames as $fieldName) {
-            $fields[$fieldName] = $_POST[$fieldName] ?? '';
-        }
-        $userRegisterDTO->setFields($fields);
-        return $userRegisterDTO;
+        return $this->userRegisterDTOFactory->create(
+            $_POST[$this::USERNAME_FIELD] ?? '',
+            $_POST[$this::PASSWORD_FIELD] ?? '',
+            $_POST[$this::FIRST_NAME_FIELD] ?? '',
+            $_POST[$this::LAST_NAME_FIELD] ?? '',
+            $_POST[$this::EMAIL_FIELD] ?? ''
+        );
     }
 
     /**

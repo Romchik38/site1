@@ -7,7 +7,7 @@ namespace Romchik38\Site1\Services;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Models\DTO\RegisterDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;
@@ -66,7 +66,7 @@ class UserRegister implements UserRegisterInterface {
      * 
      * @throws IncorrectFieldError
      */
-    public function checkUserInformation(RegisterDTOInterface $userRegisterDTO): void
+    public function checkUserInformation(UserRegisterDTOInterface $userRegisterDTO): void
     {
         $providedUserData = $userRegisterDTO->getAllData();
         foreach($this->patterns as $key => [$pattern, $message]) {
@@ -84,7 +84,7 @@ class UserRegister implements UserRegisterInterface {
         // 3. any errors user sent correct data
     }
 
-    public function register(RegisterDTOInterface $userRegisterDTO): UserModelInterface
+    public function register(UserRegisterDTOInterface $userRegisterDTO): UserModelInterface
     {
 
         $newUser = $this->userRepository->create();

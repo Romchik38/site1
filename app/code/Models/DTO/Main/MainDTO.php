@@ -18,4 +18,9 @@ class MainDTO extends DTO implements MainDTOInterface {
         return $this->getData($this::PAGE_FIELD);
     }
 
+    public function getActionName(): string
+    {
+        return $this->getData($this::ACTION_FIELD_NAME);    
+    }
+    
 }

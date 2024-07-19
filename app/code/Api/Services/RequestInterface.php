@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Api\Services;
 
-use Romchik38\Site1\Api\Models\DTO\RegisterDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOInterface;
 
 interface RequestInterface {
 
@@ -34,5 +34,5 @@ interface RequestInterface {
     public function getMessage(): string;
     public function getPassword(): string;
     public function getUserName(): string;
-    public function getUserRegisterData(): RegisterDTOInterface;
+    public function getUserRegisterData(): UserRegisterDTOInterface;
 }

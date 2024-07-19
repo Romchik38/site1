@@ -9,7 +9,6 @@ use Romchik38\Site1\Api\Models\User\UserModelInterface;
 interface LoginDTOInterface extends DTOInterface, ActionDTOInterface {
     const USER_FIELD = 'user';
 
-    public function getActionName(): string;
     public function getMessage(): string;
     public function getUser(): UserModelInterface|null;
     
