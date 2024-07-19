@@ -6,15 +6,17 @@ namespace Romchik38\Site1\Services;
 
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
-use Romchik38\Site1\Services\Error\UserRecoveryEmail\CantSendRecoveryLinkException;
+use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Api\Models\DTO\Email\EmailDTOFactoryInterface;
 
 class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
     public function __construct(
         protected EntityRepositoryInterface $entityRepository,
         protected int $entityId,
-        protected string $recoveryFieldName
+        protected string $recoveryFieldName,
+        protected EmailDTOFactoryInterface $emailDTOFactory
     ){        
     }
 
@@ -40,6 +42,13 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             'Reply-To' => $recoverySender,
             'Content-type' => 'text/html',
             'X-Mailer' => 'PHP/' . phpversion()
+        );
+
+        $emailDTO = $this->emailDTOFactory->create(
+            $email,
+            $subject,
+            $message,
+            $headers
         );
 
         $result = mail(

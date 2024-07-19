@@ -45,6 +45,11 @@ return function ($container) {
         new Romchik38\Server\Models\EntityFactory()
     );
 
+    $container->add(
+        Romchik38\Site1\Models\DTO\Email\EmailDTOFactory::class,
+        new Romchik38\Site1\Models\DTO\Email\EmailDTOFactory()
+    );
+
     // REPOSITORIES
     $container->add(
         \Romchik38\Site1\Models\Sql\Page\PageRepository::class,

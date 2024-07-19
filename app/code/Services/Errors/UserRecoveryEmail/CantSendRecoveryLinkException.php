@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Services\Error\UserRecoveryEmail;
+namespace Romchik38\Site1\Services\Errors\UserRecoveryEmail;
 
 class CantSendRecoveryLinkException extends \RuntimeException {
     

@@ -6,6 +6,7 @@ use Romchik38\Container;
 use Romchik38\Server\Routers\DefaultRouter;
 use Romchik38\Server\Results\DefaultRouterResult;
 use Romchik38\Server\Api\Server;
+use Romchik38\Site1\Models\DTO\Email\EmailDTOFactory;
 use Romchik38\Site1\Stubs\EchoLogger;
 
 $container = new Container();
@@ -41,7 +42,8 @@ $container->add(\Romchik38\Site1\Services\UserRecoveryEmail::class,
     new \Romchik38\Site1\Services\UserRecoveryEmail(
        $container->get(\Romchik38\Server\Models\Sql\Entity\EntityRepository::class),
        1,
-       'email_contact_recovery' 
+       'email_contact_recovery',
+       $container->get(EmailDTOFactory::class) 
     )
 );
 
