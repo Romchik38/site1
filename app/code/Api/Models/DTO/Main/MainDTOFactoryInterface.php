@@ -2,8 +2,8 @@
 
 namespace Romchik38\Site1\Api\Models\DTO\Main;
 
-use Romchik38\Server\Api\Models\DTOFactoryInterface;
+use Romchik38\Site1\Api\Models\PageModelInterface;
 
-interface MainDTOFactoryInterface extends DTOFactoryInterface {
-    public function create(): MainDTOInterface;
+interface MainDTOFactoryInterface {
+    public function create(PageModelInterface $page): MainDTOInterface;
 }

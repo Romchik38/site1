@@ -13,7 +13,4 @@ interface LoginDTOInterface extends DTOInterface, ActionDTOInterface {
     public function getMessage(): string;
     public function getUser(): UserModelInterface|null;
     
-    public function setActionName(string $action): LoginDTOInterface;
-    public function setMessage(string $message): LoginDTOInterface;
-    public function setUser(UserModelInterface $user): LoginDTOInterface;
 }

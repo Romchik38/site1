@@ -33,45 +33,29 @@ class Index implements ControllerInterface
     }
     public function execute($action): string
     {
-        /** @var LoginDTOInterface $loginDTO */
-        $loginDTO = $this->loginDtoFactory->create();
-        $loginDTO->setActionName($action);
-        $loginDTO->setMessage($this->request->getMessage());
 
-        if (array_search($action, $this->methods) !== false) {
-            $this->$action($loginDTO);
-        } else {
+        try {
+            $user = $this->userRepository->getById($this->session->getUserId());
+        } catch(NoSuchEntityException) {
+            $user = null;
+        }
+
+        /** @var LoginDTOInterface $loginDTO */
+        $loginDTO = $this->loginDtoFactory->create(
+            $action, 
+            $this->request->getMessage(),
+            $user
+        );
+
+        if (array_search($action, $this->methods) === false) {
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
+
+        
         $this->view
             ->setMetadata(ViewInterface::TITLE, 'Login Page')
             ->setControllerData($loginDTO);
         return $this->view->toString();
     }
 
-    private function index(LoginDTOInterface $dto): void
-    {
-        try {
-            $user = $this->userRepository->getById($this->session->getUserId());
-            $dto->setUser($user);
-        } catch(NoSuchEntityException) {
-            // $dto->getUser will be null
-        }
-        
-    }
-
-    /**
-     * Action /login/recovery
-     *
-     * @return void
-     */
-    public  function recovery(LoginDTOInterface $dto){
-        $this->index($dto);
-        return $dto;
-    }
-
-    private function register(LoginDTOInterface $dto){
-        $this->index($dto);
-        return $dto;
-    }
 }

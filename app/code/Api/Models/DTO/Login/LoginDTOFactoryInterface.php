@@ -2,8 +2,12 @@
 
 namespace Romchik38\Site1\Api\Models\DTO\Login;
 
-use Romchik38\Server\Api\Models\DTOFactoryInterface;
+use Romchik38\Site1\Api\Models\User\UserModelInterface;
 
-interface LoginDTOFactoryInterface extends DTOFactoryInterface {
-    
+interface LoginDTOFactoryInterface {
+    public function create(
+        string $action,
+        string $message,
+        UserModelInterface|null $user
+    );
 }

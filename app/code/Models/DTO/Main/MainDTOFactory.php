@@ -10,9 +10,9 @@ use Romchik38\Site1\Api\Models\PageModelInterface;
 
 class MainDTOFactory implements MainDTOFactoryInterface {
 
-    public function create(
-
-    ): MainDTOInterface {
-        return new MainDTO();
+    public function create(PageModelInterface $page): MainDTOInterface {
+        return new MainDTO(
+            $page
+        );
     }
 }

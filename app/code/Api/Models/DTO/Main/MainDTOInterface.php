@@ -12,6 +12,4 @@ interface MainDTOInterface extends DTOInterface, ActionDTOInterface {
 
     public function getPage(): PageModelInterface;
 
-    public function setPage(PageModelInterface $page): MainDTOInterface;
-
 }

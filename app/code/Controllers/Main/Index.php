@@ -30,7 +30,7 @@ class Index implements ControllerInterface
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         } else {
             $page = $arr[0];
-            $mainDTO = $this->mainDTOFactory->create()->setPage($page);
+            $mainDTO = $this->mainDTOFactory->create($page);
             $this->view
                 ->setMetadata(ViewInterface::TITLE, $page->getData('name'))
                 ->setControllerData($mainDTO);
