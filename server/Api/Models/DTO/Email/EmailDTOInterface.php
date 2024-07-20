@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Api\Models\DTO\Email;
+namespace Romchik38\Server\Api\Models\DTO\Email;
 
-use Romchik38\Server\Api\Models\DTOInterface;
+use Romchik38\Server\Api\Models\DTO\DTOInterface;
 
 interface EmailDTOInterface extends DTOInterface {
 

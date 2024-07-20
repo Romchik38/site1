@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Api\Views;
 
-use Romchik38\Server\Api\Models\DTOInterface;
+use Romchik38\Server\Api\Models\DTO\DTOInterface;
 
 interface ViewInterface
 {

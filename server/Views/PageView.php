@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Server\Views;
 
 use \Romchik38\Server\Api\Views\ViewInterface;
-use \Romchik38\Server\Api\Models\DTOInterface;
+use \Romchik38\Server\Api\Models\DTO\DTOInterface;
 
 class PageView implements ViewInterface
 {
