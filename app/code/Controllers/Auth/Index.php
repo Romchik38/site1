@@ -14,7 +14,7 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
-use Romchik38\Site1\Services\Error\UserRecoveryEmail\CantSendRecoveryLinkException;
+use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 
 class Index implements ControllerInterface

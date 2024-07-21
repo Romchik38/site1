@@ -63,6 +63,6 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
     }
 
     protected function createLink(): string {
-        return base64_encode(random_bytes(20));
+        return urlencode(base64_encode(random_bytes(20)));
     }
 }
