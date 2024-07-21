@@ -6,7 +6,7 @@ use Romchik38\Container;
 use Romchik38\Server\Routers\DefaultRouter;
 use Romchik38\Server\Results\DefaultRouterResult;
 use Romchik38\Server\Api\Server;
-use Romchik38\Site1\Models\DTO\Email\EmailDTOFactory;
+use Romchik38\Server\Models\DTO\Email\EmailDTOFactory;
 use Romchik38\Site1\Stubs\EchoLogger;
 
 $container = new Container();
@@ -18,6 +18,11 @@ $models($container);
 // SERVICES 
 $container->add(\Romchik38\Server\Services\Session::class,
     new \Romchik38\Server\Services\Session()
+);
+
+$container->add(
+    \Romchik38\Server\Services\Mailer\PhpMail::class, 
+    new \Romchik38\Server\Services\Mailer\PhpMail()
 );
 
 $container->add(\Romchik38\Site1\Services\Http\Request::class,
@@ -40,11 +45,21 @@ $container->add(\Romchik38\Site1\Services\UserRegister::class,
 
 $container->add(\Romchik38\Site1\Services\UserRecoveryEmail::class,
     new \Romchik38\Site1\Services\UserRecoveryEmail(
-       $container->get(\Romchik38\Server\Models\Sql\Entity\EntityRepository::class),
-       1,
-       'email_contact_recovery',
-       $container->get(EmailDTOFactory::class) 
+        $container->get(\Romchik38\Server\Models\Sql\Entity\EntityRepository::class),
+        1,
+        'email_contact_recovery',
+        $container->get(EmailDTOFactory::class),
+        $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
     )
+);
+
+$container->add(
+    \Romchik38\Server\Services\Redirect::class, 
+    function($container){
+        return new \Romchik38\Server\Services\Redirect(
+            $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class)
+        );
+    }
 );
 
 // VIEWS
@@ -54,16 +69,6 @@ $views($container);
 // CONTROLLERS
 $controllers = require_once(__DIR__ . '/bootstrap/Http/controllers.php');
 $controllers($container);
-
-// SERVICES
-$container->add(
-    \Romchik38\Server\Services\Redirect::class, 
-    function($container){
-        return new \Romchik38\Server\Services\Redirect(
-            $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class)
-        );
-    }
-);
 
 // ROUTER
 $container->add(DefaultRouterResult::class, new DefaultRouterResult(

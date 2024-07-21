@@ -46,8 +46,8 @@ return function ($container) {
     );
 
     $container->add(
-        Romchik38\Site1\Models\DTO\Email\EmailDTOFactory::class,
-        new Romchik38\Site1\Models\DTO\Email\EmailDTOFactory()
+        Romchik38\Server\Models\DTO\Email\EmailDTOFactory::class,
+        new Romchik38\Server\Models\DTO\Email\EmailDTOFactory()
     );
 
     // REPOSITORIES

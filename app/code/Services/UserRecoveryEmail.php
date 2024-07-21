@@ -8,7 +8,9 @@ use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Models\DTO\Email\EmailDTOFactoryInterface;
+use Romchik38\Server\Api\Models\DTO\Email\EmailDTOFactoryInterface;
+use Romchik38\Server\Services\Errors\CantSendEmailException;
+use Romchik38\Server\Api\Services\MailerInterface;
 
 class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
@@ -16,7 +18,8 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         protected EntityRepositoryInterface $entityRepository,
         protected int $entityId,
         protected string $recoveryFieldName,
-        protected EmailDTOFactoryInterface $emailDTOFactory
+        protected EmailDTOFactoryInterface $emailDTOFactory,
+        protected MailerInterface $mailer
     ){        
     }
 
@@ -51,16 +54,12 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             $headers
         );
 
-        $result = mail(
-            $email,
-            $subject,
-            $message,
-            $headers
-        );
-        
-        if ($result === false) {
+        try {
+            $this->mailer->send($emailDTO);
+        } catch (CantSendEmailException $e) {
             throw new CantSendRecoveryLinkException('Email can not be send via technical issues');
         }
+
     }
 
     protected function createLink(): string {
