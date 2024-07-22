@@ -42,10 +42,15 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             throw new CantSendRecoveryLinkException('Check recovery email settings (sender)');
         }
 
-        $hash = $this->createLink($email);
+        try {
+            $hash = $this->createLink($email);
+        } catch (CantCreateHashException $e) {
+            throw new CantSendRecoveryLinkException('Email can not be send via technical issues (database error)');
+        }
+        
 
         $subject = 'Recovery link to create a new password';
-        $message = 'Hello, user. This is recovery email. Link below. <br><a href="#">Click here to recovery password</a>';
+        $message = 'Hello, user. This is recovery email. Link below. <br><a href="/login/changepassword?emailHash="' . $hash . '>Click here to recovery password</a>';
         $headers = array(
             'From' => $recoverySender,
             'Reply-To' => $recoverySender,

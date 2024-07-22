@@ -49,7 +49,8 @@ $container->add(\Romchik38\Site1\Services\UserRecoveryEmail::class,
         1,
         'email_contact_recovery',
         $container->get(EmailDTOFactory::class),
-        $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
+        $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class),
+        $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class)
     )
 );
 
