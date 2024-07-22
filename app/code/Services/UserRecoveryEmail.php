@@ -9,6 +9,7 @@ use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
+use Romchik38\Server\Models\Errors\CouldNotAddException;
 use Romchik38\Server\Api\Models\DTO\Email\EmailDTOFactoryInterface;
 use Romchik38\Server\Services\Errors\CantSendEmailException;
 use Romchik38\Server\Api\Services\MailerInterface;
@@ -50,7 +51,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         
 
         $subject = 'Recovery link to create a new password';
-        $message = 'Hello, user. This is recovery email. Link below. <br><a href="/login/changepassword?emailHash="' . $hash . '>Click here to recovery password</a>';
+        $message = 'Hello, user. This is recovery email. Link below. <br><a href="http://site1.com/login/changepassword?emailHash=' . $hash . '">Click here to recovery password</a>';
         $headers = array(
             'From' => $recoverySender,
             'Reply-To' => $recoverySender,
@@ -79,19 +80,25 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
             $recoveryEmail = $this->recoveryRepository->getById($email);
             $recoveryEmail->setUpdatedAt();
-            $recoveryEmail->setHash = $hash;
+            $recoveryEmail->setHash($hash);
+            try {
+                $this->recoveryRepository->save($recoveryEmail);
+            } catch (CouldNotSaveException $e){
+                throw new CantCreateHashException('Could not save hash to database for email' . $email);
+            }
         } catch (NoSuchEntityException $e) {            
             /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail */
             $recoveryEmail = $this->recoveryRepository->create();
             $recoveryEmail->setEmail($email);
             $recoveryEmail->setUpdatedAt();
             $recoveryEmail->setHash = $hash;
+            try {
+                $this->recoveryRepository->add($recoveryEmail);
+            } catch (CouldNotAddException $e){
+                throw new CantCreateHashException('Could not add a hash to database for email' . $email);
+            }
         }
-        try {
-            $this->recoveryRepository->save($recoveryEmail);
-        } catch (CouldNotSaveException $e){
-            throw new CantCreateHashException('Could not save hash to database for email' . $email);
-        }
+
         return urlencode($hash);
     }
 }

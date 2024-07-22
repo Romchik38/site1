@@ -8,7 +8,9 @@ use Romchik38\Server\Api\Models\RepositoryInterface;
 use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Server\Api\Models\ModelInterface;
 use Romchik38\Server\Api\Models\ModelFactoryInterface;
-use Romchik38\Server\Models\Errors\{NoSuchEntityException, CouldNotDeleteException, CouldNotSaveException, QueryExeption};
+use Romchik38\Server\Models\Errors\{
+    NoSuchEntityException, CouldNotDeleteException, CouldNotSaveException, 
+    QueryExeption, CouldNotAddException};
 
 class Repository implements RepositoryInterface
 {
@@ -107,9 +109,13 @@ class Repository implements RepositoryInterface
 
         $query = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $keys) . ') VALUES ('
             . implode(', ', $params) . ') RETURNING *';
-        $arr = $this->database->queryParams($query, $values);
-        $row = $arr[0];
-        return $this->create($row);
+        try {
+            $arr = $this->database->queryParams($query, $values);
+            $row = $arr[0];
+            return $this->create($row);
+        } catch (QueryExeption $e) {
+            throw new CouldNotAddException($e->getMessage());
+        }
     }
 
     /**
