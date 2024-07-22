@@ -9,12 +9,6 @@ use Romchick38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 
 class RecoveryEmail extends Model implements RecoveryEmailInterface{
 
-    public function __construct()
-    {
-        $date = new \DateTime();
-        
-    }
-
     public function getEmail(): string {
         return $this->data[$this::EMAIL_FIELD];
     }
@@ -36,9 +30,23 @@ class RecoveryEmail extends Model implements RecoveryEmailInterface{
         $this->data[$this::HASH_FIELD] = $hash;
         return $this;
     }
-
-    public function setUpdatedAt(string $dateTime): RecoveryEmailInterface {
-        $this->data[$this::UPDATED_AT_FIELD] = $dateTime;
+    
+    /**
+     * use setUpdatedAt() without an argument to set now() time
+     * overwise setUpdatedAt('exact time') to set what you 
+     * 
+     * @param string $dateTime [a datetime string like '2024-07-22 16:14:06']
+     * @return RecoveryEmailInterface
+     */
+    public function setUpdatedAt(string $dateTime = ''): RecoveryEmailInterface {
+        if ($dateTime === '') {
+            $date = new \DateTime();
+            $this->data[$this::UPDATED_AT_FIELD] = $date->format(
+                RecoveryEmailInterface::DATE_TIME_FORMAT
+            );
+        } else {
+            $this->data[$this::UPDATED_AT_FIELD] = $dateTime;
+        }
         return $this;
     }
 }

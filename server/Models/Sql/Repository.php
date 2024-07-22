@@ -49,7 +49,7 @@ class Repository implements RepositoryInterface
      * @throws NoSuchEntityException
      * @return ModelInterface
      */
-    public function getById(int $id): ModelInterface
+    public function getById($id): ModelInterface
     {
         $query = 'SELECT * FROM '
             . $this->table

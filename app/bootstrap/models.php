@@ -50,6 +50,11 @@ return function ($container) {
         new Romchik38\Server\Models\DTO\Email\EmailDTOFactory()
     );
 
+    $container->add(
+        Romchick38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class,
+        new Romchick38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory()
+    );
+
     // REPOSITORIES
     $container->add(
         \Romchik38\Site1\Models\Sql\Page\PageRepository::class,
@@ -98,6 +103,18 @@ return function ($container) {
                 'entity_id',
                 'field_name',
                 'value'
+            );
+        }
+    );
+
+    $container->add(
+        \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class,
+        function($container){
+            return new \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository(
+                $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class),
+                $container->get(\Romchick38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class),
+                'recovery_email',
+                'email'
             );
         }
     );
