@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Romchick38\Site1\Models\Sql\RecoveryEmail;
+namespace Romchik38\Site1\Models\Sql\RecoveryEmail;
 
 use Romchik38\Server\Models\Model;
-use Romchick38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
+use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 
 class RecoveryEmail extends Model implements RecoveryEmailInterface{
 

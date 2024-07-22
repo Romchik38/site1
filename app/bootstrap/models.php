@@ -51,8 +51,8 @@ return function ($container) {
     );
 
     $container->add(
-        Romchick38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class,
-        new Romchick38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory()
+        Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class,
+        new Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory()
     );
 
     // REPOSITORIES
@@ -112,7 +112,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository(
                 $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class),
-                $container->get(\Romchick38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class),
+                $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class),
                 'recovery_email',
                 'email'
             );

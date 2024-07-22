@@ -71,12 +71,12 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
     protected function createLink(string $email): string {        
         $hash = base64_encode(random_bytes(20));
         try {
-            /** @var \Romchick38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
+            /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
             $recoveryEmail = $this->recoveryRepository->getById($email);
             $recoveryEmail->setUpdatedAt();
             $recoveryEmail->setHash = $hash;
         } catch (NoSuchEntityException $e) {            
-            /** @var \Romchick38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail */
+            /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail */
             $recoveryEmail = $this->recoveryRepository->create();
             $recoveryEmail->setEmail($email);
             $recoveryEmail->setUpdatedAt();
