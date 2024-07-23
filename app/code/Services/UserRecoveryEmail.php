@@ -38,7 +38,8 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         
         $recoveryFieldName = $this->recoveryFieldName;
 
-        $recoverySender = $entity->$recoveryFieldName;
+//        $recoverySender = $entity->$recoveryFieldName;
+        $recoverySender = $entity->{$this->recoveryFieldName};
         if ($recoverySender === null) {
             throw new CantSendRecoveryLinkException('Check recovery email settings (sender)');
         }
@@ -91,7 +92,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             $recoveryEmail = $this->recoveryRepository->create();
             $recoveryEmail->setEmail($email);
             $recoveryEmail->setUpdatedAt();
-            $recoveryEmail->setHash = $hash;
+            $recoveryEmail->setHash($hash);
             try {
                 $this->recoveryRepository->add($recoveryEmail);
             } catch (CouldNotAddException $e){

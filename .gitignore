@@ -1,6 +1,6 @@
 app/config
 vendor/
 .vscode/
-todo.md
+# todo.md
 testsomecode/
 .phpunit.result.cache
