@@ -22,6 +22,8 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         protected EntityRepositoryInterface $entityRepository,
         protected int $entityId,
         protected string $recoveryFieldName,
+        protected string $recoveryUrlDomain,
+        protected string $recoveryUrl,
         protected EmailDTOFactoryInterface $emailDTOFactory,
         protected MailerInterface $mailer,
         protected RepositoryInterface $recoveryRepository
@@ -36,12 +38,15 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             throw new CantSendRecoveryLinkException('Check recovery email settings (entity)');
         }
         
-        $recoveryFieldName = $this->recoveryFieldName;
-
-//        $recoverySender = $entity->$recoveryFieldName;
         $recoverySender = $entity->{$this->recoveryFieldName};
-        if ($recoverySender === null) {
-            throw new CantSendRecoveryLinkException('Check recovery email settings (sender)');
+        $recoveryUrlDomain = $entity->{$this->recoveryUrlDomain};
+        $recoveryUrl = $entity->{$this->recoveryUrl};
+
+        if ($recoverySender === null || 
+            $recoveryUrlDomain === null || 
+            $recoveryUrl === null
+        ) {
+            throw new CantSendRecoveryLinkException('Check recovery email settings (sender, domain, url)');
         }
 
         try {
@@ -52,7 +57,10 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         
 
         $subject = 'Recovery link to create a new password';
-        $message = 'Hello, user. This is recovery email. Link below. <br><a href="http://site1.com/login/changepassword?emailHash=' . $hash . '">Click here to recovery password</a>';
+        $message = 'Hello, user. This is recovery email. Link below. <br><a href="' 
+            . $recoveryUrlDomain . $recoveryUrl . $hash 
+            . '">Click here to recovery password</a>'
+            . '<p>If you do not request password changing, please do nothing.</p>';
         $headers = array(
             'From' => $recoverySender,
             'Reply-To' => $recoverySender,
