@@ -35,11 +35,13 @@ class FileLogger extends Logger implements FileLoggerInterface
     }
 
     protected function sendAllToalternativeLog(array $writeMessages): void {
-        [$level, $message] = $writeMessages;
-        $this->alternativeLogger->log($level, $message);
+        foreach($writeMessages as $item) {
+            [$level, $message] = $item;
+            $this->alternativeLogger->log($level, $message);
+        }
     }
 
-    public function __destruct()
+    public function sendAllLogs(): void
     {
         // 1 open file - write, pointer at the and, if the file doesn't exist, if will be created
         $fp = fopen($this->fullFilePath, 'a', $this->useIncludePath, $this->context);
@@ -55,12 +57,12 @@ class FileLogger extends Logger implements FileLoggerInterface
         $writeErrors = [];
         $date = new \DateTime();
         $dateString = $date->format(FileLoggerInterface::DATE_TIME_FORMAT);
-        foreach($this->messages as $message) {
-            [$level, $message] = $message;
+        foreach($this->messages as $item) {
+            [$level, $message] = $item;
             $str = '[' . $dateString . '] ' . $level . ': ' . $message . PHP_EOL;
             $writeResult = fwrite($fp, $str);
             if ($writeResult === false) {
-                $writeErrors[] = [$level, $message];
+                $writeErrors[] = $item;
             }
         }
         if (count($writeErrors) > 0) {

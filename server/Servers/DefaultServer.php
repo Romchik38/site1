@@ -7,21 +7,29 @@ namespace Romchik38\Server\Servers;
 use Romchik38\{Container, NotFoundException};
 use Romchik38\Server\Routers\DefaultRouter;
 use Romchik38\Server\Api\Server;
+use Romchik38\Server\Api\Services\LoggerServerInterface;
 
 class DefaultServer implements Server
 {
-    protected $logger = null;
 
     public function __construct(
-        protected Container $container
+        protected Container $container,
+        protected LoggerServerInterface|null $logger = null
     ) {
-        try {
-            $this->logger = $this->container->get($this::CONTAINER_LOGGER_FILED);
-        } catch (NotFoundException $e) {
-        }
     }
 
-    public function run(): void
+    public function log(): DefaultServer
+    {
+        if ($this->logger === null) {
+            return $this;
+        }
+
+        $this->logger->sendAllLogs();
+
+        return $this;
+    }
+
+    public function run(): DefaultServer
     {
         try {
             $router = $this->container->get(DefaultRouter::class);
@@ -38,7 +46,7 @@ class DefaultServer implements Server
             // This must be the last string
             if (strlen($response) > 0) {
                 echo $response;
-            }            
+            }
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->error($e->getMessage());
@@ -47,5 +55,7 @@ class DefaultServer implements Server
             http_response_code($this::DEFAULT_SERVER_ERROR_CODE);
             exit(1);
         }
+
+        return $this;
     }
 }

@@ -4,8 +4,9 @@ namespace Romchik38\Server\Services\Logger;
 
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
+use Romchik38\Server\Api\Services\LoggerServerInterface;
 
-abstract class Logger extends AbstractLogger
+abstract class Logger extends AbstractLogger implements LoggerServerInterface
 {
 
     public function __construct(

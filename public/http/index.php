@@ -24,3 +24,4 @@ $logger = $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::
 $logger->log(LogLevel::DEBUG, 'hello from index');
 
 $server->run();
+$server->log();
