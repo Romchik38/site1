@@ -42,6 +42,9 @@ $container->add(
 );
 
 // SERVER
-$container->add(Server::CONTAINER_LOGGER_FILED, new EchoLogger());
+$container->add(
+    Server::CONTAINER_LOGGER_FIELD, 
+    $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::class)
+);
 
 return $container;

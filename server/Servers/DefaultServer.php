@@ -20,11 +20,9 @@ class DefaultServer implements Server
 
     public function log(): DefaultServer
     {
-        if ($this->logger === null) {
-            return $this;
+        if ($this->logger !== null) {
+            $this->logger->sendAllLogs();
         }
-
-        $this->logger->sendAllLogs();
 
         return $this;
     }

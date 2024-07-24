@@ -8,6 +8,7 @@ use Romchik38\Server\Api\Services\LoggerServerInterface;
 
 abstract class Logger extends AbstractLogger implements LoggerServerInterface
 {
+    protected array $messages = [];
 
     public function __construct(
         protected readonly int $logLevel

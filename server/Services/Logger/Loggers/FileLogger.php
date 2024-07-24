@@ -11,7 +11,6 @@ use Psr\Log\LogLevel;
 
 class FileLogger extends Logger implements FileLoggerInterface
 {
-    protected array $messages = [];
     protected readonly string $fullFilePath;
 
     /**
