@@ -5,7 +5,7 @@ namespace Romchik38\Server\Services\Logger;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 
-abstract class FileLogger extends AbstractLogger
+abstract class Logger extends AbstractLogger
 {
 
     protected readonly int $logLevel;
@@ -28,11 +28,10 @@ abstract class FileLogger extends AbstractLogger
         }
 
         $interpolaitedMessage = $this->interpolate($message, $context);
-        $this->write($interpolaitedMessage);
+        $this->write($level, $interpolaitedMessage);
     }
 
-    protected function write($message) {    
-    }
+    abstract protected function write(string $level, string $message);
 
     protected function interpolate($message, array $context = array())
     {
