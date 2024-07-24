@@ -30,6 +30,8 @@ interface RequestInterface {
     const USERNAME_PATTERN = '[A-Za-z0-9_]{3,20}$';
     const USERNAME_ERROR_MESSAGE = 'Username must be 3-20 characters long, can contain lowercase, uppercase letter, number and underscore. Case-Sensitive';
 
+    const EMAIL_HASH_FIELD = 'email_hash';
+
     public function getEmail(): string;
     public function getMessage(): string;
     public function getPassword(): string;

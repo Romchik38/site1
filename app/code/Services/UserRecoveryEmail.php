@@ -17,6 +17,7 @@ use Romchik38\Server\Api\Models\RepositoryInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantCreateHashException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Romchik38\Site1\Api\Services\RequestInterface;
 
 class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
@@ -65,7 +66,8 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
         $subject = 'Recovery link to create a new password';
         $message = '<p>Hello, user. <br>This is a recovery email. Link below. <br><a href="' 
-            . $recoveryUrlDomain . $recoveryUrl . $hash 
+            . $recoveryUrlDomain . $recoveryUrl . '?' . RequestInterface::EMAIL_HASH_FIELD 
+            . '=' . $hash 
             . '">Click here to recovery your password</a></p>'
             . '<p>If you do not request a password changing, please do nothing.</p>';
         $headers = array(
