@@ -84,7 +84,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             $this->mailer->send($emailDTO);
             $this->logger->log(LogLevel::DEBUG, 'Recovery email for user ' . $email . ' was sent');
         } catch (CantSendEmailException $e) {
-            $this->logger->log(LogLevel::ERROR, 'Email to <' . $email . '> was not sent. Mailer said: ' . $e->getMessage());
+            $this->logger->log(LogLevel::ERROR, 'Recovery email to <' . $email . '> was not sent. Mailer said: ' . $e->getMessage());
             throw new CantSendRecoveryLinkException('Email can not be send via technical issues');
         }
 
