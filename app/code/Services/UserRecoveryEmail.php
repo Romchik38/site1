@@ -15,6 +15,8 @@ use Romchik38\Server\Services\Errors\CantSendEmailException;
 use Romchik38\Server\Api\Services\MailerInterface;
 use Romchik38\Server\Api\Models\RepositoryInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantCreateHashException;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
@@ -26,7 +28,8 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         protected string $recoveryUrl,
         protected EmailDTOFactoryInterface $emailDTOFactory,
         protected MailerInterface $mailer,
-        protected RepositoryInterface $recoveryRepository
+        protected RepositoryInterface $recoveryRepository,
+        protected LoggerInterface $logger
     ){        
     }
 
@@ -35,6 +38,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         try {
             $entity = $this->entityRepository->getById($this->entityId);
         } catch(NoSuchEntityException $e) {
+            $this->logger->log(LogLevel::ERROR, $e->getMessage());
             throw new CantSendRecoveryLinkException('Check recovery email settings (entity)');
         }
         
@@ -46,15 +50,16 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             $recoveryUrlDomain === null || 
             $recoveryUrl === null
         ) {
+            $this->logger->log(LogLevel::ERROR, 'Entity fields (sender, domain, url) for email do not config correctly. A message can\'t be send.');
             throw new CantSendRecoveryLinkException('Check recovery email settings (sender, domain, url)');
         }
 
         try {
             $hash = $this->createLink($email);
         } catch (CantCreateHashException $e) {
-            throw new CantSendRecoveryLinkException('Email can not be send via technical issues (database error)');
+            $this->logger->log(LogLevel::ERROR, $e->getMessage());
+            throw new CantSendRecoveryLinkException('Email can not be send via technical issues');
         }
-        
 
         $subject = 'Recovery link to create a new password';
         $message = 'Hello, user. This is recovery email. Link below. <br><a href="' 
@@ -77,7 +82,9 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
         try {
             $this->mailer->send($emailDTO);
+            $this->logger->log(LogLevel::DEBUG, 'Recovery email for user ' . $email . ' was sent');
         } catch (CantSendEmailException $e) {
+            $this->logger->log(LogLevel::ERROR, 'Email to <' . $email . '> was not sent. Mailer said: ' . $e->getMessage());
             throw new CantSendRecoveryLinkException('Email can not be send via technical issues');
         }
 
@@ -93,6 +100,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             try {
                 $this->recoveryRepository->save($recoveryEmail);
             } catch (CouldNotSaveException $e){
+                $this->logger->log(LogLevel::ERROR, $e->getMessage());
                 throw new CantCreateHashException('Could not save hash to database for email' . $email);
             }
         } catch (NoSuchEntityException $e) {            
@@ -104,6 +112,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             try {
                 $this->recoveryRepository->add($recoveryEmail);
             } catch (CouldNotAddException $e){
+                $this->logger->log(LogLevel::ERROR, $e->getMessage());
                 throw new CantCreateHashException('Could not add a hash to database for email' . $email);
             }
         }

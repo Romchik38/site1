@@ -16,6 +16,14 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
+        new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
+            __DIR__ . '/../var/default.log',
+            7
+        )
+    );
+
+    $container->add(
         \Romchik38\Site1\Services\Http\Request::class,
         new \Romchik38\Site1\Services\Http\Request(
             $container->get(\Romchik38\Site1\Models\DTO\UserRegisterDTOFactory::class)
@@ -46,7 +54,8 @@ return function ($container) {
             'url_recovery',
             $container->get(EmailDTOFactory::class),
             $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class),
-            $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class)
+            $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class),
+            $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::class)
         )
     );
 
@@ -57,14 +66,6 @@ return function ($container) {
                 $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class)
             );
         }
-    );
-
-    $container->add(
-        \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
-        new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
-            __DIR__ . '/../var/default.log',
-            7
-        )
     );
 
     return $container;

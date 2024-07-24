@@ -25,7 +25,7 @@ class PhpMail implements MailerInterface {
         );
         
         if ($result === false) {
-            throw new CantSendEmailException('Email can not be send');
+            throw new CantSendEmailException('Email was not sent (result is false)');
         }
     }
 }

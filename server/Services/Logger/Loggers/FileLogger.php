@@ -42,6 +42,10 @@ class FileLogger extends Logger implements FileLoggerInterface
 
     public function sendAllLogs(): void
     {
+        if (count($this->messages) === 0) {
+            return;
+        }
+        
         // 1 open file - write, pointer at the and, if the file doesn't exist, if will be created
         $fp = fopen($this->fullFilePath, 'a', $this->useIncludePath, $this->context);
         if ($fp === false) {
