@@ -20,6 +20,8 @@ use Psr\Log\LogLevel;
 
 class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
+    const FAILED_MESSAGE = 'Recovery message can not be send via technical issues';
+
     public function __construct(
         protected EntityRepositoryInterface $entityRepository,
         protected int $entityId,
@@ -39,7 +41,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             $entity = $this->entityRepository->getById($this->entityId);
         } catch(NoSuchEntityException $e) {
             $this->logger->log(LogLevel::ERROR, $e->getMessage());
-            throw new CantSendRecoveryLinkException('Check recovery email settings (entity)');
+            throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
         }
         
         $recoverySender = $entity->{$this->recoveryFieldName};
@@ -50,15 +52,15 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             $recoveryUrlDomain === null || 
             $recoveryUrl === null
         ) {
-            $this->logger->log(LogLevel::ERROR, 'Entity fields (sender, domain, url) for email do not config correctly. A message can\'t be send.');
-            throw new CantSendRecoveryLinkException('Check recovery email settings (sender, domain, url)');
+            $this->logger->log(LogLevel::ERROR, 'Entity fields (sender, domain, url) for email do not configured correctly. A message can\'t be send.');
+            throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
         }
 
         try {
             $hash = $this->createLink($email);
         } catch (CantCreateHashException $e) {
             $this->logger->log(LogLevel::ERROR, $e->getMessage());
-            throw new CantSendRecoveryLinkException('Email can not be send via technical issues');
+            throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
         }
 
         $subject = 'Recovery link to create a new password';
@@ -85,7 +87,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
             $this->logger->log(LogLevel::DEBUG, 'Recovery email for user ' . $email . ' was sent');
         } catch (CantSendEmailException $e) {
             $this->logger->log(LogLevel::ERROR, 'Recovery email to <' . $email . '> was not sent. Mailer said: ' . $e->getMessage());
-            throw new CantSendRecoveryLinkException('Email can not be send via technical issues');
+            throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
         }
 
     }
