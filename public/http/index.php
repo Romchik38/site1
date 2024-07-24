@@ -22,11 +22,6 @@ $server = new DefaultServer(
 * ...
 */
 
-/** @var \Romchik38\Server\Services\Logger\Loggers\FileLogger $logger */
-use Psr\Log\LogLevel;
-$logger = $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::class);
-$logger->log(LogLevel::DEBUG, 'hello from index');
-
 // Start app
 $server->run();
 $server->log();
