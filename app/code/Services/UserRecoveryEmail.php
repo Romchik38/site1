@@ -64,10 +64,10 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         }
 
         $subject = 'Recovery link to create a new password';
-        $message = 'Hello, user. This is recovery email. Link below. <br><a href="' 
+        $message = '<p>Hello, user. <br>This is a recovery email. Link below. <br><a href="' 
             . $recoveryUrlDomain . $recoveryUrl . $hash 
-            . '">Click here to recovery password</a>'
-            . '<p>If you do not request password changing, please do nothing.</p>';
+            . '">Click here to recovery your password</a></p>'
+            . '<p>If you do not request a password changing, please do nothing.</p>';
         $headers = array(
             'From' => $recoverySender,
             'Reply-To' => $recoverySender,
