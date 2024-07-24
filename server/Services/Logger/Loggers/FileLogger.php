@@ -5,28 +5,30 @@ declare(strict_types=1);
 namespace Romchik38\Server\Services\Logger\Loggers;
 
 use Romchik38\Server\Services\Logger\Logger;
-use Romchik38\Site1\Api\Services\Loggers\FileLoggerInterface;
+use Romchik38\Server\Api\Services\Loggers\FileLoggerInterface;
 
 class FileLogger extends Logger implements FileLoggerInterface
 {
-    protected array $messages;
+    protected array $messages = [];
     protected readonly string $fullFilePath;
 
     /**
      * @param string $protocol [ file:// (default), http://, ftp:// etc.]
      */
     public function __construct(
-        string $protocol = FileLoggerInterface::DEFAULT_PROTOCOL,
         string $fileName,
+        int $logLevel,
+        string $protocol = FileLoggerInterface::DEFAULT_PROTOCOL,
         protected readonly bool $useIncludePath = false,
         protected $context = null
     ) {
+        parent::__construct($logLevel);
         $this->fullFilePath = $protocol . $fileName;
     }
 
     public function write(string $level, string $message)
     {
-        $this->messages[$level] = $message;
+        $this->messages[] = [$level, $message];
     }
 
     public function __destruct()
@@ -40,7 +42,8 @@ class FileLogger extends Logger implements FileLoggerInterface
         }
         // 2 write
         $writeErrors = [];
-        foreach($this->messages as $level => $message) {
+        foreach($this->messages as $message) {
+            [$level, $message] = $message;
             $str = $level . ': ' . $message . PHP_EOL;
             $writeResult = fwrite($fp, $str);
             if ($writeResult === false) {

@@ -59,5 +59,13 @@ return function ($container) {
         }
     );
 
+    $container->add(
+        \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
+        new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
+            __DIR__ . '/../var/default.log',
+            7
+        )
+    );
+
     return $container;
 };

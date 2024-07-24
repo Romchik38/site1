@@ -8,7 +8,10 @@ use Psr\Log\LogLevel;
 abstract class Logger extends AbstractLogger
 {
 
-    protected readonly int $logLevel;
+    public function __construct(
+        protected readonly int $logLevel
+    ) {
+    }
 
     protected array $levels = [
         LogLevel::EMERGENCY => 0, //       Emergency: system is unusable
