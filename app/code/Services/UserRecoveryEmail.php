@@ -67,7 +67,8 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         $subject = 'Recovery link to create a new password';
         $message = '<p>Hello, user. <br>This is a recovery email. Link below. <br><a href="' 
             . $recoveryUrlDomain . $recoveryUrl . '?' . RequestInterface::EMAIL_HASH_FIELD 
-            . '=' . $hash 
+            . '=' . $hash . '&'
+            . RequestInterface::EMAIL_FIELD . '=' . urlencode($email)
             . '">Click here to recovery your password</a></p>'
             . '<p>If you do not request a password changing, please do nothing.</p>';
         $headers = array(
@@ -122,5 +123,10 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         }
 
         return urlencode($hash);
+    }
+
+    public function checkHash(string $hash): bool {
+        
+        return false;
     }
 }

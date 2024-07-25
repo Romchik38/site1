@@ -43,7 +43,7 @@ class Index implements ControllerInterface
         /** @var LoginDTOInterface $loginDTO */
         $loginDTO = $this->loginDtoFactory->create(
             $action, 
-            urldecode($this->request->getMessage()),
+            $this->request->getMessage(),
             $user
         );
 

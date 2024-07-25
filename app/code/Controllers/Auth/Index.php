@@ -146,14 +146,6 @@ class Index implements ControllerInterface
         }
     }
 
-    /** Action /auth/changepassword */
-    protected function changepassword(){
-        $emailHash = $this->request->getEmailHash();
-        if ($emailHash === '') {
-            return 'Bad request (email hash not present)';
-        }
-    }
-
     protected function weWillSend($email): string {
         return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
     }

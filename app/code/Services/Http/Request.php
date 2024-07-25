@@ -17,11 +17,13 @@ class Request implements RequestInterface {
 
     public function getEmail(): string
     {
-        return $_POST[RequestInterface::EMAIL_FIELD] ?? '';
+        return $_POST[RequestInterface::EMAIL_FIELD] 
+            ?? $_GET[RequestInterface::EMAIL_FIELD]
+            ?? '';
     }
 
     public function getEmailHash(): string {
-        return $_POST[RequestInterface::EMAIL_HASH_FIELD] ?? '';
+        return $_GET[RequestInterface::EMAIL_HASH_FIELD] ?? '';
     }
 
     public function getMessage(): string
