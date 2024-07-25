@@ -8,8 +8,7 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 
 class Index implements ControllerInterface {
     private array $methods = [
-        'index',
-        'recovery'
+        'index'
     ];
 
     public function execute($action): string {

@@ -24,13 +24,13 @@ class Redirect implements RedirectInterface
     {
         try {
             $redirectUrl = $this->redirectRepository->checkUrl($action);
-            if ($redirectUrl !== '') {
+//            if ($redirectUrl !== '') {
                 $this->redirect = true;
                 $this->redirectLocation = 'Location: ' . $_SERVER['REQUEST_SCHEME'] . '://'
                                 . $_SERVER['HTTP_HOST']
                                 . $redirectUrl->getRedirectTo();
                 $this->statusCode = $redirectUrl->getRedirectCode();
-            }
+//            }
         } catch (NoSuchEntityException $e) {
             // return empty result
         }

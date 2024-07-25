@@ -52,8 +52,7 @@ Uses MVC
 /login/register           shows register form
 /login/recovery           shows recovery form
 /changepassword/index     shows change password form for logged in user
-                          or show link to login page
-/changepassword/recovery  
+                          or show link to login page 
 
 **POST**
 /auth/index     login/password check
@@ -63,4 +62,7 @@ Uses MVC
 /auth/register  register from check
 /auth/recovery  send a recovery link 
 
-/auth/changepassword  change a password
+/auth/changepassword      check a recovery link. 
+                          if it is active - do auth and redirect to /changepassword/index
+                          if it is not - redirect to /changepassword/index
+                      

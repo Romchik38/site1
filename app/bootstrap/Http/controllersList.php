@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Controllers\controllersList;
 
 use Romchik38\Server\Api\Results\RouterResultInterface;
+use Romchik38\Site1\Api\Services\RequestInterface;
 
 $get = 'GET';
 $post = 'POST';
@@ -15,13 +16,15 @@ return [
     [$get, '/login', \Romchik38\Site1\Controllers\Login\Index::class, null],
     [$post, '/auth', \Romchik38\Site1\Controllers\Auth\Index::class, 
         function(RouterResultInterface $result, string $action = 'index'){
+            $encodedMessage = urlencode($result->getResponse());
             $arr = [
-                'index' => '/login/index?message=' . $result->getResponse(),
-                'logout' => '/login/index?message=' . $result->getResponse(),
-                'register' => '/login/register?message=' . $result->getResponse(),
-                'recovery' => '/login/recovery?message=' . $result->getResponse(),
+                'index' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
+                'logout' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
+                'register' => '/login/register?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
+                'recovery' => '/login/recovery?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
+                'changepassword' => '/changepassword/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
             ];
-            $url = $arr[$action];
+            $url = $arr[$action] ?? $arr[$action];
             $result->setHeaders([                   
                 [
                 'Location: ' . $_SERVER['REQUEST_SCHEME'] . '://'

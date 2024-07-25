@@ -23,7 +23,8 @@ class Index implements ControllerInterface
         'index',
         'logout',
         'register',
-        'recovery'
+        'recovery',
+        'changepassword'
     ];
 
     private $successMessage = 'Authentication success';
@@ -74,7 +75,7 @@ class Index implements ControllerInterface
     /**
      * Action /auth/logout
      */
-    private function logout()
+    protected function logout()
     {
         $userId = $this->session->getUserId();
 
@@ -89,7 +90,7 @@ class Index implements ControllerInterface
     /**
      * Action /auth/recovery
      */
-    public function recovery()
+    protected function recovery()
     {
         $email = $this->request->getEmail();
         if ($email === '') {
@@ -114,7 +115,7 @@ class Index implements ControllerInterface
     /**
      * Action /auth/register
      */
-    public function register()
+    protected function register()
     {
         // 1 Check username availability
         $userName = $this->request->getUserName();
@@ -145,7 +146,16 @@ class Index implements ControllerInterface
         }
     }
 
+    /** Action /auth/changepassword */
+    protected function changepassword(){
+        $emailHash = $this->request->getEmailHash();
+        if ($emailHash === '') {
+            return 'Bad request (email hash not present)';
+        }
+    }
+
     protected function weWillSend($email): string {
         return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
     }
+
 }

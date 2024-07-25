@@ -33,6 +33,7 @@ interface RequestInterface {
     const EMAIL_HASH_FIELD = 'email_hash';
 
     public function getEmail(): string;
+    public function getEmailHash(): string;
     public function getMessage(): string;
     public function getPassword(): string;
     public function getUserName(): string;

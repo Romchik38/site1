@@ -20,6 +20,10 @@ class Request implements RequestInterface {
         return $_POST[RequestInterface::EMAIL_FIELD] ?? '';
     }
 
+    public function getEmailHash(): string {
+        return $_POST[RequestInterface::EMAIL_HASH_FIELD] ?? '';
+    }
+
     public function getMessage(): string
     {
         return $_GET[RequestInterface::MESSAGE_FIELD] 
