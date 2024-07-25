@@ -49,6 +49,7 @@ return function ($container) {
         new Romchik38\Site1\Controllers\Changepassword\Index(
             $container->get(\Romchik38\Site1\Services\Http\Request::class),
             $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class),
+            $container->get(\Romchik38\Server\Services\Session::class)
         )
     );
     

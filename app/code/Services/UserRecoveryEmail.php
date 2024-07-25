@@ -18,6 +18,7 @@ use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantCreateHashException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 
 class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
@@ -96,7 +97,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
     }
 
     protected function createLink(string $email): string {        
-        $hash = base64_encode(random_bytes(20));
+        $hash = base64_encode(random_bytes(RecoveryEmailInterface::HASH_LENGTH));
         try {
             /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
             $recoveryEmail = $this->recoveryRepository->getById($email);
@@ -125,8 +126,22 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         return urlencode($hash);
     }
 
-    public function checkHash(string $hash): bool {
-        
-        return false;
+    public function checkHash(string $email, string $hash): bool {
+        try {
+            /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
+            $recoveryEmail = $this->recoveryRepository->getById($email);
+            if ($hash !== $recoveryEmail->getHash()) {
+                return false;
+            }
+            $hashTime = (int)(new \DateTime($recoveryEmail->getUpdatedAt()))->format('U');
+            $now = (int)(new \DateTime())->format('U');
+            if (($now - $hashTime) > RecoveryEmailInterface::VALID_TIME) {
+                return false;
+            }
+        } catch (NoSuchEntityException $e) {  
+            return false;
+        }
+
+        return true;
     }
 }
