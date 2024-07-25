@@ -42,5 +42,12 @@ return function ($container) {
             );
         }
     );
+
+    // /changepassword
+    $container->add(
+        Romchik38\Site1\Controllers\Changepassword\Index::class,
+        new Romchik38\Site1\Controllers\Changepassword\Index()
+    );
+    
     return $container;
 };

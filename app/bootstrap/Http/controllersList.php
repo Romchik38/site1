@@ -27,5 +27,6 @@ return [
                 'Location: ' . $_SERVER['REQUEST_SCHEME'] . '://'
                     . $_SERVER['HTTP_HOST'] . $url, true, 301
             ]]);
-    }]
+    }],
+    [$get, '/changepassword', \Romchik38\Site1\Controllers\Changepassword\Index::class, null]
 ];

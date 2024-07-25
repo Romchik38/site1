@@ -42,16 +42,18 @@ Uses MVC
 ### Routing list
 
 **GET**
-/               page controller
+/                   page controller
 /some_page
-/index          equal /
+/index                    equal /
 
-/login          login controller
-/login/index    main page
-                shows login/password form for guests
-/login/register shows register form
-/login/recovery shows recovery form
-/login/changepassword shows change password form
+/login                    login controller
+/login/index              main page
+                          shows login/password form for guests
+/login/register           shows register form
+/login/recovery           shows recovery form
+/changepassword/index     shows change password form for logged in user
+                          or show link to login page
+/changepassword/recovery  
 
 **POST**
 /auth/index     login/password check
@@ -60,4 +62,5 @@ Uses MVC
                 redirect to /login/index
 /auth/register  register from check
 /auth/recovery  send a recovery link 
+
 /auth/changepassword  change a password
