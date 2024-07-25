@@ -8,9 +8,12 @@ This is a test repository
 ## Folders
 
 ```txt
-app/                all app files  
-    config/         config files  
+app/                all app files 
+    bootstrap/      app init
     code/           app code
+    config/         config files  
+    sql/            sql tables
+    var/            log files ( created manualy [see](./help.md))
 nginx/              nginx files
 public/             public files  
     index.php/      entry point  
@@ -47,6 +50,8 @@ Uses MVC
 /login/index    main page
                 shows login/password form for guests
 /login/register shows register form
+/login/recovery shows recovery form
+/login/changepassword shows change password form
 
 **POST**
 /auth/index     login/password check
@@ -54,3 +59,5 @@ Uses MVC
 /auth/logout    destroy a session if userId was provided
                 redirect to /login/index
 /auth/register  register from check
+/auth/recovery  send a recovery link 
+/auth/changepassword  change a password
