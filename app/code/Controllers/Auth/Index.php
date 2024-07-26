@@ -73,6 +73,13 @@ class Index implements ControllerInterface
     }
 
     /**
+     * Action changepassword
+     */
+    public function changepassword() {
+        return 'hello';
+    } 
+
+    /**
      * Action /auth/logout
      */
     protected function logout()

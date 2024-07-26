@@ -31,7 +31,7 @@ return function(LoginDTOInterface $data){
             <div class="container mt-3">
                 <div class="row justify-content-center">
                     <div class="col-sm-4">
-                        <h2>Provide New Password</h2>
+                        <h2 class="text-center">Provide New Password</h2>
                         <p class="error_message">{$message}<p>
                         <form class="border rounded-3 bg-light p-4" action="/auth/changepassword" method="post">
                             <label class="form-label" for="{$password}">Enter new password: </label>
@@ -44,12 +44,14 @@ return function(LoginDTOInterface $data){
                                 <input id="input-repeat-password" class="form-control" type="password" name="repeat_password" required placeholder="Repeat password"/>
                             </div>                  
                             <div class="col text-center">
-                                <input class="btn btn-secondary mt-3" type="submit" value="Change" />
+                                <input id="register-button" class="btn btn-secondary mt-3" type="submit" value="Change" />
                             </div>
                             
                         </form>
                         <br>
+                        <p id="error_button" class="error_message text-center"><p>
                         <p>Do you remember the password? If so, just do nothing and visit <a href="/login/index">Login page</a> to see your user information.</p>
+                        <script src="/media/js/login/register/checkForm.js" defer></script>
                     </div>
                 </div>
             </div>

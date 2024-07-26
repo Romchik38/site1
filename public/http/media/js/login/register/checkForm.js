@@ -1,18 +1,5 @@
 'use strict';
 
-// add class  
-//  <input> <textarea> with .form-control
-//  <select>s with .form-select
-//  .form-check
-
-//   is-valid
-//   is-invalid
-//      .invalid-feedback
-
-// <div class="valid-feedback">
-//      Looks good!
-// </div>
-
 (()=>{
 
     var errorField = document.getElementById('error_button');
@@ -33,13 +20,12 @@
                 return;
             } else {
                 e.preventDefault();
-                errorField.innerText = "Passwords doesn't mutch";
+                errorField.innerText = "Passwords doesn't match";
                 setTimeout(()=>{
                     errorField.innerText = '';
                 }, 3000);
             }
-        }
-        
+        } 
     });
 })();
 
