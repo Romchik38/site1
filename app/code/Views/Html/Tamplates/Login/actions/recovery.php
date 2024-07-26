@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 
 return function(LoginDTOInterface $data){
     $user = $data->getUser();
@@ -12,6 +13,7 @@ return function(LoginDTOInterface $data){
     $email = RequestInterface::EMAIL_FIELD;
     $emailPattern = RequestInterface::EMAIL_PATTERN;
     $emailErrorMessage = RequestInterface::EMAIL_ERROR_MESSAGE;
+    $valid = RecoveryEmailInterface::VALID_TIME / 60;
 
     $message = $data->getMessage();
 
@@ -25,7 +27,7 @@ return function(LoginDTOInterface $data){
             <div class="row">
                 <div class="col-sm-6">
                     <h2>Password recovery section</h2>
-                    <p>Please, provide email address. We send a message to your with recovery link (confirm for 10 minutes).</p>
+                    <p>Please, provide email address. We send a message to your with recovery link (confirm for {$valid} minutes).</p>
                     <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
                 </div>
                 <div class="col-sm-6">
