@@ -50,6 +50,8 @@ class Index implements ControllerInterface
     /** Action /changepassword/index */
     protected function index()
     {
+        // 1 get user
+        
         return 'change password page';
     }
 

@@ -20,7 +20,8 @@ class Index implements ControllerInterface
     private array $methods = [
         'index',
         'register',
-        'recovery'
+        'recovery',
+        'changepassword'
     ];
     
     public function __construct(
@@ -50,7 +51,6 @@ class Index implements ControllerInterface
         if (array_search($action, $this->methods) === false) {
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
-
         
         $this->view
             ->setMetadata(ViewInterface::TITLE, 'Login Page')
