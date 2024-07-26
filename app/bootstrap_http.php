@@ -41,6 +41,10 @@ $container->add(
     )
 );
 
+// ROUTER HEADERS
+$headers = require_once(__DIR__ . '/bootstrap/router_headers.php');
+$headers($container);
+
 // SERVER
 $container->add(
     Server::CONTAINER_LOGGER_FIELD, 

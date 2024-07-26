@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Api;
+namespace Romchik38\Server\Api\Router;
 
 use Romchik38\Server\Api\Results\ResultInterface;
 
@@ -15,7 +15,7 @@ interface RouterInterface
         string $method,
         string $url,
         string $controller,
-        callable|null $callback
+        string $headersClassName
     ): RouterInterface;
 
     public function execute(): ResultInterface;

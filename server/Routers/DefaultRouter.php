@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Routers;
 
-use Romchik38\Server\Api\RouterInterface;
+use Romchik38\Server\Api\Router\RouterInterface;
 use Romchik38\Server\Api\Results\RouterResultInterface;
 use Romchik38\Server\Api\Results\ResultInterface;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Services\RedirectInterface;
 use Romchik38\Container;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
+use Romchik38\Server\Api\Router\RouterHeadersInterface;
 
 class DefaultRouter implements RouterInterface
 {
@@ -27,8 +28,8 @@ class DefaultRouter implements RouterInterface
         $this->controllers[$this::REQUEST_METHOD_GET] = [];
         $this->controllers[$this::REQUEST_METHOD_POST] = [];
 
-        foreach ($controllers as [$method, $url, $controller, $callback]) {
-            $this->addController($method, $url, $controller, $callback);
+        foreach ($controllers as [$method, $url, $controller, $headersClassName]) {
+            $this->addController($method, $url, $controller, $headersClassName);
         }
     }
 
@@ -36,10 +37,10 @@ class DefaultRouter implements RouterInterface
         string $method,
         string $url,
         string $controller,
-        callable|null $callback
+        string $headersClassName = ''
     ): DefaultRouter {
         $controllersByMethod = $this->controllers[$method];
-        $controllersByMethod[$url] = [$controller, $callback];
+        $controllersByMethod[$url] = [$controller, $headersClassName];
         $this->controllers[$method] = $controllersByMethod;
         return $this;
     }
@@ -94,14 +95,14 @@ class DefaultRouter implements RouterInterface
         // 4. Routes
         $controllersByMethod = $this->controllers[$_SERVER['REQUEST_METHOD']];
         $controllerClassName = '';
-        $callback = null;
+        $headersClassName = '';
         // 4.1 looking for exact routes
         if (array_key_exists($dirName, $controllersByMethod) === true) {
-            [$controllerClassName, $callback] = $controllersByMethod[$dirName];
+            [$controllerClassName, $headersClassName] = $controllersByMethod[$dirName];
         } else if ($this->notFoundController !== null) {
             // 5. Any maches 
             // 5.1 check for 404 page
-            [$controllerClassName, $callback] = $this->notFoundController;
+            [$controllerClassName, $headersClassName] = $this->notFoundController;
         }
         // Execute Controller       
         if ($controllerClassName !== '') {
@@ -119,8 +120,10 @@ class DefaultRouter implements RouterInterface
             $this->routerResult->setStatusCode($statusCode)
                     ->setResponse($response);
             // pass result to callback to set custom headers        
-            if (is_callable($callback)) {
-                $callback($this->routerResult, $baseName);
+            if ($headersClassName !== '') {
+                /** @var RouterHeadersInterface $header */
+                $header = $this->container->get($headersClassName);
+                $header->setHeaders($this->routerResult, $baseName);
             }
             return $this->routerResult;
         }
