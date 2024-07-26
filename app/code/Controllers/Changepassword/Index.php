@@ -18,11 +18,10 @@ use Psr\Log\LogLevel;
 class Index implements ControllerInterface
 {
     private array $methods = [
-        'index',
-        'recovery'
+        'index'
     ];
 
-    protected $failedMessage = 'Sorry, provided recovery link does\'nt work. It is valid ' 
+    protected $failedMessage = 'Sorry, provided recovery link does\'nt work. It is valid for ' 
         . (RecoveryEmailInterface::VALID_TIME / 60) . ' minutes';
 
     protected $successMessage = 'You are already logged in. Please change a password';
@@ -49,14 +48,6 @@ class Index implements ControllerInterface
 
     /** Action /changepassword/index */
     protected function index()
-    {
-        // 1 get user
-        
-        return 'change password page';
-    }
-
-    /** Action /changepassword/recover */
-    protected function recovery()
     {
         // 1 check user auth
         $userId = $this->session->getUserId();

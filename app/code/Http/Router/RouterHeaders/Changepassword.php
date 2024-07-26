@@ -6,15 +6,12 @@ use Romchik38\Server\Api\Results\RouterResultInterface;
 use Romchik38\Server\Api\Router\RouterHeadersInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 
-class Auth implements RouterHeadersInterface {
+class Changepassword implements RouterHeadersInterface {
     public function setHeaders(RouterResultInterface $result, string $action): void
     {
         $encodedMessage = urlencode($result->getResponse());
         $arr = [
-            'index' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
-            'logout' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
-            'register' => '/login/register?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
-            'recovery' => '/login/recovery?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage
+            'index' => '/login/changepassword?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage
         ];
         $url = $arr[$action] ?? '';
         if ($url !== '') {

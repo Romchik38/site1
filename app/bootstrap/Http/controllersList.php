@@ -19,29 +19,10 @@ return [
         '/auth', 
         \Romchik38\Site1\Controllers\Auth\Index::class,
         \Romchik38\Site1\Http\Router\RouterHeaders\Auth::class
-
-        // function (RouterResultInterface $result, string $action = 'index') {
-        //     $encodedMessage = urlencode($result->getResponse());
-        //     $arr = [
-        //         'index' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
-        //         'logout' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
-        //         'register' => '/login/register?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
-        //         'recovery' => '/login/recovery?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage
-        //     ];
-        //     $url = $arr[$action] ?? $arr[$action];
-        //     $result->setHeaders([
-        //         [
-        //             'Location: ' . $_SERVER['REQUEST_SCHEME'] . '://'
-        //                 . $_SERVER['HTTP_HOST'] . $url, true, 301
-        //         ]
-        //     ]);
-        // }
-
-
     ],
 
     [
         $get, '/changepassword', \Romchik38\Site1\Controllers\Changepassword\Index::class,
-        ''
+        \Romchik38\Site1\Http\Router\RouterHeaders\Changepassword::class
     ]
 ];
