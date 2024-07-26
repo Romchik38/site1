@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services;
 
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
+use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
@@ -38,7 +41,8 @@ class UserRegister implements UserRegisterInterface {
     ];
 
     public function __construct(
-        protected UserRepositoryInterface $userRepository
+        protected UserRepositoryInterface $userRepository,
+        protected LoggerInterface $logger
     ) {  
     }
 
@@ -81,7 +85,40 @@ class UserRegister implements UserRegisterInterface {
                 throw new IncorrectFieldError('Check field: ' . $message);
             }
         }
-        // 3. any errors user sent correct data
+        // 3. any error, so user sent correct data
+    }
+
+    /**
+     * Check provided password for password change
+     *
+     * @param string $password
+     * @throws IncorrectFieldError
+     * @return void
+     */
+    public function checkPasswordChange(string $password): void {
+        [$pattern, $message] = $this->patterns[RequestInterface::PASSWORD_FIELD];
+        $check = preg_match($pattern, $password);
+        if ($check === 0 || $check === false) {
+            throw new IncorrectFieldError('Check field: ' . $message);
+        }
+    }
+
+    public function changePassword(int $userId, string $password): bool {
+        try {
+            /** @var UserModelInterface $user */
+            $user = $this->userRepository->getById($userId);
+            $user->setPassword(password_hash($password, PASSWORD_DEFAULT));
+            try {
+                $this->userRepository->save($user);
+                return true;
+            } catch(CouldNotSaveException $e) {
+                $this->logger->log(LogLevel::ERROR, UserRegister::class . ' - Can not save a password for user with id: ' . $userId . '. User Repository says: ' . $e->getMessage());
+                return false;
+            }
+        } catch(NoSuchEntityException $e) {
+            $this->logger->log(LogLevel::ERROR, UserRegister::class . ' - User with id: ' . $userId . ' wants to change password, but it is not present in the User Repository');
+            return false;
+        }
     }
 
     public function register(UserRegisterDTOInterface $userRegisterDTO): UserModelInterface
@@ -99,4 +136,5 @@ class UserRegister implements UserRegisterInterface {
         
         return $this->userRepository->add($newUser);
     }
+
 }

@@ -31,6 +31,10 @@ class Index implements ControllerInterface
     private $failedMessage = 'Authentication failed';
     private $logoutMessageSuccess = 'You have loged out';
     private $logoutMessageFailed = 'You must be loged in before log out';
+    private $changepasswordFailedMessage = 'You must be logged in to change a password';
+    private $changepasswordBadRequest = 'Bad request ( no password provided )';
+    private $technicalIssues = 'We are sorry. There are some technical issues on our side. Please try later.';
+    private $changePasswordSuccessMessage = 'Your password was changed successfully';
 
     public function __construct(
         private RequestInterface $request,
@@ -76,7 +80,29 @@ class Index implements ControllerInterface
      * Action changepassword
      */
     public function changepassword() {
-        return 'hello';
+        // 1 check auth
+        $userId = $this->session->getUserId();
+
+        if ($userId === 0) {
+            return $this->changepasswordFailedMessage;
+        }
+        // 2 check if field is present
+        $password = $this->request->getPassword();
+        if ($password === '') {
+            return $this->changepasswordBadRequest;
+        }
+        // 3 check password requirements
+        try {
+            $this->userRegister->checkPasswordChange($password);
+        } catch (IncorrectFieldError $e) {
+            return $e->getMessage();
+        }
+        // 4 set new password
+        $changeResult = $this->userRegister->changepassword($userId, $password);
+        if ($changeResult === false) {
+            return $this->technicalIssues;
+        }
+        return $this->changePasswordSuccessMessage;
     } 
 
     /**

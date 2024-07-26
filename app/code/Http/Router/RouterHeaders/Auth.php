@@ -14,7 +14,8 @@ class Auth implements RouterHeadersInterface {
             'index' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
             'logout' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
             'register' => '/login/register?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
-            'recovery' => '/login/recovery?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage
+            'recovery' => '/login/recovery?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
+            'changepassword' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
         ];
         $url = $arr[$action] ?? '';
         if ($url !== '') {

@@ -40,7 +40,8 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Services\UserRegister::class,
         new \Romchik38\Site1\Services\UserRegister(
-            $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
+            $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class),
+            $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::class)
         )
     );
 
