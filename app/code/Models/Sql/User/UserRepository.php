@@ -43,6 +43,13 @@ class UserRepository extends Repository implements UserRepositoryInterface
         return $entity;
     }
 
+    /**
+     * Find a user by proveded email address
+     * 
+     * @param string $email
+     * @throws NoSuchEntityException
+     * @return UserModelInterface
+     */
     public function getByEmail(string $email): UserModelInterface
     {
         $arr = $this->list(

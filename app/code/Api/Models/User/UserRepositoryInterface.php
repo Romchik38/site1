@@ -9,5 +9,7 @@ use Romchik38\Server\Api\Models\RepositoryInterface;
 interface UserRepositoryInterface extends RepositoryInterface {
     public function create(): UserModelInterface;
     public function getByUserName(string $userName): UserModelInterface;
+
+    /** @throws NoSuchEntityException */
     public function getByEmail(string $email): UserModelInterface;
 }

@@ -4,13 +4,16 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Changepassword;
 
+use Psr\Log\LoggerInterface;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 use Romchik38\Server\Api\Services\SessionInterface;
-use Romchik38\Server\Services\Session;
+use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
+use Psr\Log\LogLevel;
 
 class Index implements ControllerInterface
 {
@@ -22,13 +25,16 @@ class Index implements ControllerInterface
     protected $failedMessage = 'Sorry, provided recovery link does\'nt work. It is valid ' 
         . (RecoveryEmailInterface::VALID_TIME / 60) . ' minutes';
 
-    protected $successMessage = 'Link is valid';
+    protected $successMessage = 'You are already logged in. Please change a password';
     protected $alreadyLoggedIn = 'You are already logged in';
+    protected $technicalProblemMessage = 'We are sorry, you can\'t recovery a password. There are some technical problems on our side.';
 
     public function __construct(
         protected RequestInterface $request,
         protected UserRecoveryEmailInterface $userRecoveryEmail,
-        protected SessionInterface $session
+        protected SessionInterface $session,
+        protected UserRepositoryInterface $userRepository,
+        protected LoggerInterface $logger
     ) {
     }
 
@@ -67,7 +73,15 @@ class Index implements ControllerInterface
             return $this->failedMessage;
         }
         // 4 auth user
+        try {
+            $user = $this->userRepository->getByEmail($email);
+        } catch(NoSuchEntityException $e) {
+            // there is a problem. Because a recovery row exist, but user do not exist.
+            $this->logger->log(LogLevel::ERROR, 'user with email ' . $email . ' does\'nt exist. But recovery row the email is present.');
+            return $this->technicalProblemMessage;
+        }
 
+        $this->session->setUserId($user->getId());
         // 5 redirect to /changepassword/index to change a password
         return $this->successMessage;
     }
