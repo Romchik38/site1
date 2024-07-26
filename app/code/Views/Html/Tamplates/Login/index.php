@@ -8,7 +8,7 @@ use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 
 return function (LoginDTOInterface $data) {
 
-    $actions = ['index', 'register', 'recovery'];
+    $actions = ['index', 'register', 'recovery', 'changepassword'];
     $actionHtml = '';
     $action = $data->getActionName();
 
