@@ -108,9 +108,9 @@ return function(LoginDTOInterface $data){
         } else {
             $html = 
             <<<HTML
-            <div class="container my-3">
+            <div class="container mt-3">
                 <h2>You successfully registered and already signed in.</h2>
-                <ul>Please visit:
+                <ul class="my-3">Please visit:
                     <li><a href="/">Main page</a> to start using our site.</li>
                     <li><a href="/login/index">Login page</a> to see your registration info</li>
                 </ul>
