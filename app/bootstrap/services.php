@@ -16,12 +16,16 @@ return function ($container) {
     );
 
     $container->add(
-        \Psr\Log\LoggerInterface::class,
+        \Romchik38\Server\Api\Services\LoggerServerInterface::class,
         new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
             __DIR__ . '/../var/default.log',
             7
         )
-        //new \Romchik38\Server\Services\Logger\Loggers\EchoLogger(7)
+    );
+
+    $container->add(
+        \Psr\Log\LoggerInterface::class,
+        $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class)
     );
 
     $container->add(
