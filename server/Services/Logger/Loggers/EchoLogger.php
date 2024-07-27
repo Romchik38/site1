@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Services\Logger;
+namespace Romchik38\Server\Services\Logger\Loggers;
 
 use Romchik38\Server\Services\Logger\Logger;
 

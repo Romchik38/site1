@@ -48,7 +48,7 @@ $headers($container);
 // SERVER
 $container->add(
     Server::CONTAINER_LOGGER_FIELD, 
-    $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::class)
+    $container->get(\Psr\Log\LoggerInterface::class)
 );
 
 return $container;

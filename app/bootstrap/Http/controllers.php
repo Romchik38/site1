@@ -51,7 +51,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class),
             $container->get(\Romchik38\Server\Services\Session::class),
             $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class),
-            $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::class)
+            $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
     

@@ -24,5 +24,12 @@ $server = new DefaultServer(
 
 // Start app
 $server->run();
-$server->log();
+$server->log();   // write all logs at the time, if they didn't send earlier
 // End app
+
+//test
+// use Psr\Log\LoggerInterface;
+// use Psr\Log\LogLevel;
+/** @var LoggerInterface $logger */
+// $logger = $container->get(Server::CONTAINER_LOGGER_FIELD);
+// $logger->log(LogLevel::DEBUG, 'hello world');
