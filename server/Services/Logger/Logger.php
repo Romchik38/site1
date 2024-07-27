@@ -5,13 +5,15 @@ namespace Romchik38\Server\Services\Logger;
 use Psr\Log\AbstractLogger;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
+use Psr\Log\LoggerInterface;
 
 abstract class Logger extends AbstractLogger implements LoggerServerInterface
 {
     protected array $messages = [];
 
     public function __construct(
-        protected readonly int $logLevel
+        protected readonly int $logLevel,
+        protected LoggerInterface|null $alternativeLogger = null
     ) {
     }
 
@@ -61,5 +63,17 @@ abstract class Logger extends AbstractLogger implements LoggerServerInterface
 
         // interpolate replacement values into the message and return
         return strtr($message, $replace);
+    }
+
+    /** 
+     * Write logs to another logger when main logger doesn't work
+     * 
+     * @param array $writeMessages [['level', 'message'], ...]
+     */
+    protected function sendAllToalternativeLog(array $writeMessages): void {
+        foreach($writeMessages as $item) {
+            [$level, $message] = $item;
+            $this->alternativeLogger->log($level, $message);
+        }
     }
 }

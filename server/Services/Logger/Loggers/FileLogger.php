@@ -8,6 +8,7 @@ use Romchik38\Server\Services\Logger\Logger;
 use Romchik38\Server\Api\Services\Loggers\FileLoggerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Romchik38\Server\Api\Services\LoggerServerInterface;
 
 class FileLogger extends Logger implements FileLoggerInterface
 {
@@ -33,12 +34,12 @@ class FileLogger extends Logger implements FileLoggerInterface
         $this->messages[] = [$level, $message];
     }
 
-    protected function sendAllToalternativeLog(array $writeMessages): void {
-        foreach($writeMessages as $item) {
-            [$level, $message] = $item;
-            $this->alternativeLogger->log($level, $message);
-        }
-    }
+    // protected function sendAllToalternativeLog(array $writeMessages): void {
+    //     foreach($writeMessages as $item) {
+    //         [$level, $message] = $item;
+    //         $this->alternativeLogger->log($level, $message);
+    //     }
+    // }
 
     public function sendAllLogs(): void
     {
@@ -59,7 +60,7 @@ class FileLogger extends Logger implements FileLoggerInterface
         // 2 write
         $writeErrors = [];
         $date = new \DateTime();
-        $dateString = $date->format(FileLoggerInterface::DATE_TIME_FORMAT);
+        $dateString = $date->format(LoggerServerInterface::DATE_TIME_FORMAT);
         foreach($this->messages as $item) {
             [$level, $message] = $item;
             $str = '[' . $dateString . '] ' . $level . ': ' . $message . PHP_EOL;
