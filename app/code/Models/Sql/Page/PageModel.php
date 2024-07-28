@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Models\Sql\Page;
 
 use Romchik38\Server\Models\Model;
-use Romchik38\Site1\Api\Models\PageModelInterface;
+use Romchik38\Site1\Api\Models\Page\PageModelInterface;
 
 class PageModel extends Model implements PageModelInterface
 {

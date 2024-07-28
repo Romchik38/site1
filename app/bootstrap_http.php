@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 use Romchik38\Container;
 use Romchik38\Server\Routers\DefaultRouter;
-use Romchik38\Server\Results\DefaultRouterResult;
 use Romchik38\Server\Api\Server;
 
 $container = new Container();
@@ -30,13 +29,12 @@ $controllers = require_once(__DIR__ . '/bootstrap/Http/controllers.php');
 $controllers($container);
 
 // ROUTER
-$container->add(DefaultRouterResult::class, new DefaultRouterResult(
-    /** default response, headers, statusCode */
-));
 $controllersList = require_once(__DIR__ . '/bootstrap/Http/controllersList.php');
 $container->add(
     DefaultRouter::class, new DefaultRouter(
-            $container->get(DefaultRouterResult::class),
+            $container->get(
+                \Romchik38\Server\Results\DefaultRouterResult::class
+            ),
             $controllersList,
             $container,
             null,

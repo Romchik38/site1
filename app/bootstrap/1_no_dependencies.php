@@ -16,15 +16,21 @@ declare(strict_types=1);
 
     // DATABASES
     $container->add(
-        Romchik38\Server\Models\Sql\DatabasePostgresql::class,
+        \Romchik38\Server\Models\Sql\DatabasePostgresql::class,
         new Romchik38\Server\Models\Sql\DatabasePostgresql($config)
     );
     
+    $container->add(
+        \Romchik38\Server\Api\Models\DatabaseInterface::class,
+        $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class)
+    );
+
     // FACTORIES
     $container->add(
-        Romchik38\Site1\Models\Sql\Page\PageFactory::class,
+        \Romchik38\Site1\Models\Sql\Page\PageFactory::class,
         new Romchik38\Site1\Models\Sql\Page\PageFactory()
     );
+
     $container->add(
         Romchik38\Site1\Models\Sql\Redirect\RedirectFactory::class,
         new Romchik38\Site1\Models\Sql\Redirect\RedirectFactory()
@@ -76,5 +82,12 @@ declare(strict_types=1);
         new \Romchik38\Server\Services\Mailer\PhpMail()
     );
     
+    // ROUTER
+    $container->add(
+        \Romchik38\Server\Results\DefaultRouterResult::class, 
+        new \Romchik38\Server\Results\DefaultRouterResult(
+        /** default response, headers, statusCode */
+    ));
+
     return $container;
 };

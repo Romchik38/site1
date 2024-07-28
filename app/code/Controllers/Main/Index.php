@@ -6,7 +6,7 @@ namespace Romchik38\Site1\Controllers\Main;
 
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
-use Romchik38\Site1\Api\Models\PageRepositoryInterface;
+use Romchik38\Site1\Api\Models\Page\PageRepositoryInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
 
