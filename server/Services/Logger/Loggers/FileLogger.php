@@ -25,7 +25,7 @@ class FileLogger extends Logger implements FileLoggerInterface
         protected $context = null,
         protected LoggerInterface|null $alternativeLogger = null
     ) {
-        parent::__construct($logLevel);
+        parent::__construct($logLevel, $alternativeLogger);
         $this->fullFilePath = $protocol . $fileName;
     }
 
