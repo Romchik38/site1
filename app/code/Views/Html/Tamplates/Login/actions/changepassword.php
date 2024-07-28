@@ -50,7 +50,7 @@ return function(LoginDTOInterface $data){
                         </form>
                         <br>
                         <p id="error_button" class="error_message text-center"><p>
-                        <p>Do you remember the password? If so, just do nothing and visit <a href="/login/index">Login page</a> to see your user information.</p>
+                        <p>Do not want to change the password? If so, just do nothing and visit <a href="/login/index">Login page</a> to see your user information.</p>
                         <script src="/media/js/login/register/checkForm.js" defer></script>
                     </div>
                 </div>

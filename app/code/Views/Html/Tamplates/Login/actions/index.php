@@ -68,6 +68,10 @@ return function(LoginDTOInterface $data){
                             <td>Email</td>
                             <td>{$userEmail}</td>
                         </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td><a href="/login/changepassword">change</a></td>
+                        </tr>
                     </table>
                     <div class="col my-3">
                         <form action="/auth/logout" method="post">
