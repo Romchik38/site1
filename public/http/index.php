@@ -28,9 +28,9 @@ $server->log();   // write all logs at the time, if they didn't send earlier
 // End app
 
 //test
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
+// use Psr\Log\LoggerInterface;
+// use Psr\Log\LogLevel;
 /** @var LoggerInterface $logger */
-$logger = $container->get(Server::CONTAINER_LOGGER_FIELD);
-$logger->log(LogLevel::ERROR, 'some error from index');
-$server->log();
+// $logger = $container->get(Server::CONTAINER_LOGGER_FIELD);
+// $logger->log(LogLevel::ERROR, 'some error from index');
+// $server->log();
