@@ -17,7 +17,7 @@ return function(LoginDTOInterface $data){
     if ($user === null) {
         $html = <<<HTML
         <div class="container mt-3">
-            <div class="row">
+            <div class="row justify-content-center">
                 <div class="col-sm-4">
                     <h2>Provide Login Credentials</h2>
                     <p class="error_message">{$message}<p>
