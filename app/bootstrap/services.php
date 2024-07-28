@@ -45,14 +45,14 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Services\PasswordCheck::class,
         new \Romchik38\Site1\Services\PasswordCheck(
-            $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
         )
     );
 
     $container->add(
         \Romchik38\Site1\Services\UserRegister::class,
         new \Romchik38\Site1\Services\UserRegister(
-            $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class),
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
     );

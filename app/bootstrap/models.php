@@ -47,6 +47,11 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
+    );
+
+    $container->add(
         \Romchik38\Server\Models\Sql\Entity\EntityRepository::class,
         function($container){
             return new \Romchik38\Server\Models\Sql\Entity\EntityRepository(

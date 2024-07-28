@@ -23,7 +23,7 @@ return function ($container) {
                 $container->get(\Romchik38\Server\Services\Session::class),
                 $container->get(\Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class),
                 $container->get(\Romchik38\Site1\Services\Http\Request::class),
-                $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
+                $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
             );
         }
     );
@@ -38,7 +38,7 @@ return function ($container) {
                 $container->get(\Romchik38\Server\Services\Session::class),
                 $container->get(\Romchik38\Site1\Services\UserRegister::class),
                 $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class),
-                $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
+                $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
             );
         }
     );
@@ -50,7 +50,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Services\Http\Request::class),
             $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class),
             $container->get(\Romchik38\Server\Services\Session::class),
-            $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class),
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
