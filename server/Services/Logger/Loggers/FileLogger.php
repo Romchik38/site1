@@ -23,7 +23,7 @@ class FileLogger extends Logger implements FileLoggerInterface
         string $protocol = FileLoggerInterface::DEFAULT_PROTOCOL,
         protected readonly bool $useIncludePath = false,
         protected $context = null,
-        protected LoggerInterface|null $alternativeLogger = null
+        protected LoggerServerInterface|null $alternativeLogger = null
     ) {
         parent::__construct($logLevel, $alternativeLogger);
         $this->fullFilePath = $protocol . $fileName;
@@ -52,8 +52,9 @@ class FileLogger extends Logger implements FileLoggerInterface
         if ($fp === false) {
             // log error to alternative logger
             if ($this->alternativeLogger) {
-                $this->alternativeLogger->log(LogLevel::ALERT, 'Cant\'t open file to log: ' . $this->fullFilePath );
+                $this->alternativeLogger->log(LogLevel::ALERT, 'Can\'t open file to log: ' . $this->fullFilePath );
                 $this->sendAllToalternativeLog($this->messages);
+                $this->alternativeLogger->sendAllLogs();
             }
             return;
         }

@@ -13,7 +13,7 @@ abstract class Logger extends AbstractLogger implements LoggerServerInterface
 
     public function __construct(
         protected readonly int $logLevel,
-        protected LoggerInterface|null $alternativeLogger = null
+        protected LoggerServerInterface|null $alternativeLogger = null
     ) {
     }
 

@@ -16,10 +16,26 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Server\Services\Logger\Loggers\EmailLogger::class,
+        new \Romchik38\Server\Services\Logger\Loggers\EmailLogger(
+            4,
+            $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class),
+            $container->get(\Romchik38\Server\Models\DTO\Email\EmailDTOFactory::class),
+            'pomahehko.c@gmail.com',
+            'ser@ozone.com.ua',
+            null
+        )
+    );
+
+    $container->add(
         \Romchik38\Server\Api\Services\LoggerServerInterface::class,
         new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
             __DIR__ . '/../var/default.log',
-            7
+            7,
+            \Romchik38\Server\Api\Services\Loggers\FileLoggerInterface::DEFAULT_PROTOCOL,
+            false,
+            null,
+            $container->get(\Romchik38\Server\Services\Logger\Loggers\EmailLogger::class)
         )
     );
 

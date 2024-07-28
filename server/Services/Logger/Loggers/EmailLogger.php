@@ -18,11 +18,11 @@ class EmailLogger extends Logger
 
     public function __construct(
         int $logLevel,
-        protected LoggerInterface|null $alternativeLogger = null,
         protected MailerInterface $mailer,
         protected EmailDTOFactoryInterface $emailDTOFactory,
         protected string $recipient,
-        protected string $sender
+        protected string $sender,
+        protected LoggerServerInterface|null $alternativeLogger = null,
     ) {
         parent::__construct($logLevel, $alternativeLogger);
     }
@@ -38,37 +38,41 @@ class EmailLogger extends Logger
             return;
         }
 
-        
+
         // write
         $writeErrors = [];
+        $messagesToSent = [];
         $date = new \DateTime();
         $dateString = $date->format(LoggerServerInterface::DATE_TIME_FORMAT);
-        foreach($this->messages as $item) {
+        foreach ($this->messages as $item) {
             [$level, $message] = $item;
-            $subject = 'Log message';
 
-            $message = '<p>Date: ' . $dateString . '</p><p>Level: ' 
+            $messagesToSent[] = '<p>Date: ' . $dateString . '</p><p>Level: '
                 . $level . '</p><p>Message: ' . $message . '</p>';
 
-            $headers = array(
-                'From' => $this->sender,
-                'Reply-To' => $this->sender,
-                'Content-type' => 'text/html',
-                'X-Mailer' => 'PHP/' . phpversion()
-            );
+        }
 
-            $emailDTO = $this->emailDTOFactory->create(
-                $this->recipient,
-                $subject,
-                $message,
-                $headers
-            );
-            // send 
-            try {
-                $this->mailer->send($emailDTO);                
-            } catch (CantSendEmailException $e) {
-                $writeErrors[] = $item;
-            }
+        $subject = 'Log message';
+
+        $headers = array(
+            'From' => $this->sender,
+            'Reply-To' => $this->sender,
+            'Content-type' => 'text/html',
+            'X-Mailer' => 'PHP/' . phpversion()
+        );
+
+        $emailDTO = $this->emailDTOFactory->create(
+            $this->recipient,
+            $subject,
+            implode("<br><br>", $messagesToSent),
+            $headers
+        );
+
+        // send 
+        try {
+            $this->mailer->send($emailDTO);
+        } catch (CantSendEmailException $e) {
+            $writeErrors[] = $item;
         }
 
         if (count($writeErrors) > 0) {
@@ -78,6 +82,5 @@ class EmailLogger extends Logger
                 $this->sendAllToalternativeLog($writeErrors);
             }
         }
-    
     }
 }
