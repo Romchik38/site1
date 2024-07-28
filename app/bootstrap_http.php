@@ -6,9 +6,12 @@ use Romchik38\Container;
 use Romchik38\Server\Routers\DefaultRouter;
 use Romchik38\Server\Results\DefaultRouterResult;
 use Romchik38\Server\Api\Server;
-use Romchik38\Site1\Stubs\EchoLogger;
 
 $container = new Container();
+
+// No dependencies
+$no_dependencies = require_once(__DIR__ . '/bootstrap/1_no_dependencies.php');
+$no_dependencies($container);
 
 // MODELS
 $models = require_once(__DIR__ . '/bootstrap/models.php');

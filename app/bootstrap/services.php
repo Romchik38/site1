@@ -5,15 +5,6 @@ declare(strict_types=1);
 use Romchik38\Server\Models\DTO\Email\EmailDTOFactory;
 
 return function ($container) {
-    $container->add(
-        \Romchik38\Server\Services\Session::class,
-        new \Romchik38\Server\Services\Session()
-    );
-
-    $container->add(
-        \Romchik38\Server\Services\Mailer\PhpMail::class,
-        new \Romchik38\Server\Services\Mailer\PhpMail()
-    );
 
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\EmailLogger::class,
