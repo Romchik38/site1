@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Romchik38\Container;
-use Romchik38\Server\Routers\DefaultRouter;
 use Romchik38\Server\Api\Server;
 
 $container = new Container();
@@ -31,15 +30,19 @@ $controllers($container);
 // ROUTER
 $controllersList = require_once(__DIR__ . '/bootstrap/Http/controllersList.php');
 $container->add(
-    DefaultRouter::class, new DefaultRouter(
-            $container->get(
-                \Romchik38\Server\Results\DefaultRouterResult::class
-            ),
-            $controllersList,
-            $container,
-            null,
-            $container->get(\Romchik38\Server\Api\Services\RedirectInterface::class)
+    \Romchik38\Server\Routers\DefaultRouter::class, 
+    new \Romchik38\Server\Routers\DefaultRouter(
+        $container->get(\Romchik38\Server\Results\DefaultRouterResult::class),
+        $controllersList,
+        $container,
+        null,
+        $container->get(\Romchik38\Server\Api\Services\RedirectInterface::class)
     )
+);
+
+$container->add(
+    \Romchik38\Server\Api\Router\RouterInterface::class,
+    $container->get(Romchik38\Server\Routers\DefaultRouter::class)
 );
 
 // ROUTER HEADERS
@@ -47,9 +50,18 @@ $headers = require_once(__DIR__ . '/bootstrap/router_headers.php');
 $headers($container);
 
 // SERVER
+
 $container->add(
-    Server::CONTAINER_LOGGER_FIELD, 
-    $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class)
+    \Romchik38\Server\Servers\Http\DefaultServer::class,
+    new \Romchik38\Server\Servers\Http\DefaultServer(
+        $container->get(\Romchik38\Server\Api\Router\RouterInterface::class),
+        $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class)
+    )
+);
+
+$container->add(
+    \Romchik38\Server\Api\Servers\ServerInterface::class,
+    $container->get(\Romchik38\Server\Servers\Http\DefaultServer::class)
 );
 
 return $container;

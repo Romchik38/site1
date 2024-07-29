@@ -4,15 +4,9 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Romchik38\Server\Servers\DefaultServer;
-use Romchik38\Server\Api\Server;
-
 $container = require_once __DIR__ . '/../../app/bootstrap_http.php';
 
-$server = new DefaultServer(
-    $container, 
-    $container->get(Server::CONTAINER_LOGGER_FIELD)
-);
+$server = $container->get(\Romchik38\Server\Api\Servers\ServerInterface::class);
 
 /* 
 * At this place can be filter or something else
@@ -31,6 +25,6 @@ $server->log();   // write all logs at the time, if they didn't send earlier
 // use Psr\Log\LoggerInterface;
 // use Psr\Log\LogLevel;
 /** @var LoggerInterface $logger */
-// $logger = $container->get(Server::CONTAINER_LOGGER_FIELD);
+// $logger = $container->get(Psr\Log\LoggerInterface::class);
 // $logger->log(LogLevel::ERROR, 'some error from index');
 // $server->log();

@@ -2,18 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Servers;
+namespace Romchik38\Server\Servers\Http;
 
-use Romchik38\{Container, NotFoundException};
-use Romchik38\Server\Routers\DefaultRouter;
-use Romchik38\Server\Api\Server;
+use Romchik38\Server\Api\Servers\Http\HttpServerInterface;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
+use Romchik38\Server\Api\Router\RouterInterface;
 
-class DefaultServer implements Server
+class DefaultServer implements HttpServerInterface
 {
 
     public function __construct(
-        protected Container $container,
+        protected RouterInterface $router,
         protected LoggerServerInterface|null $logger = null
     ) {
     }
@@ -30,8 +29,7 @@ class DefaultServer implements Server
     public function run(): DefaultServer
     {
         try {
-            $router = $this->container->get(DefaultRouter::class);
-            $result = $router->execute();
+            $result = $this->router->execute();
             $response = $result->getResponse();
             $headres = $result->getHeaders();
             $statusCode = $result->getStatusCode();
