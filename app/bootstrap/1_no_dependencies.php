@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Romchik38\Container;
+
 /**
  * A bootstrap file.
  * 
@@ -78,8 +80,18 @@ declare(strict_types=1);
     );
 
     $container->add(
+        \Romchik38\Server\Api\Services\SessionInterface::class,
+        $container->get(\Romchik38\Server\Services\Session::class)
+    );
+
+    $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,
         new \Romchik38\Server\Services\Mailer\PhpMail()
+    );
+
+    $container->add(
+        \Romchik38\Server\Api\Services\MailerInterface::class,
+        $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
     );
     
     // ROUTER

@@ -10,7 +10,7 @@ return function ($container) {
         \Romchik38\Server\Services\Logger\Loggers\EmailLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\EmailLogger(
             4,
-            $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class),
+            $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $container->get(\Romchik38\Server\Models\DTO\Email\EmailDTOFactory::class),
             'pomahehko.c@gmail.com',
             'ser@ozone.com.ua',
@@ -66,7 +66,7 @@ return function ($container) {
             'url_domain',
             'url_recovery',
             $container->get(EmailDTOFactory::class),
-            $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class),
+            $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
