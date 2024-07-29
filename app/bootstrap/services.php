@@ -102,9 +102,9 @@ return function ($container) {
 
     // REDIRECT
     $container->add(
-        \Romchik38\Server\Services\Redirect::class,
+        Romchik38\Server\Services\Redirect\Http\Redirect::class,
         function ($container) {
-            return new \Romchik38\Server\Services\Redirect(
+            return new Romchik38\Server\Services\Redirect\Http\Redirect(
                 $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class)
             );
         }
@@ -112,7 +112,7 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Server\Api\Services\RedirectInterface::class,
-        $container->get(\Romchik38\Server\Services\Redirect::class)
+        $container->get(Romchik38\Server\Services\Redirect\Http\Redirect::class)
     );
 
     return $container;
