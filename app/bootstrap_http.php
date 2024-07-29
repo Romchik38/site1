@@ -38,7 +38,7 @@ $container->add(
             $controllersList,
             $container,
             null,
-            $container->get(Romchik38\Server\Services\Redirect::class)
+            $container->get(\Romchik38\Server\Api\Services\RedirectInterface::class)
     )
 );
 

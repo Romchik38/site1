@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\controllersList;
 
-use Romchik38\Server\Api\Results\RouterResultInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
-
 $get = 'GET';
 $post = 'POST';
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Romchik38\Server\Models\DTO\Email\EmailDTOFactory;
 
 return function ($container) {
-
+    // LOGGERS
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\EmailLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\EmailLogger(
@@ -17,9 +17,8 @@ return function ($container) {
             null
         )
     );
-
     $container->add(
-        \Romchik38\Server\Api\Services\LoggerServerInterface::class,
+        \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
             __DIR__ . '/../var/default.log',
             7,
@@ -31,10 +30,16 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Server\Api\Services\LoggerServerInterface::class,
+        $container->get(\Romchik38\Server\Services\Logger\Loggers\FileLogger::class)
+    );
+
+    $container->add(
         \Psr\Log\LoggerInterface::class,
         $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class)
     );
 
+    // REQUEST
     $container->add(
         \Romchik38\Site1\Services\Http\Request::class,
         new \Romchik38\Site1\Services\Http\Request(
@@ -43,12 +48,24 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Site1\Api\Services\RequestInterface::class,
+        $container->get(\Romchik38\Site1\Services\Http\Request::class)
+    );
+
+    // PASSWORDCHECK
+    $container->add(
         \Romchik38\Site1\Services\PasswordCheck::class,
         new \Romchik38\Site1\Services\PasswordCheck(
             $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
         )
     );
 
+    $container->add(
+        \Romchik38\Site1\Api\Services\PasswordCheckInterface::class,
+        $container->get(\Romchik38\Site1\Services\PasswordCheck::class)
+    );
+
+    // USERREGISTER
     $container->add(
         \Romchik38\Site1\Services\UserRegister::class,
         new \Romchik38\Site1\Services\UserRegister(
@@ -57,6 +74,12 @@ return function ($container) {
         )
     );
 
+    $container->add(
+        \Romchik38\Site1\Api\Services\UserRegisterInterface::class,
+        $container->get(\Romchik38\Site1\Services\UserRegister::class)
+    );
+
+    // USERRECOVERYEMAIL
     $container->add(
         \Romchik38\Site1\Services\UserRecoveryEmail::class,
         new \Romchik38\Site1\Services\UserRecoveryEmail(
@@ -73,12 +96,23 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class,
+        $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class)
+    );
+
+    // REDIRECT
+    $container->add(
         \Romchik38\Server\Services\Redirect::class,
         function ($container) {
             return new \Romchik38\Server\Services\Redirect(
                 $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class)
             );
         }
+    );
+
+    $container->add(
+        \Romchik38\Server\Api\Services\RedirectInterface::class,
+        $container->get(\Romchik38\Server\Services\Redirect::class)
     );
 
     return $container;
