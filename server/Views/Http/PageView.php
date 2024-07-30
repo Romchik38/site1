@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Views;
+namespace Romchik38\Server\Views\Http;
 
 use \Romchik38\Server\Api\Views\ViewInterface;
 use \Romchik38\Server\Api\Models\DTO\DTOInterface;

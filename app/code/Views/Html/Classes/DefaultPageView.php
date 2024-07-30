@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html\Classes;
 
-use Romchik38\Server\Views\PageView;
+use Romchik38\Server\Views\Http\PageView;
 
 class DefaultPageView extends PageView
 {
