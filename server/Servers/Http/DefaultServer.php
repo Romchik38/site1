@@ -49,7 +49,6 @@ class DefaultServer implements HttpServerInterface
             }
             echo $this::DEFAULT_SERVER_ERROR_MESSAGE;
             http_response_code($this::DEFAULT_SERVER_ERROR_CODE);
-            exit(1);
         }
 
         return $this;

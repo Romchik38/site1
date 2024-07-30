@@ -15,11 +15,11 @@ return [
         $post, 
         '/auth', 
         \Romchik38\Site1\Controllers\Auth\Index::class,
-        \Romchik38\Site1\Http\Router\RouterHeaders\Auth::class
+        \Romchik38\Site1\Router\Http\RouterHeaders\Auth::class
     ],
 
     [
         $get, '/changepassword', \Romchik38\Site1\Controllers\Changepassword\Index::class,
-        \Romchik38\Site1\Http\Router\RouterHeaders\Changepassword::class
+        \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword::class
     ]
 ];
