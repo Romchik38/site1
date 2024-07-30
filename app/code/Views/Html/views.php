@@ -15,6 +15,10 @@ return function ($container) {
         )
     );
     
+    $container->add(
+        \Romchik38\Site1\Api\Views\DefaultPageViewInterface::class,
+        $container->get(\Romchik38\Site1\Views\Html\Classes\DefaultPageView::class)
+    );
 
     // MAIN 
     $container->add(
@@ -28,6 +32,12 @@ return function ($container) {
         )
     );
 
+    $container->add(
+        \Romchik38\Site1\Api\Views\MainPageViewInterface::class,
+        $container->get(\Romchik38\Site1\Views\Html\Classes\Main\Index::class)
+    );
+
+
     // LOGIN
     $container->add(
         \Romchik38\Site1\Views\Html\Classes\Login\Index::class,
@@ -38,6 +48,11 @@ return function ($container) {
             },
             require_once(__DIR__ . '/Tamplates/Login/index.php')
         )
+    );
+
+    $container->add(
+        \Romchik38\Site1\Api\Views\LoginPageViewInterface::class,
+        $container->get(\Romchik38\Site1\Views\Html\Classes\Login\Index::class)
     );
 
     return $container;

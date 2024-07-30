@@ -8,7 +8,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Main\Index::class, 
         function($container){
             return new \Romchik38\Site1\Controllers\Main\Index(
-                $container->get(\Romchik38\Site1\Views\Html\Classes\Main\Index::class),
+                $container->get(\Romchik38\Site1\Api\Views\MainPageViewInterface::class),
                 $container->get(\Romchik38\Site1\Api\Models\Page\PageRepositoryInterface::class),
                 $container->get(\Romchik38\Site1\Models\DTO\Main\MainDTOFactory::class)
             );
@@ -19,7 +19,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Login\Index::class, 
         function($container){
             return new \Romchik38\Site1\Controllers\Login\Index(
-                $container->get(\Romchik38\Site1\Views\Html\Classes\Login\Index::class),
+                $container->get(\Romchik38\Site1\Api\Views\LoginPageViewInterface::class),
                 $container->get(\Romchik38\Server\Api\Services\SessionInterface::class),
                 $container->get(\Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class),
                 $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
