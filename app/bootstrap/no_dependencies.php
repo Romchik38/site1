@@ -14,12 +14,12 @@ use Romchik38\Container;
  */
 
  return function ($container) {
-    $config = require_once(__DIR__ . '/../config/database.php');
+    $configDatabase = require_once(__DIR__ . '/../config/database.php');
 
     // DATABASES
     $container->add(
         \Romchik38\Server\Models\Sql\DatabasePostgresql::class,
-        new Romchik38\Server\Models\Sql\DatabasePostgresql($config)
+        new Romchik38\Server\Models\Sql\DatabasePostgresql($configDatabase)
     );
     
     $container->add(
@@ -75,16 +75,6 @@ use Romchik38\Container;
   
     // SERVICES
     $container->add(
-        \Romchik38\Server\Services\Session\Http\Session::class,
-        new \Romchik38\Server\Services\Session\Http\Session()
-    );
-
-    $container->add(
-        \Romchik38\Server\Api\Services\SessionInterface::class,
-        $container->get(\Romchik38\Server\Services\Session\Http\Session::class)
-    );
-
-    $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,
         new \Romchik38\Server\Services\Mailer\PhpMail()
     );
@@ -93,13 +83,6 @@ use Romchik38\Container;
         \Romchik38\Server\Api\Services\MailerInterface::class,
         $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
     );
-    
-    // ROUTER
-    $container->add(
-        \Romchik38\Server\Results\Http\HttpRouterResult::class, 
-        new \Romchik38\Server\Results\Http\HttpRouterResult(
-        /** default response, headers, statusCode */
-    ));
 
     
     return $container;
