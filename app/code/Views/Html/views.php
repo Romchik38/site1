@@ -3,9 +3,6 @@
 declare(strict_types=1);
 
 return function ($container) {
-
-    
-
     // DEFAULT
     $container->add(
         \Romchik38\Site1\Views\Html\Classes\DefaultPageView::class,
@@ -17,6 +14,7 @@ return function ($container) {
             require_once(__DIR__ . '/Tamplates/defaultTemplate.php')
         )
     );
+    
 
     // MAIN 
     $container->add(

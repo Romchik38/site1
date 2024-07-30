@@ -4,10 +4,17 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html\Classes;
 
+use Romchik38\Server\Api\Models\DTO\DTOInterface;
 use Romchik38\Server\Views\Http\PageView;
+use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 
-class DefaultPageView extends PageView
+class DefaultPageView extends PageView implements DefaultPageViewInterface
 {
+
+    protected function createHeader(DTOInterface $data) {
+        
+    }
+
     protected function createFooter()
     {
         $this->metaData[$this::FOOTER_DATA] = [
@@ -36,10 +43,10 @@ class DefaultPageView extends PageView
         ];
     }
 
-    protected function prepareMetaData(): void
+    protected function prepareMetaData(DTOInterface $data): void
     {
         /** Header */
-
+        $this->createHeader($data);
         /** Menu */
         $this->createNav();
         /** Footer */

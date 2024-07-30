@@ -52,9 +52,7 @@ class Index implements ControllerInterface
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
         
-        $this->view
-            ->setMetadata(ViewInterface::TITLE, 'Login Page')
-            ->setControllerData($loginDTO);
+        $this->view->setControllerData($loginDTO);
         return $this->view->toString();
     }
 

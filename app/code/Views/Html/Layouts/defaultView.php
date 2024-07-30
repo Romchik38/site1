@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html\Layouts;
 
-use Romchik38\Server\Api\Views\ViewInterface;
+use Romchik38\Server\Api\Views\Http\HttpViewInterface;
 
 return function (
     array $metaData,
     string $data,
-    string $wrapperName = ViewInterface::DEFAULT_WRAPPER
+    string $wrapperName = HttpViewInterface::DEFAULT_WRAPPER
 ) {
     // load wrapper
     $wrapper = require_once(__DIR__ . '/wrappers/' . $wrapperName . '.php');
@@ -29,7 +29,7 @@ return function (
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="/media/css/bootstrap.min.css" rel="stylesheet">
             <link href="/media/css/main.css" rel="stylesheet">
-            <title>{$metaData[ViewInterface::TITLE]}</title>
+            <title>{$metaData[HttpViewInterface::TITLE]}</title>
         </head>
         <body>
             {$wrapperHtml}

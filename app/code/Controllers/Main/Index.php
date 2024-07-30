@@ -31,9 +31,7 @@ class Index implements ControllerInterface
         } else {
             $page = $arr[0];
             $mainDTO = $this->mainDTOFactory->create($page);
-            $this->view
-                ->setMetadata(ViewInterface::TITLE, $page->getData('name'))
-                ->setControllerData($mainDTO);
+            $this->view->setControllerData($mainDTO);
             return $this->view->toString();
         }
     }

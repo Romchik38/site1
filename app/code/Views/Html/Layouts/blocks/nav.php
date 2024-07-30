@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-use Romchik38\Server\Api\Views\ViewInterface;
+use Romchik38\Server\Api\Views\Http\HttpViewInterface;
 
 return function(array $data = []){
     
-    if (!isset($data[ViewInterface::NAV_DATA])) {
+    if (!isset($data[HttpViewInterface::NAV_DATA])) {
         return '';
     }
     
-    $menu = $data[ViewInterface::NAV_DATA];
+    $menu = $data[HttpViewInterface::NAV_DATA];
 
     $menuHtml = '';
     foreach ($menu as $value) {
