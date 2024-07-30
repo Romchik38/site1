@@ -6,13 +6,13 @@ namespace Romchik38\Server\Servers\Http;
 
 use Romchik38\Server\Api\Servers\Http\HttpServerInterface;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
-use Romchik38\Server\Api\Router\RouterInterface;
+use Romchik38\Server\Api\Router\Http\HttpRouterInterface;
 
 class DefaultServer implements HttpServerInterface
 {
 
     public function __construct(
-        protected RouterInterface $router,
+        protected HttpRouterInterface $router,
         protected LoggerServerInterface|null $logger = null
     ) {
     }

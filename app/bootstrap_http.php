@@ -30,8 +30,8 @@ $controllers($container);
 // ROUTER
 $controllersList = require_once(__DIR__ . '/bootstrap/Http/controllersList.php');
 $container->add(
-    \Romchik38\Server\Routers\DefaultRouter::class, 
-    new \Romchik38\Server\Routers\DefaultRouter(
+    \Romchik38\Server\Routers\Http\DefaultRouter::class, 
+    new \Romchik38\Server\Routers\Http\DefaultRouter(
         $container->get(\Romchik38\Server\Results\DefaultRouterResult::class),
         $controllersList,
         $container,

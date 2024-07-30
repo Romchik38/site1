@@ -96,10 +96,11 @@ use Romchik38\Container;
     
     // ROUTER
     $container->add(
-        \Romchik38\Server\Results\DefaultRouterResult::class, 
-        new \Romchik38\Server\Results\DefaultRouterResult(
+        \Romchik38\Server\Results\Http\HttpRouterResult::class, 
+        new \Romchik38\Server\Results\Http\HttpRouterResult(
         /** default response, headers, statusCode */
     ));
 
+    
     return $container;
 };

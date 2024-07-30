@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Results\Http;
 
-use Romchik38\Server\Api\Results\Http\RouterResultInterface;
+use Romchik38\Server\Api\Results\Http\HttpRouterResultInterface;
 
-class DefaultRouterResult implements RouterResultInterface
+class HttpRouterResult implements HttpRouterResultInterface
 {
     public function __construct(
-        protected string $response = RouterResultInterface::DEFAULT_RESPONSE,
-        protected array $headers = RouterResultInterface::DEFAULT_HEADERS,
-        protected int $statusCode = RouterResultInterface::DEFAULT_STATUS_CODE,
+        protected string $response = HttpRouterResultInterface::DEFAULT_RESPONSE,
+        protected array $headers = HttpRouterResultInterface::DEFAULT_HEADERS,
+        protected int $statusCode = HttpRouterResultInterface::DEFAULT_STATUS_CODE,
     )
     {
     }
@@ -28,18 +28,18 @@ class DefaultRouterResult implements RouterResultInterface
         return $this->statusCode;
     }
 
-    public function setResponse(string $response): RouterResultInterface
+    public function setResponse(string $response): HttpRouterResultInterface
     {
         $this->response = $response;
         return $this;
     }
 
-    public function setHeaders(array $headers): RouterResultInterface
+    public function setHeaders(array $headers): HttpRouterResultInterface
     {
         $this->headers = $headers;
         return $this;
     }
-    public function setStatusCode(int $statusCode): RouterResultInterface
+    public function setStatusCode(int $statusCode): HttpRouterResultInterface
     {
         $this->statusCode = $statusCode;
         return $this;

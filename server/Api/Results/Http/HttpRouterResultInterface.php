@@ -15,7 +15,7 @@ interface HttpRouterResultInterface extends RouterResultInterface {
     public function getHeaders(): array;
     public function getStatusCode(): int;
 
-    public function setResponse(string $response): ResultInterface;
-    public function setHeaders(array $headers): ResultInterface;
-    public function setStatusCode(int $statusCode): ResultInterface;
+    public function setResponse(string $response): HttpRouterResultInterface;
+    public function setHeaders(array $headers): HttpRouterResultInterface;
+    public function setStatusCode(int $statusCode): HttpRouterResultInterface;
 }
