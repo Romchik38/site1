@@ -1,7 +1,4 @@
 # Todo
 
-- container
+- bootstrap
 
-## container
-
-1. Replace classes with Interface where it needed

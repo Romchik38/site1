@@ -5,4 +5,9 @@
     displayDetailsOnTestsThatTriggerWarnings="true"
     colors="true">
     <!-- rest of the config file -->
+    <testsuites>
+        <testsuite name="server_unit">
+          <directory>server/tests/unit</directory>
+        </testsuite>
+      </testsuites>
 </phpunit>
