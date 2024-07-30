@@ -4,5 +4,6 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Api\Results;
 
-interface RouterResultInterface extends ResultInterface {
+interface RouterResultInterface {
+
 }

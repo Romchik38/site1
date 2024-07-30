@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Api\Router;
 
-use Romchik38\Server\Api\Results\ResultInterface;
+use Romchik38\Server\Api\Results\Http\RouterResultInterface;
 
 interface RouterInterface
 {
@@ -18,5 +18,5 @@ interface RouterInterface
         string $headersClassName
     ): RouterInterface;
 
-    public function execute(): ResultInterface;
+    public function execute(): RouterResultInterface;
 }

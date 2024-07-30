@@ -2,7 +2,7 @@
 
 namespace Romchik38\Site1\Http\Router\RouterHeaders;
 
-use Romchik38\Server\Api\Results\RouterResultInterface;
+use Romchik38\Server\Api\Results\Http\RouterResultInterface;
 use Romchik38\Server\Api\Router\RouterHeadersInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 

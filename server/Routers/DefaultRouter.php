@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Server\Routers;
 
 use Romchik38\Server\Api\Router\RouterInterface;
-use Romchik38\Server\Api\Results\RouterResultInterface;
-use Romchik38\Server\Api\Results\ResultInterface;
+use Romchik38\Server\Api\Results\Http\RouterResultInterface;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Services\RedirectInterface;
 use Romchik38\Container;
@@ -45,7 +44,7 @@ class DefaultRouter implements RouterInterface
         return $this;
     }
 
-    public function execute(): ResultInterface
+    public function execute(): RouterResultInterface
     {
         // 1. method check 
         $method = $_SERVER['REQUEST_METHOD'];
@@ -108,8 +107,8 @@ class DefaultRouter implements RouterInterface
         if ($controllerClassName !== '') {
             /** @var ControllerInterface $controller */
             $controller = $this->container->get($controllerClassName);
-            $statusCode = ResultInterface::DEFAULT_STATUS_CODE;
-            $response = ResultInterface::DEFAULT_RESPONSE;
+            $statusCode = RouterResultInterface::DEFAULT_STATUS_CODE;
+            $response = RouterResultInterface::DEFAULT_RESPONSE;
             try {
                 $response = $controller->execute($baseName);
                 $statusCode = 200;

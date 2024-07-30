@@ -2,9 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Api\Results;
+namespace Romchik38\Server\Api\Results\Http;
 
-interface ResultInterface {
+use Romchik38\Server\Api\Results\RouterResultInterface;
+
+interface HttpRouterResultInterface extends RouterResultInterface {
     const DEFAULT_RESPONSE = '';
     const DEFAULT_HEADERS = [];
     const DEFAULT_STATUS_CODE = 0;
