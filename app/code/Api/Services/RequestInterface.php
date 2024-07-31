@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Api\Services;
 
-use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 
 interface RequestInterface {
 

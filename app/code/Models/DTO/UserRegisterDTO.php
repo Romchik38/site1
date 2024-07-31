@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Models\DTO;
 
 use Romchik38\Server\Models\DTO;
-use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
 
 class UserRegisterDTO extends DTO implements UserRegisterDTOInterface {

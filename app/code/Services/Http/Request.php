@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
-use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOFactoryInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface;
 
 class Request implements RequestInterface {
 

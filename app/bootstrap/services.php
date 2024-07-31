@@ -11,12 +11,13 @@ return function ($container) {
         new \Romchik38\Server\Services\Logger\Loggers\EmailLogger(
             4,
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
-            $container->get(\Romchik38\Server\Models\DTO\Email\EmailDTOFactory::class),
+            $container->get(\Romchik38\Server\Api\Models\DTO\Email\EmailDTOFactoryInterface::class),
             'pomahehko.c@gmail.com',
             'ser@ozone.com.ua',
             null
         )
     );
+    
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\FileLogger(

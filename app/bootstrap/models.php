@@ -39,7 +39,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Models\Sql\User\UserRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Models\Sql\User\UserFactory::class),
+                $container->get(\Romchik38\Site1\Api\Models\User\UserFactoryInterface::class),
                 'users',
                 'user_id'
             );
@@ -56,7 +56,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Server\Models\Sql\Entity\EntityRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(Romchik38\Server\Models\EntityFactory::class),
+                $container->get(\Romchik38\Server\Api\Models\Entity\EntityFactoryInterface::class),
                 'entities',
                 'entity_field',
                 'entity_id',
@@ -76,7 +76,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class),
+                $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailFactoryInterface::class),
                 'recovery_email',
                 'email'
             );

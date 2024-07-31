@@ -7,7 +7,7 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Services\Http\Request::class,
         new \Romchik38\Site1\Services\Http\Request(
-            $container->get(\Romchik38\Site1\Models\DTO\UserRegisterDTOFactory::class)
+            $container->get(\Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface::class)
         )
     );
 

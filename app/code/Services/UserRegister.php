@@ -10,7 +10,7 @@ use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;

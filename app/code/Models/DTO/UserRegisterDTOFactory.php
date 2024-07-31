@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Models\DTO;
 
-use Romchik38\Site1\Api\Models\DTO\UserRegisterDTOFactoryInterface;
+use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface;
 
 class UserRegisterDTOFactory implements UserRegisterDTOFactoryInterface {
 
