@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Romchik38\Container;
-use Romchik38\Server\Api\Server;
 
 $container = new Container();
 
@@ -14,10 +13,10 @@ $no_dependencies($container);
 $http_no_dependencies = require_once(__DIR__ . '/bootstrap/Http/no_dependencies.php');
 $http_no_dependencies($container);
 
-// MODELS
 $models_no_dependencies = require_once(__DIR__ . '/bootstrap/Sql/no_dependencies.php');
 $models_no_dependencies($container);
 
+// MODELS
 $models = require_once(__DIR__ . '/bootstrap/Sql/models.php');
 $models($container);
 
