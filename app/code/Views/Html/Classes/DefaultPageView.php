@@ -11,14 +11,14 @@ use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 class DefaultPageView extends PageView implements DefaultPageViewInterface
 {
 
-    protected function createHeader(DTOInterface $data) {
-        
+    protected function createHeader($data)
+    {
     }
 
     protected function createFooter()
     {
         $this->metaData[$this::FOOTER_DATA] = [
-            'copyrights' => '© 2024, Site1.com, LLC.' 
+            'copyrights' => '© 2024, Site1.com, LLC.'
         ];
     }
 

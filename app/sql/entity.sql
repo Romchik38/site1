@@ -15,7 +15,7 @@ CREATE table entity_field
 
 --INFORMATION 
 INSERT INTO entities VALUES (1, 'Company Site1');
-INSERT INTO entities VALUES (2, 'Html');
+INSERT INTO entities VALUES (2, 'Header_info');
 
 INSERT INTO entity_field (field_name, entity_id, value)
     VALUES 
@@ -23,8 +23,9 @@ INSERT INTO entity_field (field_name, entity_id, value)
         ('email_contact_main', 1, 'office@ozone.com.ua'),
         ('url_domain', 1, 'http://site1.com'),
         ('url_recovery', 1, '/changepassword/index'),
-        ('min_order_sum', 1, '100'),
-        ('default_phone_number', 1, '0-800-500-00-00');
+        ('phone_number_text', 2, '0-800-500-00-00'),
+        ('address_text', 2, 'Mazepy street 10, Kiev, Ukraine'),
+        ('notice', 2, 'free from mobile')
 ;
 
 INSERT INTO entity_field (field_name, entity_id, value)
