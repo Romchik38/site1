@@ -3,6 +3,17 @@
 declare(strict_types=1);
 
 return function ($container) {
+    $container->add(
+        \Romchik38\Site1\Views\Html\Classes\Metadata::class,
+        new \Romchik38\Site1\Views\Html\Classes\Metadata(
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface::class)
+        )
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Views\MetadataInterface::class,
+        $container->get(\Romchik38\Site1\Views\Html\Classes\Metadata::class)
+    );
+
     // DEFAULT
     $container->add(
         \Romchik38\Site1\Views\Html\Classes\DefaultPageView::class,
@@ -11,7 +22,8 @@ return function ($container) {
                 $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
                 return call_user_func($defaultView, ...$args);
             },
-            require_once(__DIR__ . '/Tamplates/defaultTemplate.php')
+            require_once(__DIR__ . '/Tamplates/defaultTemplate.php'),
+            $container->get(\Romchik38\Site1\Api\Views\MetadataInterface::class)
         )
     );
     
@@ -28,7 +40,8 @@ return function ($container) {
                 $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
                 return call_user_func($defaultView, ...$args);
             },
-            require_once(__DIR__ . '/Tamplates/Main/index.php')
+            require_once(__DIR__ . '/Tamplates/Main/index.php'),
+            $container->get(\Romchik38\Site1\Api\Views\MetadataInterface::class)
         )
     );
 
@@ -46,7 +59,8 @@ return function ($container) {
                 $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
                 return call_user_func($defaultView, ...$args);
             },
-            require_once(__DIR__ . '/Tamplates/Login/index.php')
+            require_once(__DIR__ . '/Tamplates/Login/index.php'),
+            $container->get(\Romchik38\Site1\Api\Views\MetadataInterface::class)
         )
     );
 
