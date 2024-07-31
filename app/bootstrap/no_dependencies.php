@@ -61,6 +61,15 @@ return function ($container) {
         $container->get(\Romchik38\Server\Models\DTO\Email\EmailDTOFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\DTO\Header\HeaderDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\Header\HeaderDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\Header\HeaderDTOFactory::class)
+    );
+
     // SERVICES
     $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,
