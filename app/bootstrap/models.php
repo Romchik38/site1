@@ -67,6 +67,11 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class,
+        $container->get(\Romchik38\Server\Models\Sql\Entity\EntityRepository::class)
+    );
+
+    $container->add(
         \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class,
         function($container){
             return new \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository(
@@ -76,6 +81,11 @@ return function ($container) {
                 'email'
             );
         }
+    );
+
+    $container->add(
+        \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailRepositoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class)
     );
 
     return $container;

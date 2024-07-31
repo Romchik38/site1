@@ -70,14 +70,14 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Services\UserRecoveryEmail::class,
         new \Romchik38\Site1\Services\UserRecoveryEmail(
-            $container->get(\Romchik38\Server\Models\Sql\Entity\EntityRepository::class),
+            $container->get(\Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class),
             1,
             'email_contact_recovery',
             'url_domain',
             'url_recovery',
             $container->get(EmailDTOFactory::class),
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
-            $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class),
+            $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
