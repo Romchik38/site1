@@ -15,7 +15,10 @@ $http_no_dependencies = require_once(__DIR__ . '/bootstrap/Http/no_dependencies.
 $http_no_dependencies($container);
 
 // MODELS
-$models = require_once(__DIR__ . '/bootstrap/models.php');
+$models_no_dependencies = require_once(__DIR__ . '/bootstrap/Sql/no_dependencies.php');
+$models_no_dependencies($container);
+
+$models = require_once(__DIR__ . '/bootstrap/Sql/models.php');
 $models($container);
 
 // SERVICES 

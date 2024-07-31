@@ -7,7 +7,7 @@ return function ($container) {
     $container->add(
         \Romchik38\Server\Routers\Http\DefaultRouter::class,
         new \Romchik38\Server\Routers\Http\DefaultRouter(
-            $container->get(\Romchik38\Server\Results\Http\HttpRouterResult::class),
+            $container->get(\Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class),
             $controllersList,
             $container,
             null,

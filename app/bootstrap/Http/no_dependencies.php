@@ -22,5 +22,10 @@ return function ($container) {
         )
     );
 
+    $container->add(
+        \Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class,
+        $container->get(\Romchik38\Server\Results\Http\HttpRouterResult::class)
+    );
+
     return $container;
 };

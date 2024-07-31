@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use Romchik38\Container;
-
 /**
  * A bootstrap file.
  * 
@@ -13,40 +11,20 @@ use Romchik38\Container;
  * 
  */
 
- return function ($container) {
-    $configDatabase = require_once(__DIR__ . '/../config/database.php');
-
-    // DATABASES
-    $container->add(
-        \Romchik38\Server\Models\Sql\DatabasePostgresql::class,
-        new Romchik38\Server\Models\Sql\DatabasePostgresql($configDatabase)
-    );
-    
-    $container->add(
-        \Romchik38\Server\Api\Models\DatabaseInterface::class,
-        $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class)
-    );
+return function ($container) {
 
     // FACTORIES
     $container->add(
-        \Romchik38\Site1\Models\Sql\Page\PageFactory::class,
-        new Romchik38\Site1\Models\Sql\Page\PageFactory()
-    );
-
-    $container->add(
-        \Romchik38\Site1\Models\Sql\Redirect\RedirectFactory::class,
-        new Romchik38\Site1\Models\Sql\Redirect\RedirectFactory()
-    );
-
-    $container->add(
-        \Romchik38\Site1\Models\Sql\User\UserFactory::class,
-        new Romchik38\Site1\Models\Sql\User\UserFactory()
+        \Romchik38\Server\Models\EntityFactory::class,
+        new Romchik38\Server\Models\EntityFactory()
     );
     $container->add(
-        \Romchik38\Site1\Api\Models\User\UserFactoryInterface::class,
-        $container->get(\Romchik38\Site1\Models\Sql\User\UserFactory::class)
+        \Romchik38\Server\Api\Models\Entity\EntityFactoryInterface::class,
+        $container->get(\Romchik38\Server\Models\EntityFactory::class)
     );
 
+
+    // DTO
     $container->add(
         \Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class,
         new Romchik38\Site1\Models\DTO\Login\LoginDTOFactory()
@@ -75,30 +53,12 @@ use Romchik38\Container;
     );
 
     $container->add(
-        \Romchik38\Server\Models\EntityFactory::class,
-        new Romchik38\Server\Models\EntityFactory()
-    );
-    $container->add(
-        \Romchik38\Server\Api\Models\Entity\EntityFactoryInterface::class,
-        $container->get(\Romchik38\Server\Models\EntityFactory::class)
-    );
-
-    $container->add(
         \Romchik38\Server\Models\DTO\Email\EmailDTOFactory::class,
         new Romchik38\Server\Models\DTO\Email\EmailDTOFactory()
     );
     $container->add(
         \Romchik38\Server\Api\Models\DTO\Email\EmailDTOFactoryInterface::class,
         $container->get(\Romchik38\Server\Models\DTO\Email\EmailDTOFactory::class)
-    );
-
-    $container->add(
-        \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class,
-        new Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory()
-    );
-    $container->add(
-        \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailFactoryInterface::class,
-        $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class)
     );
 
     // SERVICES
@@ -112,6 +72,6 @@ use Romchik38\Container;
         $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
     );
 
-    
+
     return $container;
 };
