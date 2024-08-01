@@ -6,6 +6,7 @@ namespace Romchik38\Site1\Views\Html\Classes;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Romchik38\Server\Api\Models\DTO\DTOInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
@@ -47,5 +48,10 @@ class Metadata implements MetadataInterface {
         );
 
         return $this->headerData;
+    }
+
+    public function getFooterData(): DTOInterface
+    {
+        
     }
 }

@@ -17,6 +17,7 @@ class DefaultPageView extends PageView implements DefaultPageViewInterface
         MetadataInterface $metadataService
     ) {
         $this->metaData[$this::HEADER_DATA] = $metadataService->getHeaderData();
+        $this->metaData[$this::FOOTER_DATA] = $metadataService->getFooterData();
     }
 
     protected function createHeader($data)

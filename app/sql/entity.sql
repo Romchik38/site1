@@ -15,7 +15,7 @@ CREATE table entity_field
 
 --INFORMATION 
 INSERT INTO entities VALUES (1, 'Company Site1');
-INSERT INTO entities VALUES (2, 'Header_info');
+INSERT INTO entities VALUES (2, 'Html_metadata');
 
 INSERT INTO entity_field (field_name, entity_id, value)
     VALUES 
@@ -25,7 +25,9 @@ INSERT INTO entity_field (field_name, entity_id, value)
         ('url_recovery', 1, '/changepassword/index'),
         ('phone_number_text', 2, '0-800-500-00-00'),
         ('address_text', 2, 'Mazepy street 10, Kiev, Ukraine'),
-        ('notice', 2, 'free from mobile')
+        ('notice', 2, 'free from mobile'),
+        ('copyrights_text', 2, '© 2024, Site1.com, LLC.'),
+        
 ;
 
 INSERT INTO entity_field (field_name, entity_id, value)

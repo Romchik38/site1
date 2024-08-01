@@ -10,5 +10,5 @@ interface MetadataInterface {
     const HEADER_METADATA_ERROR = 'We are sorry, there are some technical issues on our side. Please try later';
     public function getHeaderData(): DTOInterface;
     // public function getNavData(): DTOInterface;
-    // public function getFooterData(): DTOInterface;
+    public function getFooterData(): DTOInterface;
 }
