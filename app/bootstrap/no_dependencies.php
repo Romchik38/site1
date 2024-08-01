@@ -70,6 +70,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\DTO\Header\HeaderDTOFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\DTO\Footer\FooterDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\Footer\FooterDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\Footer\FooterDTOFactory::class)
+    );
+
     // SERVICES
     $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,

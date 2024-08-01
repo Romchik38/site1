@@ -8,6 +8,14 @@ use Romchik38\Server\Models\DTO;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
 
 class FooterDTO extends DTO implements FooterDTOInterface {
+
+    public function __construct(
+        string $copyrightsText
+    )
+    {
+        $this->data[$this::COPYRIGHTS_TEXT] = $copyrightsText;
+    }
+
     public function getCopyrightsText(): string
     {
         return $this->data[$this::COPYRIGHTS_TEXT];

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Romchik38\Server\Api\Views\Http\HttpViewInterface;
+use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
 
 return function(array $data = []){
 
@@ -10,9 +11,10 @@ return function(array $data = []){
         return '';
     }
     
+    /** @var FooterDTOInterface $footerData */
     $footerData = $data[HttpViewInterface::FOOTER_DATA];
 
-    $copyrights = $footerData['copyrights'];
+    $copyrights = $footerData->getCopyrightsText();
 
     return <<<FOOTER
         <footer class="bg-light mb-3">

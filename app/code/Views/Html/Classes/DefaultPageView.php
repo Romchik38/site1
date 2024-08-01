@@ -22,14 +22,10 @@ class DefaultPageView extends PageView implements DefaultPageViewInterface
 
     protected function createHeader($data)
     {
-       
     }
 
     protected function createFooter()
     {
-        $this->metaData[$this::FOOTER_DATA] = [
-            'copyrights' => '© 2024, Site1.com, LLC.'
-        ];
     }
 
     protected function createNav()
