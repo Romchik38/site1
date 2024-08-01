@@ -14,7 +14,7 @@ return function(array $data = []){
     /** @var FooterDTOInterface $footerData */
     $footerData = $data[HttpViewInterface::FOOTER_DATA];
 
-    $copyrights = $footerData->getCopyrightsText();
+    $copyrights = htmlentities($footerData->getCopyrightsText());
 
     return <<<FOOTER
         <footer class="bg-light mb-3">

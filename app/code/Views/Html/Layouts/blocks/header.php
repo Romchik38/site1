@@ -12,9 +12,9 @@ return function(array $data = []){
 
     /** @var HeaderDTOInterface $headerData */
     $headerData = $data[HttpViewInterface::HEADER_DATA];
-    $addressText = $headerData->getAddressText();    
-    $phoneNumberText = $headerData->getPhoneNumberText();    
-    $notice = $headerData->getNotice();    
+    $addressText = htmlentities($headerData->getAddressText());
+    $phoneNumberText = htmlentities($headerData->getPhoneNumberText());
+    $notice = htmlentities($headerData->getNotice());
 
 
     return <<<HEADER
