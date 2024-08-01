@@ -13,6 +13,12 @@
 
 ### static
 
+- create sql table
+- add values
+- model
+- factory
+- repository
+
 menu
 menu_id  name
 
