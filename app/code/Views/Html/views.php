@@ -6,7 +6,10 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Views\Html\Classes\Metadata::class,
         new \Romchik38\Site1\Views\Html\Classes\Metadata(
-            $container->get(\Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface::class)
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface::class),
+            $container->get(\Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class),
+            2,
+            $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
     $container->add(
