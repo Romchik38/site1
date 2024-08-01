@@ -64,5 +64,11 @@ Uses MVC
 /auth/logout    destroy a session if userId was provided
                 redirect to /login/index
 /auth/register  register from check
-/auth/recovery  send a recovery link 
+/auth/recovery  send a recovery link
 /auth/changepassword  check provided new password from /login/changepassword
+
+## Menu
+
+- static
+- dynamic
+- dto
