@@ -9,10 +9,6 @@ use Romchik38\Site1\Api\Models\Page\PageModelInterface;
 
 class PageModel extends Model implements PageModelInterface
 {
-    protected const PAGE_CONTENT_FIELD = 'content';
-    protected const PAGE_ID_FIELD = 'page_id';
-    protected const PAGE_NAME_FIELD = 'name';
-    protected const PAGE_URL_FIELD = 'url';
 
     public function getContent(): string
     {
