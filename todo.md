@@ -2,8 +2,8 @@
 
 - menu
 - breadcrumbs
-- add login in footer
-- refactor
+- add login to header
+? refactor
 
 ## Menu
 
@@ -13,17 +13,21 @@
 
 ### static
 
-- create sql table
-- add values
-- model
-- factory
-- repository
+[+] create sql table
+[+] add values
 
-menu
-menu_id  name
+- menu
+  - model
+  - factory
+  - repository
 
-links
-link_id  name  url  description   menu_id   parrent_id
+- menu_links
+  - model
+  - factory
+  - repository
+
+- menu_to_links
+  - repository
 
 ### dynamic
 
