@@ -22,7 +22,15 @@ return function ($container) {
         \Romchik38\Server\Api\Models\Entity\EntityFactoryInterface::class,
         $container->get(\Romchik38\Server\Models\EntityFactory::class)
     );
-
+    
+    $container->add(
+        \Romchik38\Site1\Models\Menu\MenuModelFactory::class,
+        new \Romchik38\Site1\Models\Menu\MenuModelFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\Menu\MenuModelFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Menu\MenuModelFactory::class)
+    );
 
     // DTO
     $container->add(
