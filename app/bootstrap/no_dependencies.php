@@ -32,6 +32,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\Menu\MenuModelFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\MenuLinks\MenuLinksFactory::class,
+        new \Romchik38\Site1\Models\MenuLinks\MenuLinksFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\MenuLinks\MenuLinksFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\MenuLinks\MenuLinksFactory::class)
+    );
+
     // DTO
     $container->add(
         \Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class,
