@@ -14,3 +14,5 @@ GRANT select, insert, update on table users to "php-fpm";
 GRANT USAGE, SELECT ON SEQUENCE users_user_id_seq TO "php-fpm";
 
 GRANT select, insert, update on table recovery_email to "php-fpm";
+
+GRANT select, insert, update, delete on table menu, menu_links, menu_to_links to "php-fpm";
