@@ -12,4 +12,7 @@ interface MenuModelInterface extends ModelInterface {
 
     public function getId(): int;
     public function getName(): string;
+
+    public function setId(int $id): MenuModelInterface;
+    public function setName(string $name): MenuModelInterface;
 }
