@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Models\Menu;
 
-use Romchik38\Server\Api\Models\Menu\MenuModelInterface;
+use Romchik38\Site1\Api\Models\Menu\MenuModelInterface;
 use Romchik38\Server\Models\Model;
 
 class MenuModel extends Model implements MenuModelInterface {
