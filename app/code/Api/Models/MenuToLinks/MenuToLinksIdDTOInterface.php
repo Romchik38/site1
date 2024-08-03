@@ -19,5 +19,4 @@ interface MenuToLinksIdDTOInterface extends DTOInterface
         MenuToLinksInterface::PARRENT_LINK_ID_FIELD
     ];
 
-    public function getIdKeys(): array;
 }
