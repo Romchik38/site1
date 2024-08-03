@@ -7,10 +7,10 @@ namespace Romchik38\Site1\Api\Models\MenuToLinks;
 interface MenuToLinksRepositoryInterface
 {
     public function create(): MenuToLinksInterface;
-    public function getById(array $id): MenuToLinksInterface;
+    public function getById(MenuToLinksIdDTOInterface $id): MenuToLinksInterface;
     public function list(string $expression, array $params): array;
     public function add(MenuToLinksInterface $model): MenuToLinksInterface;
-    public function deleteById(array $id): void;
+    public function deleteById(MenuToLinksIdDTOInterface $id): void;
 
     /**
      * Save existing model
