@@ -9,7 +9,7 @@ use Romchik38\Server\Models\Errors\CouldNotSaveException;
 
 interface RepositoryInterface
 {
-    public function create(): ModelInterface;
+    public function create(array $row = null): ModelInterface;
     public function getById($id): ModelInterface;
     public function list(string $expression, array $params): array;
     public function add(ModelInterface $model): ModelInterface;
