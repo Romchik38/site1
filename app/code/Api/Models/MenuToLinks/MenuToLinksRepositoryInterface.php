@@ -12,7 +12,8 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 interface MenuToLinksRepositoryInterface
 {
     /**
-     * Create a new entity
+     * Create a new empty entity
+     *   
      * @return MenuToLinksInterface
      */
     public function create(): MenuToLinksInterface;

@@ -7,9 +7,12 @@ namespace Romchik38\Site1\Models\Sql\MenuToLinks;
 use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Server\Api\Models\ModelFactoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Server\Models\Errors\DTO\CantCreateDTOException;
+use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksIdDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksIdDTOInterface;
 use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksInterface;
 use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksRepositoryInterface;
+use Romchik38\Site1\Models\MenuToLinks\MenuToLinksIdDTOFactory;
 
 class MenuToLinksRepository implements MenuToLinksRepositoryInterface
 {
@@ -17,6 +20,7 @@ class MenuToLinksRepository implements MenuToLinksRepositoryInterface
     public function __construct(
         protected DatabaseInterface $database,
         protected ModelFactoryInterface $menuToLinkFactory,
+        protected MenuToLinksIdDTOFactoryInterface $menuToLinksIdFactory,
         protected string $table,
         // protected array $primaryFieldNames     ? delete
     ) {
@@ -41,7 +45,7 @@ class MenuToLinksRepository implements MenuToLinksRepositoryInterface
             $placeHolders[] = $field . ' = $' . $counter;
         }
 
-        $query = 'SELECT * FROM ' . $this->table . ' WHERE '
+        $query = 'SELECT ' . $this->table . '.* FROM ' . $this->table . ' WHERE '
             . implode(' AND ', $placeHolders) . '; = $1';
 
         $arr = $this->database->queryParams($query, $params);
@@ -52,7 +56,7 @@ class MenuToLinksRepository implements MenuToLinksRepositoryInterface
         }
         $row = $arr[0];
 
-        return $this->create($row);
+        return $this->createFromRow($row);
     }
 
 
@@ -75,5 +79,29 @@ class MenuToLinksRepository implements MenuToLinksRepositoryInterface
 
     public function save(MenuToLinksInterface $model): MenuToLinksInterface
     {
+    }
+
+    /**
+     * Create an entity from provided row
+     * 
+     * @param array $row ['field' => 'value', ...]
+     * @throws CantCreateDTOException
+     * @return MenuToLinksInterface
+     */
+    protected function createFromRow(array $row): MenuToLinksInterface
+    {
+        $entity = $this->create();
+
+        // 1 create an id dto
+        $idDto = $this->menuToLinksIdFactory->create($row);
+        $entity->setId($idDto);
+
+        // 2 fill fields
+        foreach ($row as $key => $value) {
+            $entity->setData($key, $value);
+        }
+
+        // 3 job is done
+        return $entity;
     }
 }
