@@ -89,17 +89,17 @@ class Repository implements RepositoryInterface
     /**
      * insert row to database
      *
-     * @param ModelInterface $user 
+     * @param ModelInterface $model 
      *
      * @return ModelInterface 
      */
-    public function add(ModelInterface $user): ModelInterface
+    public function add(ModelInterface $model): ModelInterface
     {
         $keys = [];
         $values = [];
         $params = [];
         $count = 0;
-        foreach ($user->getAllData() as $key => $value) {
+        foreach ($model->getAllData() as $key => $value) {
             $count++;
             $params[] = '$' . $count;
             $keys[] = $key;
