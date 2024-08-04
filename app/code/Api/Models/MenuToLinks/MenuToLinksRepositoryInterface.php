@@ -56,7 +56,7 @@ interface MenuToLinksRepositoryInterface
     /**
      * Save existing model
      *
-     * @param ModelInterface $model
+     * @param MenuToLinksInterface $model
      * @throws CouldNotSaveException
      * @return ModelInterface
      */
