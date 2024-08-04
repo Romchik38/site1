@@ -12,10 +12,11 @@ interface MenuToLinksInterface extends ModelInterface
     const LINK_ID_FIELD = 'link_id';
     const PARRENT_LINK_ID_FIELD = 'parrent_link_id';
     const PRIORITY_FIELD = 'priority';
+    const FULL_ID_NAME = 'id';
 
-    public function getId(): array;
+    public function getId(): MenuToLinksIdDTOInterface;
     public function getPriority(): int;
 
-    public function setId(array $id): MenuToLinksInterface;
+    public function setId(MenuToLinksIdDTOInterface $id): MenuToLinksInterface;
     public function setPriority(string $priority): MenuToLinksInterface;
 }

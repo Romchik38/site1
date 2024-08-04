@@ -10,6 +10,7 @@ use Romchik38\Server\Models\Errors\DTO\CantCreateDTOException;
 
 class MenuToLinksIdDTOFactory implements MenuToLinksIdDTOFactoryInterface
 {
+
     public function create(array $data): MenuToLinksIdDTOInterface
     {
         $menuId = $data[MenuToLinksIdDTOInterface::MENU_ID_FIELD] ??
