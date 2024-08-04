@@ -36,4 +36,5 @@
 ### refactor
 
 - move UserRegisterDTO to folder with the same name
-- methid `create` Repository class split to 2 like `MenuToLinkRepository`
+- method `create` Repository class - split to 2 like `MenuToLinkRepository`
+- method `save` Repository class - add placeholders to values
