@@ -53,8 +53,7 @@ class Repository implements RepositoryInterface
      */
     public function getById($id): ModelInterface
     {
-        $query = 'SELECT * FROM '
-            . $this->table
+        $query = 'SELECT ' . $this->table . '.* FROM ' . $this->table
             . ' WHERE ' . $this->primaryFieldName . ' = $1';
         $params = [$id];
         $arr = $this->database->queryParams($query, $params);
