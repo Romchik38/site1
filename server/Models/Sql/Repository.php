@@ -103,7 +103,7 @@ class Repository implements RepositoryInterface
             $count++;
             $params[] = '$' . $count;
             $keys[] = $key;
-            $values[] = "$value";
+            $values[] = $value;
         }
 
         $query = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $keys) . ') VALUES ('
