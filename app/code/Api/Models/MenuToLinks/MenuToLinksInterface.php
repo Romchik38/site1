@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Api\Models\MenuToLinks;
 
-use Romchik38\Server\Api\Models\ModelInterface;
+use Romchik38\Server\Api\Models\CompositeId\CompositeIdModelInterface;
+// use Romchik38\Server\Api\Models\DTO\DTOInterface;
+// use Romchik38\Server\Api\Models\ModelInterface;
 
-interface MenuToLinksInterface extends ModelInterface
+interface MenuToLinksInterface extends CompositeIdModelInterface
 {
     const MENU_ID_FIELD = 'menu_id';
     const LINK_ID_FIELD = 'link_id';
@@ -19,4 +21,5 @@ interface MenuToLinksInterface extends ModelInterface
 
     public function setId(MenuToLinksIdDTOInterface $id): MenuToLinksInterface;
     public function setPriority(string $priority): MenuToLinksInterface;
+
 }

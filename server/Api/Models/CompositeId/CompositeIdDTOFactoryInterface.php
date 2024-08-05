@@ -2,21 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Api\Models\MenuToLinks;
+namespace Romchik38\Server\Api\Models\CompositeId;
 
-use Romchik38\Server\Api\Models\CompositeId\CompositeIdDTOFactoryInterface;
 use Romchik38\Server\Models\Errors\DTO\CantCreateDTOException;
 
-interface MenuToLinksIdDTOFactoryInterface extends CompositeIdDTOFactoryInterface
+interface CompositeIdDTOFactoryInterface
 {
     /**
      * Create an Id DTO entity with provided array of values 
      * 
      * @param array $data [$key => $value, ...]
      * @throws CantCreateDTOException [if not enough keys are provided]
-     * @return MenuToLinksIdDTOInterface
+     * @return CompositeIdDTOInterface
      */
     public function create(
         array $data
-    ): MenuToLinksIdDTOInterface;
+    ): CompositeIdDTOInterface;
 }
