@@ -15,10 +15,8 @@ interface MenuToLinksInterface extends CompositeIdModelInterface
     const PARRENT_LINK_ID_FIELD = 'parrent_link_id';
     const PRIORITY_FIELD = 'priority';
 
-    public function getId(): MenuToLinksIdDTOInterface;
     public function getPriority(): int;
 
-    public function setId(MenuToLinksIdDTOInterface $id): MenuToLinksInterface;
     public function setPriority(string $priority): MenuToLinksInterface;
 
 }
