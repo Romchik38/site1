@@ -21,4 +21,9 @@ class MenuToLinksIdDTO extends DTO implements MenuToLinksIdDTOInterface
         $this->data[MenuToLinksIdDTOInterface::PARRENT_LINK_ID_FIELD] = $parrentId;
     }
 
+    public function getIdKeys(): array
+    {
+        return $this::ID_KEYS;
+    }
+
 }

@@ -12,6 +12,8 @@ use Romchik38\Server\Api\Models\ModelInterface;
  */
 interface CompositeIdModelInterface extends ModelInterface
 {
+    const ID_NAME = 'id';
+    
     public function getId(): CompositeIdDTOInterface;
     public function setId(CompositeIdDTOInterface $id): CompositeIdModelInterface;
 }
