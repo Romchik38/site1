@@ -12,7 +12,7 @@ interface MenuToLinksInterface extends CompositeIdModelInterface
 {
     const MENU_ID_FIELD = 'menu_id';
     const LINK_ID_FIELD = 'link_id';
-    const PARRENT_LINK_ID_FIELD = 'parrent_link_id';
+    const PARENT_LINK_ID_FIELD = 'parent_link_id';
     const PRIORITY_FIELD = 'priority';
 
     public function getPriority(): int;

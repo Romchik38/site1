@@ -17,12 +17,12 @@ class MenuToLinksIdDTOFactory implements MenuToLinksIdDTOFactoryInterface
             throw new CantCreateDTOException('menu id key does not exist');
         $linkId = $data[MenuToLinksIdDTOInterface::LINK_ID_FIELD] ??
             throw new CantCreateDTOException('link id key does not exist');;
-        $parrentId = $data[MenuToLinksIdDTOInterface::PARRENT_LINK_ID_FIELD] ?? 0;
+        $parentId = $data[MenuToLinksIdDTOInterface::PARENT_LINK_ID_FIELD] ?? 0;
 
         return new MenuToLinksIdDTO(
             (int)$menuId,
             (int)$linkId,
-            (int)$parrentId
+            (int)$parentId
         );
     }
 }
