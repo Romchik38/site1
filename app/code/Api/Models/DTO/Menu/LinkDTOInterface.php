@@ -7,10 +7,10 @@ namespace Romchik38\Site1\Api\Models\DTO\Menu;
 use Romchik38\Server\Api\Models\DTO\DTOInterface;
 
 /**
- * Represents an entity, used in view.
+ * Represents an entity, used in a view.
  * It's a menu element 
  */
-interface MenuDTOInterface extends DTOInterface
+interface LinkDTOInterface extends DTOInterface
 {
     const DESCRIPTION = 'description';
     const NAME = 'name';
