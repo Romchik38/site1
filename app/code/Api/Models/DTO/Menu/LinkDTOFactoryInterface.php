@@ -12,6 +12,11 @@ interface LinkDTOFactoryInterface
     public function create(
         string $description,
         string $name,
-        string $url
+        string $url,
+        int $menuId,
+        int $linkId,
+        int $parentLinkId,
+        int $priority,
+        array $children
     ): LinkDTOInterface;
 }

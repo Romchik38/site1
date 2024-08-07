@@ -10,8 +10,25 @@ use Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOInterface;
  */
 class LinkDTOFactory implements LinkDTOFactoryInterface
 {
-    public function create(string $description, string $name, string $url): LinkDTOInterface
-    {
-        return new LinkDTO($description, $name, $url);
+    public function create(
+        string $description,
+        string $name,
+        string $url,
+        int $menuId,
+        int $linkId,
+        int $parentLinkId,
+        int $priority,
+        array $children = []
+    ): LinkDTOInterface {
+        return new LinkDTO(
+            $description,
+            $name,
+            $url,
+            $menuId,
+            $linkId,
+            $parentLinkId,
+            $priority,
+            $children
+        );
     }
 }
