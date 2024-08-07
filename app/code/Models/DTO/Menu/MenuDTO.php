@@ -11,28 +11,21 @@ use Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOInterface;
 class MenuDTO extends DTO implements MenuDTOInterface
 {
 
-    protected array $links;
-
     /**
      * @param int $id [MenuModelInterface id]
      * @param string $name [MenuModelInterface name]
-     * @param LinkDTOInterface[] $links
+     * @param LinkDTOInterface[] $links [0 level links]
      * @return MenuDTOInterface
      */
     public function __construct(
         int $id,
         string $name,
-        array $links
+        protected array $links
     ) {
         $this->data[MenuDTOInterface::ID_FIELD] = $id;
         $this->data[MenuDTOInterface::NAME_FIELD] = $name;
         
-        $hash = [];
 
-        /** @var LinkDTOInterface $link */
-        foreach($links as $link) {
-
-        }
     }
     public function getId(): int
     {
