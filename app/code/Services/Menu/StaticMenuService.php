@@ -5,19 +5,16 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Services\Menu;
 
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Server\Models\Errors\QueryExeption;
+use Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Menu\MenuDTOInterface;
 use Romchik38\Site1\Api\Models\Menu\MenuModelInterface;
 use Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface;
 use Romchik38\Site1\Api\Models\Menu\MenuModelRepositoryInterface;
-use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;
-use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
-use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksInterface;
-use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksRepositoryInterface;
 use Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkRepositoryInterface;
 use Romchik38\Site1\Services\Errors\Menu\CouldNotCreateMenu;
 use Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkInterface;
 use Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\Menu\MenuDTOFactoryInterface;
 
 class StaticMenuService extends StaticMenuServiceInterface
 {
@@ -28,9 +25,9 @@ class StaticMenuService extends StaticMenuServiceInterface
 
     public function __construct(
         protected MenuModelRepositoryInterface $menuModelRepository,
-        protected MenuToLinksRepositoryInterface $menuToLinksRepository,
-        protected MenuLinksRepositoryInterface $menuLinksRepository,
-        protected VirtualLinkRepositoryInterface $virtualLinkRepository
+        protected VirtualLinkRepositoryInterface $virtualLinkRepository,
+        protected LinkDTOFactoryInterface $linkDTOFactory,
+        protected MenuDTOFactoryInterface $menuDTOFactory
     ) {}
 
     /**
@@ -53,9 +50,14 @@ class StaticMenuService extends StaticMenuServiceInterface
          * @throws CouldNotCreateMenu
          * */
         $linkDTOs = $this->getLinkDTOs($menu);
-
         // 3 create MenuDTO
-
+        $menuDTO = $this->menuDTOFactory->create(
+            $menu->getId(),
+            $menu->getName(),
+            $linkDTOs
+        );
+        
+        return $menuDTO;
     }
 
     /**
@@ -148,11 +150,20 @@ class StaticMenuService extends StaticMenuServiceInterface
                 continue;
             }
             // create
-            /** @var  $innerElem */
+            /** @var VirtualLinkInterface $innerElem */
             foreach ($inititalData as $innerElem) {
-                if ($innerElem['link_id'] === $linkId) {
-                    $link = new Link($linkId, $innerElem['parrent_link_id'], $depInstancies);
-                    $hash[$link->linkId] = $link;
+                if ($innerElem->getLinkId() === $linkId) {
+                    $linkDTO = $this->linkDTOFactory->create(
+                        $innerElem->getDescription(),
+                        $innerElem->getName(),
+                        $innerElem->getUrl(),
+                        $innerElem->getMenuId(),
+                        $innerElem->getLinkId(),
+                        $innerElem->getParentLinkId(),
+                        $innerElem->getPriority(),
+                        $depInstancies
+                    );
+                    $hash[$linkDTO->getLinkId()] = $linkDTO;
                 }
             }
         }
