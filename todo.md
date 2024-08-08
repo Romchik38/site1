@@ -8,18 +8,7 @@
 
 ## Menu
 
-- static
-- dynamic
-[+] dto
-
-### static
-
-[+] create sql table
-[+] add values
-[+] menu
-[+] menu_links
-[+] menu_to_links
-[-] static menu service
+[-] dynamic
 
 ### dynamic
 
@@ -34,3 +23,4 @@
 ## test
 
 - create a test for CompositeIdRepository
+- Virtual Repository
