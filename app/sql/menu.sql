@@ -50,3 +50,17 @@ SELECT * FROM menu_to_links
     WHERE menu_id = 1
     ORDER BY parent_link_id ASC, priority DESC
 ;
+
+---VIRTUAL
+SELECT menu_to_links.*,
+    menu_links.name,
+    menu_links.url,
+    menu_links.description
+    FROM menu_links, menu_to_links
+    WHERE 
+
+        menu_to_links.menu_id = 1 AND
+        menu_to_links.link_id = menu_links.link_id
+
+;
+

@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Api\Models\Virtual\Link;
 
-use Romchik38\Server\Api\Models\CompositeId\CompositeIdRepositoryInterface;
+use Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkInterface;
 
-interface VirtualLinkRepositoryInterface extends CompositeIdRepositoryInterface {
-
+interface VirtualLinkRepositoryInterface
+{
+    /** 
+     * @return VirtualLinkInterface[];
+     */
+    public function getByMenuId(int $id): array;
 }
