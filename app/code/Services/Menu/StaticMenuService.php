@@ -29,8 +29,7 @@ class StaticMenuService extends StaticMenuServiceInterface
         protected MenuToLinksRepositoryInterface $menuToLinksRepository,
         protected MenuLinksRepositoryInterface $menuLinksRepository,
         protected VirtualLinkRepositoryInterface $virtualLinkRepository
-    )
-    {
+    ) {
     }
 
     /**
@@ -38,22 +37,22 @@ class StaticMenuService extends StaticMenuServiceInterface
      */
     public function getMenuById(int $id): MenuDTOInterface
     {
-        
+
         // 1 check id
         try {
             /** @var MenuModelInterface $menu */
             $menu = $this->menuModelRepository->getById($id);
         } catch (NoSuchEntityException $e) {
             throw new CouldNotCreateMenu('menu with id: ' . 'does not present');
-        } 
-        
+        }
+
         // 2 get all links that belong to the menu
         /** 
          * @var LinkDTOInterface[] $links
          * @throws CouldNotCreateMenu
          * */
         $linkDTOs = $this->getLinkDTOs($menu);
-        
+
         // 3 create MenuDTO
 
     }
@@ -63,10 +62,17 @@ class StaticMenuService extends StaticMenuServiceInterface
      * 
      * @return LinkDTOInterface[]
      */
-    protected function getLinkDTOs(MenuModelInterface $menu): array {
+    protected function getLinkDTOs(MenuModelInterface $menu): array
+    {
 
         $linkModels = $this->virtualLinkRepository->getByMenuId($menu->getId());
-        
 
+        $noDependecies = [];
+        $dependencies = [];
+        // 1 dto wothout dependencies
+        foreach ($linkModels as $linkModel) {
+            if ($model->getLinkId() === $linkModel->getParentLinkId()) {
+            }
+        }
     }
 }
