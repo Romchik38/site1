@@ -14,6 +14,7 @@ use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
 use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksInterface;
 use Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksRepositoryInterface;
+use Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkRepositoryInterface;
 use Romchik38\Site1\Services\Errors\Menu\CouldNotCreateMenu;
 
 class StaticMenuService extends StaticMenuServiceInterface
@@ -26,7 +27,8 @@ class StaticMenuService extends StaticMenuServiceInterface
     public function __construct(
         protected MenuModelRepositoryInterface $menuModelRepository,
         protected MenuToLinksRepositoryInterface $menuToLinksRepository,
-        protected MenuLinksRepositoryInterface $menuLinksRepository
+        protected MenuLinksRepositoryInterface $menuLinksRepository,
+        protected VirtualLinkRepositoryInterface $virtualLinkRepository
     )
     {
     }
@@ -43,7 +45,7 @@ class StaticMenuService extends StaticMenuServiceInterface
             $menu = $this->menuModelRepository->getById($id);
         } catch (NoSuchEntityException $e) {
             throw new CouldNotCreateMenu('menu with id: ' . 'does not present');
-        }
+        } 
         
         // 2 get all links that belong to the menu
         /** 
@@ -62,35 +64,9 @@ class StaticMenuService extends StaticMenuServiceInterface
      * @return LinkDTOInterface[]
      */
     protected function getLinkDTOs(MenuModelInterface $menu): array {
-        // 1. menuTolinks
-        $expression = MenuDTOInterface::ID_FIELD . ' = $1';
-        $params = [$menu->getId()];
-        try {
-            /** @var MenuToLinksInterface[] $menuTolinks */
-            $menuTolinks = $this->menuToLinksRepository->list($expression, $params);
-        } catch (QueryExeption $e) {
-            throw new CouldNotCreateMenu($e->getMessage());
-        }
 
-        // 2. menuLinks
-        $conditions = [];
-        $params = [];
-        $counter = 0;
-        foreach($menuTolinks as $menuToLink) {
-            $counter++;
-            $conditions[] = MenuLinksInterface::LINK_ID_FIELD . '= $' . $counter; 
-            $params[] = $menuToLink->getLinkId();
-        }
+        $linkModels = $this->virtualLinkRepository->getByMenuId($menu->getId());
         
-        $expression = implode(' OR ', $conditions);
-        try {
-            /** @var MenuLinksInterface[] $menuLinks */
-            $menuLinks = $this->menuLinksRepository->list($expression, $params);
-        } catch (QueryExeption $e) {
-            throw new CouldNotCreateMenu($e->getMessage());
-        }
 
-        // 3 so we have all entities: $menu, $menuLinks, $menuTolinks
-        
     }
 }
