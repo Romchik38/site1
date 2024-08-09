@@ -84,5 +84,37 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\Sql\Virtual\Link\VirtualLinkRepository::class,
+        function($container){
+            return new \Romchik38\Site1\Models\Sql\Virtual\Link\VirtualLinkRepository(
+                $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
+                $container->get(\Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkFactoryInterface::class),
+                ['menu_to_links.*', 'menu_links.name', 'menu_links.url', 'menu_links.description'],
+                ['menu_links', 'menu_to_links']
+            );
+        }
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkRepositoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Sql\Virtual\Link\VirtualLinkRepository::class)
+    );
+
+    $container->add(
+        \Romchik38\Site1\Models\Sql\Menu\MenuModelRepository::class,
+        function($container){
+            return new \Romchik38\Site1\Models\Sql\Menu\MenuModelRepository(
+                $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
+                $container->get(\Romchik38\Site1\Api\Models\Menu\MenuModelFactoryInterface::class),
+                'menu',
+                'menu_id'
+            );
+        }
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\Menu\MenuModelRepositoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Sql\Menu\MenuModelRepository::class)
+    );
+
     return $container;
 };

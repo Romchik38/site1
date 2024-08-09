@@ -41,6 +41,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\MenuLinks\MenuLinksFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\Virtual\Link\VirtualLinkFactory::class,
+        new \Romchik38\Site1\Models\Virtual\Link\VirtualLinkFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Virtual\Link\VirtualLinkFactory::class)
+    );
+
     // DTO
     $container->add(
         \Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class,
@@ -95,6 +104,25 @@ return function ($container) {
         \Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\DTO\Footer\FooterDTOFactory::class)
     );
+
+    $container->add(
+        \Romchik38\Site1\Models\DTO\Menu\LinkDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\Menu\LinkDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\Menu\LinkDTOFactory::class)
+    );
+    
+    $container->add(
+        \Romchik38\Site1\Models\DTO\Menu\MenuDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\Menu\MenuDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\Menu\MenuDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\Menu\MenuDTOFactory::class)
+    );
+    
 
     // SERVICES
     $container->add(

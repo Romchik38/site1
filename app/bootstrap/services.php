@@ -88,5 +88,20 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Services\Menu\StaticMenuService::class,
+        new \Romchik38\Site1\Services\Menu\StaticMenuService(
+            $container->get(\Romchik38\Site1\Api\Models\Menu\MenuModelRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOFactoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Menu\MenuDTOFactoryInterface::class)
+        )
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface::class,
+        $container->get(\Romchik38\Site1\Services\Menu\StaticMenuService::class)
+    );
+
+
     return $container;
 };
