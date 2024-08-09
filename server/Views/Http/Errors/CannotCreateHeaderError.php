@@ -6,6 +6,6 @@ namespace Romchik38\Server\Views\Http\Errors;
 
 use RuntimeException;
 
-class CannotCreateHeaderError extends RuntimeException {
+class CannotCreateMetadataError extends RuntimeException {
 
 }
