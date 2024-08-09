@@ -10,7 +10,8 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface::class),
             $container->get(\Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class),
             2,
-            $container->get(\Psr\Log\LoggerInterface::class)
+            $container->get(\Psr\Log\LoggerInterface::class),
+            $container->get(\Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface::class)
         )
     );
     $container->add(

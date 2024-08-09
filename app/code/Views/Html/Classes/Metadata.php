@@ -54,7 +54,7 @@ class Metadata implements MetadataInterface {
     }
 
     public function getNavData(): DTOInterface {
-
+        
     }
 
     public function getFooterData(): FooterDTOInterface
