@@ -18,18 +18,18 @@ class DefaultPageView extends PageView implements DefaultPageViewInterface
     ) {
         $this->metaData[$this::HEADER_DATA] = $metadataService->getHeaderData();
         $this->metaData[$this::FOOTER_DATA] = $metadataService->getFooterData();
+
+        $res = $metadataService->getNavData();
+        $a = 1;
     }
 
-    protected function createHeader($data)
-    {
-    }
+    protected function createHeader($data) {}
 
-    protected function createFooter()
-    {
-    }
+    protected function createFooter() {}
 
     protected function createNav()
     {
+
         $this->metaData[$this::NAV_DATA] = [
             [
                 'name' => 'Home',
