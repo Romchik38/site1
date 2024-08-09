@@ -26,8 +26,8 @@ INSERT INTO entity_field (field_name, entity_id, value)
         ('phone_number_text', 2, '0-800-500-00-00'),
         ('address_text', 2, 'Mazepy street 10, Kiev, Ukraine'),
         ('notice', 2, 'free from mobile'),
-        ('copyrights_text', 2, '© 2024, Site1.com, LLC.')
-        
+        ('copyrights_text', 2, '© 2024, Site1.com, LLC.'),
+        ('nav_menu_id', 2, '1')
 ;
 
 INSERT INTO entity_field (field_name, entity_id, value)

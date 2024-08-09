@@ -6,7 +6,6 @@ namespace Romchik38\Site1\Views\Html\Classes;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Romchik38\Server\Api\Models\DTO\DTOInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
@@ -16,7 +15,10 @@ use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface;
 use Romchik38\Site1\Api\Views\MetadataInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\Nav\NavDTOFactoryInterface;
+use Romchik38\Site1\Api\Models\DTO\Nav\NavDTOInterface;
 use Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface;
+use Romchik38\Site1\Services\Errors\Menu\CouldNotCreateMenu;
 
 /**
  * Class collect metadata for header, nav, footer
@@ -26,6 +28,7 @@ class Metadata implements MetadataInterface {
 
     public function __construct(
         protected HeaderDTOFactoryInterface $headerDTOFactory,
+        protected NavDTOFactoryInterface $navDTOFactory,
         protected FooterDTOFactoryInterface $footerDTOFactory,
         protected EntityRepositoryInterface $entityRepository,
         int $entityId,
@@ -39,7 +42,7 @@ class Metadata implements MetadataInterface {
         } catch (NoSuchEntityException $e) {
             // It's a problem, because site does not work as expected
             $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with id: ' . $entityId . ' was not found. Check config');
-            throw new CannotCreateMetadataError(MetadataInterface::ENTITY_METADATA_ERROR);
+            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
     }
 
@@ -53,8 +56,15 @@ class Metadata implements MetadataInterface {
 
     }
 
-    public function getNavData(): DTOInterface {
-        
+    public function getNavData(): NavDTOInterface {
+        $meniId = (int)$this->entity->{NavDTOInterface::NAV_MENU_ID_FIELD};
+        try {
+            $menuDTO = $this->staticMenuService->getMenuById($meniId);
+        } catch(CouldNotCreateMenu $e) {
+            $this->logger->log(LogLevel::ERROR, $this::class . ': ' . $e->getMessage());
+            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+        }
+        return $this->navDTOFactory->create($menuDTO);
     }
 
     public function getFooterData(): FooterDTOInterface

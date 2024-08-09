@@ -30,9 +30,6 @@ class StaticMenuService extends StaticMenuServiceInterface
         protected MenuDTOFactoryInterface $menuDTOFactory
     ) {}
 
-    /**
-     * @throws CouldNotCreateMenu 
-     */
     public function getMenuById(int $id): MenuDTOInterface
     {
 
