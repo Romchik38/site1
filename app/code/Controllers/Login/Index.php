@@ -21,7 +21,8 @@ class Index implements ControllerInterface
         'index',
         'register',
         'recovery',
-        'changepassword'
+        'changepassword',
+        'all'
     ];
     
     public function __construct(

@@ -20,7 +20,7 @@ return function(LoginDTOInterface $data){
             <div class="container mt-3">
                 <div class="row">
                         <p class="error_message">{$message}<p>
-                        <p>User can change a password. This process starts with getting a recovery link. Please, visit our <a href="/login/recovery">Recovery page</a> and follow the given instructions.</p>
+                        <p>Registered user can change a password. This process starts with getting a recovery link. Please, visit our <a href="/login/recovery">Recovery page</a> and follow the given instructions.</p>
                         <p>You do not forget you password? Visit <a href="/login/index">Login page</a></p>
                 </div>
             </div>
