@@ -8,7 +8,9 @@
 
 ## Menu
 
+[-] metadata hash for footer/nav/header
 [-] dynamic
+[-] multimenu
 
 ### dynamic
 
@@ -24,3 +26,8 @@
 
 - create a test for CompositeIdRepository
 - Virtual Repository
+
+## breadcrumbs
+
+- create
+- active link in nav layout

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Server\Models\Virtual;
+namespace Romchik38\Server\Models\Sql\Virtual;
 
 use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Server\Api\Models\ModelFactoryInterface;
@@ -25,7 +25,7 @@ class VirtualRepository implements VirtualRepositoryInterface
         $entities = [];
 
         $query = 'SELECT ' . implode(', ', $this->selectFields) 
-            . '.* FROM ' . implode(', ', $this->tables) . ' ' . $expression;
+            . ' FROM ' . implode(', ', $this->tables) . ' ' . $expression;
 
         $arr = $this->database->queryParams($query, $params);
         foreach ($arr as $row) {

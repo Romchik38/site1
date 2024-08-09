@@ -57,9 +57,14 @@ class Metadata implements MetadataInterface {
     }
 
     public function getNavData(): NavDTOInterface {
-        $meniId = (int)$this->entity->{NavDTOInterface::NAV_MENU_ID_FIELD};
+        $meniId = $this->entity->{NavDTOInterface::NAV_MENU_ID_FIELD};
+        if ($meniId === null) {
+            $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with field: ' 
+                . NavDTOInterface::NAV_MENU_ID_FIELD . ' was not found. Check config');
+            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+        }
         try {
-            $menuDTO = $this->staticMenuService->getMenuById($meniId);
+            $menuDTO = $this->staticMenuService->getMenuById((int)$meniId);
         } catch(CouldNotCreateMenu $e) {
             $this->logger->log(LogLevel::ERROR, $this::class . ': ' . $e->getMessage());
             throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);

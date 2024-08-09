@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Romchik38\Server\Api\Views\Http\HttpViewInterface;
+use Romchik38\Site1\Models\DTO\Nav\NavDTO;
 
 return function(array $data = []){
     
@@ -10,12 +11,18 @@ return function(array $data = []){
         return '';
     }
     
-    $menu = $data[HttpViewInterface::NAV_DATA];
+    /** @var NavDTO $navDTO */
+    $navDTO = $data[HttpViewInterface::NAV_DATA];
+    $menuDTO = $navDTO->getMenuDTO();
+    $links = $menuDTO->getLinks();
 
     $menuHtml = '';
-    foreach ($menu as $value) {
-        $active = $value['active'] ?? '';
-        $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$value['url']}\" alt=\"{$value['alt']}\">{$value['name']}</a></li>"; 
+    foreach ($links as $link) {
+        $active = '';   //   << this must be implemented for  active link
+        $url = $link->getUrl();
+        $description = $link->getDescription();
+        $name = $link->getName();
+        $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$url}\" alt=\"{$description}\">{$name}</a></li>"; 
         $menuHtml = $menuHtml . $menuItem;
     }
 

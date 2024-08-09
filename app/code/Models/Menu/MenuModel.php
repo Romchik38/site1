@@ -10,7 +10,7 @@ use Romchik38\Server\Models\Model;
 class MenuModel extends Model implements MenuModelInterface {
     public function getId(): int
     {
-        return $this->data[$this::MENU_ID_FILED];
+        return (int)$this->data[$this::MENU_ID_FILED];
     }
 
     public function getName(): string {

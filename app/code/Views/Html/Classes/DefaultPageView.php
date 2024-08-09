@@ -9,7 +9,7 @@ use Romchik38\Server\Views\Http\PageView;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 use Romchik38\Site1\Api\Views\MetadataInterface;
 
-class DefaultPageView extends PageView implements DefaultPageViewInterface
+abstract class DefaultPageView extends PageView implements DefaultPageViewInterface
 {
     public function __construct(
         protected $generateTemplate,
@@ -17,45 +17,23 @@ class DefaultPageView extends PageView implements DefaultPageViewInterface
         MetadataInterface $metadataService
     ) {
         $this->metaData[$this::HEADER_DATA] = $metadataService->getHeaderData();
+        $this->metaData[$this::NAV_DATA] = $metadataService->getNavData();
         $this->metaData[$this::FOOTER_DATA] = $metadataService->getFooterData();
-
-        $res = $metadataService->getNavData();
-        $a = 1;
     }
 
-    protected function createHeader($data) {}
+    protected function createHeader($data){}
 
-    protected function createFooter() {}
+    protected function createFooter($data){}
 
-    protected function createNav()
-    {
-
-        $this->metaData[$this::NAV_DATA] = [
-            [
-                'name' => 'Home',
-                'url' => '/',
-                'alt' => 'To Home Page'
-            ],
-            [
-                'name' => 'About',
-                'url' => '/about',
-                'alt' => 'To About Page'
-            ],
-            [
-                'name' => 'Login',
-                'url' => '/login/index',
-                'alt' => 'To Login Page'
-            ]
-        ];
-    }
+    protected function createNav($data){}
 
     protected function prepareMetaData(DTOInterface $data): void
     {
         /** Header */
         $this->createHeader($data);
         /** Menu */
-        $this->createNav();
+        $this->createNav($data);
         /** Footer */
-        $this->createFooter();
+        $this->createFooter($data);
     }
 }

@@ -16,7 +16,7 @@ use Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkInterface;
 use Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Menu\MenuDTOFactoryInterface;
 
-class StaticMenuService extends StaticMenuServiceInterface
+class StaticMenuService implements StaticMenuServiceInterface
 {
     /** menu hash
      * @var array $menus [id => MenuDTOInterface]
@@ -74,7 +74,7 @@ class StaticMenuService extends StaticMenuServiceInterface
         $isCercular = false;
         while ($isCercular === false) {
             $isCercular = true;
-            [$updatedHaveDep, $updatedHash] = createLink($dep, $hash, $linkModels);
+            [$updatedHaveDep, $updatedHash] = $this->createLink($dep, $hash, $linkModels);
             if (count($updatedHash) > count($hash)) {
                 $isCercular = false;
                 $hash = $updatedHash;
