@@ -15,15 +15,8 @@ interface LinkDTOInterface extends DTOInterface
 {
 
     /**
-     * Fields in this DTO used from VirtualLinkInterface
+     * Fields in this DTO are used from VirtualLinkInterface
      */
-
-    // const DESCRIPTION = VirtualLinkInterface::DESCRIPTION;    << Moved to VirtualLinkInterface
-    // const NAME = VirtualLinkInterface::NAME;
-    // const URL = VirtualLinkInterface::URL;
-    // const LINK_ID = VirtualLinkInterface::LINK_ID;
-    // const PARENT_LINK_ID = VirtualLinkInterface::PARENT_LINK_ID;
-    // const PRIORITY = VirtualLinkInterface::PRIORITY;
 
     public function getDescription(): string;
     public function getLinkId(): int; 

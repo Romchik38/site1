@@ -22,7 +22,7 @@ return function ($container) {
         \Romchik38\Server\Api\Models\Entity\EntityFactoryInterface::class,
         $container->get(\Romchik38\Server\Models\EntityFactory::class)
     );
-    
+
     $container->add(
         \Romchik38\Site1\Models\Menu\MenuModelFactory::class,
         new \Romchik38\Site1\Models\Menu\MenuModelFactory()
@@ -113,7 +113,7 @@ return function ($container) {
         \Romchik38\Site1\Api\Models\DTO\Menu\LinkDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\DTO\Menu\LinkDTOFactory::class)
     );
-    
+
     $container->add(
         \Romchik38\Site1\Models\DTO\Menu\MenuDTOFactory::class,
         new \Romchik38\Site1\Models\DTO\Menu\MenuDTOFactory()
@@ -122,7 +122,15 @@ return function ($container) {
         \Romchik38\Site1\Api\Models\DTO\Menu\MenuDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\DTO\Menu\MenuDTOFactory::class)
     );
-    
+
+    $container->add(
+        \Romchik38\Site1\Models\DTO\Nav\NavDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\Nav\NavDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\Nav\NavDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\Nav\NavDTOFactory::class)
+    );
 
     // SERVICES
     $container->add(
