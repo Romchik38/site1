@@ -233,4 +233,57 @@ class CompositeIdRepositoryTest extends TestCase
         $repository = $this->createRepository();
         $repository->deleteById(new CompositeIdDTO([]));
     }
+
+    /**
+     * method list
+     * tests:
+     *   1 query
+     *   2 entity
+     *   3 entity id
+     *   4 entity data
+     */
+    public function testList()
+    {
+        // prepare data
+        $expression = 'WHERE model_key = $1';
+        $params = ['model_value'];
+        $expectedQuery = 'SELECT ' . $this->table . '.* FROM ' . $this->table . ' ' . $expression;
+        $idDTOData = ['dto_key' => 'dto_val'];
+        $modelData = ['model_key' => 'model_value'];
+        $allData = [...$idDTOData, ...$modelData];
+
+        $entityFromFactory = new CompositeIdModel();
+        $this->factory->method('create')->willReturn($entityFromFactory);
+
+        $idDTO = new CompositeIdDTO($idDTOData);
+        $this->idFactory->method('create')->willReturn($idDTO);
+
+        // 1 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([$allData])
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), $params);;
+
+        // exec
+        $repository = $this->createRepository();
+        $result = $repository->list($expression, $params);
+
+        // 2 entity
+        $this->assertSame(1, count($result));
+
+        $listedEntity = $result[0];
+        $this->assertSame($entityFromFactory, $listedEntity);
+
+        // 3 entity id
+        $this->assertSame($idDTO, $listedEntity->getId());
+
+        // 4 entity data
+        $this->assertSame('model_value', $listedEntity->getData('model_key'));
+    }
 }
