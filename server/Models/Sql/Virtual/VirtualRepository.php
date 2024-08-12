@@ -20,6 +20,11 @@ class VirtualRepository implements VirtualRepositoryInterface
     ) {
     }
 
+    public function create(): ModelInterface
+    {
+        return $this->modelFactory->create();
+    }
+
     public function list(string $expression, array $params): array
     {
         $entities = [];
@@ -33,11 +38,6 @@ class VirtualRepository implements VirtualRepositoryInterface
         }
 
         return $entities;
-    }
-
-    public function create(): ModelInterface
-    {
-        return $this->modelFactory->create();
     }
 
     /**
@@ -56,6 +56,5 @@ class VirtualRepository implements VirtualRepositoryInterface
 
         return $entity;
     }
-
 
 }
