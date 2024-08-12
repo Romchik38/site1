@@ -87,7 +87,7 @@ class CompositeIdRepositoryTest extends TestCase
                     }
                     return true;
                 }
-            ), ['dto_val']);;
+            ), ['dto_val']);
 
         $this->idFactory->expects($this->once())->method('create')
             ->with($allData)->willReturn($idDTO);
