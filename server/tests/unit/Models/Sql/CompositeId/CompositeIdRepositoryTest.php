@@ -10,6 +10,7 @@ use Romchik38\Server\Models\CompositeId\CompositeIdModel;
 use Romchik38\Server\Models\CompositeId\CompositeIdDTOFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdDTO;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
+use Romchik38\Server\Models\Errors\CouldNotDeleteException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\QueryExeption;
 
@@ -127,6 +128,9 @@ class CompositeIdRepositoryTest extends TestCase
      * method add
      * tested:
      *   1 query
+     *   2 entity
+     *   3 entity id
+     *   4 entity data
      */
     public function testAdd()
     {
@@ -186,6 +190,47 @@ class CompositeIdRepositoryTest extends TestCase
         // exec
         $repository = $this->createRepository();
         $repository->add(new CompositeIdModel());
+    }
 
+    /**
+     * method deleteById
+     * tests:
+     *   1 query
+     */
+    public function testDeleteById()
+    {
+        $idDTOData = ['dto_key' => 'dto_val'];
+        $idDTO = new CompositeIdDTO($idDTOData);
+        $expectedQuery = 'DELETE FROM ' . $this->table
+            . ' WHERE dto_key = $1';
+
+        // 1 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), ['dto_val']);;
+
+        $repository = $this->createRepository();
+        $repository->deleteById($idDTO);
+    }
+
+    /**
+     * method deleteById
+     * throws CouldNotDeleteException
+     */
+    public function testDeleteByIdThrowsError()
+    {
+        $this->database->method('queryParams')->willThrowException(new QueryExeption());
+
+        $this->expectException(CouldNotDeleteException::class);
+
+        // exec
+        $repository = $this->createRepository();
+        $repository->deleteById(new CompositeIdDTO([]));
     }
 }
