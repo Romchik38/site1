@@ -9,7 +9,7 @@
 ## test
 
 [+] check existing tests  
-[-] create a test for CompositeIdRepository  
+[+] create a test for CompositeIdRepository  
 [-] Virtual Repository  
 
 ## refactor
