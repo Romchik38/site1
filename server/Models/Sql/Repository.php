@@ -97,12 +97,16 @@ class Repository implements RepositoryInterface
     public function save(ModelInterface $model): ModelInterface
     {
         $fields = [];
+        $params = [];
+        $counter = 0;
         foreach ($model->getAllData() as $key => $value) {
-            $fields[] = $key . ' = \'' . $value . '\'';
+            $counter++;
+            $fields[] = $key . ' = $' . $counter;
+            $params[] = $value;
         }
         $query = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $fields)
-            . 'WHERE ' . $this->primaryFieldName . ' = $1 RETURNING *';
-        $params = [$model->getData($this->primaryFieldName)];
+            . ' WHERE ' . $this->primaryFieldName . ' = $' . ++$counter . ' RETURNING *';
+        $params[] = $model->getData($this->primaryFieldName);
         try {
             $arr = $this->database->queryParams($query, $params);
             $row = $arr[0];
