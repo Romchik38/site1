@@ -28,8 +28,7 @@ class CompositeIdRepository implements CompositeIdRepositoryInterface
         protected CompositeIdFactoryInterface $modelFactory,
         protected CompositeIdDTOFactoryInterface $idDTOFactory,
         protected string $table,
-    ) {
-    }
+    ) {}
 
     public function add(CompositeIdModelInterface $model): CompositeIdModelInterface
     {
@@ -108,21 +107,24 @@ class CompositeIdRepository implements CompositeIdRepositoryInterface
 
     public function save(CompositeIdModelInterface $model): CompositeIdModelInterface
     {
-        // prepare id
-        $id = $model->getId();
-        $counter = count($id->getAllData());
-        [$IdPlaceHolders, $params] = $this->getParametersFromIdDto($id);
-
         // prepare all fields
+        $counter = 0;
         $fields = [];
+        $fieldsParams = [];
         foreach ($model->getAllData() as $key => $value) {
             $counter++;
             $fields[] = $key . ' = $' . $counter;
-            $params[] = $value;
+            $fieldsParams[] = $value;
         }
 
+        // prepare id
+        $id = $model->getId();
+        [$IdPlaceHolders, $idParams] = $this->getParametersFromIdDto($id, $counter);
+        
+        $params = array_merge($fieldsParams, $idParams);
+        
         $query = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $fields)
-            . 'WHERE ' . implode(' AND ', $IdPlaceHolders) . ' RETURNING *';
+            . ' WHERE ' . implode(' AND ', $IdPlaceHolders) . ' RETURNING *';
 
         try {
             $arr = $this->database->queryParams($query, $params);
@@ -163,10 +165,10 @@ class CompositeIdRepository implements CompositeIdRepositoryInterface
      * @param CompositeIdDTOInterface $id
      * @return array [ ['fieldname = $1', ...], [$value, ...] ]
      */
-    protected function getParametersFromIdDto(CompositeIdDTOInterface $id): array
+    protected function getParametersFromIdDto(CompositeIdDTOInterface $id, int $start = 0): array
     {
         $idFields = $id->getIdKeys();
-        $counter = 0;
+        $counter = $start;
         $placeHolders = [];
         $params = [];
 

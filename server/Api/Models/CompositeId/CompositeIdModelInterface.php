@@ -11,9 +11,7 @@ use Romchik38\Server\Api\Models\ModelInterface;
  * Composite Id - is a primary key with more than 1 field 
  */
 interface CompositeIdModelInterface extends ModelInterface
-{
-    const ID_NAME = 'id';
-    
+{    
     public function getId(): CompositeIdDTOInterface;
     public function setId(CompositeIdDTOInterface $id): CompositeIdModelInterface;
 }

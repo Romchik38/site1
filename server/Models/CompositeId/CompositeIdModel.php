@@ -10,14 +10,16 @@ use Romchik38\Server\Models\Model;
 
 class CompositeIdModel extends Model implements CompositeIdModelInterface
 {
+    protected CompositeIdDTOInterface|null $id = null;
+
     public function getId(): CompositeIdDTOInterface
     {
-        return $this->data[CompositeIdModelInterface::ID_NAME];
+        return $this->id;
     }
 
     public function setId(CompositeIdDTOInterface $id): CompositeIdModelInterface
     {
-        $this->data[CompositeIdModelInterface::ID_NAME] = $id;
+        $this->id = $id;
         return $this;
     }
 }
