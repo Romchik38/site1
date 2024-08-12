@@ -38,8 +38,9 @@ class CompositeIdRepositoryTest extends TestCase
     /**
      * method create
      */
-    public function testCreate() {
-        
+    public function testCreate()
+    {
+
         $compositeIdEntity = new CompositeIdModel();
 
         $this->factory->expects($this->once())->method('create')
@@ -59,7 +60,8 @@ class CompositeIdRepositoryTest extends TestCase
      *   3 entity id
      *   4 entity data
      */
-    public function testGetByIdQuery(){
+    public function testGetByIdQuery()
+    {
         $idDTOData = ['dto_key' => 'dto_val'];
         $modelData = ['model_key' => 'model_value'];
         $allData = [...$idDTOData, ...$modelData];
@@ -75,19 +77,19 @@ class CompositeIdRepositoryTest extends TestCase
         $this->database->expects($this->once())->method('queryParams')
             ->willReturn([$allData])
             ->with($this->callback(
-                function($query) use ($expectedQuery){
-                if ($query !== $expectedQuery) {
-                    return false;
-                    //$param[0] !== 'val2'
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
                 }
-                return true;
-            }), ['dto_val']);;
+            ), ['dto_val']);;
 
         $this->idFactory->expects($this->once())->method('create')
             ->with($allData)->willReturn($idDTO);
 
-        
-        
+
+
         $repository = $this->createRepository();
         $createdEntity = $repository->getById($idDTO);
 
@@ -105,7 +107,8 @@ class CompositeIdRepositoryTest extends TestCase
      * method getById
      * throws NoSuchEntityException
      */
-    public function testGetByIdThrowError(){
+    public function testGetByIdThrowError()
+    {
         $idDTOData = ['dto_key' => 'dto_val'];
         $idDTO = new CompositeIdDTO($idDTOData);
 
@@ -116,5 +119,55 @@ class CompositeIdRepositoryTest extends TestCase
 
         $repository = $this->createRepository();
         $repository->getById($idDTO);
+    }
+
+    /**
+     * method add
+     * tested:
+     *   1 query
+     */
+    public function testAdd()
+    {
+        // prepare data
+        $entity = new CompositeIdModel();
+        $entity->setData('dto_key', 'dto_val');
+        $entity->setData('model_key', 'model_value');
+        $idDTOData = ['dto_key' => 'dto_val'];
+        $modelData = ['model_key' => 'model_value'];
+        $allData = [...$idDTOData, ...$modelData];
+        $idDTO = new CompositeIdDTO($idDTOData);
+        $expectedQuery = 'INSERT INTO ' . $this->table
+            . ' (dto_key, model_key) VALUES ($1, $2) RETURNING *';
+
+        $entityFromFactory = new CompositeIdModel();
+        $this->factory->method('create')->willReturn($entityFromFactory);
+
+
+        $this->idFactory->method('create')->willReturn($idDTO);
+
+        // 1 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([$allData])
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), ['dto_val', 'model_value']);;
+
+        // exec
+        $repository = $this->createRepository();
+        $addedEntity = $repository->add($entity);
+
+        // 2 entity
+        $this->assertSame($entityFromFactory, $addedEntity);
+
+        // 3 entity id
+        $this->assertSame($idDTO, $addedEntity->getId());
+
+        // 4 entity data
+        $this->assertSame('model_value', $addedEntity->getData('model_key'));
     }
 }
