@@ -9,6 +9,7 @@ use Romchik38\Server\Models\CompositeId\CompositeIdFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdModel;
 use Romchik38\Server\Models\CompositeId\CompositeIdDTOFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdDTO;
+use Romchik38\Server\Models\Errors\NoSuchEntityException;
 
 class CompositeIdRepositoryTest extends TestCase
 {
@@ -98,5 +99,22 @@ class CompositeIdRepositoryTest extends TestCase
 
         // 4 entity data
         $this->assertSame('model_value', $createdEntity->getData('model_key'));
+    }
+
+    /**
+     * method getById
+     * throws NoSuchEntityException
+     */
+    public function testGetByIdThrowError(){
+        $idDTOData = ['dto_key' => 'dto_val'];
+        $idDTO = new CompositeIdDTO($idDTOData);
+
+        $this->database->method('queryParams')
+            ->willReturn([]);
+
+        $this->expectException(NoSuchEntityException::class);
+
+        $repository = $this->createRepository();
+        $repository->getById($idDTO);
     }
 }
