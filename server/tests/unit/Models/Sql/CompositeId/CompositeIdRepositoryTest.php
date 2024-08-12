@@ -11,6 +11,7 @@ use Romchik38\Server\Models\CompositeId\CompositeIdDTOFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdDTO;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
 use Romchik38\Server\Models\Errors\CouldNotDeleteException;
+use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\QueryExeption;
 
@@ -285,5 +286,76 @@ class CompositeIdRepositoryTest extends TestCase
 
         // 4 entity data
         $this->assertSame('model_value', $listedEntity->getData('model_key'));
+    }
+
+    /**
+     * method save
+     * tested: 
+     *   1 query
+     * 
+     */
+    public function testSave()
+    {
+        // prepare data
+        $entity = new CompositeIdModel();
+        $entity->setData('dto_key', 'dto_val');
+        $entity->setData('model_key', 'model_value');
+        $idDTOData = ['dto_key' => 'dto_val'];
+        $modelData = ['model_key' => 'model_value'];
+        $allData = [...$idDTOData, ...$modelData];
+        $idDTO = new CompositeIdDTO($idDTOData);
+        $entity->setId($idDTO);
+        $expectedQuery = 'UPDATE ' . $this->table
+            . ' SET dto_key = $1, model_key = $2 WHERE dto_key = $3 RETURNING *';
+
+        $entityFromFactory = new CompositeIdModel();
+        $this->factory->method('create')->willReturn($entityFromFactory);
+
+
+        $this->idFactory->method('create')->willReturn($idDTO);
+
+        // 1 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([$allData])
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), ['dto_val', 'model_value', 'dto_val']);;
+
+        // exec
+        $repository = $this->createRepository();
+        $savedEntity = $repository->save($entity);
+
+        // 2 entity
+        $this->assertSame($entityFromFactory, $savedEntity);
+
+        // 3 entity id
+        $this->assertSame($idDTO, $savedEntity->getId());
+
+        // 4 entity data
+        $this->assertSame('model_value', $savedEntity->getData('model_key'));
+    }
+
+    /**
+     * method save
+     * throws CouldNotSaveException
+     */
+    public function testSaveThrowsError()
+    {
+        $entity = new CompositeIdModel();
+        $idDTO = new CompositeIdDTO([]);
+        $entity->setId($idDTO);
+
+        $this->database->method('queryParams')->willThrowException(new QueryExeption());
+
+        $this->expectException(CouldNotSaveException::class);
+
+        // exec
+        $repository = $this->createRepository();
+        $repository->save($entity);
     }
 }
