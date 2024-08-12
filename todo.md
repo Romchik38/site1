@@ -7,7 +7,7 @@
 
 ## test
 
-[-] check existing tests  
+[+] check existing tests  
 [-] create a test for CompositeIdRepository  
 [-] Virtual Repository  
 
