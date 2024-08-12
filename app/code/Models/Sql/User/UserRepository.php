@@ -14,35 +14,6 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 class UserRepository extends Repository implements UserRepositoryInterface
 {
 
-    public function __construct(
-        protected DatabaseInterface $database,
-        protected UserFactoryInterface $userFactory,
-        protected string $table,
-        protected string $primaryFieldName
-    ) {
-    }
-
-    /**
-     * Create an user entity from provided row
-     *   or
-     * an empty entity if the row wasn't provided
-     *
-     * @param array $row [explicite description]
-     *
-     * @return UserModelInterface
-     */
-    public function create(array $row = null): UserModelInterface
-    {
-        $entity = $this->userFactory->create();
-        if ($row !== null) {
-            foreach ($row as $key => $value) {
-                $entity->setData($key, $value);
-            }
-        }
-
-        return $entity;
-    }
-
     /**
      * Find a user by proveded email address
      * 

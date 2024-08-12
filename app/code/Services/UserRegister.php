@@ -123,7 +123,7 @@ class UserRegister implements UserRegisterInterface {
 
     public function register(UserRegisterDTOInterface $userRegisterDTO): UserModelInterface
     {
-
+        /** @var UserModelInterface $newUser */
         $newUser = $this->userRepository->create();
         $providedUserData = $userRegisterDTO->getAllData();
         $password = $providedUserData[RequestInterface::PASSWORD_FIELD];

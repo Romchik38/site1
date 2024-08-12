@@ -9,8 +9,12 @@ use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Server\Api\Models\ModelInterface;
 use Romchik38\Server\Api\Models\ModelFactoryInterface;
 use Romchik38\Server\Models\Errors\{
-    NoSuchEntityException, CouldNotDeleteException, CouldNotSaveException, 
-    QueryExeption, CouldNotAddException};
+    NoSuchEntityException,
+    CouldNotDeleteException,
+    CouldNotSaveException,
+    QueryExeption,
+    CouldNotAddException
+};
 
 class Repository implements RepositoryInterface
 {
@@ -20,79 +24,8 @@ class Repository implements RepositoryInterface
         protected ModelFactoryInterface $modelFactory,
         protected string $table,
         protected string $primaryFieldName
-    ) {
-    }
+    ) {}
 
-    /**
-     * Create an entity from provided row
-     *   or
-     * an empty entity if the row wasn't provided
-     *
-     * @param array $row [explicite description]
-     *
-     * @return ModelInterface
-     */
-    public function create(array $row = null): ModelInterface
-    {
-        $entity = $this->modelFactory->create();
-        if ($row !== null) {
-            foreach ($row as $key => $value) {
-                $entity->setData($key, $value);
-            }
-        }
-
-        return $entity;
-    }
-
-    /**
-     * Find an entity by provided id
-     *
-     * @param int $id [Entity Primary key]
-     * @throws NoSuchEntityException
-     * @return ModelInterface
-     */
-    public function getById($id): ModelInterface
-    {
-        $query = 'SELECT ' . $this->table . '.* FROM ' . $this->table
-            . ' WHERE ' . $this->primaryFieldName . ' = $1';
-        $params = [$id];
-        $arr = $this->database->queryParams($query, $params);
-        if (count($arr) === 0) {
-            throw new NoSuchEntityException('row with id ' . $id
-                . ' do not present in the ' . $this->table . ' table');
-        }
-        $row = $arr[0];
-
-        return $this->create($row);
-    }
-
-    /**
-     * Return a list of Models
-     *
-     * @param string $expression [like WHERE first_name = 'bob']
-     *
-     * @return ModelInterface[]
-     */
-    public function list(string $expression = '', array $params = []): array
-    {
-        $entities = [];
-
-        $query = 'SELECT ' . $this->table . '.* FROM ' . $this->table . ' ' . $expression;
-        $arr = $this->database->queryParams($query, $params);
-        foreach ($arr as $row) {
-            $entities[] = $this->create($row);
-        }
-
-        return $entities;
-    }
-
-    /**
-     * insert row to database
-     *
-     * @param ModelInterface $model 
-     *
-     * @return ModelInterface 
-     */
     public function add(ModelInterface $model): ModelInterface
     {
         $keys = [];
@@ -111,19 +44,17 @@ class Repository implements RepositoryInterface
         try {
             $arr = $this->database->queryParams($query, $values);
             $row = $arr[0];
-            return $this->create($row);
+            return $this->createFromRow($row);
         } catch (QueryExeption $e) {
             throw new CouldNotAddException($e->getMessage());
         }
     }
 
-    /**
-     * Delete a row from the table
-     *
-     * @param int $id [PRIMARY KEY of the table]
-     * @throws CouldNotDeleteException
-     * @return void
-     */
+    public function create(): ModelInterface
+    {
+        return $this->modelFactory->create();
+    }
+
     public function deleteById(int $id): void
     {
         $query = 'DELETE FROM ' . $this->table . ' WHERE '
@@ -135,13 +66,34 @@ class Repository implements RepositoryInterface
         }
     }
 
-    /**
-     * Update a row in the table
-     *
-     * @param ModelInterface $model 
-     * @throws CouldNotSaveException
-     * @return ModelInterface 
-     */
+    public function getById($id): ModelInterface
+    {
+        $query = 'SELECT ' . $this->table . '.* FROM ' . $this->table
+            . ' WHERE ' . $this->primaryFieldName . ' = $1';
+        $params = [$id];
+        $arr = $this->database->queryParams($query, $params);
+        if (count($arr) === 0) {
+            throw new NoSuchEntityException('row with id ' . $id
+                . ' do not present in the ' . $this->table . ' table');
+        }
+        $row = $arr[0];
+
+        return $this->createFromRow($row);
+    }
+
+    public function list(string $expression = '', array $params = []): array
+    {
+        $entities = [];
+
+        $query = 'SELECT ' . $this->table . '.* FROM ' . $this->table . ' ' . $expression;
+        $arr = $this->database->queryParams($query, $params);
+        foreach ($arr as $row) {
+            $entities[] = $this->createFromRow($row);
+        }
+
+        return $entities;
+    }
+
     public function save(ModelInterface $model): ModelInterface
     {
         $fields = [];
@@ -154,9 +106,25 @@ class Repository implements RepositoryInterface
         try {
             $arr = $this->database->queryParams($query, $params);
             $row = $arr[0];
-            return $this->create($row);
+            return $this->createFromRow($row);
         } catch (QueryExeption $e) {
             throw new CouldNotSaveException($e->getMessage());
         }
+    }
+
+    /**
+     *  Create an entity from provided row
+     *
+     * @param array $row [explicite description]
+     * @return ModelInterface
+     */
+    protected function createFromRow(array $row): ModelInterface
+    {
+        $entity = $this->modelFactory->create();
+        foreach ($row as $key => $value) {
+            $entity->setData($key, $value);
+        }
+
+        return $entity;
     }
 }

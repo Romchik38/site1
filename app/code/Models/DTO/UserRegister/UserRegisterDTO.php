@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Models\DTO;
+namespace Romchik38\Site1\Models\DTO\UserRegister;
 
 use Romchik38\Server\Models\DTO;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;

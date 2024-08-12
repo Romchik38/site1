@@ -70,12 +70,12 @@ return function ($container) {
     );
 
     $container->add(
-        \Romchik38\Site1\Models\DTO\UserRegisterDTOFactory::class,
-        new Romchik38\Site1\Models\DTO\UserRegisterDTOFactory()
+        \Romchik38\Site1\Models\DTO\UserRegister\UserRegisterDTOFactory::class,
+        new Romchik38\Site1\Models\DTO\UserRegister\UserRegisterDTOFactory()
     );
     $container->add(
         \Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface::class,
-        $container->get(\Romchik38\Site1\Models\DTO\UserRegisterDTOFactory::class)
+        $container->get(\Romchik38\Site1\Models\DTO\UserRegister\UserRegisterDTOFactory::class)
     );
 
     $container->add(

@@ -17,14 +17,6 @@ class RedirectRepository extends Repository implements RedirectRepositoryInterfa
     protected const URL_FIELD = 'url';
     protected const REDIRECT_FIELD = 'redirect_to';
 
-    public function __construct(
-        protected DatabaseInterface $database,
-        protected ModelFactoryInterface $modelFactory,
-        protected string $table,
-        protected string $primaryFieldName
-    ) {
-    }
-
     public function checkUrl(string $url): RedirectModelInterface
     {
         $expression = 'WHERE ' . $this::URL_FIELD . ' = $1';
@@ -37,24 +29,4 @@ class RedirectRepository extends Repository implements RedirectRepositoryInterfa
         }
     }
 
-    /**
-     * Create an entity from provided row
-     *   or
-     * an empty entity if the row wasn't provided
-     *
-     * @param array $row [explicite description]
-     *
-     * @return ModelInterface
-     */
-    public function create(array $row = null): RedirectModelInterface
-    {
-        $entity = $this->modelFactory->create();
-        if ($row !== null) {
-            foreach ($row as $key => $value) {
-                $entity->setData($key, $value);
-            }
-        }
-
-        return $entity;
-    }
 }

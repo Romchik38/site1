@@ -35,7 +35,7 @@ class VirtualRepository implements VirtualRepositoryInterface
         return $entities;
     }
 
-    protected function create(): ModelInterface
+    public function create(): ModelInterface
     {
         return $this->modelFactory->create();
     }

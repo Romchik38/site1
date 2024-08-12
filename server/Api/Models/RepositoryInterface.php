@@ -9,14 +9,50 @@ use Romchik38\Server\Models\Errors\CouldNotSaveException;
 
 interface RepositoryInterface
 {
-    public function create(array $row = null): ModelInterface;
+    /**
+     * Creates a new empty entity
+     */
+    public function create(): ModelInterface;
+
+    /**
+     * Find an entity by provided id
+     *
+     * @param int $id [Entity Primary key]
+     * @throws NoSuchEntityException
+     * @return ModelInterface
+     */
     public function getById($id): ModelInterface;
+
+    /**
+     * Returns a list of the Models
+     *
+     * @param string $expression [like WHERE first_name = 'bob']
+     *
+     * @return ModelInterface[]
+     */
     public function list(string $expression, array $params): array;
+
+    /**
+     * inserts a row to the database
+     *
+     * @param ModelInterface $model 
+     *
+     * @return ModelInterface 
+     */
+
     public function add(ModelInterface $model): ModelInterface;
+
+    /**
+     * Delete a row from the table
+     *
+     * @param int $id [PRIMARY KEY of the table]
+     * @throws CouldNotDeleteException
+     * @return void
+     */
     public function deleteById(int $id): void;
 
     /**
-     * Save existing model
+     * Update an existing model
      *
      * @param ModelInterface $model
      * @throws CouldNotSaveException
