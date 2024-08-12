@@ -42,7 +42,7 @@ class CompositeIdRepository implements CompositeIdRepositoryInterface
         [$placeHolders, $params] = $this->getParametersFromIdDto($id);
 
         $query = 'SELECT ' . $this->table . '.* FROM ' . $this->table . ' WHERE '
-            . implode(' AND ', $placeHolders) . ';';
+            . implode(' AND ', $placeHolders);
 
         $arr = $this->database->queryParams($query, $params);
 
