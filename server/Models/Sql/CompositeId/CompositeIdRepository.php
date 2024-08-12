@@ -160,7 +160,7 @@ class CompositeIdRepository implements CompositeIdRepositoryInterface
     }
 
     /**
-     * Prepare id data for the query
+     * Prepare an id data for the query
      * Used in methods: 
      *   - getById
      *   - deleteById
