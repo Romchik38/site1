@@ -33,6 +33,10 @@ class StaticMenuService implements StaticMenuServiceInterface
     public function getMenuById(int $id): MenuDTOInterface
     {
 
+        // 0 check hash
+        $result = $this->menus[$id] ?? null;
+        if ($result !== null) return $result;
+
         // 1 check id
         try {
             /** @var MenuModelInterface $menu */
@@ -54,6 +58,9 @@ class StaticMenuService implements StaticMenuServiceInterface
             $linkDTOs
         );
         
+        // 4 add the result to the hash
+        $this->menus[$id] = $menuDTO;
+
         return $menuDTO;
     }
 

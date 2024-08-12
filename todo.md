@@ -8,7 +8,6 @@
 
 ## Menu
 
-[-] metadata hash for footer/nav/header
 [-] dynamic
 [-] multimenu
 
