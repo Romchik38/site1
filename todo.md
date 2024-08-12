@@ -4,7 +4,6 @@
 [-] breadcrumbs  
 [-] add login to header  
 [-] menu  
-[-] refactor
 
 ## test
 
@@ -12,10 +11,6 @@
 [+] create a test for CompositeIdRepository  
 [+] Virtual Repository  
 [-] Repository
-
-## refactor
-
-- compositeId repo - change model fact to compid factory
 
 ## breadcrumbs
 
