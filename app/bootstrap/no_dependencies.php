@@ -42,6 +42,24 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Site1\Models\MenuToLinks\MenuToLinksFactory::class,
+        new \Romchik38\Site1\Models\MenuToLinks\MenuToLinksFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\MenuToLinks\MenuToLinksFactory::class)
+    );  
+
+    $container->add(
+        \Romchik38\Site1\Models\MenuToLinks\MenuToLinksIdDTOFactory::class,
+        new \Romchik38\Site1\Models\MenuToLinks\MenuToLinksIdDTOFactory
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksIdDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\MenuToLinks\MenuToLinksIdDTOFactory::class)
+    );  
+
+    $container->add(
         \Romchik38\Site1\Models\Virtual\Link\VirtualLinkFactory::class,
         new \Romchik38\Site1\Models\Virtual\Link\VirtualLinkFactory()
     );

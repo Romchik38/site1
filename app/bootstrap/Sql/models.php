@@ -116,5 +116,23 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\Sql\Menu\MenuModelRepository::class)
     );
 
+    
+    $container->add(
+        \Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository::class,
+        function($container){
+            return new \Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository(
+                $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
+                $container->get(\Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksFactoryInterface::class),
+                $container->get(\Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksIdDTOFactoryInterface::class),
+                'menu_to_links'
+            );
+        }
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksRepositoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository::class)
+    );
+
+
     return $container;
 };

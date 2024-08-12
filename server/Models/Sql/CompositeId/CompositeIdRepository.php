@@ -10,6 +10,7 @@ use Romchik38\Server\Api\Models\CompositeId\CompositeIdModelInterface;
 use Romchik38\Server\Api\Models\CompositeId\CompositeIdRepositoryInterface;
 use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Server\Api\Models\ModelFactoryInterface;
+use Romchik38\Server\Api\Models\CompositeId\CompositeIdFactoryInterface;
 use Romchik38\Server\Models\Errors\{
     CouldNotAddException,
     CouldNotDeleteException,
@@ -24,7 +25,7 @@ class CompositeIdRepository implements CompositeIdRepositoryInterface
 
     public function __construct(
         protected DatabaseInterface $database,
-        protected ModelFactoryInterface $modelFactory,
+        protected CompositeIdFactoryInterface $modelFactory,
         protected CompositeIdDTOFactoryInterface $idDTOFactory,
         protected string $table,
     ) {

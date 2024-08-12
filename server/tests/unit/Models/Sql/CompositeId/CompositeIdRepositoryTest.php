@@ -5,9 +5,9 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Romchik38\Server\Models\Sql\CompositeId\CompositeIdRepository;
 use Romchik38\Server\Models\Sql\DatabasePostgresql;
-use Romchik38\Server\Models\ModelFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdModel;
+use Romchik38\Server\Models\CompositeId\CompositeIdDTOFactory;
 
 class CompositeIdRepositoryTest extends TestCase
 {
@@ -19,8 +19,8 @@ class CompositeIdRepositoryTest extends TestCase
     public function setUp(): void
     {
         $this->database = $this->createMock(DatabasePostgresql::class);
-        $this->factory = $this->createMock(ModelFactory::class);
-        $this->idFactory = $this->createMock(CompositeIdFactory::class);
+        $this->factory = $this->createMock(CompositeIdFactory::class);
+        $this->idFactory = $this->createMock(CompositeIdDTOFactory::class);
     }
 
     protected function createRepository(): CompositeIdRepository
@@ -33,10 +33,19 @@ class CompositeIdRepositoryTest extends TestCase
         );
     }
 
+    /**
+     * method create
+     */
     public function testCreate() {
+        
+        $compositeIdEntity = new CompositeIdModel();
+
+        $this->factory->expects($this->once())->method('create')
+            ->willReturn($compositeIdEntity);
+
         $repository = $this->createRepository();
         $entity = $repository->create();
 
-        $this->assertSame(true, $entity instanceof(CompositeIdModel::class));
+        $this->assertSame($compositeIdEntity, $entity);
     }
 }
