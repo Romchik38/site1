@@ -9,7 +9,9 @@ use Romchik38\Server\Models\CompositeId\CompositeIdFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdModel;
 use Romchik38\Server\Models\CompositeId\CompositeIdDTOFactory;
 use Romchik38\Server\Models\CompositeId\CompositeIdDTO;
+use Romchik38\Server\Models\Errors\CouldNotAddException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Server\Models\Errors\QueryExeption;
 
 class CompositeIdRepositoryTest extends TestCase
 {
@@ -169,5 +171,21 @@ class CompositeIdRepositoryTest extends TestCase
 
         // 4 entity data
         $this->assertSame('model_value', $addedEntity->getData('model_key'));
+    }
+
+    /**
+     * method add
+     * throws CouldNotAddException
+     */
+    public function testAddThrowsError()
+    {
+        $this->database->method('queryParams')->willThrowException(new QueryExeption());
+
+        $this->expectException(CouldNotAddException::class);
+
+        // exec
+        $repository = $this->createRepository();
+        $repository->add(new CompositeIdModel());
+
     }
 }
