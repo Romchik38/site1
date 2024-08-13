@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Romchik38\Server\Api\Models\RepositoryInterface;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
+use Romchik38\Server\Models\Errors\CouldNotDeleteException;
 use Romchik38\Server\Models\Errors\QueryExeption;
 use Romchik38\Server\Models\Model;
 use Romchik38\Server\Models\Sql\Repository;
@@ -112,6 +113,46 @@ class RepositoryTest extends TestCase
         $this->assertSame($entity, $createdEntity);
     }
 
+    /**
+     * method deleteById
+     * tests:
+     *   1 query and params
+     */
+    public function testDeleteById()
+    {
+        $id = 1;
+        $expectedQuery = 'DELETE FROM ' . $this->table . ' WHERE '
+            . $this->primaryFieldName . ' = $1';
+
+        // 1 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), [$id]);
+
+        $repository = $this->createRepository();
+        $repository->deleteById($id);
+    }
+
+    /**
+     * metyhod deleteById 
+     * throws CouldNotDeleteException
+     */
+    public function testDeleteByIdThrowsError()
+    {
+        $this->database->method('queryParams')->willThrowException(new QueryExeption());
+
+        $this->expectException(CouldNotDeleteException::class);
+        $repository = $this->createRepository();
+        $repository->deleteById(1);
+    }
+
+    
     // for list
     //$modelData2 = ['model2_key1' => 'model2_value1', 'model2_key2' => 'model2_value2'];
 
