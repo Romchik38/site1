@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Romchik38\Server\Api\Models\RepositoryInterface;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
 use Romchik38\Server\Models\Errors\CouldNotDeleteException;
+use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\QueryExeption;
 use Romchik38\Server\Models\Model;
 use Romchik38\Server\Models\Sql\Repository;
@@ -152,7 +153,62 @@ class RepositoryTest extends TestCase
         $repository->deleteById(1);
     }
 
-    
+    /**
+     * method getById
+     * tests
+     *   1 factory creation
+     *   2 query and params
+     *   3 entity
+     *   4 entity data
+     */
+    public function testGetById()
+    {
+        $id = 1;
+        $entityFromFactory = new Model();
+        $expectedQuery = 'SELECT ' . $this->table . '.* FROM ' . $this->table
+            . ' WHERE ' . $this->primaryFieldName . ' = $1';
+        $modelData = ['model_key1' => 'model_value1', 'model_key2' => 'model_value2'];
+
+        // 1 factory creation
+        $this->factory->expects($this->once())->method('create')->willReturn($entityFromFactory);
+
+        // 2 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([$modelData])
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), [$id]);
+
+        $repository = $this->createRepository();
+        $result = $repository->getById($id);
+
+        // 3 entity
+        $this->assertSame($entityFromFactory, $result);
+
+        // 4 entity data
+        $this->assertSame('model_value1', $result->getData('model_key1'));
+    }
+
+    /**
+     * method getById
+     * throws NoSuchEntityException
+     */
+    public function testGetByIdThrowsError()
+    {
+        $this->database->method('queryParams')->willReturn([]);
+
+        $this->expectException(NoSuchEntityException::class);
+
+        $repository = $this->createRepository();
+        $result = $repository->getById(1);
+    }
+
+
     // for list
     //$modelData2 = ['model2_key1' => 'model2_value1', 'model2_key2' => 'model2_value2'];
 
