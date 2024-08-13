@@ -64,7 +64,6 @@ class VirtualRepositoryTest extends TestCase
     public function testList()
     {
         // prepare data
-        $entity = new Model();
         $expression = 'WHERE model_key = $1';
         $params = ['model_value'];
         $expectedQuery = 'SELECT ' . implode(', ', $this->selectFields)
