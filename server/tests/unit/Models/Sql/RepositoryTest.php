@@ -208,8 +208,55 @@ class RepositoryTest extends TestCase
         $result = $repository->getById(1);
     }
 
+    /**
+     * method list
+     * tests
+     *   1 factory creation
+     *   2 query and params
+     *   3 count of the entities
+     *   4 entity data
+     */
+    public function testList()
+    {
+        $expression = ' WHERE id = $1';
+        $expectedQuery = 'SELECT ' . $this->table . '.* FROM ' . $this->table . ' ' . $expression;
+        $params = ['model_value'];
+        $modelData = [
+            'model_key' => 'model_value',
+            'model_key2' => 'model_value2'
+        ];
+        $modelData2 = [
+            'model2_key' => 'model2_value',
+            'model2_key2' => 'model2_value2'
+        ];
 
-    // for list
-    //$modelData2 = ['model2_key1' => 'model2_value1', 'model2_key2' => 'model2_value2'];
+        // 1 factory creation
+        $this->factory->expects($this->exactly(2))->method('create')
+            ->willReturn(new Model(), new Model());
 
+        // 2 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([$modelData, $modelData2])
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), ['model_value']);
+
+        // exec
+        $repository = $this->createRepository();
+        $result = $repository->list($expression, $params);
+
+        // 3 count of the entities
+        $this->assertSame(2, count($result));
+
+        // 4 entity data
+        [$firstEntity, $secondEntity] = $result;
+        $this->assertSame('model_value', $firstEntity->getData('model_key'));
+
+        $this->assertSame('model2_value', $secondEntity->getData('model2_key'));
+    }
 }
