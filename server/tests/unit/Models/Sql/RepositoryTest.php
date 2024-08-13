@@ -6,6 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Romchik38\Server\Api\Models\RepositoryInterface;
 use Romchik38\Server\Models\Errors\CouldNotAddException;
 use Romchik38\Server\Models\Errors\CouldNotDeleteException;
+use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Models\Errors\QueryExeption;
 use Romchik38\Server\Models\Model;
@@ -274,8 +275,8 @@ class RepositoryTest extends TestCase
         $entity->setData('model_key2', 'model_value2');
         $entity->setData($this->primaryFieldName, $id);
 
-        $expectedQuery = 'UPDATE ' . $this->table 
-            . ' SET model_key1 = $1, model_key2 = $2, ' 
+        $expectedQuery = 'UPDATE ' . $this->table
+            . ' SET model_key1 = $1, model_key2 = $2, '
             . $this->primaryFieldName . ' = $3 WHERE '
             . $this->primaryFieldName . ' = $4 RETURNING *';
         $modelData = [
@@ -297,9 +298,29 @@ class RepositoryTest extends TestCase
                     }
                     return true;
                 }
-            ), ['model_value1', 'model_value2', $id]);
+            ), ['model_value1', 'model_value2', $id, $id]);
 
         $repository = $this->createRepository();
         $result = $repository->save($entity);
+
+        // 3 entity
+        $this->assertSame($entityFromFactory, $result);
+
+        // 4 entity data
+        $this->assertSame('model_value1', $result->getData('model_key1'));
+    }
+
+    /**
+     * method save
+     * throws CouldNotSaveException
+     */
+    public function testSaveThrowsError()
+    {
+        $this->database->method('queryParams')->willThrowException(new QueryExeption());
+
+        $this->expectException(CouldNotSaveException::class);
+
+        $repository = $this->createRepository();
+        $repository->save(new Model());
     }
 }
