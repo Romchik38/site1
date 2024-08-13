@@ -37,10 +37,10 @@ class RepositoryTest extends TestCase
     /** 
      * method add
      * tests
-     *   0 factory creation
-     *   1 query
-     *   2 entity
-     *   3 entity data
+     *   1 factory creation
+     *   2 query
+     *   3 entity
+     *   4 entity data
      */
     public function testAdd()
     {
@@ -52,10 +52,10 @@ class RepositoryTest extends TestCase
             . ' (model_key1, model_key2) VALUES ($1, $2) RETURNING *';
 
         $entityFromFactory = new Model();
-        // 0 factory creation
+        // 1 factory creation
         $this->factory->expects($this->once())->method('create')->willReturn($entityFromFactory);
 
-        // 1 query and params
+        // 2 query and params
         $this->database->expects($this->once())->method('queryParams')
             ->willReturn([$modelData])
             ->with($this->callback(
@@ -70,10 +70,10 @@ class RepositoryTest extends TestCase
         $repository = $this->createRepository();
         $addedEntity = $repository->add($entity);
 
-        // 2 entity
+        // 3 entity
         $this->assertSame($entityFromFactory, $addedEntity);
 
-        // 3 entity data
+        // 4 entity data
         $this->assertSame('model_value1', $addedEntity->getData('model_key1'));
     }
 
@@ -91,7 +91,28 @@ class RepositoryTest extends TestCase
         $repository->add(new Model());
     }
 
+    /** 
+     * method create
+     * tests:
+     *   1 factory creation
+     *   2 entity
+     */
+    public function testCreate()
+    {
+        // prepare data
+        $entity = new Model();
 
+        // 1 factory creation
+        $this->factory->expects($this->once())->method('create')->willReturn($entity);
+
+        $repository = $this->createRepository();
+        $createdEntity = $repository->create();
+
+        // 2 entity
+        $this->assertSame($entity, $createdEntity);
+    }
+
+    // for list
     //$modelData2 = ['model2_key1' => 'model2_value1', 'model2_key2' => 'model2_value2'];
 
 }
