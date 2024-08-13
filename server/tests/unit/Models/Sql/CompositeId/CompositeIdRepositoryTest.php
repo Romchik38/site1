@@ -324,7 +324,7 @@ class CompositeIdRepositoryTest extends TestCase
                     }
                     return true;
                 }
-            ), ['dto_val', 'model_value', 'dto_val']);;
+            ), ['dto_val', 'model_value', 'dto_val']);
 
         // exec
         $repository = $this->createRepository();

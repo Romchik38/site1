@@ -259,4 +259,47 @@ class RepositoryTest extends TestCase
 
         $this->assertSame('model2_value', $secondEntity->getData('model2_key'));
     }
+
+    /**
+     * method save
+     * tests
+     *   
+     */
+    public function testSave()
+    {
+        $id = 1;
+
+        $entity = new Model();
+        $entity->setData('model_key1', 'model_value1');
+        $entity->setData('model_key2', 'model_value2');
+        $entity->setData($this->primaryFieldName, $id);
+
+        $expectedQuery = 'UPDATE ' . $this->table 
+            . ' SET model_key1 = $1, model_key2 = $2, ' 
+            . $this->primaryFieldName . ' = $3 WHERE '
+            . $this->primaryFieldName . ' = $4 RETURNING *';
+        $modelData = [
+            'model_key1' => 'model_value1',
+            'model_key2' => 'model_value2'
+        ];
+
+        $entityFromFactory = new Model();
+        // 1 factory creation
+        $this->factory->method('create')->willReturn($entityFromFactory);
+
+        // 2 query and params
+        $this->database->expects($this->once())->method('queryParams')
+            ->willReturn([$modelData])
+            ->with($this->callback(
+                function ($query) use ($expectedQuery) {
+                    if ($query !== $expectedQuery) {
+                        return false;
+                    }
+                    return true;
+                }
+            ), ['model_value1', 'model_value2', $id]);
+
+        $repository = $this->createRepository();
+        $result = $repository->save($entity);
+    }
 }
