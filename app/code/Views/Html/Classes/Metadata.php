@@ -89,8 +89,14 @@ class Metadata implements MetadataInterface
 
     public function getFooterData(): FooterDTOInterface
     {
+        $copyrights = $this->entity->{FooterDTOInterface::COPYRIGHTS_TEXT};
+        if ($copyrights === null) {
+            $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with field: '
+                . FooterDTOInterface::COPYRIGHTS_TEXT . ' was not found. Check config');
+            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+        }
         return $this->footerDTOFactory->create(
-            $this->entity->{FooterDTOInterface::COPYRIGHTS_TEXT}
+            $copyrights
         );
     }
 }
