@@ -23,7 +23,8 @@ use Romchik38\Site1\Services\Errors\Menu\CouldNotCreateMenu;
 /**
  * Class collect metadata for header, nav, footer
  */
-class Metadata implements MetadataInterface {
+class Metadata implements MetadataInterface
+{
     protected EntityModelInterface $entity;
 
     public function __construct(
@@ -34,8 +35,7 @@ class Metadata implements MetadataInterface {
         int $entityId,
         protected LoggerInterface $logger,
         protected StaticMenuServiceInterface $staticMenuService
-    )
-    {
+    ) {
         // Header
         try {
             $this->entity = $this->entityRepository->getById($entityId);
@@ -48,24 +48,39 @@ class Metadata implements MetadataInterface {
 
     public function getHeaderData(): HeaderDTOInterface
     {
+        $phone = $this->entity->{HeaderDTOInterface::PHONE_NUMBER_TEXT};
+        $address = $this->entity->{HeaderDTOInterface::ADDRESS_TEXT};
+        $notice = $this->entity->{HeaderDTOInterface::NOTICE};
+        if (
+            $phone === null ||
+            $address === null ||
+            $notice === null
+        ) {
+            $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with field(s): '
+                . HeaderDTOInterface::PHONE_NUMBER_TEXT . ' or '
+                . HeaderDTOInterface::ADDRESS_TEXT . ' or '
+                . HeaderDTOInterface::NOTICE
+                . ' was(ere) not found. Check config');
+            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+        }
         return $this->headerDTOFactory->create(
-            $this->entity->{HeaderDTOInterface::PHONE_NUMBER_TEXT},
-            $this->entity->{HeaderDTOInterface::ADDRESS_TEXT},
-            $this->entity->{HeaderDTOInterface::NOTICE}
+            $phone,
+            $address,
+            $notice
         );
-
     }
 
-    public function getNavData(): NavDTOInterface {
+    public function getNavData(): NavDTOInterface
+    {
         $menuId = $this->entity->{NavDTOInterface::NAV_MENU_ID_FIELD};
         if ($menuId === null) {
-            $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with field: ' 
+            $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with field: '
                 . NavDTOInterface::NAV_MENU_ID_FIELD . ' was not found. Check config');
             throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
         try {
             $menuDTO = $this->staticMenuService->getMenuById((int)$menuId);
-        } catch(CouldNotCreateMenu $e) {
+        } catch (CouldNotCreateMenu $e) {
             $this->logger->log(LogLevel::ERROR, $this::class . ': ' . $e->getMessage());
             throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
