@@ -11,5 +11,5 @@ interface ControllerDTOFactoryInterface
     /**            \    /                 */
     /**             \  /                  */
     /**              \/                   */
-    public function create(): ControllerDTOInterface;
+    public function create(string $name): ControllerDTOInterface;
 }
