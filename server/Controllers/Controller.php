@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Controllers;
 
+use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
+use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
+use Romchik38\Server\Controllers\Errors\DynamicActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\NoSuchControllerException;
+use Romchik38\Server\Controllers\Errors\NotFoundException;
 
 /**
  * Controller tasks:
@@ -37,8 +41,8 @@ class Controller implements ControllerInterface
      */
     public function __construct(
         protected readonly string $path,
-        protected readonly ActionInterface $action,
-        protected readonly DynamicAction|null $dynamicAction = null
+        protected readonly DefaultActionInterface $action,
+        protected readonly DynamicActionInterface|null $dynamicAction = null
     ) {
         $this->action->setController($this);
         if ($this->dynamicAction !== null) {
@@ -48,9 +52,9 @@ class Controller implements ControllerInterface
 
     public function getName(): string
     {
-        if ($this->path === '') {
-            return 'root';
-        }
+        // if ($this->path === '') {
+        //     return 'root';
+        // }
         return $this->path;
     }
 
@@ -65,7 +69,7 @@ class Controller implements ControllerInterface
             throw new NoSuchControllerException('children with name: ' . $name . ' does not exist');
     }
 
-    public function setChild(Controller $child): Controller
+    public function setChild(ControllerInterface $child): Controller
     {
         $name = $child->getName();
         $this->children[$name] = $child;
@@ -91,12 +95,12 @@ class Controller implements ControllerInterface
         return $this->currentParent;
     }
 
-    public function setCurrentParent(Controller $currentParent): void
+    public function setCurrentParent(ControllerInterface $currentParent): void
     {
         $this->currentParent = $currentParent;
     }
 
-    public function execute(array $elements)
+    public function execute(array $elements): string
     {
         if (count($elements) === 0) {
             throw new \RuntimeException('Controller error: path not found');
@@ -120,16 +124,19 @@ class Controller implements ControllerInterface
                     if (count($elements) === 1) {
                         try {
                             return $this->dynamicAction->execute($nextRoute);
-                        } catch (\RuntimeException $e) {
-                            return 'Not found';         //  1.2.1.2.1 - throw NotFoundException
+                        } catch (DynamicActionNotFoundException $e) {
+                            //  1.2.1.2.1 - throw NotFoundException
+                            throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);
                         }
                     }
 
-                    return 'Not found';                 // 1.2.1.3.1 - throw NotFoundException                
+                    // 1.2.1.3.1 - throw NotFoundException                
+                    throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);
                 }
             }
         } else {
-            return 'Not found';                         //0.1 - throw NotFoundException
+            //0.1 - throw NotFoundException
+            throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);
         }
     }
 
@@ -138,7 +145,7 @@ class Controller implements ControllerInterface
         return $this->parents;
     }
 
-    protected function addParent(Controller $parent)
+    public function addParent(ControllerInterface $parent): void
     {
         $this->parents[] = $parent;
     }

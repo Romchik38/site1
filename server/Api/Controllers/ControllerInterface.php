@@ -6,6 +6,15 @@ namespace Romchik38\Server\Api\Controllers;
 
 interface ControllerInterface
 {
+    const NOT_FOUND_ERROR_MESSAGE = 'Requested url was not found on the server. Please check it and try again.';
+    /**
+     * add parrent to this controller
+     * 
+     * @param ControllerInterface $parent
+     * @return void
+     */
+    public function addParent(ControllerInterface $parent): void;
+
     /** transfers control to next controller */
     public function execute(array $elements): string;
 
