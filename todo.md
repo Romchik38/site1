@@ -9,6 +9,11 @@
 ## new routing system
 
 [-] interfaces  
+  [+] controller
+  [-] action
+  [-] dynamic
+  [-] controller model
+  [-] service
 [-] classes  
 [-] routing  
 
