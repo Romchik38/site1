@@ -8,14 +8,15 @@
 
 ## new routing system
 
-[-] interfaces  
-  [+] controller
-  [-] action
-  [-] dynamic
-  [-] controller model
-  [-] service
+[+] interfaces  
+  [+] controller  
+  [+] default action  
+  [+] dynamic  
+  [+] controller model  
+  [+] service  
 [-] classes  
 [-] routing  
+[-] refactor controlledDTO - move set methods to __construct  
 
 ## breadcrumbs
 
