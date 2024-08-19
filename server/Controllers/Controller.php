@@ -20,14 +20,16 @@ use Romchik38\Server\Controllers\Errors\NotFoundException;
  *      1.1 - there is a next controller
  *          - transfer control to next controller
  *      1.2 - if there is no next controller
- *          1.2.1 - execute dynamic action if present
+ *          1.2.1 - execute action if dynamic not present
+ *          1.2.2 - execute dynamic action if present
  *              1.2.1.1 - dynamic action present, route is known
  *                  1.2.1.1.1 - return the result
  *              1.2.1.2 - dynamic action present, but route is unknown
  *                  1.2.1.2.1 - throw NotFoundException
  *              1.2.1.3 - dynamic action present, but we have at least one more next control element in the path
  *                  1.2.1.3.1 - throw NotFoundException
- *          1.2.2 - execute action
+ *          1.2.3 - if dynamic action not present 
+ *              1.2.3.1 - throw NotFoundException
  */
 class Controller implements ControllerInterface
 {
@@ -122,6 +124,10 @@ class Controller implements ControllerInterface
                     // we do not have next controller
                     // execute dinamic action
                     if (count($elements) === 1) {
+                        if ($this->dynamicAction === null) {
+                            //1.2.3.1 - throw NotFoundException
+                            throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);
+                        }
                         try {
                             return $this->dynamicAction->execute($nextRoute);
                         } catch (DynamicActionNotFoundException $e) {
