@@ -4,11 +4,13 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Routers\Http;
 
+use Romchik38\Server\Api\Controllers\Actions\ActionInterface;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Results\Http\HttpRouterResultInterface;
 use Romchik38\Server\Api\Router\Http\HttpRouterInterface;
 use Romchik38\Server\Api\Services\RedirectInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
+use Romchik38\Server\Api\Router\Http\RouterHeadersInterface;
 
 class PlasticineRouter implements HttpRouterInterface
 {
@@ -48,11 +50,17 @@ class PlasticineRouter implements HttpRouterInterface
         // 3. Exec
         try {
             $controllerResult = $rootController->execute($elements);
+
             $path = $controllerResult->getPath();
-            $type = $controllerResult->getType();
             $response = $controllerResult->getResponse();
-            return $this->routerResult->setStatusCode(200)
-                ->setResponse($response);
+            $type = $controllerResult->getType();
+
+            $this->routerResult->setStatusCode(200)->setResponse($response);
+
+            $this->setHeaders($path, $type);
+
+            return $this->routerResult;
+
         } catch (NotFoundException $e) {
             return $this->pageNotFound();
         }
@@ -73,5 +81,24 @@ class PlasticineRouter implements HttpRouterInterface
         $this->routerResult->setStatusCode(404)
             ->setResponse('Error 404 from router - Page not found');
         return $this->routerResult;
+    }
+
+    protected function setHeaders(array $path, string $type) {
+        $a = 1;
+        $this->headers;
+        $pathString = implode(ControllerInterface::PATH_SEPARATOR, $path);
+        $header = $this->headers[$pathString] ?? null;
+
+        if ($header === null && $type === ActionInterface::TYPE_DYNAMIC_ACTION) {
+            $dynamicPath = array_slice($path, 0, count($path)-1);
+            array_push($dynamicPath, ControllerInterface::PATH_DYNAMIC_ALL);
+            $dynamicPathString = implode(ControllerInterface::PATH_SEPARATOR, $dynamicPath);
+            $header = $this->headers[$dynamicPathString] ?? null;
+        }
+
+        if ($header !== null) {
+            /** @var RouterHeadersInterface $header */
+            $header->setHeaders($this->routerResult, $path);
+        }
     }
 }

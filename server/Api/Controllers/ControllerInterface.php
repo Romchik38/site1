@@ -9,6 +9,8 @@ use Romchik38\Server\Api\Results\Controller\ControllerResultInterface;
 interface ControllerInterface
 {
     const NOT_FOUND_ERROR_MESSAGE = 'Requested url was not found on the server. Please check it and try again.';
+    const PATH_SEPARATOR = '<>';
+    const PATH_DYNAMIC_ALL = '*';
     /**
      * add parrent to this controller
      * 
