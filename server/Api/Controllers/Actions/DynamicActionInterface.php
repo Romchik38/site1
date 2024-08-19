@@ -16,7 +16,7 @@ interface DynamicActionInterface extends ActionInterface
      * @throws DynamicActionNotFoundException [if the route is unknown]
      * @return string [result]
      */
-    public function execute($dynamicRoute): string;
+    public function execute(string $dynamicRoute): string;
 
     /**
      * returns an array of routes names

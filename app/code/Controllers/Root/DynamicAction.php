@@ -19,7 +19,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         protected MainDTOFactoryInterface $mainDTOFactory
     ) {}
 
-    public function execute($action): string
+    public function execute(string $action): string
     {
 
         $arr = $this->pageRepository->getByUrl($action);

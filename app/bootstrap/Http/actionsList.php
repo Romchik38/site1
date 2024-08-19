@@ -7,7 +7,7 @@ use Romchik38\Server\Controllers\Controller;
 
 return function ($container) {
 
-    // Init
+    // GET
     $root = new Controller(
         'root',
         $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
@@ -22,10 +22,27 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Controllers\Login\DynamicAction::class)
     );
 
-    // Routing
     $root->setChild($login);
-   
+
+    // POST
+    $rootPost = new Controller(
+        'root',
+        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
+        $container->get(\Romchik38\Site1\Controllers\DefaultActionStub::class),
+
+    );
+
+    $authPost = new Controller(
+        'auth',
+        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
+        $container->get(\Romchik38\Site1\Controllers\DefaultActionStub::class),
+        $container->get(\Romchik38\Site1\Controllers\Auth\DynamicAction::class)
+    );
+    
+    $rootPost->setChild($authPost);
+
     return [
-        HttpRouterInterface::REQUEST_METHOD_GET => $root
+        HttpRouterInterface::REQUEST_METHOD_GET => $root,
+        HttpRouterInterface::REQUEST_METHOD_POST => $rootPost
     ];
 };

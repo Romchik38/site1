@@ -31,7 +31,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         protected RequestInterface $request,
         protected UserRepositoryInterface $userRepository
     ) {}
-    public function execute($action): string
+    public function execute(string $action): string
     {
 
         try {

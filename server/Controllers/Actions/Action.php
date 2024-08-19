@@ -13,7 +13,7 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 abstract class Action implements ActionInterface
 {
 
-    protected readonly ControllerInterface $controller;
+    protected ControllerInterface $controller;
 
     public function getController(): ControllerInterface
     {

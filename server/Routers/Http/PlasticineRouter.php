@@ -84,8 +84,6 @@ class PlasticineRouter implements HttpRouterInterface
     }
 
     protected function setHeaders(array $path, string $type) {
-        $a = 1;
-        $this->headers;
         $pathString = implode(ControllerInterface::PATH_SEPARATOR, $path);
         $header = $this->headers[$pathString] ?? null;
 

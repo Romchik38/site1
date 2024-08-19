@@ -43,10 +43,6 @@ $actions($container);
 $router = require_once(__DIR__ . '/bootstrap/Http/router.php');
 $router($container);
 
-// ROUTER HEADERS
-$headers = require_once(__DIR__ . '/bootstrap/Http/router_headers.php');
-$headers($container);
-
 // SERVER
 $server = require_once(__DIR__ . '/bootstrap/Http/server.php');
 $server($container);
