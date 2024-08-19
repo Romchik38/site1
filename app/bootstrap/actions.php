@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return function ($container) {
 
+    // Root
     $container->add(
         \Romchik38\Site1\Controllers\Root\DefaultAction::class,
         new \Romchik38\Site1\Controllers\Root\DefaultAction(
@@ -19,6 +20,29 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Views\MainPageViewInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\Page\PageRepositoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface::class)
+        )
+    );
+
+    // Login
+    $container->add(
+        \Romchik38\Site1\Controllers\Login\DefaultAction::class,
+        new \Romchik38\Site1\Controllers\Login\DefaultAction(
+            $container->get(\Romchik38\Site1\Api\Views\LoginPageViewInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\SessionInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
+        )
+    );
+
+    $container->add(
+        \Romchik38\Site1\Controllers\Login\DynamicAction::class,
+        new \Romchik38\Site1\Controllers\Login\DynamicAction(
+            $container->get(\Romchik38\Site1\Api\Views\LoginPageViewInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\SessionInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
         )
     );
 
