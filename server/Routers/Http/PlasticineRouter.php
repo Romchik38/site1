@@ -15,6 +15,7 @@ class PlasticineRouter implements HttpRouterInterface
     public function __construct(
         protected HttpRouterResultInterface $routerResult,
         protected array $controllers,
+        protected array $headers,
         protected ControllerInterface | null $notFoundController = null,
         protected RedirectInterface|null $redirectService = null
     ) {}
@@ -48,6 +49,7 @@ class PlasticineRouter implements HttpRouterInterface
         try {
             $controllerResult = $rootController->execute($elements);
             $path = $controllerResult->getPath();
+            $type = $controllerResult->getType();
             $response = $controllerResult->getResponse();
             return $this->routerResult->setStatusCode(200)
                 ->setResponse($response);

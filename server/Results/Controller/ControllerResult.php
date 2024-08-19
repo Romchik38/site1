@@ -12,10 +12,12 @@ class ControllerResult extends DTO implements ControllerResultInterface
 
     public function __construct(
         string $response,
-        array $path
+        array $path,
+        string $type
     ) {
         $this->data[ControllerResultInterface::RESPONSE_FIELD] = $response;
         $this->data[ControllerResultInterface::PATH_FIELD] = $path;
+        $this->data[ControllerResultInterface::TYPE_FIELD] = $type;
     }
 
     public function getResponse(): string
@@ -26,5 +28,10 @@ class ControllerResult extends DTO implements ControllerResultInterface
     public function getPath(): array
     {
         return $this->data[ControllerResultInterface::PATH_FIELD];
+    }
+
+    public function getType(): string
+    {
+        return $this->data[ControllerResultInterface::TYPE_FIELD];
     }
 }

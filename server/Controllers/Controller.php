@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Controllers;
 
+use Romchik38\Server\Api\Controllers\Actions\ActionInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
@@ -117,7 +118,7 @@ class Controller implements ControllerInterface
                 // execute this default action
                 $fullPath = $this->getFullPath();
                 $response = $this->action->execute();
-                return $this->controllerResultFactory->create($response, $fullPath);
+                return $this->controllerResultFactory->create($response, $fullPath, ActionInterface::TYPE_ACTION);
             } else {
                 $nextRoute = $elements[0];
                 // check for controller
@@ -136,7 +137,7 @@ class Controller implements ControllerInterface
                         try {
                             $fullPath = $this->getFullPath($nextRoute);
                             $response = $this->dynamicAction->execute($nextRoute);
-                            return $this->controllerResultFactory->create($response, $fullPath);
+                            return $this->controllerResultFactory->create($response, $fullPath, ActionInterface::TYPE_DYNAMIC_ACTION);
                         } catch (DynamicActionNotFoundException $e) {
                             //  1.2.1.2.1 - throw NotFoundException
                             throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);

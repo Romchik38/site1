@@ -11,7 +11,8 @@ interface ControllerResultFactoryInterface
      * 
      * @param string $response [response from action]
      * @param array $path [full path from root to action]
+     * @param string $type [a const from ActionInterface]
      * @return ControllerResultInterface
      */
-    public function create(string $response, array $path): ControllerResultInterface;
+    public function create(string $response, array $path, string $type): ControllerResultInterface;
 }

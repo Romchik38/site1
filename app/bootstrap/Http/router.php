@@ -22,6 +22,7 @@ return function ($container) {
         new \Romchik38\Server\Routers\Http\PlasticineRouter(
             $container->get(\Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class),
             $controllersList,
+            [],
             null,
             null
         )

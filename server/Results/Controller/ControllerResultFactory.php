@@ -9,8 +9,8 @@ use Romchik38\Server\Api\Results\Controller\ControllerResultInterface;
 
 class ControllerResultFactory implements ControllerResultFactoryInterface
 {
-    public function create(string $response, array $path): ControllerResultInterface
+    public function create(string $response, array $path, string $type): ControllerResultInterface
     {
-        return new ControllerResult($response, $path);
+        return new ControllerResult($response, $path, $type);
     }
 }
