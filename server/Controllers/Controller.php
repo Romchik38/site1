@@ -7,6 +7,8 @@ namespace Romchik38\Server\Controllers;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
+use Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface;
+use Romchik38\Server\Api\Results\Controller\ControllerResultInterface;
 use Romchik38\Server\Controllers\Errors\DynamicActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\NoSuchControllerException;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
@@ -43,6 +45,7 @@ class Controller implements ControllerInterface
      */
     public function __construct(
         protected readonly string $path,
+        protected ControllerResultFactoryInterface $controllerResultFactory,
         protected readonly DefaultActionInterface $action,
         protected readonly DynamicActionInterface|null $dynamicAction = null
     ) {
@@ -102,7 +105,7 @@ class Controller implements ControllerInterface
         $this->currentParent = $currentParent;
     }
 
-    public function execute(array $elements): string
+    public function execute(array $elements): ControllerResultInterface
     {
         if (count($elements) === 0) {
             throw new \RuntimeException('Controller error: path not found');
@@ -113,7 +116,8 @@ class Controller implements ControllerInterface
             if (count($elements) === 0) {
                 // execute this default action
                 $fullPath = $this->getFullPath();
-                return $this->action->execute();
+                $response = $this->action->execute();
+                return $this->controllerResultFactory->create($response, $fullPath);
             } else {
                 $nextRoute = $elements[0];
                 // check for controller
@@ -131,7 +135,8 @@ class Controller implements ControllerInterface
                         }
                         try {
                             $fullPath = $this->getFullPath($nextRoute);
-                            return $this->dynamicAction->execute($nextRoute);
+                            $response = $this->dynamicAction->execute($nextRoute);
+                            return $this->controllerResultFactory->create($response, $fullPath);
                         } catch (DynamicActionNotFoundException $e) {
                             //  1.2.1.2.1 - throw NotFoundException
                             throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);
@@ -158,7 +163,8 @@ class Controller implements ControllerInterface
         $this->parents[] = $parent;
     }
 
-    protected function getFullPath(string $route = ''): array {
+    protected function getFullPath(string $route = ''): array
+    {
         $fullPath = [$this->path];
         if ($route !== '') {
             array_push($fullPath, $route);
@@ -167,7 +173,7 @@ class Controller implements ControllerInterface
         $nextParrent = $this->currentParent;
         while ($stop === false) {
             $stop = true;
-            if ( $nextParrent === null) {
+            if ($nextParrent === null) {
                 return $fullPath;
             } else {
                 array_unshift($fullPath, $nextParrent->getName());

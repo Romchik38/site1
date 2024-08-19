@@ -150,6 +150,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\DTO\Nav\NavDTOFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Server\Results\Controller\ControllerResultFactory::class,
+        new \Romchik38\Server\Results\Controller\ControllerResultFactory()
+    );
+    $container->add(
+        \Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class,
+        $container->get(\Romchik38\Server\Results\Controller\ControllerResultFactory::class)
+    );
+    
     // SERVICES
     $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,

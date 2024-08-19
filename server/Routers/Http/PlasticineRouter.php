@@ -46,7 +46,9 @@ class PlasticineRouter implements HttpRouterInterface
 
         // 3. Exec
         try {
-            $response = $rootController->execute($elements);
+            $controllerResult = $rootController->execute($elements);
+            $path = $controllerResult->getPath();
+            $response = $controllerResult->getResponse();
             return $this->routerResult->setStatusCode(200)
                 ->setResponse($response);
         } catch (NotFoundException $e) {
