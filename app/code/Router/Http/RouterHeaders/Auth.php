@@ -7,8 +7,9 @@ use Romchik38\Server\Api\Router\Http\RouterHeadersInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 
 class Auth implements RouterHeadersInterface {
-    public function setHeaders(HttpRouterResultInterface $result, string $action): void
+    public function setHeaders(HttpRouterResultInterface $result, array $path): void
     {
+        $action = $path[count($path) - 1];
         $encodedMessage = urlencode($result->getResponse());
         $arr = [
             'index' => '/login/index?' . RequestInterface::MESSAGE_FIELD . '=' . $encodedMessage,
