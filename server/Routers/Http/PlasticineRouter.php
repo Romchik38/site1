@@ -7,22 +7,34 @@ namespace Romchik38\Server\Routers\Http;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Results\Http\HttpRouterResultInterface;
 use Romchik38\Server\Api\Router\Http\HttpRouterInterface;
+use Romchik38\Server\Api\Services\RedirectInterface;
+use Romchik38\Server\Controllers\Errors\NotFoundException;
 
 class PlasticineRouter implements HttpRouterInterface
 {
     public function __construct(
-        protected readonly ControllerInterface $rootController)
-    {
-        
-    }
+        protected HttpRouterResultInterface $routerResult,
+        protected array $controllers,
+        protected ControllerInterface | null $notFoundController = null,
+        protected RedirectInterface|null $redirectService = null
+    ) {}
     public function execute(): HttpRouterResultInterface
     {
+        // 1. method check 
+        $method = $_SERVER['REQUEST_METHOD'];
+        if (array_key_exists($method, $this->controllers) === false) {
+            return $this->methodNotAllowed();
+        }
 
+        /** @var ControllerInterface $rootController */
+        $rootController = $this->controllers[$method];
+
+        // 2. parse url
         [$url] = explode('?', $_SERVER['REQUEST_URI']);
 
         $elements = explode('/', $url);
 
-        // 2 blank elements for /
+        // two blank elements for /
         if (count($elements) === 2 && $elements[0] === '' && $elements[1] === '') {
             $elements = [$elements[0]];
         }
@@ -32,7 +44,30 @@ class PlasticineRouter implements HttpRouterInterface
             $elements[0] = 'root';
         }
 
-        $result = $this->rootController->execute($elements);
-        
+        // 3. Exec
+        try {
+            $response = $rootController->execute($elements);
+            return $this->routerResult->setStatusCode(200)
+                ->setResponse($response);
+        } catch (NotFoundException $e) {
+            return $this->pageNotFound();
+        }
+    }
+
+    protected function methodNotAllowed(): HttpRouterResultInterface
+    {
+        $this->routerResult->setResponse('Method Not Allowed')
+            ->setStatusCode(405)
+            ->setHeaders([
+                ['Allow:' . implode(', ', array_keys($this->controllers))]
+            ]);
+        return $this->routerResult;
+    }
+
+    protected function pageNotFound()
+    {
+        $this->routerResult->setStatusCode(404)
+            ->setResponse('Error 404 from router - Page not found');
+        return $this->routerResult;
     }
 }

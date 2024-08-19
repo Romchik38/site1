@@ -18,6 +18,10 @@
 [-] routing  
 [-] refactor controlledDTO - move set methods to __construct  
 
+[-] delete  
+  [-] DefaultRouter.php  
+  [-] controllers.php  
+
 ## breadcrumbs
 
 [-] create  

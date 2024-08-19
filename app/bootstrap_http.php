@@ -32,8 +32,12 @@ $views = require_once(__DIR__ . '/code/Views/Html/views.php');
 $views($container);
 
 // CONTROLLERS
-$controllers = require_once(__DIR__ . '/bootstrap/controllers.php');
-$controllers($container);
+// $controllers = require_once(__DIR__ . '/bootstrap/controllers.php');
+// $controllers($container);
+
+// ACTIONS
+$actions = require_once(__DIR__ . '/bootstrap/actions.php');
+$actions($container);
 
 // ROUTER
 $router = require_once(__DIR__ . '/bootstrap/Http/router.php');
