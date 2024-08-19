@@ -9,7 +9,8 @@ return function ($container) {
 
     $root = new Controller(
         'root',
-        $container->get(\Romchik38\Site1\Controllers\Root\DefaultAction::class)
+        $container->get(\Romchik38\Site1\Controllers\Root\DefaultAction::class),
+        $container->get(\Romchik38\Site1\Controllers\Root\DynamicAction::class),
     );
 
     return [

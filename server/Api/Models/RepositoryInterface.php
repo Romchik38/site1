@@ -59,4 +59,5 @@ interface RepositoryInterface
      * @return ModelInterface
      */
     public function save(ModelInterface $model): ModelInterface;
+
 }
