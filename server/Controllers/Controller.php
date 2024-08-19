@@ -112,6 +112,7 @@ class Controller implements ControllerInterface
         if ($route === $this->path) {
             if (count($elements) === 0) {
                 // execute this default action
+                $fullPath = $this->getFullPath();
                 return $this->action->execute();
             } else {
                 $nextRoute = $elements[0];
@@ -129,6 +130,7 @@ class Controller implements ControllerInterface
                             throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);
                         }
                         try {
+                            $fullPath = $this->getFullPath($nextRoute);
                             return $this->dynamicAction->execute($nextRoute);
                         } catch (DynamicActionNotFoundException $e) {
                             //  1.2.1.2.1 - throw NotFoundException
@@ -154,5 +156,24 @@ class Controller implements ControllerInterface
     public function addParent(ControllerInterface $parent): void
     {
         $this->parents[] = $parent;
+    }
+
+    protected function getFullPath(string $route = ''): array {
+        $fullPath = [$this->path];
+        if ($route !== '') {
+            array_push($fullPath, $route);
+        }
+        $stop = false;
+        $nextParrent = $this->currentParent;
+        while ($stop === false) {
+            $stop = true;
+            if ( $nextParrent === null) {
+                return $fullPath;
+            } else {
+                array_unshift($fullPath, $nextParrent->getName());
+                $nextParrent = $nextParrent->getCurrentParent();
+                $stop = false;
+            }
+        }
     }
 }
