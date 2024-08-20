@@ -22,7 +22,7 @@ INSERT INTO entity_field (field_name, entity_id, value)
         ('email_contact_recovery', 1, 'ser@ozone.com.ua'),
         ('email_contact_main', 1, 'office@ozone.com.ua'),
         ('url_domain', 1, 'http://site1.com'),
-        ('url_recovery', 1, '/changepassword/index'),
+        ('url_recovery', 1, '/changepassword'),
         ('phone_number_text', 2, '0-800-500-00-00'),
         ('address_text', 2, 'Mazepy street 10, Kiev, Ukraine'),
         ('notice', 2, 'free from mobile'),
