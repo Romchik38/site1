@@ -9,6 +9,7 @@ use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
+use Romchik38\Site1\Api\Models\Page\PageModelInterface;
 use Romchik38\Site1\Api\Models\Page\PageRepositoryInterface;
 
 class DynamicAction extends Action implements DynamicActionInterface
@@ -36,7 +37,11 @@ class DynamicAction extends Action implements DynamicActionInterface
 
     public function getRoutes(): array
     {
-        $routes = $this->pageRepository->getUrls();
+        $routes = [];
+        $rows = $this->pageRepository->getUrls();
+        foreach ($rows as $row) {
+            $routes[] = $row[PageModelInterface::PAGE_URL_FIELD];
+        }
         return $routes;
     }
 }
