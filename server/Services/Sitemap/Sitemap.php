@@ -34,6 +34,7 @@ class Sitemap implements SitemapInterface
             if ($parentName !== '') {
                 $lastElement->setPath($parentName);
             }
+            $this->addDynamicChildren($element, [], $lastElement);
             return $lastElement;
         }
         /** @var Controller $child */
@@ -52,20 +53,29 @@ class Sitemap implements SitemapInterface
                 $rowElem->setPath($path);
             }
         }
-        // skip dynamic routes which names equal children names
+        // add dynamic children - controller has children
+        $this->addDynamicChildren($element, $childrenNames, $row);
+        return $row;
+    }
+
+    protected function addDynamicChildren(
+        ControllerInterface $element,
+        array $childrenNames,
+        ControllerDTOInterface $row
+    ): void {
         $dynamicRoutes = $element->getDynamicRoutes();
         foreach ($dynamicRoutes as $dynamicRoute) {
+            // skip dynamic routes which names equal children names
             if (array_search($dynamicRoute, $childrenNames) !== false) {
                 continue;
             }
             $rowDynamicElem = $this->controllerDTOFactory->create($dynamicRoute);
-            $rowDynamicElem->setPath($elementName);
+            $rowDynamicElem->setPath($element->getName());
             $row->setChild($rowDynamicElem);
-            foreach ($rowPath as $path) {
+            foreach ($row->getPath() as $path) {
                 $rowDynamicElem->setPath($path);
             }
         }
-        return $row;
     }
 
     protected function getFirst(ControllerInterface $controller): ControllerInterface
