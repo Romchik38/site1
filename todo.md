@@ -1,19 +1,15 @@
 # Todo
 
-[-] new routing system
 [-] breadcrumbs  
-[-] add login to header  
 [-] menu  
+[-] add login form to header  
 [-] psr-7  
 [-] ?  
-
-## new routing system
-
-[-] refactor controlledDTO - move set methods to __construct  
 
 ## breadcrumbs
 
 [-] sitemap  
+[-] refactor controlledDTO - move set methods to __construct  
 [-] create  
 [-] active link in nav layout  
 
