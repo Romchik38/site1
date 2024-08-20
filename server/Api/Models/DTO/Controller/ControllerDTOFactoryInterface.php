@@ -6,10 +6,9 @@ namespace Romchik38\Server\Api\Models\DTO\Controller;
 
 interface ControllerDTOFactoryInterface
 {
-    /** MUST BE refactored with argements */
-    /**           \      /                */
-    /**            \    /                 */
-    /**             \  /                  */
-    /**              \/                   */
-    public function create(string $name): ControllerDTOInterface;
+    public function create(
+        string $name,
+        array $pathVar,
+        array $childrenVar
+    ): ControllerDTOInterface;
 }

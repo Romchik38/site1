@@ -53,7 +53,7 @@ Uses MVC
 /login/recovery           shows recovery form
 /login/changepassword     shows change password form for logged in user
                           or show link to recovery/login page
-/changepassword/index     check a recovery link.
+/changepassword           check a recovery link.
                           if it is active - do auth and redirect to /changepassword/index
                           if it is not - redirect to /changepassword/index 
                           [!] it must be a POST controller, but link can be crated for GET

@@ -9,8 +9,15 @@ use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
 
 class ControllerDTOFactory implements ControllerDTOFactoryInterface
 {
-    public function create(string $name): ControllerDTOInterface
-    {
-        return new ControllerDTO($name);
+    public function create(
+        string $name,
+        array $path,
+        array $children
+    ): ControllerDTOInterface {
+        return new ControllerDTO(
+            $name,
+            $path,
+            $children
+        );
     }
 }

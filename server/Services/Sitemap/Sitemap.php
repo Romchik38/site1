@@ -26,56 +26,69 @@ class Sitemap implements SitemapInterface
         return $ControllerDTO;
     }
 
-    protected function createElement(ControllerInterface $element, $parentName = '')
+    protected function createElement(ControllerInterface $element, $parentName = '', $parrentPath = [])
     {
+        $rowPath = $parrentPath;
         $children = $element->getChildren();
+
         if (count($children) === 0) {
-            $lastElement = $this->controllerDTOFactory->create($element->getName());    // 1
+            $lastPath = $rowPath;
             if ($parentName !== '') {
-                $lastElement->setPath($parentName);
+                $lastPath[] = $parentName;
             }
-            $this->addDynamicChildren($element, [], $lastElement);
+
+            $allChi = $this->addDynamicChildren($element, [], [], $lastPath);
+
+            $lastElement = $this->controllerDTOFactory->create(
+                $element->getName(),
+                $lastPath,
+                $allChi
+            );
             return $lastElement;
         }
+
         /** @var Controller $child */
         $elementName = $element->getName();
-        $row = $this->controllerDTOFactory->create($elementName);                // 2 
+        $rowChi = [];
         if ($parentName !== '') {
-            $row->setPath($parentName);
+            array_unshift($rowPath, $parentName);
         }
-        $rowPath = $row->getPath();
         $childrenNames = [];
         foreach ($children as $child) {
             $childrenNames[] = $child->getName();
-            $rowElem = $this->createElement($child, $row->getName());   // 3
-            $row->setChild($rowElem);
-            foreach ($rowPath as $path) {
-                $rowElem->setPath($path);
-            }
+            $rowElem = $this->createElement($child, $elementName, $rowPath);
+            $rowChi[] = $rowElem;
         }
-        // add dynamic children - controller has children
-        $this->addDynamicChildren($element, $childrenNames, $row);
+
+        $allChi = $this->addDynamicChildren($element, $childrenNames, $rowChi, $rowPath);
+
+        $row = $this->controllerDTOFactory->create($elementName, $rowPath, $allChi); // 2
         return $row;
     }
 
     protected function addDynamicChildren(
         ControllerInterface $element,
         array $childrenNames,
-        ControllerDTOInterface $row
-    ): void {
+        array $rowChi,
+        array $rowPath
+    ): array {
+        $allChi = $rowChi;
         $dynamicRoutes = $element->getDynamicRoutes();
         foreach ($dynamicRoutes as $dynamicRoute) {
-            // skip dynamic routes which names equal children names
+            // skip dynamic routes which names equal to children names
             if (array_search($dynamicRoute, $childrenNames) !== false) {
                 continue;
             }
-            $rowDynamicElem = $this->controllerDTOFactory->create($dynamicRoute);
-            $rowDynamicElem->setPath($element->getName());
-            $row->setChild($rowDynamicElem);
-            foreach ($row->getPath() as $path) {
-                $rowDynamicElem->setPath($path);
-            }
+            $dynElemPath = $rowPath;
+            $dynElemPath[] = $element->getName();
+            $rowDynamicElem = $this->controllerDTOFactory->create(
+                $dynamicRoute,
+                $dynElemPath,
+                []
+            );
+            $allChi[] = $rowDynamicElem;
         }
+        return $allChi;
     }
 
     protected function getFirst(ControllerInterface $controller): ControllerInterface

@@ -14,12 +14,14 @@ use Romchik38\Server\Models\DTO;
  */
 class ControllerDTO extends DTO implements ControllerDTOInterface
 {
-    protected array $path = [];
-    protected array $children = [];
 
     public function __construct(
-        protected readonly string $name
-    ) {}
+        protected readonly string $name,
+        protected array $path,
+        protected array $children
+    ) {
+
+    }
 
     public function getName(): string
     {
@@ -34,18 +36,6 @@ class ControllerDTO extends DTO implements ControllerDTOInterface
     public function getChildren(): array
     {
         return $this->children;
-    }
-
-    public function setChild(ControllerDTOInterface $child): ControllerDTOInterface
-    {
-        $this->children[] = $child;
-        return $this;
-    }
-
-    public function setPath(string $path): ControllerDTOInterface
-    {
-        array_unshift($this->path, $path);
-        return $this;
     }
 
     public function jsonSerialize(): mixed
