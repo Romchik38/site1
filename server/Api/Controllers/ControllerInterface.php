@@ -22,6 +22,11 @@ interface ControllerInterface
     /** transfers control to next controller */
     public function execute(array $elements): ControllerResultInterface;
 
+    /** 
+     * can controller be shown to user in the sitemap
+     */
+    public function isPublic(): bool;
+
     /** return the controller name */
     public function getName(): string;
 

@@ -50,6 +50,7 @@ class Controller implements ControllerInterface
      */
     public function __construct(
         protected readonly string $path,
+        protected readonly bool $publicity = false,
         protected ControllerResultFactoryInterface|null $controllerResultFactory = null,
         protected readonly DefaultActionInterface|null $action = null,
         protected readonly DynamicActionInterface|null $dynamicAction = null
@@ -61,19 +62,15 @@ class Controller implements ControllerInterface
             $this->dynamicAction->setController($this);
         }
     }
+    
+    public function isPublic(): bool {
+        return $this->publicity;
+    }
 
     public function getName(): string
     {
-        // if ($this->path === '') {
-        //     return 'root';
-        // }
         return $this->path;
     }
-
-    // public function getUrl(): string
-    // {
-    //     return $this->path;
-    // }
 
     public function getChild(string $name): Controller
     {
@@ -128,7 +125,7 @@ class Controller implements ControllerInterface
                     return $this->controllerResultFactory->create($response, $fullPath, ActionInterface::TYPE_ACTION);
                 } else {
                     // 1.2.1.2.1 - throw NotFoundException
-                    throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);                    
+                    throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);
                 }
             } else {
                 $nextRoute = $elements[0];

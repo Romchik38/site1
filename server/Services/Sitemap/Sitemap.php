@@ -8,6 +8,7 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
 use Romchik38\Server\Api\Services\SitemapInterface;
+use Romchik38\Server\Services\Errors\CantCreateSitemapElement;
 
 class Sitemap implements SitemapInterface
 {
@@ -28,6 +29,10 @@ class Sitemap implements SitemapInterface
 
     protected function createElement(ControllerInterface $element, $parentName = '', $parrentPath = [])
     {
+        if ($element->isPublic() === false) {
+            throw new CantCreateSitemapElement('Element ' . $element->getName() . ' is not public');
+        }
+
         $rowPath = $parrentPath;
         $children = $element->getChildren();
 
@@ -56,8 +61,12 @@ class Sitemap implements SitemapInterface
         $childrenNames = [];
         foreach ($children as $child) {
             $childrenNames[] = $child->getName();
-            $rowElem = $this->createElement($child, $elementName, $rowPath);
-            $rowChi[] = $rowElem;
+            try {
+                $rowElem = $this->createElement($child, $elementName, $rowPath);
+                $rowChi[] = $rowElem;
+            } catch(CantCreateSitemapElement $e) {
+                continue;
+            }
         }
 
         $allChi = $this->addDynamicChildren($element, $childrenNames, $rowChi, $rowPath);

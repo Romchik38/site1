@@ -11,17 +11,6 @@ return function ($container) {
     $headersFn = require_once(__DIR__ . '/router_headers.php');
     $headers = $headersFn($container);
 
-    // $container->add(
-    //     \Romchik38\Server\Routers\Http\DefaultRouter::class,
-    //     new \Romchik38\Server\Routers\Http\DefaultRouter(
-    //         $container->get(\Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class),
-    //         $controllersList,
-    //         $container,
-    //         null,
-    //         $container->get(\Romchik38\Server\Api\Services\RedirectInterface::class)
-    //     )
-    // );
-
     $container->add(
         \Romchik38\Server\Routers\Http\PlasticineRouter::class,
         new \Romchik38\Server\Routers\Http\PlasticineRouter(
