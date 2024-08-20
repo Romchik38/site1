@@ -25,17 +25,12 @@ return function ($container) {
     $root->setChild($login);
 
     // POST
-    $rootPost = new Controller(
-        'root',
-        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
-        $container->get(\Romchik38\Site1\Controllers\DefaultActionStub::class),
-
-    );
+    $rootPost = new Controller('root');
 
     $authPost = new Controller(
         'auth',
         $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
-        $container->get(\Romchik38\Site1\Controllers\DefaultActionStub::class),
+        null,
         $container->get(\Romchik38\Site1\Controllers\Auth\DynamicAction::class)
     );
     

@@ -24,6 +24,10 @@ use Romchik38\Server\Controllers\Errors\NotFoundException;
  *          - transfer control to next controller
  *      1.2 - if there is no next controller
  *          1.2.1 - execute action if dynamic not present
+ *              1.2.1.1 - if action present 
+ *                  1.2.1.1.1 - execute
+ *              1.2.1.2 - if no action present
+ *                  1.2.1.2.1 - throw NotFoundException
  *          1.2.2 - execute dynamic action if present
  *              1.2.1.1 - dynamic action present, route is known
  *                  1.2.1.1.1 - return the result
@@ -46,11 +50,13 @@ class Controller implements ControllerInterface
      */
     public function __construct(
         protected readonly string $path,
-        protected ControllerResultFactoryInterface $controllerResultFactory,
-        protected readonly DefaultActionInterface $action,
+        protected ControllerResultFactoryInterface|null $controllerResultFactory = null,
+        protected readonly DefaultActionInterface|null $action = null,
         protected readonly DynamicActionInterface|null $dynamicAction = null
     ) {
-        $this->action->setController($this);
+        if ($this->action !== null) {
+            $this->action->setController($this);
+        }
         if ($this->dynamicAction !== null) {
             $this->dynamicAction->setController($this);
         }
@@ -117,8 +123,13 @@ class Controller implements ControllerInterface
             if (count($elements) === 0) {
                 // execute this default action
                 $fullPath = $this->getFullPath();
-                $response = $this->action->execute();
-                return $this->controllerResultFactory->create($response, $fullPath, ActionInterface::TYPE_ACTION);
+                if ($this->action !== null) {
+                    $response = $this->action->execute();
+                    return $this->controllerResultFactory->create($response, $fullPath, ActionInterface::TYPE_ACTION);
+                } else {
+                    // 1.2.1.2.1 - throw NotFoundException
+                    throw new NotFoundException(ControllerInterface::NOT_FOUND_ERROR_MESSAGE);                    
+                }
             } else {
                 $nextRoute = $elements[0];
                 // check for controller
