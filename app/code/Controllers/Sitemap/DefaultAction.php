@@ -44,16 +44,18 @@ class DefaultAction extends Action implements DefaultActionInterface
         $children = $element->getChildren();
         $path = $this->mapHome($element->getPath());
         $name = $element->getName();
+        $url = $name;
         if ($name === 'root') {
-            $name = '';
+            $url = '';
+            $name = 'home';
         }
-        $link = implode('/', $path) . '/' . $name;
+        $link = implode('/', $path) . '/' . $url;
         if (count($children) === 0) {
-            $elemName = '<a href="' . $link . '">' . $element->getName() . '</a>';
+            $elemName = '<a href="' . $link . '">' . $name . '</a>';
             $lastElement = '<li>' . $elemName . '</li>';
             return $lastElement;
         }
-        $rowName = '<a href="' . $link . '">' . $element->getName() . '</a>';
+        $rowName = '<a href="' . $link . '">' . $name . '</a>';
         $rowElements = [];
         foreach ($children as $child) {
             $rowElem = $this->createHtml($child);
