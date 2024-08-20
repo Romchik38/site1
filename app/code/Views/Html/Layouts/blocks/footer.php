@@ -27,7 +27,7 @@ return function(array $data = []){
                             <div class="col-6">
                                 <h5 class="fw-bold">Links</h5>
                                 <ul class="list-unstyled">
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Home</a></li>
+                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="/sitemap">Sitemap</a></li>
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">About</a></li>
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Contacts</a></li>
                                     <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Shop</a></li>
