@@ -59,10 +59,16 @@ return function ($container) {
         )
     );
 
-    // Stub
+    // Changepassword
     $container->add(
-        \Romchik38\Site1\Controllers\DefaultActionStub::class,
-        new \Romchik38\Site1\Controllers\DefaultActionStub()
+        \Romchik38\Site1\Controllers\Changepassword\DefaultAction::class,
+        new \Romchik38\Site1\Controllers\Changepassword\DefaultAction(
+            $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
+            $container->get(\Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\SessionInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
+            $container->get(\Psr\Log\LoggerInterface::class)
+        )
     );
 
     return $container;

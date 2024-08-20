@@ -22,7 +22,13 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Controllers\Login\DynamicAction::class)
     );
 
-    $root->setChild($login);
+    $changepassword = new Controller(
+        'changepassword',
+        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
+        $container->get(\Romchik38\Site1\Controllers\Changepassword\DefaultAction::class)
+    );
+
+    $root->setChild($login)->setChild($changepassword);
 
     // POST
     $rootPost = new Controller('root');

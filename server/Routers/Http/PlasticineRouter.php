@@ -14,13 +14,17 @@ use Romchik38\Server\Api\Router\Http\RouterHeadersInterface;
 
 class PlasticineRouter implements HttpRouterInterface
 {
+    protected array $headers;
+
     public function __construct(
         protected HttpRouterResultInterface $routerResult,
         protected array $controllers,
-        protected array $headers,
+        array $headers,
         protected ControllerInterface | null $notFoundController = null,
         protected RedirectInterface|null $redirectService = null
-    ) {}
+    ) {
+        $this->headers = $headers[$_SERVER['REQUEST_METHOD']] ?? [];
+    }
     public function execute(): HttpRouterResultInterface
     {
         // 1. method check 
