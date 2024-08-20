@@ -28,7 +28,13 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Controllers\Changepassword\DefaultAction::class)
     );
 
-    $root->setChild($login)->setChild($changepassword);
+    $sitemap = new Controller(
+        'sitemap',
+        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
+        $container->get(Romchik38\Site1\Controllers\Sitemap\DefaultAction::class)
+    );
+
+    $root->setChild($login)->setChild($changepassword)->setChild($sitemap);
 
     // POST
     $rootPost = new Controller('root');

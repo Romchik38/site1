@@ -71,5 +71,13 @@ return function ($container) {
         )
     );
 
+    // Sitemap
+    $container->add(
+        Romchik38\Site1\Controllers\Sitemap\DefaultAction::class,
+        new Romchik38\Site1\Controllers\Sitemap\DefaultAction(
+            $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class)
+        )
+    );
+
     return $container;
 };
