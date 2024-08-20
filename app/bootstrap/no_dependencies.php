@@ -158,6 +158,15 @@ return function ($container) {
         \Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class,
         $container->get(\Romchik38\Server\Results\Controller\ControllerResultFactory::class)
     );
+
+    $container->add(
+        \Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory::class,
+        new \Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory()
+    );
+    $container->add(
+        Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOFactoryInterface::class,
+        $container->get(\Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory::class)
+    );
     
     // SERVICES
     $container->add(

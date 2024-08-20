@@ -102,6 +102,17 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Services\Menu\StaticMenuService::class)
     );
 
+    // Sitemap
+    $container->add(
+        \Romchik38\Server\Services\Sitemap\Sitemap::class,
+        new \Romchik38\Server\Services\Sitemap\Sitemap(
+            $container->get(Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOFactoryInterface::class)
+        )
+    );
+    $container->add(
+        \Romchik38\Server\Api\Services\SitemapInterface::class,
+        $container->get(\Romchik38\Server\Services\Sitemap\Sitemap::class)
+    );
 
     return $container;
 };
