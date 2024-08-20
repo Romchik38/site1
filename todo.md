@@ -14,8 +14,8 @@
   [+] dynamic  
   [+] controller model  
   [+] service  
-[-] classes  
-[-] routing  
+[+] classes  
+[+] routing  
 [-] refactor controlledDTO - move set methods to __construct  
 
 [-] delete  
