@@ -17,17 +17,42 @@ class Sitemap implements SitemapInterface
         protected readonly ControllerDTOFactoryInterface $controllerDTOFactory
     ) {}
 
-    public function getOnlyLineRootControllerDTO(ControllerInterface $controller): ControllerDTOInterface {
-        
-        $root =  $this->controllerDTOFactory->create(
-            $name,
-            $path,
-            []
-        );
-        return $root;
+    public function getOnlyLineRootControllerDTO(ControllerInterface $controller): ControllerDTOInterface
+    {
+        $rootDTO = $this->createItem(null, $controller);
+        return $rootDTO;
     }
 
-    
+    protected function createItem(ControllerDTOInterface|null $child, ControllerInterface $controller): ControllerDTOInterface
+    {
+        $name = $controller->getName();
+        $current = $controller;
+        $path = [];
+        while ($current->getCurrentParent() !== null) {
+            $parent = $current->getCurrentParent();
+            $path[]  = $parent->getName();
+            $current = $parent;
+        }
+        if ($child !== null) {
+            $element =  $this->controllerDTOFactory->create(
+                $name,
+                $path,
+                [$child]
+            );
+        } else {
+            $element =  $this->controllerDTOFactory->create(
+                $name,
+                $path,
+                []
+            );
+        }
+
+        if ($controller->getCurrentParent() !== null) {
+            return $this->createItem($element, $controller->getCurrentParent());
+        } else {
+            return $element;
+        }
+    }
 
     /** map controller tree 
      *   to 
@@ -76,7 +101,7 @@ class Sitemap implements SitemapInterface
             try {
                 $rowElem = $this->createElement($child, $elementName, $rowPath);
                 $rowChi[] = $rowElem;
-            } catch(CantCreateSitemapElement $e) {
+            } catch (CantCreateSitemapElement $e) {
                 continue;
             }
         }

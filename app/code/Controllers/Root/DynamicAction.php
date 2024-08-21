@@ -30,7 +30,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         } else {
             $page = $arr[0];
             $mainDTO = $this->mainDTOFactory->create($page);
-            $this->view->setControllerData($mainDTO);
+            $this->view->setController($this->getController())->setControllerData($mainDTO);
             return $this->view->toString();
         }
     }
