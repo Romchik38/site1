@@ -25,7 +25,10 @@ abstract class DefaultPageView extends PageView implements DefaultPageViewInterf
 
     protected function createFooter($data){}
 
-    protected function createNav($data){}
+    protected function createNav($data){
+        $a = 1;
+        
+    }
 
     protected function prepareMetaData(DTOInterface $data): void
     {

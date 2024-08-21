@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Views\Http;
 
+use Romchik38\Server\Api\Controllers\ControllerInterface;
 use \Romchik38\Server\Api\Views\Http\HttpViewInterface;
 use \Romchik38\Server\Api\Models\DTO\DTOInterface;
 
@@ -11,6 +12,7 @@ class PageView implements HttpViewInterface
 {
     protected string $controllerData = '';
     protected array $metaData = [];
+    protected ControllerInterface|null $controller = null;
 
     public function __construct(
         protected $generateTemplate,
@@ -19,8 +21,9 @@ class PageView implements HttpViewInterface
     {
     }
 
-    protected function prepareMetaData(DTOInterface $data): void{
-        /** use this for add info to metaData */
+    public function setController(ControllerInterface $controller): HttpViewInterface {
+        $this->controller = $controller;
+        return $this;
     }
 
     public function setControllerData(DTOInterface $data): HttpViewInterface
@@ -51,5 +54,9 @@ class PageView implements HttpViewInterface
         );
 
         return $html;
+    }
+
+    protected function prepareMetaData(DTOInterface $data): void{
+        /** use this for add info to metaData */
     }
 }

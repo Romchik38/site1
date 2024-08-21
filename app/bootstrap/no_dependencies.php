@@ -48,7 +48,7 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\MenuToLinks\MenuToLinksFactory::class)
-    );  
+    );
 
     $container->add(
         \Romchik38\Site1\Models\MenuToLinks\MenuToLinksIdDTOFactory::class,
@@ -57,7 +57,7 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksIdDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\MenuToLinks\MenuToLinksIdDTOFactory::class)
-    );  
+    );
 
     $container->add(
         \Romchik38\Site1\Models\Virtual\Link\VirtualLinkFactory::class,
@@ -164,10 +164,19 @@ return function ($container) {
         new \Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory()
     );
     $container->add(
-        Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOFactoryInterface::class,
+        \Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOFactoryInterface::class,
         $container->get(\Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory::class)
     );
-    
+
+    $container->add(
+        \Romchik38\Site1\Models\DTO\Breadcrumb\BreadcrumbDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\Breadcrumb\BreadcrumbDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\Breadcrumb\BreadcrumbDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\Breadcrumb\BreadcrumbDTOFactory::class)
+    );
+
     // SERVICES
     $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,
