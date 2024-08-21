@@ -17,6 +17,18 @@ class Sitemap implements SitemapInterface
         protected readonly ControllerDTOFactoryInterface $controllerDTOFactory
     ) {}
 
+    public function getOnlyLineRootControllerDTO(ControllerInterface $controller): ControllerDTOInterface {
+        
+        $root =  $this->controllerDTOFactory->create(
+            $name,
+            $path,
+            []
+        );
+        return $root;
+    }
+
+    
+
     /** map controller tree 
      *   to 
      * controller model tree */

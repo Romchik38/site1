@@ -59,6 +59,7 @@ class Metadata implements MetadataInterface
             '/',
             null
         );
+        $controllerDTO = $this->sitemapService->getOnlyLineRootControllerDTO($controller);
         return $breadcrumb;
     }
 

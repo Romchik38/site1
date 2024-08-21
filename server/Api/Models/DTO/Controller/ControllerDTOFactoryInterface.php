@@ -8,7 +8,7 @@ interface ControllerDTOFactoryInterface
 {
     public function create(
         string $name,
-        array $pathVar,
-        array $childrenVar
+        array $path,
+        array $children
     ): ControllerDTOInterface;
 }
