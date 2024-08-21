@@ -41,7 +41,8 @@ class DefaultAction extends Action implements DefaultActionInterface
             $user
         );
 
-        $this->view->setControllerData($loginDTO);
+        $this->view->setController($this->getController())
+            ->setControllerData($loginDTO);
         return $this->view->toString();
     }
 }

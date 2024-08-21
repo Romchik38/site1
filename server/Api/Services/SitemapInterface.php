@@ -24,5 +24,5 @@ interface SitemapInterface
      * @param ControllerInterface $controller current controller
      * @return ControllerDTOInterface root controller dto
      */
-    public function getOnlyLineRootControllerDTO(ControllerInterface $controller): ControllerDTOInterface;
+    public function getOnlyLineRootControllerDTO(ControllerInterface $controller, string $action): ControllerDTOInterface;
 }

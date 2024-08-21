@@ -42,7 +42,7 @@ return function (array $data = []) {
             $name = $currentDTO->getName();
             $description = $currentDTO->getDescription();
             $url = $currentDTO->getUrl();
-            $currentDTO = $breadcrumbDTO->getPrev();
+            $currentDTO = $currentDTO->getPrev();
             if ( $currentDTO !== null) {
                 $stop = false;
                 array_unshift(

@@ -13,6 +13,7 @@ class PageView implements HttpViewInterface
     protected string $controllerData = '';
     protected array $metaData = [];
     protected ControllerInterface|null $controller = null;
+    protected string $action;
 
     public function __construct(
         protected $generateTemplate,
@@ -21,8 +22,9 @@ class PageView implements HttpViewInterface
     {
     }
 
-    public function setController(ControllerInterface $controller): HttpViewInterface {
+    public function setController(ControllerInterface $controller, string $action = ''): HttpViewInterface {
         $this->controller = $controller;
+        $this->action = $action;
         return $this;
     }
 

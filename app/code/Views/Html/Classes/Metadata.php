@@ -7,6 +7,7 @@ namespace Romchik38\Site1\Views\Html\Classes;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
+use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Server\Api\Services\SitemapInterface;
@@ -52,15 +53,14 @@ class Metadata implements MetadataInterface
         }
     }
 
-    public function getBreadcrumbs(ControllerInterface $controller): BreadcrumbDTOInterface {
-        $breadcrumb = $this->breadcrumbDTOFactory->create(
-            'Home',
-            'Home page',
-            '/',
-            null
-        );
-        $controllerDTO = $this->sitemapService->getOnlyLineRootControllerDTO($controller);
-        return $breadcrumb;
+    public function getBreadcrumbs(ControllerInterface $controller, string $action): BreadcrumbDTOInterface
+    {
+
+        $controllerDTO = $this->sitemapService->getOnlyLineRootControllerDTO($controller, $action);
+
+        $breadcrumbDTO = $this->mapControllerDTOtoBreadcrumbDTO($controllerDTO, null);
+
+        return $breadcrumbDTO;
     }
 
     public function getHeaderData(): HeaderDTOInterface
@@ -115,5 +115,31 @@ class Metadata implements MetadataInterface
         return $this->footerDTOFactory->create(
             $copyrights
         );
+    }
+
+    protected function mapControllerDTOtoBreadcrumbDTO(
+        ControllerDTOInterface $controllerDTO,
+        BreadcrumbDTOInterface|null $prev
+    ): BreadcrumbDTOInterface {
+
+        $name = $controllerDTO->getName();
+        $path = $controllerDTO->getPath();
+        array_push($path, $name);
+        $url = '/' . implode('/', $path);
+
+        $element = $this->breadcrumbDTOFactory->create(
+            $name,
+            $name,
+            $url,
+            $prev
+        );
+
+        $children = $controllerDTO->getChildren();
+        if (count($children) > 0) {
+            $child = $children[0];
+            return $this->mapControllerDTOtoBreadcrumbDTO($child, $element);
+        } else {
+            return $element;
+        }
     }
 }

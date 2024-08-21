@@ -17,22 +17,40 @@ class Sitemap implements SitemapInterface
         protected readonly ControllerDTOFactoryInterface $controllerDTOFactory
     ) {}
 
-    public function getOnlyLineRootControllerDTO(ControllerInterface $controller): ControllerDTOInterface
+    /** 
+     * for breadcrumbs
+     */
+    public function getOnlyLineRootControllerDTO(ControllerInterface $controller, string $action): ControllerDTOInterface
     {
-        $rootDTO = $this->createItem(null, $controller);
+        $rootDTO = $this->createItem(null, $controller, $action);
         return $rootDTO;
     }
 
-    protected function createItem(ControllerDTOInterface|null $child, ControllerInterface $controller): ControllerDTOInterface
+    protected function createItem(ControllerDTOInterface|null $child, ControllerInterface $controller, string $action = ''): ControllerDTOInterface
     {
-        $name = $controller->getName();
+
         $current = $controller;
         $path = [];
         while ($current->getCurrentParent() !== null) {
             $parent = $current->getCurrentParent();
-            $path[]  = $parent->getName();
+            array_unshift($path, $parent->getName());
             $current = $parent;
         }
+
+        if ($action !== '') {
+            $name = $action;
+            $path[] = $controller->getName();
+            $element = $this->controllerDTOFactory->create(
+                $name,
+                $path,
+                []
+            );
+
+            return $this->createItem($element, $controller);
+        }
+
+        $name = $controller->getName();
+
         if ($child !== null) {
             $element =  $this->controllerDTOFactory->create(
                 $name,

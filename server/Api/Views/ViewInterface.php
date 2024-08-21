@@ -9,7 +9,7 @@ use Romchik38\Server\Api\Models\DTO\DTOInterface;
 
 interface ViewInterface
 {
-    public function setController(ControllerInterface $controller): ViewInterface;
+    public function setController(ControllerInterface $controller, string $action = ''): ViewInterface;
     public function setControllerData(DTOInterface $data): ViewInterface;
     public function setMetadata(string $key, string $value): ViewInterface;
     public function toString(): string;

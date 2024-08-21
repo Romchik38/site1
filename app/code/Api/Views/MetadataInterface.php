@@ -13,7 +13,7 @@ use Romchik38\Site1\Api\Models\DTO\Nav\NavDTOInterface;
 interface MetadataInterface {
     const TECHNICAL_ISSUES_ERROR = 'We are sorry, there are some technical issues on our side. Please try later';
 
-    public function getBreadcrumbs(ControllerInterface $controller): BreadcrumbDTOInterface;
+    public function getBreadcrumbs(ControllerInterface $controller, string $action): BreadcrumbDTOInterface;
     public function getHeaderData(): HeaderDTOInterface;
     public function getNavData(): NavDTOInterface;
     public function getFooterData(): FooterDTOInterface;

@@ -27,7 +27,7 @@ abstract class DefaultPageView extends PageView implements DefaultPageViewInterf
 
     protected function createNav($data){
         if ($this->controller !== null)  {
-            $breadcrumb = $this->metadataService->getBreadcrumbs($this->controller);
+            $breadcrumb = $this->metadataService->getBreadcrumbs($this->controller, $this->action);
             $this->metaData[$this::BREADCRUMB_DATA] = $breadcrumb;
         }
     }

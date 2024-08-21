@@ -51,7 +51,8 @@ class DynamicAction extends Action implements DynamicActionInterface
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
 
-        $this->view->setControllerData($loginDTO);
+        $this->view->setController($this->getController(), $action)
+            ->setControllerData($loginDTO);
         return $this->view->toString();
     }
 
