@@ -37,6 +37,7 @@ return function (array $data = []) {
         $stop = false;
         $currentDTO = $breadcrumbDTO;
         $line = [];
+        $withouLink = 0;
         while($stop === false) {
             $stop = true;
             $name = $currentDTO->getName();
@@ -45,14 +46,18 @@ return function (array $data = []) {
             $currentDTO = $currentDTO->getPrev();
             if ( $currentDTO !== null) {
                 $stop = false;
+
+            } 
+            if ($withouLink === 0) {
+                $withouLink++;
+                array_unshift(
+                    $line, 
+                    '<li class="breadcrumb-item active" aria-current="page">' . $name .'</li>');
+            } else {
                 array_unshift(
                     $line, 
                     '<li class="breadcrumb-item"><a href="' . $url 
                         . '" title="' . $description . '">' . $name .'</a></li>');
-            } else {
-                array_unshift(
-                    $line, 
-                    '<li class="breadcrumb-item active" aria-current="page">' . $name .'</li>');
             }
         }
 

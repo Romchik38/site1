@@ -11,8 +11,8 @@
 [+] sitemap  
 [+] refactor controlledDTO - move set methods to __construct  
 [+] public/private controller  
-[-] create  
-[-] active link in nav layout  
+[+] create  
+[+] active link in nav layout  
 
 ## Menu
 

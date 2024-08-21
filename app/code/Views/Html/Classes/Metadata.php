@@ -124,8 +124,19 @@ class Metadata implements MetadataInterface
 
         $name = $controllerDTO->getName();
         $path = $controllerDTO->getPath();
+
         array_push($path, $name);
+        
+        $firstPath = $path[0] ?? null;
+        if ($firstPath === 'root') {
+            $path = array_slice($path, 1);
+        }
+
         $url = '/' . implode('/', $path);
+
+        if ($name === 'root') {
+            $name = 'home';
+        }
 
         $element = $this->breadcrumbDTOFactory->create(
             $name,
