@@ -6,10 +6,14 @@ namespace Romchik38\Site1\Views\Html\Classes;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
+use Romchik38\Server\Api\Services\SitemapInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Views\Http\Errors\CannotCreateMetadataError;
+use Romchik38\Site1\Api\Models\DTO\Breadcrumb\BreadcrumbDTOFactoryInterface;
+use Romchik38\Site1\Api\Models\DTO\Breadcrumb\BreadcrumbDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface;
@@ -34,7 +38,9 @@ class Metadata implements MetadataInterface
         protected EntityRepositoryInterface $entityRepository,
         int $entityId,
         protected LoggerInterface $logger,
-        protected StaticMenuServiceInterface $staticMenuService
+        protected StaticMenuServiceInterface $staticMenuService,
+        protected SitemapInterface $sitemapService,
+        protected BreadcrumbDTOFactoryInterface $breadcrumbDTOFactory
     ) {
         // Header
         try {
@@ -44,6 +50,16 @@ class Metadata implements MetadataInterface
             $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with id: ' . $entityId . ' was not found. Check config');
             throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
+    }
+
+    public function getBreadcrumbs(ControllerInterface $controller): BreadcrumbDTOInterface {
+        $breadcrumb = $this->breadcrumbDTOFactory->create(
+            'Home',
+            'Home page',
+            '/',
+            null
+        );
+        return $breadcrumb;
     }
 
     public function getHeaderData(): HeaderDTOInterface

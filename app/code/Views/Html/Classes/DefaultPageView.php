@@ -14,7 +14,7 @@ abstract class DefaultPageView extends PageView implements DefaultPageViewInterf
     public function __construct(
         protected $generateTemplate,
         protected $controllerTemplate,
-        MetadataInterface $metadataService
+        protected MetadataInterface $metadataService
     ) {
         $this->metaData[$this::HEADER_DATA] = $metadataService->getHeaderData();
         $this->metaData[$this::NAV_DATA] = $metadataService->getNavData();
@@ -26,8 +26,10 @@ abstract class DefaultPageView extends PageView implements DefaultPageViewInterf
     protected function createFooter($data){}
 
     protected function createNav($data){
-        $a = 1;
-        
+        if ($this->controller !== null)  {
+            $breadcrumb = $this->metadataService->getBreadcrumbs($this->controller);
+            $this->metaData[$this::BREADCRUMB_DATA] = $breadcrumb;
+        }
     }
 
     protected function prepareMetaData(DTOInterface $data): void

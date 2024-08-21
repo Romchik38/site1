@@ -12,31 +12,15 @@ return function ($container) {
             $container->get(\Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class),
             2,
             $container->get(\Psr\Log\LoggerInterface::class),
-            $container->get(\Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface::class)
+            $container->get(\Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Breadcrumb\BreadcrumbDTOFactoryInterface::class)
         )
     );
     $container->add(
         \Romchik38\Site1\Api\Views\MetadataInterface::class,
         $container->get(\Romchik38\Site1\Views\Html\Classes\Metadata::class)
     );
-
-    // DEFAULT
-    // $container->add(
-    //     \Romchik38\Site1\Views\Html\Classes\DefaultPageView::class,
-    //     new \Romchik38\Site1\Views\Html\Classes\DefaultPageView(
-    //         function(...$args){
-    //             $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
-    //             return call_user_func($defaultView, ...$args);
-    //         },
-    //         require_once(__DIR__ . '/Tamplates/defaultTemplate.php'),
-    //         $container->get(\Romchik38\Site1\Api\Views\MetadataInterface::class)
-    //     )
-    // );
-    
-    // $container->add(
-    //     \Romchik38\Site1\Api\Views\DefaultPageViewInterface::class,
-    //     $container->get(\Romchik38\Site1\Views\Html\Classes\DefaultPageView::class)
-    // );
 
     // MAIN 
     $container->add(

@@ -22,7 +22,7 @@ class BreadcrumbDTO extends DTO implements BreadcrumbDTOInterface
         $this->data[BreadcrumbDTOInterface::PREV_FIELD] = $prev;
     }
 
-    public function getPrev(): BreadcrumbDTOInterface
+    public function getPrev(): BreadcrumbDTOInterface|null
     {
         return $this->data[BreadcrumbDTOInterface::PREV_FIELD];
     }

@@ -13,7 +13,7 @@ interface BreadcrumbDTOInterface extends DTOInterface
     const URL_FIELD = 'url';
     const PREV_FIELD = 'prev';
 
-    public function getPrev(): BreadcrumbDTOInterface;
+    public function getPrev(): BreadcrumbDTOInterface|null;
 
     public function getDescription(): string;
     public function getName(): string;

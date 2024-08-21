@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 use Romchik38\Server\Api\Views\Http\HttpViewInterface;
 use Romchik38\Site1\Models\DTO\Nav\NavDTO;
+use Romchik38\Site1\Api\Models\DTO\Breadcrumb\BreadcrumbDTOInterface;
 
-return function(array $data = []){
-    
+return function (array $data = []) {
+
     if (!isset($data[HttpViewInterface::NAV_DATA])) {
         return '';
     }
-    
+
     /** @var NavDTO $navDTO */
     $navDTO = $data[HttpViewInterface::NAV_DATA];
     $menuDTO = $navDTO->getMenuDTO();
@@ -22,8 +23,49 @@ return function(array $data = []){
         $url = $link->getUrl();
         $description = $link->getDescription();
         $name = $link->getName();
-        $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$url}\" alt=\"{$description}\">{$name}</a></li>"; 
+        $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$url}\" alt=\"{$description}\">{$name}</a></li>";
         $menuHtml = $menuHtml . $menuItem;
+    }
+
+    $navBreadcumb = '';
+
+    /** @var BreadcrumbDTOInterface $breadcrumbDTO */
+    $breadcrumbDTO = $data[HttpViewInterface::BREADCRUMB_DATA] ?? null;
+
+    if ($breadcrumbDTO !== null) {
+
+        $stop = false;
+        $currentDTO = $breadcrumbDTO;
+        $line = [];
+        while($stop === false) {
+            $stop = true;
+            $name = $currentDTO->getName();
+            $description = $currentDTO->getDescription();
+            $url = $currentDTO->getUrl();
+            $currentDTO = $breadcrumbDTO->getPrev();
+            if ( $currentDTO !== null) {
+                $stop = false;
+                array_unshift(
+                    $line, 
+                    '<li class="breadcrumb-item"><a href="' . $url 
+                        . '" title="' . $description . '">' . $name .'</a></li>');
+            } else {
+                array_unshift(
+                    $line, 
+                    '<li class="breadcrumb-item active" aria-current="page">' . $name .'</li>');
+            }
+        }
+
+        $lineHTML = implode('', $line);
+        $navBreadcumb = <<<BREADCUMB
+        <div class="container">
+            <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                {$lineHTML}
+            </ol>
+            </nav>
+        </div>
+        BREADCUMB;
     }
 
     return <<<NAV
@@ -47,5 +89,6 @@ return function(array $data = []){
 
             </div>
         </nav>
+        {$navBreadcumb}
     NAV;
 };
