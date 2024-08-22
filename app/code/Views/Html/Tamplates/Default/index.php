@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Romchik38\Server\Api\Models\DTO\DTOInterface;
+use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 
-return function(DTOInterface $data) {
+return function(DefaultViewDTOInterface $data) {
     $content = $data->getContent();
 
     $html = <<<HTML

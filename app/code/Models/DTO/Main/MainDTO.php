@@ -20,6 +20,11 @@ class MainDTO extends DTO implements MainDTOInterface
         $this->data[DefaultViewDTOInterface::DEFAULT_DESCRIPTION_FIELD] = $description;
     }
 
+    public function getContent(): string
+    {
+        return $this->getData(DefaultViewDTOInterface::DEFAULT_CONTENT_FIELD);
+    }
+
     public function getName(): string
     {
         return $this->getData(DefaultViewDTOInterface::DEFAULT_NAME_FIELD);

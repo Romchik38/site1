@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html\Classes;
 
-use Romchik38\Server\Api\Models\DTO\DTOInterface;
 use Romchik38\Server\Views\Http\PageView;
+use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 use Romchik38\Site1\Api\Views\MetadataInterface;
 
-abstract class DefaultPageView extends PageView implements DefaultPageViewInterface
+class DefaultPageView extends PageView implements DefaultPageViewInterface
 {
     public function __construct(
         protected $generateTemplate,
@@ -21,20 +21,21 @@ abstract class DefaultPageView extends PageView implements DefaultPageViewInterf
         $this->metaData[$this::FOOTER_DATA] = $metadataService->getFooterData();
     }
 
-    protected function createHeader($data){
-        
+    protected function createHeader(DefaultViewDTOInterface $data) {
+        $this->setMetadata($this::TITLE, $data->getName());
     }
 
-    protected function createFooter($data){}
+    protected function createFooter(DefaultViewDTOInterface $data) {}
 
-    protected function createNav($data){
-        if ($this->controller !== null)  {
+    protected function createNav(DefaultViewDTOInterface $data)
+    {
+        if ($this->controller !== null) {
             $breadcrumb = $this->metadataService->getBreadcrumbs($this->controller, $this->action);
             $this->metaData[$this::BREADCRUMB_DATA] = $breadcrumb;
         }
     }
 
-    protected function prepareMetaData(DTOInterface $data): void
+    protected function prepareMetaData(DefaultViewDTOInterface $data): void
     {
         /** Header */
         $this->createHeader($data);

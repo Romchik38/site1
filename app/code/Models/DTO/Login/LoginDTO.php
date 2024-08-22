@@ -30,6 +30,11 @@ class LoginDTO extends DTO implements LoginDTOInterface
         return $this->getData($this::ACTION_FIELD_NAME);
     }
 
+    public function getContent(): string
+    {
+        return $this->getData(DefaultViewDTOInterface::DEFAULT_CONTENT_FIELD);
+    }
+    
     public function getDescription(): string
     {
         return $this->getData(DefaultViewDTOInterface::DEFAULT_DESCRIPTION_FIELD);

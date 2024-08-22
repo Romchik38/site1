@@ -10,13 +10,4 @@ use Romchik38\Site1\Views\Html\Classes\DefaultPageView;
 
 class Index extends DefaultPageView implements MainPageViewInterface
 {
-
-    /** 
-     * @param MainDTOInterface $data 
-     * */
-    protected function createHeader($data)
-    {
-
-        $this->setMetadata($this::TITLE, $data->getName());
-    }
 }

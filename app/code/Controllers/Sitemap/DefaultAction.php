@@ -8,12 +8,16 @@ use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
 use Romchik38\Server\Api\Services\SitemapInterface;
 use Romchik38\Server\Controllers\Actions\Action;
+use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
+use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
 
 class DefaultAction extends Action implements DefaultActionInterface
 {
 
     public function __construct(
-        protected readonly SitemapInterface $sitemapService
+        protected readonly SitemapInterface $sitemapService,
+        protected readonly DefaultPageViewInterface $view,
+        protected readonly DefaultViewDTOFactoryInterface $defaultViewDTOFactory
     ) {}
 
     public function execute(): string
@@ -23,7 +27,10 @@ class DefaultAction extends Action implements DefaultActionInterface
 
         $html = '<ul>Sitemap:' . $this->createHtml($result) . '</ul>';
 
-        return $html;
+        $defaultDTO = $this->defaultViewDTOFactory->create('Sitemap', 'Sitemap Page', $html);
+        $this->view->setControllerData($defaultDTO);
+
+        return $this->view->toString();
     }
 
     protected function mapHome($arr)

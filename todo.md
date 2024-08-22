@@ -12,9 +12,9 @@
     [+] all view dto must implement  
       [+] main  
       [+] login  
-  [-] default page view (DPV)  
+  [+] default page view (DPV)  
   [-] add description to DPV  
-  [-] add DPW to sitemap page  
+  [+] add DPW to sitemap page  
   [-] connect menuLink repo to sitemap  
 [-] multimenu  
 

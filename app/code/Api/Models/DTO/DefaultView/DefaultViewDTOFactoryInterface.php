@@ -8,6 +8,7 @@ interface DefaultViewDTOFactoryInterface
 {
     public function create(
         string $name,
-        string $description
+        string $description,
+        string $content = ''
     ): DefaultViewDTOInterface;
 }
