@@ -21,7 +21,9 @@ abstract class DefaultPageView extends PageView implements DefaultPageViewInterf
         $this->metaData[$this::FOOTER_DATA] = $metadataService->getFooterData();
     }
 
-    protected function createHeader($data){}
+    protected function createHeader($data){
+        
+    }
 
     protected function createFooter($data){}
 

@@ -8,6 +8,10 @@
 ## Menu
 
 [-] dynamic ( page, ...)  
+  [-] defaultDTOinterface  
+  [-] default page view (DPW)  
+  [-] add DPW to sitemap page  
+  [-] connect menuLink repo to sitemap  
 [-] multimenu  
 
 ## ?
