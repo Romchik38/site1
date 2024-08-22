@@ -9,7 +9,7 @@ CREATE table pages
 INSERT INTO pages (name, url, content)
     VALUES
     ('Main Page of the site', 'index', '<p>Wellcome to our site. We are the best.</p>'),
-    ('About Page', 'about', '<p>We sell smartphones for 20 years. Located in Ukraine.</p><p>Contacts: site@site1.com</p>')
+    ('About Page', 'about', '<div class="row"><p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Architecto dolore laudantium ullam, neque, quas iste eum enim, nihil vitae molestiae quisquam minus iure eveniet et ratione porro corrupti quis asperiores.</p> <img class="img-fluid" src="/media/img/our_company.webp" alt="Our company in Kyiv"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet tenetur temporibus enim laborum possimus, soluta tempore praesentium, reprehenderit, nulla voluptatum magnam facilis distinctio repudiandae sit ullam. Placeat nulla quasi saepe?</p></div><div class="row justify-content-center"><div class="col-3"><div class="card"><img class="card-img-top" src="/media/img/our_people.webp" alt="Our people"><div class="card-header bg-dark text-white"><h5 class="card-title text-center ">Head mananger</h5></div><div class="card-body bg-secondary text-white"><p class="card-text">Petro Sagaydachni</p><p class="card-text">Over 20 years of experience in the field of selling cellular communication devices and implementing new communication systems in large companies worldwide</p></div></div></div></div>')
 ;
 
 -- HELPER
