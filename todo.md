@@ -13,7 +13,7 @@
       [+] main  
       [+] login  
   [+] default page view (DPV)  
-  [-] add description to DPV  
+  [+] add description to DPV  
   [+] add DPW to sitemap page  
   [-] connect menuLink repo to sitemap  
 [-] multimenu  

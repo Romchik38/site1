@@ -23,6 +23,7 @@ class DefaultPageView extends PageView implements DefaultPageViewInterface
 
     protected function createHeader(DefaultViewDTOInterface $data) {
         $this->setMetadata($this::TITLE, $data->getName());
+        $this->setMetadata($this::DESCRIPTION, $data->getDescription());
     }
 
     protected function createFooter(DefaultViewDTOInterface $data) {}

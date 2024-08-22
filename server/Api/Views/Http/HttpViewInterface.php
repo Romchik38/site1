@@ -12,6 +12,7 @@ interface HttpViewInterface extends ViewInterface
      * Metadata fields
      */
     const TITLE = 'title';
+    const DESCRIPTION = 'description';
     const HEADER_DATA = 'header_data';
     const NAV_DATA = 'nav_data';
     const FOOTER_DATA = 'footer_data';

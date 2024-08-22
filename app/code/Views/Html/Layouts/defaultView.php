@@ -20,6 +20,9 @@ return function (
     // creating inner Html
     $wrapperHtml = $wrapper($blocks, $metaData, $data);
 
+    // define local vars
+    $title = $metaData[HttpViewInterface::TITLE] ?? '';
+    $description = $metaData[HttpViewInterface::DESCRIPTION] ?? '';
     // creating html
     return <<<HTML
     <!DOCTYPE html>
@@ -29,7 +32,8 @@ return function (
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <link href="/media/css/bootstrap.min.css" rel="stylesheet">
             <link href="/media/css/main.css" rel="stylesheet">
-            <title>{$metaData[HttpViewInterface::TITLE]}</title>
+            <title>{$title}</title>
+            <meta name="description" content="{$description}">
         </head>
         <body>
             {$wrapperHtml}
