@@ -8,9 +8,9 @@ use Romchik38\Site1\Views\Html\Classes\DefaultPageView;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 
 class Index extends DefaultPageView {
+        
+    /** @param LoginDTOInterface $data */
     protected function createHeader($data) {
-        /** @var LoginDTOInterface $loginDTO */
-        $action = $data->getActionName();
-        $this->setMetadata($this::TITLE, 'Login - ' . $action);
+        $this->setMetadata($this::TITLE, $data->getName());
     }
 }

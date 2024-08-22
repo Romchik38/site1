@@ -38,7 +38,9 @@ class DefaultAction extends Action implements DefaultActionInterface
         $loginDTO = $this->loginDtoFactory->create(
             $action,
             $this->request->getMessage(),
-            $user
+            $user,
+            'Login',
+            'Login page'
         );
 
         $this->view->setController($this->getController())

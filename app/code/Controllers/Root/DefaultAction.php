@@ -10,6 +10,7 @@ use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\Page\PageRepositoryInterface;
+use Romchik38\Site1\Api\Models\Page\PageModelInterface;
 
 class DefaultAction extends Action implements DefaultActionInterface
 {
@@ -28,9 +29,14 @@ class DefaultAction extends Action implements DefaultActionInterface
         if (count($arr) === 0) {
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         } else {
+            /** @var PageModelInterface $page*/
             $page = $arr[0];
-            $mainDTO = $this->mainDTOFactory->create($page);
-            
+            $mainDTO = $this->mainDTOFactory->create(
+                $page,
+                $page->getName(),
+                $page->getName()
+            );
+
             $this->view->setControllerData($mainDTO);
             return $this->view->toString();
         }

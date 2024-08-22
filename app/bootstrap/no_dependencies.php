@@ -177,6 +177,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\DTO\Breadcrumb\BreadcrumbDTOFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory::class)
+    );
+
     // SERVICES
     $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,

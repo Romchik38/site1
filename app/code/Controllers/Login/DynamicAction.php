@@ -44,7 +44,9 @@ class DynamicAction extends Action implements DynamicActionInterface
         $loginDTO = $this->loginDtoFactory->create(
             $action,
             $this->request->getMessage(),
-            $user
+            $user,
+            'Login - ' . $action,
+            'Login page - ' . $action
         );
 
         if (array_search($action, $this->methods) === false) {

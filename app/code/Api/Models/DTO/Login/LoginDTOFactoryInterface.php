@@ -8,6 +8,8 @@ interface LoginDTOFactoryInterface {
     public function create(
         string $action,
         string $message,
-        UserModelInterface|null $user
+        UserModelInterface|null $user,
+        string $name,
+        string $description
     );
 }

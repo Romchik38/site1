@@ -8,10 +8,15 @@ use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
 use Romchik38\Site1\Api\Views\MainPageViewInterface;
 use Romchik38\Site1\Views\Html\Classes\DefaultPageView;
 
-class Index extends DefaultPageView implements MainPageViewInterface {
-    protected function createHeader($data) {
-        /** @var MainDTOInterface $data */
-        $page = $data->getPage();
-        $this->setMetadata($this::TITLE, $page->getName());
+class Index extends DefaultPageView implements MainPageViewInterface
+{
+
+    /** 
+     * @param MainDTOInterface $data 
+     * */
+    protected function createHeader($data)
+    {
+
+        $this->setMetadata($this::TITLE, $data->getName());
     }
 }

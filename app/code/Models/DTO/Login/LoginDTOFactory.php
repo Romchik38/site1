@@ -9,13 +9,16 @@ use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Models\DTO\Login\LoginDTO;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;
 
-class LoginDTOFactory implements LoginDTOFactoryInterface {
+class LoginDTOFactory implements LoginDTOFactoryInterface
+{
 
     public function create(
         string $action,
         string $message,
-        UserModelInterface|null $user
+        UserModelInterface|null $user,
+        string $name,
+        string $description
     ): LoginDTOInterface {
-        return new LoginDTO($action, $message, $user);
+        return new LoginDTO($action, $message, $user, $name, $description);
     }
 }

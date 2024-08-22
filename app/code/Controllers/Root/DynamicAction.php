@@ -29,7 +29,7 @@ class DynamicAction extends Action implements DynamicActionInterface
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         } else {
             $page = $arr[0];
-            $mainDTO = $this->mainDTOFactory->create($page);
+            $mainDTO = $this->mainDTOFactory->create($page, $page->getName(), $page->getName());
             $this->view->setController($this->getController(), $action)->setControllerData($mainDTO);
             return $this->view->toString();
         }
