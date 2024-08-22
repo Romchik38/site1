@@ -28,7 +28,8 @@ class DefaultAction extends Action implements DefaultActionInterface
         $html = '<ul>Sitemap:' . $this->createHtml($result) . '</ul>';
 
         $defaultDTO = $this->defaultViewDTOFactory->create('Sitemap', 'Sitemap Page', $html);
-        $this->view->setControllerData($defaultDTO);
+        $this->view->setController($this->getController())
+            ->setControllerData($defaultDTO);
 
         return $this->view->toString();
     }
