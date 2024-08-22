@@ -10,6 +10,8 @@ use Romchik38\Server\Api\Services\SitemapInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
+use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;
+use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
 
 class DefaultAction extends Action implements DefaultActionInterface
 {
@@ -17,7 +19,8 @@ class DefaultAction extends Action implements DefaultActionInterface
     public function __construct(
         protected readonly SitemapInterface $sitemapService,
         protected readonly DefaultPageViewInterface $view,
-        protected readonly DefaultViewDTOFactoryInterface $defaultViewDTOFactory
+        protected readonly DefaultViewDTOFactoryInterface $defaultViewDTOFactory,
+        protected readonly MenuLinksRepositoryInterface $menuLinksRepository
     ) {}
 
     public function execute(): string
@@ -25,7 +28,14 @@ class DefaultAction extends Action implements DefaultActionInterface
         $result = $this->sitemapService
             ->getRootControllerDTO($this->getController());
 
-        $html = '<ul>Sitemap:' . $this->createHtml($result) . '</ul>';
+        /** @var MenuLinksInterface[] $menuLinks */
+        $menuLinks = $this->menuLinksRepository->list('', []);
+        $menuLinksHash = [];
+        foreach ($menuLinks as $menuLink) {
+            $menuLinksHash[$menuLink->getUrl()] = $menuLink;
+        }
+
+        $html = '<ul>Sitemap:' . $this->createHtml($result, $menuLinksHash) . '</ul>';
 
         $defaultDTO = $this->defaultViewDTOFactory->create('Sitemap', 'Sitemap Page', $html);
         $this->view->setController($this->getController())
@@ -47,7 +57,8 @@ class DefaultAction extends Action implements DefaultActionInterface
         return $newArr;
     }
 
-    protected function createHtml(ControllerDTOInterface $element): string
+
+    protected function createHtml(ControllerDTOInterface $element, array $hash): string
     {
         $children = $element->getChildren();
         $path = $this->mapHome($element->getPath());
@@ -58,15 +69,24 @@ class DefaultAction extends Action implements DefaultActionInterface
             $name = 'home';
         }
         $link = implode('/', $path) . '/' . $url;
+
+        /** @var MenuLinksInterface $menuLink */
+        $menuLink = $hash[$link] ?? null;
+        $description = '';
+        if ($menuLink !== null) {
+            $name = $menuLink->getName();
+            $description = $menuLink->getDescription();
+        }
+
         if (count($children) === 0) {
-            $elemName = '<a href="' . $link . '">' . $name . '</a>';
+            $elemName = '<a href="' . $link . '" title="' . $description . '">' . $name . '</a>';
             $lastElement = '<li>' . $elemName . '</li>';
             return $lastElement;
         }
-        $rowName = '<a href="' . $link . '">' . $name . '</a>';
+        $rowName = '<a href="' . $link . '" title="' . $description . '">' . $name . '</a>';
         $rowElements = [];
         foreach ($children as $child) {
-            $rowElem = $this->createHtml($child);
+            $rowElem = $this->createHtml($child, $hash);
             $rowElements[] = $rowElem;
         }
 

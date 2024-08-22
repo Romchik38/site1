@@ -77,7 +77,8 @@ return function ($container) {
         new Romchik38\Site1\Controllers\Sitemap\DefaultAction(
             $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class),
             $container->get(\Romchik38\Site1\Api\Views\DefaultPageViewInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
+            $container->get(\Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)
         )
     );
 

@@ -16,6 +16,7 @@
   [+] add description to DPV  
   [+] add DPW to sitemap page  
   [-] connect menuLink repo to sitemap  
+  [-] move html from sitemap controller to view  
 [-] multimenu  
 
 ## ?
