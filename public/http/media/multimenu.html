@@ -28,7 +28,7 @@
         </header>
 
         <!-- NAVBAR -->
-        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <nav class="navbar navbar-expand-sm  bg-light">
             <div class="container">
                 <!-- Logo + name -->
                 <a class="navbar-brand" href="/">
@@ -48,13 +48,22 @@
                         <!-- Menu item -->
                         <li class="nav-item"><a class="nav-link active" href="/" alt="To Home Page">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="/about" alt="To About Page">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="/login/index" alt="To Login Page">Login</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Login</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Login</a></li>
+                                <li><a class="dropdown-item" href="#">Recovery</a></li>
+                                <li><a class="dropdown-item" href="#">Change  password</a></li>
+                            </ul>
+                        </li>
                     </ul>
 
                 </div>
 
             </div>
         </nav>
+
 
 
         <!-- SECTION -->
@@ -66,9 +75,13 @@
                         <h1 class="text-center">Main Page of the site</h1>
                         <div class="container">
                             <!-- DINAMIC DATA -->
-                            <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam animi sint provident
+                            <p class="lead">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam animi sint
+                                provident
                                 molestiae voluptate tenetur quae at porro fugit quidem! Repellat culpa quis inventore
-                                placeat in illum numquam vitae adipisci? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Perspiciatis reiciendis aperiam, deserunt vel nisi voluptatibus illum exercitationem, expedita, assumenda unde autem in ab quos. Expedita porro alias earum nihil quidem!</p>
+                                placeat in illum numquam vitae adipisci? Lorem ipsum dolor, sit amet consectetur
+                                adipisicing elit. Perspiciatis reiciendis aperiam, deserunt vel nisi voluptatibus illum
+                                exercitationem, expedita, assumenda unde autem in ab quos. Expedita porro alias earum
+                                nihil quidem!</p>
                             <p>Lorem ipsum dolor, <a href="#">sit amet consectetur</a> adipisicing elit. Nam animi sint
                                 provident molestiae voluptate tenetur quae at porro fugit quidem! Repellat culpa quis
                                 inventore placeat in illum numquam vitae adipisci?</p>
@@ -79,7 +92,13 @@
                                 <div class="col-sm-6">
                                     <h2>Lorem ipsum dolor sit</h2>
                                     <p>
-                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem nostrum voluptatibus velit maxime perspiciatis nihil facilis tempora ullam enim repudiandae! Nihil laborum eaque doloremque facere obcaecati? Ipsam, praesentium quas. Quod? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure delectus error molestias debitis corrupti fugiat eos repellendus, nostrum, incidunt repudiandae pariatur illo, cupiditate tenetur modi. Voluptatem molestias expedita nisi iure.
+                                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem nostrum
+                                        voluptatibus velit maxime perspiciatis nihil facilis tempora ullam enim
+                                        repudiandae! Nihil laborum eaque doloremque facere obcaecati? Ipsam, praesentium
+                                        quas. Quod? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Iure
+                                        delectus error molestias debitis corrupti fugiat eos repellendus, nostrum,
+                                        incidunt repudiandae pariatur illo, cupiditate tenetur modi. Voluptatem
+                                        molestias expedita nisi iure.
                                     </p>
                                     <button class="btn btn-secondary my-3" type="button">Details</button>
                                 </div>
@@ -93,67 +112,73 @@
         </div>
         <!-- FOOTER -->
         <footer class="bg-light mb-3">
-                <div class="row">
-                    <div class="col-sm-4 p-5">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius deserunt eaque ipsam voluptate hic libero earum, temporibus accusamus dicta error, dolores repudiandae quaerat itaque iure odio dignissimos odit, distinctio obcaecati?
-                    </div>
-                    <div class="col-sm-4 p-5">
-                        <div class="row">
-                            <div class="col-6">
-                                <h5 class="fw-bold">Links</h5>
-                                <ul class="list-unstyled">
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Home</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">About</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Contacts</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Shop</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Blog</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Privacy Notice</a></li>
-                                  </ul>
-                            </div>
-                            <div class="col-6">
-                                <h5 class="fw-bold">Customer</h5>
-                                <ul class="list-unstyled">
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Log In</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Register</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Terms & Conditions</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Rules</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Order</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Support</a></li>
-                                  </ul>
-                            </div>
+            <div class="row">
+                <div class="col-sm-4 p-5">
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius deserunt eaque ipsam voluptate hic
+                    libero earum, temporibus accusamus dicta error, dolores repudiandae quaerat itaque iure odio
+                    dignissimos odit, distinctio obcaecati?
+                </div>
+                <div class="col-sm-4 p-5">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="fw-bold">Links</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Home</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">About</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Contacts</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Shop</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Blog</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Privacy Notice</a>
+                                </li>
+                            </ul>
                         </div>
-                    </div>
-                    <div class="col-sm-4 p-5">
-                        <div class="row">
-                            <div class="col-6">
-                                <h5 class="fw-bold">Links</h5>
-                                <ul class="list-unstyled">
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Home</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">About</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Contacts</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Shop</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Blog</a></li>
-                                    <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Privacy Notice</a></li>
-                                  </ul>
-                            </div>
-                            <div class="col-sm-6">
-                                <h5 class="mt-5">Subscribe us</h5>
-                                <form action="">
-                                    <label class="form-label" for="email">News and sales</label>
-                                    <input class="form-control" type="email" required placeholder="Enter email">
-                                    <button class="btn btn-secondary my-3">Subscribe</button>
-                                </form>
-                            </div>
+                        <div class="col-6">
+                            <h5 class="fw-bold">Customer</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Log In</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Register</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Terms &
+                                        Conditions</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Rules</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Order</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Support</a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>
-                <div class="row copyrights text-center">
-                    <div class="col">
-                        © 2024, Site1.com, LLC.
+                <div class="col-sm-4 p-5">
+                    <div class="row">
+                        <div class="col-6">
+                            <h5 class="fw-bold">Links</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Home</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">About</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Contacts</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Shop</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Blog</a></li>
+                                <li class="mb-2"><a class="link-dark text-decoration-none" href="#">Privacy Notice</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <h5 class="mt-5">Subscribe us</h5>
+                            <form action="">
+                                <label class="form-label" for="email">News and sales</label>
+                                <input class="form-control" type="email" required placeholder="Enter email">
+                                <button class="btn btn-secondary my-3">Subscribe</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
+            </div>
+            <div class="row copyrights text-center">
+                <div class="col">
+                    © 2024, Site1.com, LLC.
+                </div>
+            </div>
         </footer>
     </div>
+    <script src="/media/js/popper.min.js"></script>
     <script src="/media/js/bootstrap.min.js"></script>
 </body>
 
