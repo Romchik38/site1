@@ -13,6 +13,11 @@ use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
 
+/**
+ * This class MUST be html agnostic,
+ * but while there are any other controller to demonstrate default view interface,
+ * it will works with html.
+ */
 class DefaultAction extends Action implements DefaultActionInterface
 {
 

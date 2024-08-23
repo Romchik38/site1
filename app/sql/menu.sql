@@ -35,7 +35,10 @@ INSERT INTO menu_links (link_id, name, url, description) VALUES
     (2, 'Login', '/login/index', 'Login Page'),
     (3, 'About', '/about', 'About Page'),
     (4, 'Recovery password', '/login/recovery', 'Login recovery password page'),
-    (5, 'Login pages', '/login', 'All login pages ( login, recovery, etc)')
+    (5, 'Login pages', '/login', 'All login pages ( login, recovery, etc)'),
+    (6, 'Register new user', '/login/register', 'New users can be registered via this page'),
+    (7, 'Change password', '/login/changepassword', 'Registered users can change compromised password on this page'),
+    (8, 'Sitemap', '/sitemap', 'All pages are shown here. Visit it to see all in one')
 ;
 
 INSERT INTO menu_to_links (menu_id, link_id, parent_link_id, priority) VALUES

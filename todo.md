@@ -15,8 +15,7 @@
   [+] default page view (DPV)  
   [+] add description to DPV  
   [+] add DPW to sitemap page  
-  [-] connect menuLink repo to sitemap  
-  [-] move html from sitemap controller to view  
+  [+] connect menuLink repo to sitemap  
 [-] multimenu  
 
 ## ?
@@ -24,3 +23,5 @@
 [-] delete  
   [-] DefaultRouter.php  
   [-] controllers.php  
+
+[-] move html from sitemap controller to view  
