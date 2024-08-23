@@ -14,7 +14,8 @@ return function ($container) {
             $container->get(\Psr\Log\LoggerInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface::class),
             $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\DTO\Breadcrumb\BreadcrumbDTOFactoryInterface::class)
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Breadcrumb\BreadcrumbDTOFactoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)
         )
     );
     $container->add(
