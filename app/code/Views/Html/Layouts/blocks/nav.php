@@ -12,20 +12,12 @@ return function (array $data = []) {
         return '';
     }
 
-    /** @var NavDTO $navDTO */
-    $navDTO = $data[HttpViewInterface::NAV_DATA];
-    $menuDTO = $navDTO->getMenuDTO();
-    $links = $menuDTO->getLinks();
-
-    $menuHtml = '';
-    foreach ($links as $link) {
-        $active = '';   //   << this must be implemented for  active link
-        $url = $link->getUrl();
-        $description = $link->getDescription();
-        $name = $link->getName();
-        $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$url}\" alt=\"{$description}\">{$name}</a></li>";
-        $menuHtml = $menuHtml . $menuItem;
-    }
+    /**
+     * shows whick link is active 
+     * checke in braedcumbs
+     * used in menu
+     */
+    $activeUrl = '';
 
     $navBreadcumb = '';
 
@@ -38,26 +30,28 @@ return function (array $data = []) {
         $currentDTO = $breadcrumbDTO;
         $line = [];
         $withouLink = 0;
-        while($stop === false) {
+        while ($stop === false) {
             $stop = true;
             $name = $currentDTO->getName();
             $description = $currentDTO->getDescription();
             $url = $currentDTO->getUrl();
             $currentDTO = $currentDTO->getPrev();
-            if ( $currentDTO !== null) {
+            if ($currentDTO !== null) {
                 $stop = false;
-
-            } 
+            }
             if ($withouLink === 0) {
                 $withouLink++;
                 array_unshift(
-                    $line, 
-                    '<li class="breadcrumb-item active" aria-current="page">' . $name .'</li>');
+                    $line,
+                    '<li class="breadcrumb-item active" aria-current="page">' . $name . '</li>'
+                );
+                $activeUrl = $url;
             } else {
                 array_unshift(
-                    $line, 
-                    '<li class="breadcrumb-item"><a href="' . $url 
-                        . '" title="' . $description . '">' . $name .'</a></li>');
+                    $line,
+                    '<li class="breadcrumb-item"><a href="' . $url
+                        . '" title="' . $description . '">' . $name . '</a></li>'
+                );
             }
         }
 
@@ -65,16 +59,58 @@ return function (array $data = []) {
         $navBreadcumb = <<<BREADCUMB
         <div class="container">
             <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ul class="breadcrumb">
                 {$lineHTML}
-            </ol>
+            </ul>
             </nav>
         </div>
         BREADCUMB;
     }
 
+    /** @var NavDTO $navDTO */
+    $navDTO = $data[HttpViewInterface::NAV_DATA];
+    $menuDTO = $navDTO->getMenuDTO();
+    $links = $menuDTO->getLinks();
+
+    $menuHtml = '';
+    foreach ($links as $link) {
+        /** @todo implement active */
+        $url = $link->getUrl();
+        $description = $link->getDescription();
+        $name = $link->getName();
+        // dropdown
+        $children = $link->getChildrens();
+        if (count($children) > 0) {
+            $childrenHtml = '';
+            foreach ($children as $child) {
+                $childUrl = $child->getUrl();
+                $childDescription = $child->getDescription();
+                $childName = $child->getName();
+                /** @todo implement active */
+                $active = '';
+                if ($activeUrl === $childUrl) {
+                    $active = 'active';
+                }
+                $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$childUrl}\" alt=\"{$childDescription}\">{$childName}</a></li>";
+                $childrenHtml .= $menuItem;
+            }
+            $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . $name . '</a>';
+            $menuItem = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu">' . $childrenHtml . '</ul></li>';
+        } else {
+            /** @todo implement active */
+            $active = '';
+            if ($activeUrl === $url) {
+                $active = 'active';
+            }
+            $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$url}\" alt=\"{$description}\">{$name}</a></li>";
+        }
+
+
+        $menuHtml = $menuHtml . $menuItem;
+    }
+
     return <<<NAV
-       <nav class="navbar navbar-expand-sm navbar-primary bg-light">
+       <nav class="navbar navbar-expand-sm bg-light">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="/media/img/logo-192x192.png" alt="Logo Site1" height="50">
@@ -89,7 +125,6 @@ return function (array $data = []) {
                     <ul class="navbar-nav ">
                         {$menuHtml}
                     </ul>
-
                 </div>
 
             </div>

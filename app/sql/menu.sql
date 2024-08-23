@@ -46,7 +46,9 @@ INSERT INTO menu_to_links (menu_id, link_id, parent_link_id, priority) VALUES
     (1, 2, 5, 0),
     (1, 3, 0, 0),
     (1, 4, 5, 0),
-    (1, 5, 0, 100)
+    (1, 5, 0, 100),
+    (1, 6, 5, 0),
+    (1, 7, 5, 0)
 ;
 
 SELECT * FROM menu_to_links 
