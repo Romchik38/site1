@@ -7,17 +7,11 @@
 
 ## Menu
 
-[-] dynamic ( page, ...)  
-  [+] defaultDTOinterface  
-    [+] all view dto must implement  
-      [+] main  
-      [+] login  
-  [+] default page view (DPV)  
-  [+] add description to DPV  
-  [+] add DPW to sitemap page  
-  [+] connect menuLink repo to sitemap  
-[-] multimenu  
-[-] active link  
+[-] get current controllerDTO from sitemap  
+  [-] add url to DPV  
+  [-] active  
+    [-] remove from nav loops (used 2 times)  
+    [-] add in one place  
 
 ## ?
 

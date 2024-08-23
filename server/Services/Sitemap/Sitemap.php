@@ -26,6 +26,17 @@ class Sitemap implements SitemapInterface
         return $rootDTO;
     }
 
+    /** maps whole controller tree to controller model tree with root element in a head*/
+    public function getRootControllerDTO(ControllerInterface $controller): ControllerDTOInterface
+    {
+        $first = $this->getFirst($controller);
+        $ControllerDTO = $this->createElement($first);
+        return $ControllerDTO;
+    }
+
+    /** 
+     * used in getOnlyLineRootControllerDTO
+     */
     protected function createItem(ControllerDTOInterface|null $child, ControllerInterface $controller, string $action = ''): ControllerDTOInterface
     {
 
@@ -72,16 +83,9 @@ class Sitemap implements SitemapInterface
         }
     }
 
-    /** map controller tree 
-     *   to 
-     * controller model tree */
-    public function getRootControllerDTO(ControllerInterface $controller): ControllerDTOInterface
-    {
-        $first = $this->getFirst($controller);
-        $ControllerDTO = $this->createElement($first);
-        return $ControllerDTO;
-    }
-
+    /** 
+     * used in getRootControllerDTO
+     */
     protected function createElement(ControllerInterface $element, $parentName = '', $parrentPath = [])
     {
         if ($element->isPublic() === false) {
@@ -130,6 +134,9 @@ class Sitemap implements SitemapInterface
         return $row;
     }
 
+    /** 
+     * used in getRootControllerDTO
+     */
     protected function addDynamicChildren(
         ControllerInterface $element,
         array $childrenNames,
@@ -155,6 +162,9 @@ class Sitemap implements SitemapInterface
         return $allChi;
     }
 
+    /** 
+     * returns the first root element with all tree
+     */
     protected function getFirst(ControllerInterface $controller): ControllerInterface
     {
         $stop = false;
