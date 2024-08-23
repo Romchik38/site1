@@ -42,7 +42,6 @@ INSERT INTO menu_links (link_id, name, url, description) VALUES
 ;
 
 INSERT INTO menu_to_links (menu_id, link_id, parent_link_id, priority) VALUES
-    (1, 1, 0, 0),
     (1, 2, 5, 0),
     (1, 3, 0, 0),
     (1, 4, 5, 0),
