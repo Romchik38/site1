@@ -41,12 +41,12 @@ return function ($container) {
     // API
     $api = new Controller(
         'api',
-        true
+        false
     );
 
     $userinfo = new Controller(
         'userinfo',
-        true,
+        false,
         $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         $container->get(\Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction::class)
     );
