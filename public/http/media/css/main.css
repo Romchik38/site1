@@ -28,6 +28,12 @@ section.main {
     margin-right: 10px;
 }
 
+/* Header*/
+
+div.header-user-loggedin {
+    display: none;
+}
+
 /* Footer */
 .copyrights {
     text-align: center;

@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Romchik38\Server\Api\Views\Http\HttpViewInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOInterface;
 
-return function(array $data = []){
+return function (array $data = []) {
     if (!isset($data[HttpViewInterface::HEADER_DATA])) {
         return '';
     }
@@ -20,10 +20,8 @@ return function(array $data = []){
     return <<<HEADER
         <header class="row d-none d-md-flex my-3 mt-0">
             <div class="col-sm mt-3">
-                <div class="d-flex justify-content-center">
-                    <a class="link-dark text-decoration-none" href="#" title="To Home Page">
-                        <span>{$addressText}</span>
-                    </a>
+                <div class="text-center">
+                    <span>{$addressText}</span>
                 </div>
             </div>
             <div class="col-sm text-end">
@@ -31,6 +29,18 @@ return function(array $data = []){
             </div>
             <div class="col-sm-3">
                 <div class="mt-3">{$notice}</div>
+            </div>
+            <div class="col-sm-3">
+                <div class="mt-3 text-center">
+                    <div class="header-user-notloggedin">
+                        <a class="link-notloggedin" href="/login/index">Login</a>
+                        <span class="px-2">|</span>
+                        <a class="link-notloggedin-create" href="/login/register">Register</a>
+                    </div>
+                    <div class="header-user-loggedin">
+                        Hello, User_name
+                    </div>
+                </div>
             </div>
         </header>
     HEADER;
