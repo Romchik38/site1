@@ -86,7 +86,10 @@ return function ($container) {
     // userinfo
     $container->add(
         \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction::class,
-        new \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction()
+        new \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction(
+            $container->get(\Romchik38\Server\Api\Services\SessionInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
+        )
     );
 
     return $container;
