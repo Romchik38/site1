@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 
-return function(DefaultViewDTOInterface $data) {
+/**
+ * This is a default template 
+ * can be used vith default page view
+ */
+return function (DefaultViewDTOInterface $data) {
     $content = $data->getContent();
 
     $html = <<<HTML
