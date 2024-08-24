@@ -1,17 +1,13 @@
 # Todo
 
-[-] menu  
 [-] add login form to header  
 [-] psr-7  
 [-] ?  
 
-## Menu
+## add login form to header
 
-[-] get current controllerDTO from sitemap  
-  [-] add url to DPV  
-  [-] active  
-    [-] remove from nav loops (used 2 times)  
-    [-] add in one place  
+[-] add to header  
+[-] create a controller to get user info  
 
 ## ?
 
