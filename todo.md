@@ -6,7 +6,7 @@
 
 ## add login form to header
 
-[-] add to header  
+[+] add to header  
 [-] create a controller to get user info  
 
 ## ?

@@ -38,7 +38,22 @@ return function ($container) {
         $container->get(Romchik38\Site1\Controllers\Sitemap\DefaultAction::class)
     );
 
-    $root->setChild($login)->setChild($changepassword)->setChild($sitemap);
+    // API
+    $api = new Controller(
+        'api',
+        true
+    );
+
+    $userinfo = new Controller(
+        'userinfo',
+        true,
+        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
+        $container->get(\Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction::class)
+    );
+
+    $api->setChild($userinfo);
+
+    $root->setChild($login)->setChild($changepassword)->setChild($sitemap)->setChild($api);
 
     // POST
     $rootPost = new Controller('root');

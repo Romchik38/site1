@@ -82,5 +82,12 @@ return function ($container) {
         )
     );
 
+    // API
+    // userinfo
+    $container->add(
+        \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction::class,
+        new \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction()
+    );
+
     return $container;
 };
