@@ -37,8 +37,11 @@ return function (array $data = []) {
                         <span class="px-2">|</span>
                         <a class="link-notloggedin-create" href="/login/register">Register</a>
                     </div>
-                    <div class="header-user-loggedin">
-                        Hello, User_name
+                    <div class="header-user-loggedin justify-content-center">
+                        <span>Hello,&nbsp</span><span class="user-name-field me-3">User_name</span>
+                        <form action="/auth/logout" method="post">
+                            <button class="btn btn-light py-0 align-top px-1" type="submit">Log out</button>
+                        </form>
                     </div>
                 </div>
             </div>

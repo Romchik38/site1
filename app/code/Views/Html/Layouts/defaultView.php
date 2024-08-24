@@ -39,6 +39,7 @@ return function (
             {$wrapperHtml}
             <script src="/media/js/popper.min.js"></script>
             <script src="/media/js/bootstrap.min.js"></script>
+            <script src="/media/js/header/userinfo.js"></script>
         </body>
     </html>
     HTML;
