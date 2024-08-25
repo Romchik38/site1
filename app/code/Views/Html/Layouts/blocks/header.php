@@ -18,7 +18,7 @@ return function (array $data = []) {
 
 
     return <<<HEADER
-        <header class="row d-none d-md-flex my-3 mt-0">
+        <header class="row d-none d-sm-flex my-3 mt-0">
             <div class="col-sm mt-3">
                 <div class="text-center">
                     <span>{$addressText}</span>
