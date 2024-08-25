@@ -3,18 +3,14 @@
 (()=>{
     addEventListener("DOMContentLoaded", (event) => {
        
-    var notloggedinDivs = document.getElementsByClassName('header-user-notloggedin');
-    var loggedinDivs = document.getElementsByClassName('header-user-loggedin');
+    var notloggedinElems = document.getElementsByClassName('header-user-notloggedin');
+    var loggedinElems = document.getElementsByClassName('header-user-loggedin');
     var usernameElems = document.getElementsByClassName('user-name-field');
 
-    if (notloggedinDivs.length === 0 ) return;
-    var notloggedinDiv = notloggedinDivs[0];
-
-    if (loggedinDivs.length === 0 ) return;
-    var loggedinDiv = loggedinDivs[0];
-    
-    if (usernameElems.length === 0 ) return;
-    var usernameElem = usernameElems[0];
+    if (notloggedinElems.length === 0 || loggedinElems.length === 0 || usernameElems.length === 0) {
+        console.error('userinfo script started, but some of the elements not found on the page, pls check it: [header-user-notloggedin, header-user-loggedin, user-name-field]');
+        return;
+    }
     
         var url = window.location.origin + '/api/userinfo';
         
@@ -28,9 +24,16 @@
                         var successKeys = Object.keys(success);
                         if(successKeys.indexOf('username') > -1) {
                             var username = success['username'];
-                            usernameElem.innerText = username;
-                            notloggedinDiv.style.display = 'none';
-                            loggedinDiv.style.display = 'flex';
+                            for(var elem of usernameElems) {
+                                elem.innerText = username;
+                            }
+
+                            for(var elem of notloggedinElems) {
+                                elem.style.display = 'none';
+                            }
+                            for(var elem of loggedinElems) {
+                                elem.style.display = 'flex';
+                            }
                         }
                     }
                 }, (err)=> {

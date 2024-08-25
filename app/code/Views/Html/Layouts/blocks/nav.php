@@ -125,8 +125,20 @@ return function (array $data = []) {
                     <ul class="navbar-nav ">
                         {$menuHtml}
                     </ul>
+                    <div class="row d-sm-none my-3 ms-3">
+                        <div class="header-user-notloggedin">
+                            <a class="link-notloggedin" href="/login/index">Login</a>
+                            <span class="px-2">|</span>
+                            <a class="link-notloggedin-create" href="/login/register">Register</a>
+                        </div>
+                        <div class="header-user-loggedin justify-content-center">
+                            <span>Hello,&nbsp</span><span class="user-name-field me-3">User_name</span>
+                            <form action="/auth/logout" method="post">
+                                <button class="btn btn-light py-0 align-top px-1" type="submit">Log out</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
             </div>
         </nav>
         {$navBreadcumb}
