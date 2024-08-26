@@ -41,7 +41,7 @@ class DefaultServer implements HttpServerInterface
             if ($statusCode > 0) {
                 http_response_code($statusCode);
             }
-            throw new \Exception('hello');
+
             if (strlen($response) > 0) {
                 echo $response;
             }

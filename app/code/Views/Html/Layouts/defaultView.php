@@ -12,10 +12,11 @@ return function (
     string $wrapperName = HttpViewInterface::DEFAULT_WRAPPER
 ) {
     // load wrapper
-    $wrapper = require_once(__DIR__ . '/wrappers/' . $wrapperName . '.php');
-    
+    $wrapper = require(__DIR__ . '/wrappers/' . $wrapperName . '.php');
+    $readBlocks = require(__DIR__ . '/readBlocks.php');
+
     // getting blocks
-    $blocks = readBlocks(__DIR__ . '/blocks');
+    $blocks = $readBlocks(__DIR__ . '/blocks');
     
     // creating inner Html
     $wrapperHtml = $wrapper($blocks, $metaData, $data);
@@ -48,15 +49,15 @@ return function (
 /**
  * returns an array of filename => function(){}
  */
-function readBlocks(string $path){
-    $files = [];
-    $handle = opendir($path);
-    while (false !== ($entry = readdir($handle))) {
-        if (is_file($path . '/' . $entry)){
-            $base = pathinfo($entry)['filename'];
-            $files[$base] = require_once($path . '/' . $entry);
-        }
-    }
-    closedir($handle);
-    return $files;
-}
+// function readBlocks(string $path){
+//     $files = [];
+//     $handle = opendir($path);
+//     while (false !== ($entry = readdir($handle))) {
+//         if (is_file($path . '/' . $entry)){
+//             $base = pathinfo($entry)['filename'];
+//             $files[$base] = require_once($path . '/' . $entry);
+//         }
+//     }
+//     closedir($handle);
+//     return $files;
+// }
