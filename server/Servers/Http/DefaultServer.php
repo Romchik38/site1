@@ -36,19 +36,21 @@ class DefaultServer implements HttpServerInterface
             foreach ($headres as $header) {
                 header(...$header);
             }
+
             if ($statusCode > 0) {
                 http_response_code($statusCode);
             }
-            // This must be the last string
+
             if (strlen($response) > 0) {
                 echo $response;
             }
+            
         } catch (\Exception $e) {
             if ($this->logger) {
                 $this->logger->error($e->getMessage());
             }
-            echo $this::DEFAULT_SERVER_ERROR_MESSAGE;
             http_response_code($this::DEFAULT_SERVER_ERROR_CODE);
+            echo $this::DEFAULT_SERVER_ERROR_MESSAGE;
         }
 
         return $this;
