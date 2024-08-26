@@ -17,8 +17,7 @@ $server = $container->get(\Romchik38\Server\Api\Servers\ServerInterface::class);
 */
 
 // Start app
-$server->run();
-$server->log();   // write all logs at the time, if they didn't send earlier
+$server->run()->log();
 // End app
 
 //test
