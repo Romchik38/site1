@@ -28,7 +28,7 @@ return function ($container) {
         \Romchik38\Site1\Views\Html\Classes\DefaultPageView::class,
         new \Romchik38\Site1\Views\Html\Classes\DefaultPageView(
             function(...$args){
-                $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
+                $defaultView = require(__DIR__ . '/Layouts/defaultView.php');
                 return call_user_func($defaultView, ...$args);
             },
             require_once(__DIR__ . '/Tamplates/Default/index.php'),
@@ -45,7 +45,7 @@ return function ($container) {
         \Romchik38\Site1\Views\Html\Classes\Main\Index::class,
         new \Romchik38\Site1\Views\Html\Classes\Main\Index(
             function(...$args){
-                $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
+                $defaultView = require(__DIR__ . '/Layouts/defaultView.php');
                 return call_user_func($defaultView, ...$args);
             },
             require_once(__DIR__ . '/Tamplates/Main/index.php'),
@@ -64,7 +64,7 @@ return function ($container) {
         \Romchik38\Site1\Views\Html\Classes\Login\Index::class,
         new \Romchik38\Site1\Views\Html\Classes\Login\Index(
             function(...$args){
-                $defaultView = require_once(__DIR__ . '/Layouts/defaultView.php');
+                $defaultView = require(__DIR__ . '/Layouts/defaultView.php');
                 return call_user_func($defaultView, ...$args);
             },
             require_once(__DIR__ . '/Tamplates/Login/index.php'),

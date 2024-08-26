@@ -92,5 +92,14 @@ return function ($container) {
         )
     );
 
+    // Server Error
+    $container->add(
+        \Romchik38\Site1\Controllers\ServerError\DefaultAction::class,
+        new \Romchik38\Site1\Controllers\ServerError\DefaultAction(
+            $container->get(\Romchik38\Site1\Api\Views\DefaultPageViewInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
+        )
+    );
+
     return $container;
 };
