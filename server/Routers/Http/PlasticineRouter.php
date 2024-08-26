@@ -82,8 +82,12 @@ class PlasticineRouter implements HttpRouterInterface
 
     protected function pageNotFound()
     {
+        $response = 'Error 404 from router - Page not found';
+        if ($this->notFoundController !== null) {
+            $response = $this->notFoundController->execute(['404'])->getResponse();
+        }
         $this->routerResult->setStatusCode(404)
-            ->setResponse('Error 404 from router - Page not found');
+            ->setResponse($response);
         return $this->routerResult;
     }
 

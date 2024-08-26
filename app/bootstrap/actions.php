@@ -101,5 +101,14 @@ return function ($container) {
         )
     );
 
+    // 404 Page not found
+    $container->add(
+        \Romchik38\Site1\Controllers\PageNotFound\DefaultAction::class,
+        new \Romchik38\Site1\Controllers\PageNotFound\DefaultAction(
+            $container->get('page-view-404'),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
+        )
+    );
+
     return $container;
 };

@@ -40,6 +40,19 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Views\Html\Classes\DefaultPageView::class)
     );
 
+    // 404
+    $container->add(
+        'page-view-404',
+        new \Romchik38\Site1\Views\Html\Classes\DefaultPageView(
+            function(...$args){
+                $defaultView = require(__DIR__ . '/Layouts/defaultView.php');
+                return call_user_func($defaultView, ...$args);
+            },
+            require_once(__DIR__ . '/Tamplates/PageNotFound/index.php'),
+            $container->get(\Romchik38\Site1\Api\Views\MetadataInterface::class) 
+        )
+    ); 
+
     // MAIN 
     $container->add(
         \Romchik38\Site1\Views\Html\Classes\Main\Index::class,

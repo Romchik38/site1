@@ -17,7 +17,12 @@ return function ($container) {
             $container->get(\Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class),
             $controllersList,
             $headers,
-            null,
+            new \Romchik38\Server\Controllers\Controller(
+                '404', 
+                false,
+                $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
+                $container->get(Romchik38\Site1\Controllers\PageNotFound\DefaultAction::class)
+            ),
             null
         )
     );
