@@ -12,6 +12,7 @@ use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
+use Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOFactoryInterface;
 
 /**
  * This class MUST be html agnostic,
@@ -24,7 +25,7 @@ class DefaultAction extends Action implements DefaultActionInterface
     public function __construct(
         protected readonly SitemapInterface $sitemapService,
         protected readonly DefaultPageViewInterface $view,
-        protected readonly DefaultViewDTOFactoryInterface $defaultViewDTOFactory,
+        protected readonly SitemapDTOFactoryInterface $sitemapDTOFactory,
         protected readonly MenuLinksRepositoryInterface $menuLinksRepository
     ) {}
 
@@ -35,66 +36,17 @@ class DefaultAction extends Action implements DefaultActionInterface
 
         /** @var MenuLinksInterface[] $menuLinks */
         $menuLinks = $this->menuLinksRepository->list('', []);
-        $menuLinksHash = [];
-        foreach ($menuLinks as $menuLink) {
-            $menuLinksHash[$menuLink->getUrl()] = $menuLink;
-        }
 
-        $html = '<ul>Sitemap:' . $this->createHtml($result, $menuLinksHash) . '</ul>';
 
-        $defaultDTO = $this->defaultViewDTOFactory->create('Sitemap', 'Sitemap Page', $html);
+        $sitemapDTO = $this->sitemapDTOFactory->create(
+            'Sitemap',
+            'Sitemap Page',
+            $result,
+            $menuLinks
+        );
         $this->view->setController($this->getController())
-            ->setControllerData($defaultDTO);
+            ->setControllerData($sitemapDTO);
 
         return $this->view->toString();
-    }
-
-    protected function mapHome($arr)
-    {
-        $newArr = [];
-        foreach ($arr as $elem) {
-            if ($elem === 'root') {
-                $newArr[] = '';
-            } else {
-                $newArr[] = $elem;
-            }
-        }
-        return $newArr;
-    }
-
-
-    protected function createHtml(ControllerDTOInterface $element, array $hash): string
-    {
-        $children = $element->getChildren();
-        $path = $this->mapHome($element->getPath());
-        $name = $element->getName();
-        $url = $name;
-        if ($name === 'root') {
-            $url = '';
-            $name = 'home';
-        }
-        $link = implode('/', $path) . '/' . $url;
-
-        /** @var MenuLinksInterface $menuLink */
-        $menuLink = $hash[$link] ?? null;
-        $description = '';
-        if ($menuLink !== null) {
-            $name = $menuLink->getName();
-            $description = $menuLink->getDescription();
-        }
-
-        if (count($children) === 0) {
-            $elemName = '<a href="' . $link . '" title="' . $description . '">' . $name . '</a>';
-            $lastElement = '<li>' . $elemName . '</li>';
-            return $lastElement;
-        }
-        $rowName = '<a href="' . $link . '" title="' . $description . '">' . $name . '</a>';
-        $rowElements = [];
-        foreach ($children as $child) {
-            $rowElem = $this->createHtml($child, $hash);
-            $rowElements[] = $rowElem;
-        }
-
-        return '<li>' . $rowName . '<ul>' . implode('', $rowElements) . '</ul></li>';
     }
 }

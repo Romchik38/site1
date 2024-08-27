@@ -185,6 +185,15 @@ return function ($container) {
         \Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory::class)
     );
+    
+    $container->add(
+        \Romchik38\Site1\Models\DTO\Sitemap\SitemapDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\Sitemap\SitemapDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\Sitemap\SitemapDTOFactory::class)
+    );
 
     // SERVICES
     $container->add(

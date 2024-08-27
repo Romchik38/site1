@@ -1,8 +1,5 @@
 # Todo
 
-[-] no route controller
-[+] server error controller  
-
 ## ?
 
 [-] delete  

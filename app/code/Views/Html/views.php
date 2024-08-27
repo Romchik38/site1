@@ -90,5 +90,24 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Views\Html\Classes\Login\Index::class)
     );
 
+    // Sitemap
+    
+    $container->add(
+        \Romchik38\Site1\Views\Html\Classes\Sitemap\Index::class,
+        new \Romchik38\Site1\Views\Html\Classes\Sitemap\Index(
+            function(...$args){
+                $defaultView = require(__DIR__ . '/Layouts/defaultView.php');
+                return call_user_func($defaultView, ...$args);
+            },
+            require_once(__DIR__ . '/Tamplates/Sitemap/index.php'),
+            $container->get(\Romchik38\Site1\Api\Views\MetadataInterface::class)
+        )
+    );
+
+    $container->add(
+        \Romchik38\Site1\Api\Views\SitemapViewInterface::class,
+        $container->get(\Romchik38\Site1\Views\Html\Classes\Sitemap\Index::class)
+    );
+
     return $container;
 };
