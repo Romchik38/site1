@@ -41,14 +41,14 @@ Accept-Language: uk-UA,uk;q=0.8,en-US;q=0.5,en;q=0.3
 
 ## php
 
-1. class Translate
+- class Translate
 
   used inside other classes as dep  
   used inseid __()  
 
-2. __(value)
+- __(value)
 
-  create a fn, that will return a traslated value  
+  create a fn, that will return a translated value  
   it must be visible in all included files  
   already have all info  
   *value* can be not only a phrase, but a key ( like some.key.to.find )  
