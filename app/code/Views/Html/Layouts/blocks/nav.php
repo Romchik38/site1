@@ -110,7 +110,7 @@ return function (array $data = []) {
     }
 
     return <<<NAV
-       <nav class="navbar navbar-expand-sm bg-light">
+       <nav class="navbar navbar-expand-sm bg-primary">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="/media/img/logo-192x192.png" alt="Logo Site1" height="50">
