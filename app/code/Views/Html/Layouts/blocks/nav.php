@@ -95,7 +95,7 @@ return function (array $data = []) {
                 $childrenHtml .= $menuItem;
             }
             $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . $name . '</a>';
-            $menuItem = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu">' . $childrenHtml . '</ul></li>';
+            $menuItem = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-primary">' . $childrenHtml . '</ul></li>';
         } else {
             /** @todo implement active */
             $active = '';
@@ -110,7 +110,7 @@ return function (array $data = []) {
     }
 
     return <<<NAV
-       <nav class="navbar navbar-expand-sm bg-primary">
+       <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="/media/img/logo-192x192.png" alt="Logo Site1" height="50">
@@ -122,16 +122,16 @@ return function (array $data = []) {
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
-                    <ul class="navbar-nav ">
+                    <ul class="navbar-nav">
                         {$menuHtml}
                     </ul>
-                    <div class="row d-sm-none my-3 ms-3">
+                    <div class="row d-sm-none my-3 ms-3 text-white-50">
                         <div class="header-user-notloggedin">
-                            <a class="link-notloggedin" href="/login/index">Login</a>
+                            <a class="link-notloggedin text-white-50" href="/login/index">Login</a>
                             <span class="px-2">|</span>
-                            <a class="link-notloggedin-create" href="/login/register">Register</a>
+                            <a class="link-notloggedin-create text-white-50" href="/login/register">Register</a>
                         </div>
-                        <div class="header-user-loggedin justify-content-center">
+                        <div class="header-user-loggedin justify-content-center text-white-50">
                             <span>Hello,&nbsp</span><span class="user-name-field me-3">User_name</span>
                             <form action="/auth/logout" method="post">
                                 <button class="btn btn-light py-0 align-top px-1" type="submit">Log out</button>
