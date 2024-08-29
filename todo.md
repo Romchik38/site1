@@ -1,9 +1,6 @@
 # Todo
 
-[-] multilanguage
-
-## ?
-
-[-] delete  
-  [-] DefaultRouter.php  
-  [-] controllers.php  
+[-] redirect  
+[-] escape input data  
+[-] namespaces in the templates  
+  
