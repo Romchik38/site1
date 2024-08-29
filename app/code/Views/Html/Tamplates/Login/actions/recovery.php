@@ -27,11 +27,11 @@ return function(LoginDTOInterface $data){
                 <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
             </div>
             <div class="col-sm-6">
-                <form class="border rounded-3 bg-light p-4" action="/auth/recovery" method="post">
+                <form class="border rounded-3 p-4" action="/auth/recovery" method="post">
                     <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPattern}"/>
                     <div id="emailHelpBlock" class="form-text">Input your email</div>
                     <br>
-                    <button class="btn btn-primary" type="submit">Reset</button>
+                    <button class="btn btn-secondary" type="submit">Reset</button>
                 </form>
             </div>
             HTML;
@@ -62,7 +62,7 @@ return function(LoginDTOInterface $data){
                     <li><a href="/">Main page</a> to start using our site.</li>
                     <li><a href="/login/index">Login page</a> to see your registration info</li>
                 </ul>
-                <form action="/auth/logout" method="post">Or you can <button class="btn btn-primary" type="submit">Log out</button> now and then start recovery process.
+                <form action="/auth/logout" method="post">Or you can <button class="btn btn-secondary" type="submit">Log out</button> now and then start recovery process.
                     
                 </form>
             </div>

@@ -78,7 +78,7 @@ return function(LoginDTOInterface $data){
                                 <div id="emailHelpBlock" class="form-text">{$emailErrorMessage}</div>
                             </div>
                         </div>
-                        <button id="register-button" class="btn btn-primary" type="submit">Register</button>
+                        <button id="register-button" class="btn btn-secondary" type="submit">Register</button>
                         </fieldset>
                     </form>
                     <br>
@@ -101,7 +101,7 @@ return function(LoginDTOInterface $data){
             <<<HTML
             <div class="col my-3">
                 <form action="/auth/logout" method="post">You already signed in. Please
-                    <button class="btn btn-outline-primary" type="submit">Log out</button>
+                    <button class="btn btn-secondary" type="submit">Log out</button>
                 </form>
             </div>
             HTML;

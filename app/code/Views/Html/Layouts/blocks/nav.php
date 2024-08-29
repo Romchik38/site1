@@ -91,11 +91,11 @@ return function (array $data = []) {
                 if ($activeUrl === $childUrl) {
                     $active = 'active';
                 }
-                $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$childUrl}\" alt=\"{$childDescription}\">{$childName}</a></li>";
+                $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active} text-dark\" href=\"{$childUrl}\" alt=\"{$childDescription}\">{$childName}</a></li>";
                 $childrenHtml .= $menuItem;
             }
             $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . $name . '</a>';
-            $menuItem = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-primary">' . $childrenHtml . '</ul></li>';
+            $menuItem = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-light border-primary ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
         } else {
             /** @todo implement active */
             $active = '';
