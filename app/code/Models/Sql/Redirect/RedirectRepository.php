@@ -7,7 +7,7 @@ namespace Romchik38\Site1\Models\Sql\Redirect;
 use Romchik38\Server\Models\Sql\Repository;
 use Romchik38\Server\Api\Models\RedirectRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Models\RedirectModelInterface;
+use Romchik38\Server\Api\Models\RedirectModelInterface;
 use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Server\Api\Models\ModelFactoryInterface;
 
