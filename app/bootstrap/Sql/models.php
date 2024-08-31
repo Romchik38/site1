@@ -26,7 +26,7 @@ return function ($container) {
         function($container){
             return new \Romchik38\Site1\Models\Sql\Redirect\RedirectRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectFactory::class),
+                $container->get(\Romchik38\Site1\Models\Redirect\RedirectFactory::class),
                 'redirects',
                 'redirect_id'
             );

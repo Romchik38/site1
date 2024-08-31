@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Api\Services;
 
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
+use Romchik38\Server\Api\Services\Request\Http\RequestInterface as ServerRequestInterface;
 
-interface RequestInterface {
+interface RequestInterface extends ServerRequestInterface {
 
     const EMAIL_FIELD = 'email';
     const EMAIL_PATTERN = '^[A-Za-z0-9.]{2,}@[A-Za-z0-9.]{2,}\.[a-z]{2,}$';

@@ -22,8 +22,8 @@ return function ($container) {
     );
 
     $container->add(
-        \Romchik38\Site1\Models\Sql\Redirect\RedirectFactory::class,
-        new Romchik38\Site1\Models\Sql\Redirect\RedirectFactory()
+        \Romchik38\Site1\Models\Redirect\RedirectFactory::class,
+        new \Romchik38\Site1\Models\Redirect\RedirectFactory()
     );
 
     $container->add(

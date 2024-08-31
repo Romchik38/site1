@@ -27,5 +27,15 @@ return function ($container) {
         $container->get(\Romchik38\Server\Results\Http\HttpRouterResult::class)
     );
 
+    // DTO
+    $container->add(
+        \Romchik38\Server\Models\DTO\RedirectResult\Http\RedirectResultDTOFactory::class,
+        new \Romchik38\Server\Models\DTO\RedirectResult\Http\RedirectResultDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Server\Api\Models\DTO\RedirectResult\Http\RedirectResultDTOFactoryInterface::class,
+        $container->get(\Romchik38\Server\Models\DTO\RedirectResult\Http\RedirectResultDTOFactory::class)
+    );
+
     return $container;
 };

@@ -16,14 +16,15 @@ return function ($container) {
         new \Romchik38\Server\Routers\Http\PlasticineRouter(
             $container->get(\Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class),
             $controllersList,
+            $container->get(\Romchik38\Server\Api\Services\Request\Http\RequestInterface::class),
             $headers,
             new \Romchik38\Server\Controllers\Controller(
                 '404', 
                 false,
                 $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
                 $container->get(Romchik38\Site1\Controllers\PageNotFound\DefaultAction::class)
-            ),
-            null
+            ), 
+            $container->get(\Romchik38\Server\Api\Services\Redirect\Http\RedirectInterface::class)
         )
     );
 

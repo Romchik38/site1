@@ -7,8 +7,9 @@ namespace Romchik38\Site1\Services\Http;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface;
+use Romchik38\Server\Services\Request\Http\Request as ServerRequest;
 
-class Request implements RequestInterface {
+class Request extends ServerRequest implements RequestInterface {
 
     public function __construct(
         protected UserRegisterDTOFactoryInterface $userRegisterDTOFactory
