@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
+use Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface;
@@ -12,6 +13,7 @@ use Romchik38\Server\Services\Request\Http\Request as ServerRequest;
 class Request extends ServerRequest implements RequestInterface {
 
     public function __construct(
+        protected readonly UriFactoryInterface $uriFactory,
         protected UserRegisterDTOFactoryInterface $userRegisterDTOFactory
     ) {  
     }

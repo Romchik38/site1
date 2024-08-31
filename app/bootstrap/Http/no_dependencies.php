@@ -14,6 +14,15 @@ return function ($container) {
         $container->get(\Romchik38\Server\Services\Session\Http\Session::class)
     );
 
+    $container->add(
+        \Romchik38\Server\Services\Request\Http\UriFactory::class,
+        new \Romchik38\Server\Services\Request\Http\UriFactory()
+    );
+    $container->add(
+        \Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface::class,
+        $container->get(\Romchik38\Server\Services\Request\Http\UriFactory::class)
+    );
+
     // ROUTER
     $container->add(
         \Romchik38\Server\Results\Http\HttpRouterResult::class,

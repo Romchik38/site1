@@ -14,13 +14,13 @@ use Romchik38\Site1\Models\Redirect\RedirectModel;
 class RedirectRepository extends Repository implements RedirectRepositoryInterface
 {
 
-    public function checkUrl(string $url, string $method): RedirectModelInterface
+    public function checkUrl(string $redirectFrom, string $method): RedirectModelInterface
     {
-        $expression = 'WHERE ' . RedirectModel::URL_FIELD . ' = $1 AND ' 
+        $expression = 'WHERE ' . RedirectModel::REDIRECT_FROM_FIELD . ' = $1 AND ' 
             . RedirectModel::REDIRECT_METHOD_FIELD . ' = $2';
-        $arr = $this->list($expression, [$url, $method]);
+        $arr = $this->list($expression, [$redirectFrom, $method]);
         if (count($arr) === 0) {
-            throw new NoSuchEntityException('There is no entity: ' . $url);
+            throw new NoSuchEntityException('There is no entity: ' . $redirectFrom);
         } else {
             $redirect = $arr[0];
             return  $redirect;

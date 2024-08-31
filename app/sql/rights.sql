@@ -5,6 +5,7 @@ GRANT connect on database site1 to "service";
 GRANT select on table pages to "service";
 GRANT insert on table pages to "service";
 
+GRANT select on table redirects to "php-fpm";
 --
 GRANT select on table entities to "php-fpm";
 GRANT select on table entity_field to "php-fpm";
