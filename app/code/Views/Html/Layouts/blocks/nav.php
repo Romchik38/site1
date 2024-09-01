@@ -43,14 +43,14 @@ return function (array $data = []) {
                 $withouLink++;
                 array_unshift(
                     $line,
-                    '<li class="breadcrumb-item active" aria-current="page">' . $name . '</li>'
+                    '<li class="breadcrumb-item active" aria-current="page">' . htmlentities($name) . '</li>'
                 );
                 $activeUrl = $url;
             } else {
                 array_unshift(
                     $line,
-                    '<li class="breadcrumb-item"><a href="' . $url
-                        . '" title="' . $description . '">' . $name . '</a></li>'
+                    '<li class="breadcrumb-item"><a href="' . htmlentities($url)
+                        . '" title="' . htmlentities($description) . '">' . htmlentities($name) . '</a></li>'
                 );
             }
         }
@@ -91,22 +91,25 @@ return function (array $data = []) {
                 if ($activeUrl === $childUrl) {
                     $active = 'active';
                 }
-                $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active} text-dark\" href=\"{$childUrl}\" alt=\"{$childDescription}\">{$childName}</a></li>";
-                $childrenHtml .= $menuItem;
+                $childMenuItemHtml = '<li class="nav-item"><a class="nav-link ' . htmlentities($active) 
+                    . ' text-dark" href="' . htmlentities($childUrl) . '" alt="' 
+                    . htmlentities($childDescription) . '">' . htmlentities($childName) . '</a></li>';
+                $childrenHtml .= $childMenuItemHtml;
             }
-            $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . $name . '</a>';
-            $menuItem = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-light border-primary ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
+            /** @todo add alt to <a> */
+            $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . htmlentities($name) . '</a>';
+            $menuItemHtml = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-light border-primary ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
         } else {
             /** @todo implement active */
             $active = '';
             if ($activeUrl === $url) {
                 $active = 'active';
             }
-            $menuItem = "<li class=\"nav-item\"><a class=\"nav-link {$active}\" href=\"{$url}\" alt=\"{$description}\">{$name}</a></li>";
+            $menuItemHtml = '<li class="nav-item"><a class="nav-link ' . htmlentities($active) . '" href="' . htmlentities($url) . '" alt="' . htmlentities($description) . '">' . htmlentities($name) . '</a></li>';
         }
 
 
-        $menuHtml = $menuHtml . $menuItem;
+        $menuHtml = $menuHtml . $menuItemHtml;
     }
 
     return <<<NAV
