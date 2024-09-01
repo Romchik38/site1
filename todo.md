@@ -4,6 +4,7 @@
 [-] namespaces in the templates  
 [-] add img to login page  
 [-] change logo
+[-] add favicon
 
 ## escape input data  
 
@@ -13,4 +14,12 @@
 
 ```html
 Main "><script>console.log('hello')</script>
+```
+
+```php
+htmlspecialchars();
+```
+
+```html
+<meta name="description" content="Main &quot;&gt;&lt;script&gt;console.log(&#039;hello&#039;)&lt;/script&gt;">
 ```
