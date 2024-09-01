@@ -11,10 +11,9 @@ return function(LoginDTOInterface $data){
     $html = '';
     $h1Html = 'Password recovery page';
 
-    $email = RequestInterface::EMAIL_FIELD;
-    $emailPattern = RequestInterface::EMAIL_PATTERN;
-    $emailErrorMessage = RequestInterface::EMAIL_ERROR_MESSAGE;
-    $valid = RecoveryEmailInterface::VALID_TIME / 60;
+    $emailHtml = RequestInterface::EMAIL_FIELD;
+    $emailPatternHtml = RequestInterface::EMAIL_PATTERN;
+    $valid = (int)(RecoveryEmailInterface::VALID_TIME / 60);
 
     $message = $data->getMessage();
     $messageHtml = htmlentities($message);
@@ -25,12 +24,12 @@ return function(LoginDTOInterface $data){
             $htmlInputEmail = <<<HTML
             <div class="col-sm-6">
                 <!-- <h2>Password recovery section</h2> -->
-                <p>Please, provide email address. We send a message to your with recovery link (confirm for {$valid} minutes).</p>
+                <p>Please, provide email address. We will send a message to your with a recovery link (confirm  it for {$valid} minutes).</p>
                 <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
             </div>
             <div class="col-sm-6">
                 <form class="border rounded-3 p-4" action="/auth/recovery" method="post">
-                    <input class="form-control" type="email" name="{$email}" id="{$email}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPattern}"/>
+                    <input class="form-control" type="email" name="{$emailHtml}" id="{$emailHtml}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPatternHtml}"/>
                     <div id="emailHelpBlock" class="form-text">Input your email</div>
                     <br>
                     <button class="btn btn-secondary" type="submit">Reset</button>

@@ -9,18 +9,7 @@
 ## escape input data  
 
 [-] Layouts  
-  [-] Login recovery  
+  [+] Login recovery  
+  [-] Main
 [-] Tamplates
 [-] js username
-
-```html
-Main "><script>console.log('hello')</script>
-```
-
-```php
-htmlspecialchars();
-```
-
-```html
-<meta name="description" content="Main &quot;&gt;&lt;script&gt;console.log(&#039;hello&#039;)&lt;/script&gt;">
-```
