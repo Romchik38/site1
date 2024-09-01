@@ -7,25 +7,29 @@ use \Romchik38\Site1\Api\Services\RequestInterface;
 
 return function(LoginDTOInterface $data){
 
-    $userName = RequestInterface::USERNAME_FIELD;
-    $password = RequestInterface::PASSWORD_FIELD;
-    $message = $data->getMessage() ?? '';
+    $userNameHtml = htmlentities(RequestInterface::USERNAME_FIELD);
+    $passwordHtml = htmlentities(RequestInterface::PASSWORD_FIELD);
+    $messageHtml = htmlentities($data->getMessage()) ?? '';
 
     $html = '';
+    $h1Html = 'Login page';
     $user = $data->getUser();
     // Visitor is a guest
     if ($user === null) {
         $html = <<<HTML
-        <div class="container mt-3">
+        <div class="container">
             <div class="row justify-content-center">
+                <h1 class="text-center">{$h1Html}</h1>
+                <p class="lead">On this page you can provide your login credentials. Please visit <a href="/login/recovery" alt="Recovery password page">Recovery password page</a> if your forgot a password. We will send a special link via email.</p>
+                <p>Do not registered yet? Visit <a href="/login/register" alt="Register page">Register page</a>. Just a few minutes and you is a registered user.</p>
                 <div class="col-sm-4">
                     <h2 class="text-center">Provide Login Credentials</h2>
-                    <p class="error_message">{$message}<p>
+                    <p class="error_message">{$messageHtml}<p>
                     <form class="border rounded-3 p-4" action="/auth/index" method="post">
-                        <label for="{$userName}">Enter your user name: </label>
-                        <input class="form-control" type="text" name="{$userName}" id="{$userName}" required /><br>
-                        <label for="{$password}">Enter {$password}: </label>
-                        <input class="form-control" type="password" name="{$password}" id="{$password}" required /><br>
+                        <label for="{$userNameHtml}">Enter your user name: </label>
+                        <input class="form-control" type="text" name="{$userNameHtml}" id="{$userNameHtml}" required /><br>
+                        <label for="{$passwordHtml}">Enter {$passwordHtml}: </label>
+                        <input class="form-control" type="password" name="{$passwordHtml}" id="{$passwordHtml}" required /><br>
                         <input class="btn btn-secondary" type="submit" value="Log In" />
                     </form>
                     <br>
@@ -36,17 +40,19 @@ return function(LoginDTOInterface $data){
         </div>
         HTML;
     } else {
-        $userFirstName = htmlentities($user->getFirstName());
-        $userLastName = htmlentities($user->getLastName());
-        $userName = htmlentities($user->getUserName());
-        $userEmail = htmlentities($user->getEmail());
+        $userFirstNameHtml = htmlentities($user->getFirstName());
+        $userLastNameHtml = htmlentities($user->getLastName());
+        $userNameHtml = htmlentities($user->getUserName());
+        $userEmailHtml = htmlentities($user->getEmail());
     // Visitor is registered user
         $html = <<<HTML
-        <div class="container mt-3">
+        <div class="container">
             <div class="row">
+                <h1 class="text-center">{$h1Html}</h1>
+                <p class="lead">On the user profile page you can see all information about you and your customer data.</p>
                 <div class="col-sm-6">
-                    <h2> {$userFirstName} {$userLastName} </h2>
-                    <p class="error_message">{$message}<p>
+                    <h2> {$userFirstNameHtml} {$userLastNameHtml} </h2>
+                    <p class="error_message">{$messageHtml}<p>
                     <table class="table">
                         <thead>
                             <td>Field</td>
@@ -54,19 +60,19 @@ return function(LoginDTOInterface $data){
                         </thead>
                         <tr>
                             <td>User name</td>
-                            <td>{$userName}</td>
+                            <td>{$userNameHtml}</td>
                         </tr>
                         <tr>
                             <td>First name</td>
-                            <td>{$userFirstName}</td>
+                            <td>{$userFirstNameHtml}</td>
                         </tr>
                         <tr>
                             <td>Last Name</td>
-                            <td>{$userLastName}</td>
+                            <td>{$userLastNameHtml}</td>
                         </tr>
                         <tr>
                             <td>Email</td>
-                            <td>{$userEmail}</td>
+                            <td>{$userEmailHtml}</td>
                         </tr>
                         <tr>
                             <td>Password</td>

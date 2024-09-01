@@ -9,6 +9,8 @@ use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
  * can be used vith default page view
  */
 return function (DefaultViewDTOInterface $data) {
+
+    /** @var $content we do not escape, because it's alreade html */
     $content = $data->getContent();
 
     $html = <<<HTML

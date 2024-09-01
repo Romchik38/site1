@@ -96,7 +96,6 @@ return function (array $data = []) {
                     . htmlentities($childDescription) . '">' . htmlentities($childName) . '</a></li>';
                 $childrenHtml .= $childMenuItemHtml;
             }
-            /** @todo add alt to <a> */
             $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . htmlentities($name) . '</a>';
             $menuItemHtml = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-light border-primary ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
         } else {

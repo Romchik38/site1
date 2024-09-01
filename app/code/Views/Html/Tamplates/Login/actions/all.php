@@ -9,9 +9,9 @@ use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 return function (LoginDTOInterface $data) {
 
     $html = <<<HTML
-    <div class="container mt-3">
+    <div class="container">
         <div class="row">
-            <h2 class="text-center">All Login Pages</h2>
+            <h1 class="text-center">All Login Pages</h1>
             <p>Use the links below 👇 to navigate through the login pages of our site.</p>
             <div class="col">
                 <p><span class=""><a href="/login/index" target="_self">Login page</a></span> - use to log in to the website.</p>

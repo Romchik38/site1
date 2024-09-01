@@ -9,6 +9,7 @@ use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 return function(LoginDTOInterface $data){
     $user = $data->getUser();
     $html = '';
+    $h1Html = 'Password recovery page';
 
     $email = RequestInterface::EMAIL_FIELD;
     $emailPattern = RequestInterface::EMAIL_PATTERN;
@@ -16,13 +17,14 @@ return function(LoginDTOInterface $data){
     $valid = RecoveryEmailInterface::VALID_TIME / 60;
 
     $message = $data->getMessage();
+    $messageHtml = htmlentities($message);
 
     if ($user === null) {
         $htmlInputEmail = '';
         if ($message === '') {
             $htmlInputEmail = <<<HTML
             <div class="col-sm-6">
-                <h2>Password recovery section</h2>
+                <!-- <h2>Password recovery section</h2> -->
                 <p>Please, provide email address. We send a message to your with recovery link (confirm for {$valid} minutes).</p>
                 <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
             </div>
@@ -46,8 +48,10 @@ return function(LoginDTOInterface $data){
         $html = $html . 
         <<<HTML
         <div class="container mt-3">
+            <h1 class="text-center">{$h1Html}</h1>
+            <p class="lead">Forgot your password? It's not a problem.</p>
             <div class="row">
-                <p class="fs-4 error_message text-center">{$message}</p>
+                <p class="fs-4 error_message text-center">{$messageHtml}</p>
             </div>
             <div class="row">{$htmlInputEmail}</div>
         </div>
@@ -57,14 +61,18 @@ return function(LoginDTOInterface $data){
         <<<HTML
         <div class="container my-3">
             <div class="row">
-                <h2>You already signed in.</h2>
-                <ul>Please visit:
-                    <li><a href="/">Main page</a> to start using our site.</li>
-                    <li><a href="/login/index">Login page</a> to see your registration info</li>
-                </ul>
-                <form action="/auth/logout" method="post">Or you can <button class="btn btn-secondary" type="submit">Log out</button> now and then start recovery process.
-                    
+                <h1 class="text-center">{$h1Html}</h1>
+                <p class="lead">You already signed in. Please logout first, if you want to recovery a password.</p>
+                <form action="/auth/logout" method="post">Please push the <button class="btn btn-secondary" type="submit">Log out</button> now and start a recovery process.    
                 </form>
+                <div class="col-sm-6 mt-4">
+                    <p class="h5">Do not want to recover a password?</p>
+                    <ul class="list-group"> Please visit:
+                        <li class="list-group-item"><a href="/">Main page</a> to start using our site.</li>
+                        <li class="list-group-item"><a href="/login/index">Login page</a> to see your registration info</li>
+                        <li class="list-group-item"><a href="/sitemap">Sitemap</a> to see all our pages at the time</li>
+                    </ul>
+                </div>
             </div>
         </div>
         HTML;

@@ -6,21 +6,23 @@ use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
 
 return function(LoginDTOInterface $data){
-    $password = RequestInterface::PASSWORD_FIELD;
-    $passwordErrorMessage = RequestInterface::PASSWORD_ERROR_MESSAGE;
-    $passwordPattern = RequestInterface::PASSWORD_PATTERN;
+    $passwordHTML = htmlentities(RequestInterface::PASSWORD_FIELD);
+    $passwordErrorMessageHtml = htmlentities(RequestInterface::PASSWORD_ERROR_MESSAGE);
+    $passwordPatternHtml = htmlentities(RequestInterface::PASSWORD_PATTERN);
 
-    $message = $data->getMessage() ?? '';
+    $messageHtml = htmlentities($data->getMessage()) ?? '';
 
     $html = '';
+    $h1Text = 'Change password page';
     $user = $data->getUser();
     // Visitor is a guest
     if ($user === null) {
         $html = <<<HTML
-            <div class="container mt-3">
+            <div class="container">
                 <div class="row">
-                        <p class="error_message">{$message}<p>
-                        <p>Only registered user can change a password. This process starts with getting a recovery link. Please, visit our <a href="/login/recovery">Recovery page</a> and follow the given instructions.</p>
+                        <h1 class="text-center">{$h1Text}</h1>
+                        <p class="error_message">{$messageHtml}<p>
+                        <p class="lead">Only registered user can change a password. This process starts with getting a recovery link. Please, visit our <a href="/login/recovery">Recovery page</a> and follow the given instructions.</p>
                         <p>You do not forget you password? Visit <a href="/login/index">Login page</a></p>
                 </div>
             </div>
@@ -28,16 +30,18 @@ return function(LoginDTOInterface $data){
         // Auth user
     } else {
         $html = <<<HTML
-            <div class="container mt-3">
+            <div class="container">
                 <div class="row justify-content-center">
+                    <h1 class="text-center">{$h1Text}</h1>
+                    <p class="lead">On this page you can change a password. Changes take effect immediately. If you changed the password and forgot it, visit <a href="/login/recovery" alt="Recovery password page for registered users">Recovery Password Page</a>.</p>
                     <div class="col-sm-4">
                         <h2 class="text-center">Provide New Password</h2>
-                        <p class="error_message">{$message}<p>
+                        <p class="error_message">{$messageHtml}<p>
                         <form class="border rounded-3 bg-light p-4" action="/auth/changepassword" method="post">
-                            <label class="form-label" for="{$password}">Enter new password: </label>
+                            <label class="form-label" for="{$passwordHTML}">Enter new password: </label>
                             <div>
-                                <input id="input-password" class="form-control" type="password" name="{$password}" required placeholder="Enter new password" pattern="{$passwordPattern}" title="Please enter new valid password"/>
-                                <div id="passwordHelpBlock" class="form-text">{$passwordErrorMessage}</div>
+                                <input id="input-password" class="form-control" type="password" name="{$passwordHTML}" required placeholder="Enter new password" pattern="{$passwordPatternHtml }" title="Please enter new valid password"/>
+                                <div id="passwordHelpBlock" class="form-text">{$passwordErrorMessageHtml}</div>
                             </div>
                             <label class="form-label mt-3" for="repeat_password">Repeat password: </label>
                             <div>

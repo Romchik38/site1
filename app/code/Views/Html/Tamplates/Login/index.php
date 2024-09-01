@@ -20,13 +20,13 @@ return function (LoginDTOInterface $data) {
     $html = <<<HTML
     <div class="row">
         <article>
-            <h1 class="text-center">Login Page</h1>
+            <!-- <p class="h3 text-center">Login Page</p> -->
             <div class="container mt-sm-5">
                 <div class="row">
-                    <div class="col-12">
+                    <!-- <div class="col-12">
                         <p class="lead">On this page, you can log in to the site and see information for authorized users. Additionally, you will see all prices with special discounts, if available.
                         We offer many benefits to registered users, so let's register and log in if you haven't done so yet.</p>
-                    </div>
+                    </div> -->
                     <div class="col">
                         {$actionHtml}
                     </div>
