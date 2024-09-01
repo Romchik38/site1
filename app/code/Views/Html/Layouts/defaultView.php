@@ -22,8 +22,8 @@ return function (
     $wrapperHtml = $wrapper($blocks, $metaData, $data);
 
     // define local vars
-    $title = $metaData[HttpViewInterface::TITLE] ?? '';
-    $description = $metaData[HttpViewInterface::DESCRIPTION] ?? '';
+    $title = htmlspecialchars($metaData[HttpViewInterface::TITLE]) ?? '';
+    $description = htmlspecialchars($metaData[HttpViewInterface::DESCRIPTION]) ?? '';
     // creating html
     return <<<HTML
     <!DOCTYPE html>
