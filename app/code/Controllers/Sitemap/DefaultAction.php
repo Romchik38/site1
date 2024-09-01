@@ -15,9 +15,7 @@ use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOFactoryInterface;
 
 /**
- * This class MUST be html agnostic,
- * but while there are any other controller to demonstrate default view interface,
- * it will works with html.
+ * Creates a sitemap tree of public controllers's actions
  */
 class DefaultAction extends Action implements DefaultActionInterface
 {
