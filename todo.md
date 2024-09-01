@@ -9,6 +9,7 @@
 ## escape input data  
 
 [-] Layouts  
+  [-] Login recovery  
 [-] Tamplates
 [-] js username
 
