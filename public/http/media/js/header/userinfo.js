@@ -25,7 +25,9 @@
                         if(successKeys.indexOf('username') > -1) {
                             var username = success['username'];
                             for(var elem of usernameElems) {
-                                elem.innerText = username;
+                                var injected = '<p class="bg-danger">aa</p>';
+                                //elem.innerText = username;
+                                elem.innerHTML = injected;
                             }
 
                             for(var elem of notloggedinElems) {

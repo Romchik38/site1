@@ -9,8 +9,20 @@
 
 ## escape input data  
 
-[-] Layouts  
+[+] Layouts  
   [+] Login recovery  
-  [-] Main
-[-] Tamplates
+  [+] Main
+[+] Tamplates
 [-] js username
+
+### js
+
+```javascript
+function escapeHTML(str) {
+  return str.replace(/&/g, '&amp;’)
+    .replace(/</g, '&lt;’)
+    .replace(/>/g, '&gt;’)
+    .replace(/"/g, '&quot;’)
+    .replace(/’/g, '&#039;’);
+}
+```
