@@ -70,17 +70,19 @@ function createHtml(ControllerDTOInterface $element, array $hash): string
         $description = $menuLink->getDescription();
     }
 
+    // 1. the element has not children
     if (count($children) === 0) {
         $elemNameHtml = '<a href="' . htmlspecialchars($link) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($name) . '</a>';
         $lastElementHtml = '<li>' . $elemNameHtml . '</li>';
         return $lastElementHtml;
     }
+    
+    // 2. the element has children
     $rowNameHtml = '<a href="' . htmlspecialchars($link) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($name) . '</a>';
     $rowElementsHtml = [];
     foreach ($children as $child) {
         $rowElemHtml = createHtml($child, $hash);
         $rowElementsHtml[] = $rowElemHtml;
     }
-
     return '<li>' . $rowNameHtml . '<ul>' . implode('', $rowElementsHtml) . '</ul></li>';
 }
