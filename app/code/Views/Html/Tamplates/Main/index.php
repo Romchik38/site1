@@ -6,14 +6,16 @@ use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
 
 return function(MainDTOInterface $data) {
     $page = $data->getPage();
-    $content = $page->getContent();
-    $name = htmlentities($page->getName());
+
+    /** @var $content html for the page's body*/
+    $contentHtml = $page->getContent();
+    $nameHtml = htmlentities($page->getName());
     $html = <<<HTML
     <div class="row">
         <article>
-            <h1 class="text-center">{$name}</h1>
+            <h1 class="text-center">{$nameHtml}</h1>
             <div class="container">
-                {$content}
+                {$contentHtml}
             </div>
         </article>
     </div>
