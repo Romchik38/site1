@@ -71,16 +71,16 @@ function createHtml(ControllerDTOInterface $element, array $hash): string
     }
 
     if (count($children) === 0) {
-        $elemName = '<a href="' . $link . '" title="' . $description . '">' . $name . '</a>';
-        $lastElement = '<li>' . $elemName . '</li>';
-        return $lastElement;
+        $elemNameHtml = '<a href="' . htmlspecialchars($link) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($name) . '</a>';
+        $lastElementHtml = '<li>' . $elemNameHtml . '</li>';
+        return $lastElementHtml;
     }
-    $rowName = '<a href="' . $link . '" title="' . $description . '">' . $name . '</a>';
-    $rowElements = [];
+    $rowNameHtml = '<a href="' . htmlspecialchars($link) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($name) . '</a>';
+    $rowElementsHtml = [];
     foreach ($children as $child) {
-        $rowElem = createHtml($child, $hash);
-        $rowElements[] = $rowElem;
+        $rowElemHtml = createHtml($child, $hash);
+        $rowElementsHtml[] = $rowElemHtml;
     }
 
-    return '<li>' . $rowName . '<ul>' . implode('', $rowElements) . '</ul></li>';
+    return '<li>' . $rowNameHtml . '<ul>' . implode('', $rowElementsHtml) . '</ul></li>';
 }
