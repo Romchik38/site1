@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Views\Html\Tamplates\Sitemap;
 
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
+use Romchik38\Server\Api\Services\SitemapInterface;
 use Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOInterface;
 
 /**
@@ -40,7 +41,7 @@ function mapHome($arr)
 {
     $newArr = [];
     foreach ($arr as $elem) {
-        if ($elem === 'root') {
+        if ($elem === SitemapInterface::ROOT_NAME) {
             $newArr[] = '';
         } else {
             $newArr[] = $elem;
@@ -56,7 +57,7 @@ function createHtml(ControllerDTOInterface $element, array $hash): string
     $path = mapHome($element->getPath());
     $name = $element->getName();
     $url = $name;
-    if ($name === 'root') {
+    if ($name === SitemapInterface::ROOT_NAME) {
         $url = '';
         $name = 'home';
     }

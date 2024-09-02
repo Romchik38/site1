@@ -139,11 +139,11 @@ class Metadata implements MetadataInterface
         array_push($path, $name);
 
         $firstPath = $path[0] ?? null;
-        if ($firstPath === 'root') {
+        if ($firstPath === SitemapInterface::ROOT_NAME) {
             $path = array_slice($path, 1);
         }
 
-        if ($name === 'root') {
+        if ($name === SitemapInterface::ROOT_NAME) {
             $name = 'home';
         }
 

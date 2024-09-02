@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 use Romchik38\Server\Api\Router\Http\HttpRouterInterface;
 use Romchik38\Server\Controllers\Controller;
+use Romchik38\Server\Api\Services\SitemapInterface;
 
 return function ($container) {
 
     // GET
     $root = new Controller(
-        'root',
+        SitemapInterface::ROOT_NAME,
         true,
         $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         $container->get(\Romchik38\Site1\Controllers\Root\DefaultAction::class),
@@ -56,7 +57,7 @@ return function ($container) {
     $root->setChild($login)->setChild($changepassword)->setChild($sitemap)->setChild($api);
 
     // POST
-    $rootPost = new Controller('root');
+    $rootPost = new Controller(SitemapInterface::ROOT_NAME);
 
     $authPost = new Controller(
         'auth',

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Router\Http\HttpRouterInterface;
+use Romchik38\Server\Api\Services\SitemapInterface;
 
 return function ($container) {
 
@@ -22,10 +23,10 @@ return function ($container) {
     
     return [
         HttpRouterInterface::REQUEST_METHOD_GET => [
-            'root' . $s . 'changepassword' => new \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword()
+            SitemapInterface::ROOT_NAME . $s . 'changepassword' => new \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword()
         ],
         HttpRouterInterface::REQUEST_METHOD_POST => [
-            'root' . $s . 'auth' . $s . $a => new \Romchik38\Site1\Router\Http\RouterHeaders\Auth()
+            SitemapInterface::ROOT_NAME . $s . 'auth' . $s . $a => new \Romchik38\Site1\Router\Http\RouterHeaders\Auth()
         ]
     ];
 };
