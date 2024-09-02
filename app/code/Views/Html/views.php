@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Romchik38\Site1\Views\Html;
+
 return function ($container) {
     $container->add(
         \Romchik38\Site1\Views\Html\Classes\Metadata::class,

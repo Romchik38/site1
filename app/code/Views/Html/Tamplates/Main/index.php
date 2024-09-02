@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Romchik38\Site1\Views\Html\Tamplates\Main;
+
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
 
 return function(MainDTOInterface $data) {

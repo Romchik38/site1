@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+namespace Romchik38\Site1\Views\Html\Tamplates\Login;
+
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;

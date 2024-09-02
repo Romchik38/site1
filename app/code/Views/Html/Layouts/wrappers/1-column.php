@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Views\Html;
+namespace Romchik38\Site1\Views\Html\Layouts;
 
 return function (array $blocks, $metaData, $data) {
 
