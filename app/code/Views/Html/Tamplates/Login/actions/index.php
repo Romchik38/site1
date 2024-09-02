@@ -38,6 +38,9 @@ return function(LoginDTOInterface $data){
                     <p>Forgot a password? Use <a href="/login/recovery">Password recovery Page</a>.</p>
                     <p>New user? Please, visit <a href="/login/register">Registration Page</a>.</p>
                 </div>
+                <div class="col-sm-4">
+                    <img class="img-fluid" src="/media/img/bilding4.webp">
+                </div>
             </div>
         </div>
         HTML;
