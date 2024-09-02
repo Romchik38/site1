@@ -26,7 +26,7 @@ return function(LoginDTOInterface $data){
                 <p>Do not registered yet? Visit <a href="/login/register" alt="Register page">Register page</a>. Just a few minutes and you is a registered user.</p>
                 <div class="col-sm-4">
                     <h2 class="text-center">Provide Login Credentials</h2>
-                    <p class="error_message">{$messageHtml}<p>
+                    <p class="error_message text-center">{$messageHtml}<p>
                     <form class="border rounded-3 p-4" action="/auth/index" method="post">
                         <label for="{$userNameHtml}">Enter your user name: </label>
                         <input class="form-control" type="text" name="{$userNameHtml}" id="{$userNameHtml}" required /><br>
