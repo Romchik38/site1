@@ -117,7 +117,7 @@ return function (array $data = []) {
        <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="/">
-                    <img src="/media/img/logo-192x192.png" alt="Logo Site1" height="50">
+                    <img src="/media/img/logo.png" alt="Logo Site1" height="50">
                     Site1
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

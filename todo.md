@@ -1,3 +1,1 @@
 # Todo
-
-[-] change logo
