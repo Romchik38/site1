@@ -1,4 +1,15 @@
 {
+    "name": "romchik38/sites-site1",
+    "description": "App shows implementing of simple a few pages site with dynamic routing",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Serhii Romanenko",
+            "homepage": "https://github.com/Romchik38"
+        }
+    ],
+
     "repositories": [
         {
             "type": "vcs",
