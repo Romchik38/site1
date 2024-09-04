@@ -76,7 +76,6 @@ return function (array $data = []) {
 
     $menuHtml = '';
     foreach ($links as $link) {
-        /** @todo implement active */
         $url = $link->getUrl();
         $description = $link->getDescription();
         $name = $link->getName();
@@ -88,20 +87,18 @@ return function (array $data = []) {
                 $childUrl = $child->getUrl();
                 $childDescription = $child->getDescription();
                 $childName = $child->getName();
-                /** @todo implement active */
                 $active = '';
                 if ($activeUrl === $childUrl) {
                     $active = 'active';
                 }
                 $childMenuItemHtml = '<li class="nav-item"><a class="nav-link ' . htmlentities($active) 
-                    . ' text-dark" href="' . htmlentities($childUrl) . '" alt="' 
+                    . '" href="' . htmlentities($childUrl) . '" alt="' 
                     . htmlentities($childDescription) . '">' . htmlentities($childName) . '</a></li>';
                 $childrenHtml .= $childMenuItemHtml;
             }
             $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . htmlentities($name) . '</a>';
-            $menuItemHtml = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-light border-primary ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
+            $menuItemHtml = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-primary ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
         } else {
-            /** @todo implement active */
             $active = '';
             if ($activeUrl === $url) {
                 $active = 'active';
@@ -114,7 +111,7 @@ return function (array $data = []) {
     }
 
     return <<<NAV
-       <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+       <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="/media/img/logo.png" alt="Logo Site1" height="50">

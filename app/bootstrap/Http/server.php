@@ -17,9 +17,8 @@ return function ($container) {
         )
     );
 
-    /** @todo change to Http interface */
     $container->add(
-        \Romchik38\Server\Api\Servers\ServerInterface::class,
+        \Romchik38\Server\Api\Servers\Http\HttpServerInterface::class,
         $container->get(\Romchik38\Server\Servers\Http\DefaultServer::class)
     );
 

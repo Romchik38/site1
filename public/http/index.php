@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 
 $container = (require_once __DIR__ . '/../../app/bootstrap_http.php')();
 
-$server = $container->get(\Romchik38\Server\Api\Servers\ServerInterface::class);
+$server = $container->get(\Romchik38\Server\Api\Servers\Http\HttpServerInterface::class);
 
 /* 
 * At this place can be filter or something else
