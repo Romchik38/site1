@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 use Romchik38\Server\Api\Controllers\ControllerInterface;
-use Romchik38\Server\Api\Router\Http\HttpRouterInterface;
+use Romchik38\Server\Api\Routers\Http\HttpRouterInterface;
 use Romchik38\Server\Api\Services\SitemapInterface;
 
 return function ($container) {

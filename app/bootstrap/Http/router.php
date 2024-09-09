@@ -29,7 +29,7 @@ return function ($container) {
     );
 
     $container->add(
-        \Romchik38\Server\Api\Router\RouterInterface::class,
+        \Romchik38\Server\Api\Routers\RouterInterface::class,
         $container->get(\Romchik38\Server\Routers\Http\PlasticineRouter::class)
     );
 
