@@ -3,10 +3,10 @@
 namespace Romchik38\Site1\Router\Http\RouterHeaders;
 
 use Romchik38\Server\Api\Results\Http\HttpRouterResultInterface;
-use Romchik38\Server\Api\Router\Http\RouterHeadersInterface;
+use Romchik38\Server\Routers\Http\RouterHeader;
 use Romchik38\Site1\Api\Services\RequestInterface;
 
-class Auth implements RouterHeadersInterface {
+class Auth extends RouterHeader {
     public function setHeaders(HttpRouterResultInterface $result, array $path): void
     {
         $action = $path[count($path) - 1];

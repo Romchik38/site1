@@ -13,20 +13,26 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Site1\Router\Http\RouterHeaders\Auth::class,
-        new \Romchik38\Site1\Router\Http\RouterHeaders\Auth()
+        new \Romchik38\Site1\Router\Http\RouterHeaders\Auth(
+            HttpRouterInterface::REQUEST_METHOD_POST,
+            SitemapInterface::ROOT_NAME . $s . 'auth' . $s . $a
+        )
     );
 
     $container->add(
         \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword::class,
-        new \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword()
+        new \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword(
+            HttpRouterInterface::REQUEST_METHOD_GET,
+            SitemapInterface::ROOT_NAME . $s . 'changepassword'
+        )
     );
     
     return [
         HttpRouterInterface::REQUEST_METHOD_GET => [
-            SitemapInterface::ROOT_NAME . $s . 'changepassword' => new \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword()
+            SitemapInterface::ROOT_NAME . $s . 'changepassword' => $container->get(\Romchik38\Site1\Router\Http\RouterHeaders\Changepassword::class)
         ],
         HttpRouterInterface::REQUEST_METHOD_POST => [
-            SitemapInterface::ROOT_NAME . $s . 'auth' . $s . $a => new \Romchik38\Site1\Router\Http\RouterHeaders\Auth()
+            SitemapInterface::ROOT_NAME . $s . 'auth' . $s . $a => $container->get(\Romchik38\Site1\Router\Http\RouterHeaders\Auth::class)
         ]
     ];
 };
