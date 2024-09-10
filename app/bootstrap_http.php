@@ -36,6 +36,10 @@ return function(){
     $actions = require_once(__DIR__ . '/bootstrap/actions.php');
     $actions($container);
     
+    // ROUTER HEADERS
+    $http_headers = require_once(__DIR__ . '/bootstrap/Http/router_headers.php');
+    $http_headers($container);
+
     // ROUTER
     $router = require_once(__DIR__ . '/bootstrap/Http/router.php');
     $router($container);
