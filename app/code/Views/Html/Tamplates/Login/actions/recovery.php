@@ -8,6 +8,9 @@ use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 
+/**
+ * @todo add site-key as a var
+ */
 return function(LoginDTOInterface $data){
     $user = $data->getUser();
     $html = '';
@@ -30,13 +33,34 @@ return function(LoginDTOInterface $data){
                 <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
             </div>
             <div class="col-sm-6">
-                <form class="border rounded-3 p-4" action="/auth/recovery" method="post">
+                <form id="reset-form" class="border rounded-3 p-4" action="/auth/recovery" method="post">
                     <input class="form-control" type="email" name="{$emailHtml}" id="{$emailHtml}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPatternHtml}"/>
+                    <input type="hidden" id="form-token" name="token" value=""/>
                     <div id="emailHelpBlock" class="form-text">Input your email</div>
                     <br>
-                    <button class="btn btn-secondary" type="submit">Reset</button>
+                    <button class="btn btn-secondary g-recaptcha" 
+                            type="submit"
+                            data-sitekey="6LcxKD4qAAAAAIVc32ibDUmww7tgKSMlJJHu2_Sz"
+                            data-callback='onSubmit' 
+                            data-action='submit'>Reset
+                    </button>
                 </form>
             </div>
+            <script src="https://www.google.com/recaptcha/api.js"></script>
+            <script>
+                function onSubmit(token) {     
+                    var form = document.getElementById("reset-form");
+                    if(!form) return;
+                    var isValidForm = form.reportValidity();
+                    if(isValidForm === true) {
+                        var tokenElement = document.getElementById("form-token");
+                        if(tokenElement !== null) {
+                            tokenElement.value = token;
+                            form.submit();
+                        }
+                    }
+                }
+            </script>
             HTML;
         } else {
             $htmlInputEmail = <<<HTML
