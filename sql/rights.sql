@@ -17,3 +17,5 @@ GRANT USAGE, SELECT ON SEQUENCE users_user_id_seq TO "service";
 GRANT select, insert, update on table recovery_email to "service";
 
 GRANT select, insert, update, delete on table menu, menu_links, menu_to_links to "service";
+
+GRANT select, insert, update on table recaptcha, recaptcha_google to "service";
