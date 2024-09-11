@@ -13,13 +13,11 @@ interface GoogleReCaptchaDTOInterface extends DTOInterface
     const SECRET_KEY_FIELD = 'secret_key';
     const API_KEY_FIELD = 'api_key';
     const PROJECT_NAME_FIELD = 'project_name';
-    const ACTION_NAME_FIELD = 'action';
     const SCORE_FIELD = 'score';
 
     public function getSiteKey(): string;
     public function getSecretKey(): string;
     public function getApiKey(): string;
     public function getProjectName(): string;
-    public function getActionName(): string;
     public function getScore(): string;
 }
