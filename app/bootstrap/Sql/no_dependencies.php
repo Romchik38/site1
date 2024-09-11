@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 return function ($container) {
-    $configDatabase = require_once(__DIR__ . '/../../config/database.php');
+    $configDatabase = require_once(__DIR__ . '/../../config/private/database.php');
 
     // DATABASES
     $container->add(
