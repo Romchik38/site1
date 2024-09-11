@@ -19,4 +19,5 @@ interface GoogleReCaptchaDTOInterface extends DTOInterface
     public function getSiteKey(): string;
     public function getSecretKey(): string;
     public function getProjectName(): string;
+    public function getApiKey(): string;
 }

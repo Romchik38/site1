@@ -13,5 +13,6 @@ interface GoogleReCaptchaDTOFactoryInterface
         string $siteKey,
         string $secretKey,
         string $projectName,
+        string $apiKey
     ): GoogleReCaptchaDTOInterface;
 }

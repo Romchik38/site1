@@ -15,7 +15,8 @@ class GoogleReCaptchaDTOFactory implements GoogleReCaptchaDTOFactoryInterface
         float $score,
         string $siteKey,
         string $secretKey,
-        string $projectName
+        string $projectName,
+        string $apiKey
     ): GoogleReCaptchaDTOInterface {
         return new GoogleReCaptchaDTO(
             $actionName,
@@ -23,7 +24,8 @@ class GoogleReCaptchaDTOFactory implements GoogleReCaptchaDTOFactoryInterface
             $score,
             $siteKey,
             $secretKey,
-            $projectName
+            $projectName,
+            $apiKey
         );
     }
 }

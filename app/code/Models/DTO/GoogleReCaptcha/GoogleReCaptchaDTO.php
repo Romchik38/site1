@@ -18,7 +18,8 @@ class GoogleReCaptchaDTO extends DTO implements GoogleReCaptchaDTOInterface
         float $score,
         string $siteKey,
         string $secretKey,
-        string $projectName
+        string $projectName,
+        string $apiKey
     ) {
         $this->data[ReCaptchaModelInterface::ACTION_NAME_FIELD] = $actionName;
         $this->data[ReCaptchaModelInterface::ACTIVE_FIELD] = $active;
@@ -26,6 +27,7 @@ class GoogleReCaptchaDTO extends DTO implements GoogleReCaptchaDTOInterface
         $this->data[GoogleReCaptchaDTOInterface::SITE_KEY_FIELD] = $siteKey;
         $this->data[GoogleReCaptchaDTOInterface::SECRET_KEY_FIELD] = $secretKey;
         $this->data[GoogleReCaptchaDTOInterface::PROJECT_NAME_FIELD] = $projectName;
+        $this->data[GoogleReCaptchaDTOInterface::API_KEY_FIELD] = $apiKey;
     }
 
     public function getActionName(): string
@@ -56,5 +58,10 @@ class GoogleReCaptchaDTO extends DTO implements GoogleReCaptchaDTOInterface
     public function getProjectName(): string
     {
         return $this->data[GoogleReCaptchaDTOInterface::PROJECT_NAME_FIELD];
+    }
+
+    public function getApiKey(): string
+    {
+        return $this->data[GoogleReCaptchaDTOInterface::API_KEY_FIELD];
     }
 }
