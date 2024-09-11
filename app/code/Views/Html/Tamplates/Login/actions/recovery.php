@@ -28,7 +28,6 @@ return function(LoginDTOInterface $data){
         if ($message === '') {
             $htmlInputEmail = <<<HTML
             <div class="col-sm-6">
-                <!-- <h2>Password recovery section</h2> -->
                 <p>Please, provide email address. We will send a message to your with a recovery link (confirm  it for {$valid} minutes).</p>
                 <p>Have a question? Contact <a href="#">User Service</a> 24/7</p>
             </div>
@@ -42,7 +41,7 @@ return function(LoginDTOInterface $data){
                             type="submit"
                             data-sitekey="6LcxKD4qAAAAAIVc32ibDUmww7tgKSMlJJHu2_Sz"
                             data-callback='onSubmit' 
-                            data-action='submit'>Reset
+                            data-action='submit-login-recovery'>Reset
                     </button>
                 </form>
             </div>
