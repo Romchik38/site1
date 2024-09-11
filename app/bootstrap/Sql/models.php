@@ -7,7 +7,7 @@ return function ($container) {
     // REPOSITORIES
     $container->add(
         \Romchik38\Site1\Models\Sql\Page\PageRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Site1\Models\Sql\Page\PageRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Site1\Models\Sql\Page\PageFactory::class),
@@ -23,7 +23,7 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Site1\Models\Sql\Redirect\RedirectRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Site1\Models\Redirect\RedirectFactory::class),
@@ -32,10 +32,10 @@ return function ($container) {
             );
         }
     );
-    
+
     $container->add(
         \Romchik38\Site1\Models\Sql\User\UserRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Site1\Models\Sql\User\UserRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Site1\Api\Models\User\UserFactoryInterface::class),
@@ -51,7 +51,7 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Server\Models\Sql\Entity\EntityRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Server\Models\Sql\Entity\EntityRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Server\Api\Models\Entity\EntityFactoryInterface::class),
@@ -70,7 +70,7 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailFactoryInterface::class),
@@ -86,7 +86,7 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Site1\Models\Sql\Virtual\Link\VirtualLinkRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Site1\Models\Sql\Virtual\Link\VirtualLinkRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Site1\Api\Models\Virtual\Link\VirtualLinkFactoryInterface::class),
@@ -102,7 +102,7 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Site1\Models\Sql\Menu\MenuModelRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Site1\Models\Sql\Menu\MenuModelRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Site1\Api\Models\Menu\MenuModelFactoryInterface::class),
@@ -132,7 +132,7 @@ return function ($container) {
 
     $container->add(
         \Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository::class,
-        function($container){
+        function ($container) {
             return new \Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
                 $container->get(\Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksFactoryInterface::class),
@@ -146,6 +146,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\Sql\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepository::class,
+        new \Romchik38\Site1\Models\Sql\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepository(
+            $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelFactoryInterface::class),
+            ['recaptcha.*', 'recaptcha_google.score'],
+            ['recaptcha', 'recaptcha_google']
+        )
+    );
 
     return $container;
 };

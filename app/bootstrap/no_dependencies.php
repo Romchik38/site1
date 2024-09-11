@@ -68,6 +68,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\Virtual\Link\VirtualLinkFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Site1\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelFactory::class,
+        new \Romchik38\Site1\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelFactory()
+    );
+    $container->add(
+        Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelFactory::class)
+    );
+
     // DTO
     $container->add(
         \Romchik38\Site1\Models\DTO\Login\LoginDTOFactory::class,
