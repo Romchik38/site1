@@ -9,5 +9,5 @@ use Romchik38\Server\Api\Models\DTO\DTOInterface;
 interface RecaptchaInterface
 {
     public function check(string $actionName): bool;
-    public function getRecaptchaDTO(string $actionName): DTOInterface;
+    public function getActiveRecaptchaDTO(string $actionName): DTOInterface;
 }
