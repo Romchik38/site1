@@ -14,6 +14,8 @@ use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
+use Romchik38\Site1\Api\Services\RecaptchaInterface;
+use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 class DynamicAction extends Action implements DynamicActionInterface
 {
@@ -29,7 +31,8 @@ class DynamicAction extends Action implements DynamicActionInterface
         protected SessionInterface $session,
         protected LoginDTOFactoryInterface $loginDtoFactory,
         protected RequestInterface $request,
-        protected UserRepositoryInterface $userRepository
+        protected UserRepositoryInterface $userRepository,
+        protected RecaptchaInterface $recaptchaService
     ) {}
     public function execute(string $action): string
     {
@@ -38,6 +41,12 @@ class DynamicAction extends Action implements DynamicActionInterface
             $user = $this->userRepository->getById($this->session->getUserId());
         } catch (NoSuchEntityException) {
             $user = null;
+        }
+
+        try {
+            $reCaptchaDTO = $this->recaptchaService->getActiveRecaptchaDTO();
+        } catch(RecaptchaException $e) {
+            $reCaptchaDTO = null;
         }
 
         /** @var LoginDTOInterface $loginDTO */
