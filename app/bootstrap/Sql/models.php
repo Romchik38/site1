@@ -155,6 +155,10 @@ return function ($container) {
             ['recaptcha', 'recaptcha_google']
         )
     );
+    $container->add(
+        \Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\Sql\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepository::class)
+    );
 
     return $container;
 };

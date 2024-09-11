@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
-use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use Romchik38\Server\Api\Models\DTO\DTOInterface;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface;
@@ -56,7 +54,7 @@ class GoogleRecaptcha implements RecaptchaInterface
         return true;
     }
 
-    public function getActiveRecaptchaDTO(string $actionName): DTOInterface
+    public function getActiveRecaptchaDTO(string $actionName): GoogleReCaptchaDTOInterface
     {
         try {
             $reCaptchaModel = $this->reCaptchaRepository->getActiveByActionName($actionName);

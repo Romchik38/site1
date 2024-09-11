@@ -114,5 +114,17 @@ return function ($container) {
         $container->get(\Romchik38\Server\Services\Sitemap\Sitemap::class)
     );
 
+    // GoogleReCaptcha
+    $google_reCAPTCHA = require_once(__DIR__ . '/../config/private/google_reCAPTCHA.php');
+    $container->add(
+        \Romchik38\Site1\Services\Http\GoogleRecaptcha::class,
+        new \Romchik38\Site1\Services\Http\GoogleRecaptcha(
+            $container->get(\Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class),
+            $google_reCAPTCHA,
+            $container->get(\Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface::class)
+        )
+    );
+
     return $container;
 };
