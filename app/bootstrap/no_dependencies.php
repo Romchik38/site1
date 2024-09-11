@@ -203,6 +203,14 @@ return function ($container) {
         \Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\DTO\Sitemap\SitemapDTOFactory::class)
     );
+    $container->add(
+        \Romchik38\Site1\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactory::class,
+        new \Romchik38\Site1\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface::class,
+        $container->get(\Romchik38\Site1\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactory::class)
+    );
 
     // SERVICES
     $container->add(
