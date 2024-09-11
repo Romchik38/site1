@@ -65,7 +65,7 @@ return function(LoginDTOInterface $data){
         } else {
             $htmlInputEmail = <<<HTML
             <div class="col-sm-6">
-                <p>Your request was sent. If you have any questions, please contact <a href="#">User Service</a> 24/7.</p>
+                <p>Your request was processed. If you have any questions, please contact <a href="#">User Service</a> 24/7.</p>
                 <p>Click on this <a href="/login/recovery">link</a> to send recovery request again.</p>
             </div>
             HTML;
