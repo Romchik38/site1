@@ -124,6 +124,10 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface::class)
         )
     );
+    $container->add(
+        \Romchik38\Site1\Api\Services\RecaptchaInterface::class,
+        $container->get(\Romchik38\Site1\Services\Http\GoogleRecaptcha::class)
+    );
 
     return $container;
 };

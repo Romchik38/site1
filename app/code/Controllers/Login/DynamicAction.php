@@ -15,7 +15,6 @@ use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
-use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 class DynamicAction extends Action implements DynamicActionInterface
 {
@@ -50,10 +49,10 @@ class DynamicAction extends Action implements DynamicActionInterface
         }
 
         /** 2. Get recaptchas for DTO */
-        $recaptchaNames = $this->recaptchas[$action];
-        try {
+        $recaptchaNames = $this->recaptchas[$action] ?? [];
+        if (count($recaptchaNames) > 0) {
             $reCaptchaDTOs = $this->recaptchaService->getActiveRecaptchaDTOs($recaptchaNames);
-        } catch (RecaptchaException $e) {
+        } else {
             $reCaptchaDTO = null;
         }
 

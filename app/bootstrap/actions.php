@@ -42,7 +42,8 @@ return function ($container) {
             $container->get(\Romchik38\Server\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
+            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class)
         )
     );
 
