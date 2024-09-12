@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 return function ($container) {
 
+    $configGoogleReCaptchas = require_once(__DIR__);
+    
     // Root
     $container->add(
         \Romchik38\Site1\Controllers\Root\DefaultAction::class,
