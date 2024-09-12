@@ -4,17 +4,16 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html\Tamplates\Login;
 
+use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOInterface;
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 
-/**
- * @todo add site-key as a var
- */
 return function(LoginDTOInterface $data){
     $user = $data->getUser();
 
     $recaptchas = $data->getRecaptchaHash();
+    /** @var GoogleReCaptchaDTOInterface $recaptchaEmeilButton */
     $recaptchaEmeilButton = $recaptchas['login_recovery_emeil_submit'] ?? null;
 
     $html = '';
@@ -27,6 +26,32 @@ return function(LoginDTOInterface $data){
     $message = $data->getMessage();
     $messageHtml = htmlentities($message);
 
+    /** reCaptcha Email button */
+    $buttonClassHtml = '';
+    $buttonSiteKey = '';
+    $buttonAction = '';
+    $buttonScript = '';
+    if($recaptchaEmeilButton !== null) {
+        $buttonClassHtml = 'g-recaptcha';
+        $buttonSiteKey = 'data-sitekey="' . htmlentities($recaptchaEmeilButton->getSiteKey()) . '" data-callback="onSubmit"';
+        $buttonAction = 'data-action="' . htmlentities($recaptchaEmeilButton->getActionName()) . '"';
+        $buttonScript = 
+        <<<HTML
+            <script src="https://www.google.com/recaptcha/api.js"></script>
+            <script>
+                function onSubmit(token) {     
+                    var form = document.getElementById("reset-form");
+                    if(!form) return;
+                    var isValidForm = form.reportValidity();
+                    if(isValidForm === true) {
+                        form.submit();
+                    }
+                }
+            </script>
+        HTML;
+    }
+
+
     if ($user === null) {
         $htmlInputEmail = '';
         if ($message === '') {
@@ -38,32 +63,16 @@ return function(LoginDTOInterface $data){
             <div class="col-sm-6">
                 <form id="reset-form" class="border rounded-3 p-4" action="/auth/recovery" method="post">
                     <input class="form-control" type="email" name="{$emailHtml}" id="{$emailHtml}" required title="Please enter a valid email address" placeholder="Enter email" pattern="{$emailPatternHtml}"/>
-                    <input type="hidden" id="form-token" name="token" value=""/>
                     <div id="emailHelpBlock" class="form-text">Input your email</div>
                     <br>
-                    <button class="btn btn-secondary g-recaptcha" 
+                    <button class="btn btn-secondary {$buttonClassHtml}" 
                             type="submit"
-                            data-sitekey="6LcxKD4qAAAAAIVc32ibDUmww7tgKSMlJJHu2_Sz"
-                            data-callback='onSubmit' 
-                            data-action='submit-login-recovery'>Reset
+                            {$buttonSiteKey}
+                            {$buttonAction}>Reset
                     </button>
                 </form>
             </div>
-            <script src="https://www.google.com/recaptcha/api.js"></script>
-            <script>
-                function onSubmit(token) {     
-                    var form = document.getElementById("reset-form");
-                    if(!form) return;
-                    var isValidForm = form.reportValidity();
-                    if(isValidForm === true) {
-                        var tokenElement = document.getElementById("form-token");
-                        if(tokenElement !== null) {
-                            tokenElement.value = token;
-                            form.submit();
-                        }
-                    }
-                }
-            </script>
+            {$buttonScript}
             HTML;
         } else {
             $htmlInputEmail = <<<HTML

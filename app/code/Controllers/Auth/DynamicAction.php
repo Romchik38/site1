@@ -134,6 +134,12 @@ class DynamicAction extends Action implements DynamicActionInterface {
         if ($email === '') {
             return 'Bad request (email not present)';
         }
+
+        /** 
+         * recaptcha check 
+         *  g-recaptcha-response
+        */
+
         // check if email is present in the database
         try {
             $this->userRepository->getByEmail($email);
