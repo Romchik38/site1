@@ -32,24 +32,36 @@ class DynamicAction extends Action implements DynamicActionInterface
         protected LoginDTOFactoryInterface $loginDtoFactory,
         protected RequestInterface $request,
         protected UserRepositoryInterface $userRepository,
-        protected RecaptchaInterface $recaptchaService
+        protected RecaptchaInterface $recaptchaService,
+        protected array $recaptchas = []
     ) {}
     public function execute(string $action): string
     {
+        /** 0. Check if dynamic action is repesent */
+        if (array_search($action, $this->methods) === false) {
+            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
+        }
 
+        /** 1. Get user identity for DTO */
         try {
             $user = $this->userRepository->getById($this->session->getUserId());
         } catch (NoSuchEntityException) {
             $user = null;
         }
 
+        /** 2. Get recaptchas for DTO */
+        $recaptchas = $this->recaptchas[$action];
         try {
             $reCaptchaDTO = $this->recaptchaService->getActiveRecaptchaDTO();
-        } catch(RecaptchaException $e) {
+        } catch (RecaptchaException $e) {
             $reCaptchaDTO = null;
         }
 
-        /** @var LoginDTOInterface $loginDTO */
+        /** 
+         * 3. Create a view's dto
+         * 
+         * @var LoginDTOInterface $loginDTO 
+         * */
         $loginDTO = $this->loginDtoFactory->create(
             $action,
             $this->request->getMessage(),
@@ -58,13 +70,11 @@ class DynamicAction extends Action implements DynamicActionInterface
             'Login page - ' . $action
         );
 
-        if (array_search($action, $this->methods) === false) {
-            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
-        }
-
-        $this->view->setController($this->getController(), $action)
-            ->setControllerData($loginDTO);
-        return $this->view->toString();
+        /** 4. Exec view */
+        return $this->view
+            ->setController($this->getController(), $action)
+            ->setControllerData($loginDTO)
+            ->toString();
     }
 
     public function getRoutes(): array
