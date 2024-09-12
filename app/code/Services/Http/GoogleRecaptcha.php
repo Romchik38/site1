@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
-use Psr\Log\LogLevel;
-use Romchik38\Server\Api\Services\LoggerServerInterface;
-use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOInterface;
+use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelInterface;
 use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
@@ -23,7 +21,6 @@ class GoogleRecaptcha implements RecaptchaInterface
 
     public function __construct(
         protected VirtualGoogleReCaptchaModelRepositoryInterface $reCaptchaRepository,
-        protected LoggerServerInterface $logger,
         array $configData,
         protected GoogleReCaptchaDTOFactoryInterface $reCaptchaDTOFactory
     ) {
@@ -54,23 +51,43 @@ class GoogleRecaptcha implements RecaptchaInterface
         return true;
     }
 
-    public function getActiveRecaptchaDTO(string $actionName): GoogleReCaptchaDTOInterface
+    /**
+     * @throws RecaptchaException
+     * @return GoogleReCaptchaDTOInterface[]
+     */
+    public function getActiveRecaptchaDTOs(array $actionNames): array
     {
-        try {
-            $reCaptchaModel = $this->reCaptchaRepository->getActiveByActionName($actionName);
-            $recaptchaDTO = $this->reCaptchaDTOFactory->create(
-                $reCaptchaModel->getActionName(),
-                $reCaptchaModel->getActive(),
-                $reCaptchaModel->getScore(),
-                $this->siteKey,
-                $this->secretKey,
-                $this->projectName,
-                $this->apiKey
-            );
-            return $recaptchaDTO;
-        } catch (NoSuchEntityException $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage());
-            throw new RecaptchaException('Cant create recaptcha with action name ' . $actionName);
+        $actionLength = count($actionNames);
+        if ($actionLength === 0) {
+            throw new RecaptchaException('Actions list can\'t be empty');
         }
+
+        $reCaptchaModels = $this->reCaptchaRepository->getActiveByActionNames($actionNames);
+        if (count($reCaptchaModels) !== $actionLength) {
+            throw new RecaptchaException(
+                'Cant create recaptcha with action names '
+                    . implode(', ', $actionNames) . '. Check config.'
+            );
+        }
+
+        $dtos = [];
+        foreach ($reCaptchaModels as $reCaptchaModel) {
+            $dtos[] = $this->createDTO($reCaptchaModel);
+        }
+        return $dtos;
+    }
+
+    protected function createDTO(VirtualGoogleReCaptchaModelInterface $reCaptchaModel): GoogleReCaptchaDTOInterface
+    {
+        $recaptchaDTO = $this->reCaptchaDTOFactory->create(
+            $reCaptchaModel->getActionName(),
+            $reCaptchaModel->getActive(),
+            $reCaptchaModel->getScore(),
+            $this->siteKey,
+            $this->secretKey,
+            $this->projectName,
+            $this->apiKey
+        );
+        return $recaptchaDTO;
     }
 }

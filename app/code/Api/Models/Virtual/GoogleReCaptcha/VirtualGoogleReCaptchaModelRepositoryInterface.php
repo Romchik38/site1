@@ -10,7 +10,7 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 interface VirtualGoogleReCaptchaModelRepositoryInterface extends VirtualRepositoryInterface
 {
     /**
-     * @throws NoSuchEntityException
+     * @return VirtualGoogleReCaptchaModelInterface[]
      */
-    public function getActiveByActionName(string $actionName): VirtualGoogleReCaptchaModelInterface;
+    public function getActiveByActionNames(array $actionNames): array;
 }

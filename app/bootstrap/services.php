@@ -120,7 +120,6 @@ return function ($container) {
         \Romchik38\Site1\Services\Http\GoogleRecaptcha::class,
         new \Romchik38\Site1\Services\Http\GoogleRecaptcha(
             $container->get(\Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface::class),
-            $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class),
             $google_reCAPTCHA,
             $container->get(\Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface::class)
         )

@@ -12,6 +12,7 @@ interface RecaptchaInterface
 
     /**
      * @throws RecaptchaException
+     * @return DTOInterface[]
      */
-    public function getActiveRecaptchaDTO(string $actionName): DTOInterface;
+    public function getActiveRecaptchaDTOs(array $actionNames): array;
 }

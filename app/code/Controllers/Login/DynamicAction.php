@@ -50,9 +50,9 @@ class DynamicAction extends Action implements DynamicActionInterface
         }
 
         /** 2. Get recaptchas for DTO */
-        $recaptchas = $this->recaptchas[$action];
+        $recaptchaNames = $this->recaptchas[$action];
         try {
-            $reCaptchaDTO = $this->recaptchaService->getActiveRecaptchaDTO();
+            $reCaptchaDTOs = $this->recaptchaService->getActiveRecaptchaDTOs($recaptchaNames);
         } catch (RecaptchaException $e) {
             $reCaptchaDTO = null;
         }
