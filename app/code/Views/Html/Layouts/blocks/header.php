@@ -40,7 +40,7 @@ return function (array $data = []) {
                         <a class="link-notloggedin-create" href="/login/register">Register</a>
                     </div>
                     <div class="header-user-loggedin justify-content-center">
-                        <span>Hello,&nbsp</span><a href="/login/index"><span class="user-name-field me-3">User_name</span></a>
+                        <span>Hello,&nbsp;</span><a href="/login/index"><span class="user-name-field me-3">User_name</span></a>
                         <form action="/auth/logout" method="post">
                             <button class="btn btn-secondary py-0 align-top px-1" type="submit">Log out</button>
                         </form>
