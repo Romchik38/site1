@@ -9,6 +9,7 @@ use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelInterface;
 use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
+use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 class GoogleRecaptcha implements RecaptchaInterface
@@ -22,7 +23,8 @@ class GoogleRecaptcha implements RecaptchaInterface
     public function __construct(
         protected VirtualGoogleReCaptchaModelRepositoryInterface $reCaptchaRepository,
         array $configData,
-        protected GoogleReCaptchaDTOFactoryInterface $reCaptchaDTOFactory
+        protected GoogleReCaptchaDTOFactoryInterface $reCaptchaDTOFactory,
+        protected readonly RequestInterface $request
     ) {
         $this->siteKey = $configData[GoogleReCaptchaDTOInterface::SITE_KEY_FIELD] ??
             throw new RecaptchaException(
@@ -46,8 +48,10 @@ class GoogleRecaptcha implements RecaptchaInterface
             );
     }
 
-    public function check(string $actionName): bool
+    public function checkReCaptcha(string $actionName): bool
     {
+        /** g-recaptcha-response */
+        $tocken = $this->request->getTocken();
         return true;
     }
 

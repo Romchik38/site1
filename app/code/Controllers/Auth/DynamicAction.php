@@ -10,6 +10,7 @@ use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Services\PasswordCheckInterface;
 use Romchik38\Server\Api\Services\SessionInterface;
+use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
@@ -140,14 +141,17 @@ class DynamicAction extends Action implements DynamicActionInterface {
 
         /** 
          * recaptcha check 
-         *  
-        */
+         * 
+         * */
         $recaptchas = $this->recaptchas['recovery'] ?? [];
-        foreach($recaptchas as $actionName) {
-            $result = $this->recaptchaService->check($actionName);
-            if($result === false) {
-                return $this->weWillSend($email);
-            }
+        if(count($recaptchas) !== 1) {
+            throw new MissingRequiredParameterInFileError(
+                'Check config for action auth/recovery: wrong count (expected 1)'
+            );
+        }
+        $result = $this->recaptchaService->checkReCaptcha($recaptchas[0]);
+        if($result === false) {
+            return $this->weWillSend($email);
         }
 
         // check if email is present in the database

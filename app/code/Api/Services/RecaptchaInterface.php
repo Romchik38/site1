@@ -8,7 +8,13 @@ use Romchik38\Server\Api\Models\DTO\DTOInterface;
 
 interface RecaptchaInterface
 {
-    public function check(string $actionName): bool;
+    /**
+     * Checks recaptchas by given names
+     * 
+     * @param string $actionName Recaptcha name
+     * @return bool Return true if check passed
+     */
+    public function checkReCaptcha(string $actionNames): bool;
 
     /**
      * @throws RecaptchaException
