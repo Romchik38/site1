@@ -2,10 +2,13 @@
 
 declare(strict_types=1);
 
+use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
+use SebastianBergmann\Diff\ConfigurationException;
+
 return function ($container) {
 
-    $configGoogleReCaptchas = require_once(__DIR__);
-    
+    $configGoogleReCaptchas = require_once(__DIR__ . '/../config/shared/actions/google_recaptchas.php');
+
     // Root
     $container->add(
         \Romchik38\Site1\Controllers\Root\DefaultAction::class,
@@ -37,6 +40,9 @@ return function ($container) {
         )
     );
 
+    $configLoginDynamicGoogleReCaptchas = $configGoogleReCaptchas[\Romchik38\Site1\Controllers\Login\DynamicAction::class] ??
+        throw new MissingRequiredParameterInFileError('Check config for action class: ' 
+        . \Romchik38\Site1\Controllers\Login\DynamicAction::class);
     $container->add(
         \Romchik38\Site1\Controllers\Login\DynamicAction::class,
         new \Romchik38\Site1\Controllers\Login\DynamicAction(
@@ -45,7 +51,8 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
-            $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class)
+            $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
+            $configLoginDynamicGoogleReCaptchas
         )
     );
 
