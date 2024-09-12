@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
+use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface;
-use Romchik38\Server\Services\Request\Http\Request as ServerRequest;
+use Romchik38\Server\Services\Request\Http\ServerRequest;
 
 class Request extends ServerRequest implements RequestInterface {
 

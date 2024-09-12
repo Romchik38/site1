@@ -12,7 +12,7 @@ return function ($container) {
         new \Romchik38\Server\Routers\Http\PlasticineRouter(
             $container->get(\Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class),
             $controllersList,
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\RequestInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class),
             $container->get(Romchik38\Server\Api\Routers\Http\HeadersCollectionInterface::class),
             new \Romchik38\Server\Controllers\Controller(
                 '404', 

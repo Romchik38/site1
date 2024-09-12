@@ -46,5 +46,22 @@ return function ($container) {
         $container->get(\Romchik38\Server\Models\DTO\RedirectResult\Http\RedirectResultDTOFactory::class)
     );
 
+
+    // REQUEST  depends only on this file
+    $container->add(
+        \Romchik38\Site1\Services\Http\Request::class,
+        new \Romchik38\Site1\Services\Http\Request(
+            $container->get(\Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface::class),
+            $container->get(\Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface::class)
+        )
+    );
+    $container->add(
+        \Romchik38\Site1\Api\Services\RequestInterface::class,
+        $container->get(\Romchik38\Site1\Services\Http\Request::class)
+    );
+    $container->add(
+        \Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class,
+        $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class)
+    );
     return $container;
 };

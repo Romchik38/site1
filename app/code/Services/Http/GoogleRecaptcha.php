@@ -50,8 +50,13 @@ class GoogleRecaptcha implements RecaptchaInterface
 
     public function checkReCaptcha(string $actionName): bool
     {
-        /** g-recaptcha-response */
-        $tocken = $this->request->getTocken();
+        $body = $this->request->getParsedBody();
+        $tocken = $body['g-recaptcha-response'] ?? '';
+        /** 1. no tocken in the request data */
+        if($tocken === '') {
+            return false;
+        }
+
         return true;
     }
 
