@@ -10,6 +10,7 @@ interface LoginDTOFactoryInterface {
         string $message,
         UserModelInterface|null $user,
         string $name,
-        string $description
+        string $description,
+        array $recaptchaHash = []
     );
 }

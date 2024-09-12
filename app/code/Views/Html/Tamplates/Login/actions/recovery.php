@@ -13,6 +13,10 @@ use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
  */
 return function(LoginDTOInterface $data){
     $user = $data->getUser();
+
+    $recaptchas = $data->getRecaptchaHash();
+    $recaptchaEmeilButton = $recaptchas['login_recovery_emeil_submit'] ?? null;
+
     $html = '';
     $h1Html = 'Password recovery page';
 

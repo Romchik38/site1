@@ -14,6 +14,7 @@ use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
+use Romchik38\Site1\Api\Models\DTO\ReCaptcha\ReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 
 class DynamicAction extends Action implements DynamicActionInterface
@@ -50,11 +51,14 @@ class DynamicAction extends Action implements DynamicActionInterface
 
         /** 2. Get recaptchas for DTO */
         $recaptchaNames = $this->recaptchas[$action] ?? [];
+        $reCaptchaHash = [];
         if (count($recaptchaNames) > 0) {
             $reCaptchaDTOs = $this->recaptchaService->getActiveRecaptchaDTOs($recaptchaNames);
-        } else {
-            $reCaptchaDTO = null;
-        }
+            /** @var ReCaptchaDTOInterface $reCaptchaDTO */
+            foreach($reCaptchaDTOs as $reCaptchaDTO) {
+                $reCaptchaHash[$reCaptchaDTO->getActionName()] = $reCaptchaDTO;
+            }
+        } 
 
         /** 
          * 3. Create a view's dto
@@ -66,7 +70,8 @@ class DynamicAction extends Action implements DynamicActionInterface
             $this->request->getMessage(),
             $user,
             'Login - ' . $action,
-            'Login page - ' . $action
+            'Login page - ' . $action,
+            $reCaptchaHash
         );
 
         /** 4. Exec view */

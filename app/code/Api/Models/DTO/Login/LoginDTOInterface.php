@@ -10,7 +10,9 @@ use Romchik38\Site1\Api\Models\User\UserModelInterface;
 interface LoginDTOInterface extends DTOInterface, ActionDTOInterface, DefaultViewDTOInterface
 {
     const USER_FIELD = 'user';
+    const RECAPTCHA_HASH_FIELD = 'recaptcha_hash';
 
     public function getMessage(): string;
     public function getUser(): UserModelInterface|null;
+    public function getRecaptchaHash(): array;
 }

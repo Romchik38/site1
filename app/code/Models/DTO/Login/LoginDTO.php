@@ -16,13 +16,15 @@ class LoginDTO extends DTO implements LoginDTOInterface
         string $message,
         UserModelInterface|null $user,
         string $name,
-        string $description
+        string $description,
+        array $recaptchaHash
     ) {
         $this->data[$this::ACTION_FIELD_NAME] = $action;
         $this->data[RequestInterface::MESSAGE_FIELD] = $message;
         $this->data[LoginDTOInterface::USER_FIELD] = $user;
         $this->data[DefaultViewDTOInterface::DEFAULT_NAME_FIELD] = $name;
         $this->data[DefaultViewDTOInterface::DEFAULT_DESCRIPTION_FIELD] = $description;
+        $this->data[LoginDTOInterface::RECAPTCHA_HASH_FIELD] = $recaptchaHash;
     }
 
     public function getActionName(): string
@@ -34,7 +36,7 @@ class LoginDTO extends DTO implements LoginDTOInterface
     {
         return $this->getData(DefaultViewDTOInterface::DEFAULT_CONTENT_FIELD);
     }
-    
+
     public function getDescription(): string
     {
         return $this->getData(DefaultViewDTOInterface::DEFAULT_DESCRIPTION_FIELD);
@@ -53,5 +55,10 @@ class LoginDTO extends DTO implements LoginDTOInterface
     public function getUser(): UserModelInterface|null
     {
         return $this->getData(LoginDTOInterface::USER_FIELD);
+    }
+
+    public function getRecaptchaHash(): array
+    {
+        return $this->data[LoginDTOInterface::RECAPTCHA_HASH_FIELD];
     }
 }

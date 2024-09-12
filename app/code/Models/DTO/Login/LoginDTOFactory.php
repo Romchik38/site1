@@ -17,8 +17,9 @@ class LoginDTOFactory implements LoginDTOFactoryInterface
         string $message,
         UserModelInterface|null $user,
         string $name,
-        string $description
+        string $description,
+        array $recaptchaHash = []
     ): LoginDTOInterface {
-        return new LoginDTO($action, $message, $user, $name, $description);
+        return new LoginDTO($action, $message, $user, $name, $description, $recaptchaHash);
     }
 }
