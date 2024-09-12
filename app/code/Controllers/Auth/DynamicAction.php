@@ -17,6 +17,7 @@ use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
+use Romchik38\Site1\Api\Services\RecaptchaInterface;
 
 class DynamicAction extends Action implements DynamicActionInterface {
     private array $methods = [
@@ -37,12 +38,14 @@ class DynamicAction extends Action implements DynamicActionInterface {
     private $changePasswordSuccessMessage = 'Your password was changed successfully';
 
     public function __construct(
-        private RequestInterface $request,
-        private PasswordCheckInterface $passwordCheck,
-        private SessionInterface $session,
-        private UserRegisterInterface $userRegister,
-        private UserRecoveryEmailInterface $userRecoveryEmail,
-        private UserRepositoryInterface $userRepository
+        private readonly RequestInterface $request,
+        private readonly PasswordCheckInterface $passwordCheck,
+        private readonly SessionInterface $session,
+        private readonly UserRegisterInterface $userRegister,
+        private readonly UserRecoveryEmailInterface $userRecoveryEmail,
+        private readonly UserRepositoryInterface $userRepository,
+        protected readonly RecaptchaInterface $recaptchaService,
+        protected array $recaptchas = []
     ) {
     }
 
@@ -137,8 +140,15 @@ class DynamicAction extends Action implements DynamicActionInterface {
 
         /** 
          * recaptcha check 
-         *  g-recaptcha-response
+         *  
         */
+        $recaptchas = $this->recaptchas['recovery'] ?? [];
+        foreach($recaptchas as $actionName) {
+            $result = $this->recaptchaService->check($actionName);
+            if($result === false) {
+                return $this->weWillSend($email);
+            }
+        }
 
         // check if email is present in the database
         try {

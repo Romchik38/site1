@@ -15,5 +15,8 @@ declare(strict_types=1);
 return [
     \Romchik38\Site1\Controllers\Login\DynamicAction::class => [
         'recovery' => ['login_recovery_emeil_submit']
+    ],
+    \Romchik38\Site1\Controllers\Auth\DynamicAction::class => [
+        'recovery' => ['login_recovery_emeil_submit']
     ]
 ];
