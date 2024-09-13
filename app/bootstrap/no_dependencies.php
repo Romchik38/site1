@@ -223,7 +223,7 @@ return function ($container) {
         $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
     );
 
-    $container(
+    $container->add(
         \Romchik38\Server\Services\Request\Http\ServerRequestService::class,
         new \Romchik38\Server\Services\Request\Http\ServerRequestService()
     );

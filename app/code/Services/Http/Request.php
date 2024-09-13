@@ -15,10 +15,10 @@ class Request extends ServerRequest implements Site1RequestInterface {
 
     public function __construct(
         protected readonly UriFactoryInterface $uriFactory,
-        protected readonly ServerRequestServiceInterface $serverRequestHeadersService,
+        protected readonly ServerRequestServiceInterface $serverRequestService,
         protected UserRegisterDTOFactoryInterface $userRegisterDTOFactory
     ) {  
-        parent::__construct($uriFactory, $serverRequestHeadersService);
+        //parent::__construct($uriFactory, $serverRequestService);
     }
 
     public function getEmail(): string
