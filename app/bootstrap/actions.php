@@ -70,6 +70,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class),
             $configAuthDynamicGoogleReCaptchas
         )
     );
