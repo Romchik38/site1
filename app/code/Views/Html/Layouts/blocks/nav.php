@@ -97,7 +97,7 @@ return function (array $data = []) {
                 $childrenHtml .= $childMenuItemHtml;
             }
             $aTag = '<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">' . htmlentities($name) . '</a>';
-            $menuItemHtml = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu bg-primary ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
+            $menuItemHtml = '<li class="nav-item dropdown">' . $aTag . '<ul class="dropdown-menu ps-2 ps-md-0">' . $childrenHtml . '</ul></li>';
         } else {
             $active = '';
             if ($activeUrl === $url) {
@@ -111,7 +111,7 @@ return function (array $data = []) {
     }
 
     return <<<NAV
-       <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
+       <nav class="navbar navbar-expand-sm navbar-light" style="background-color:rgba(13, 110, 253, 0.34)">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="/media/img/logo.png" alt="Logo Site1" height="50">

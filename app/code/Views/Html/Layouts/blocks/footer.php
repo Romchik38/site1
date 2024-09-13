@@ -19,7 +19,7 @@ return function(array $data = []){
     $copyrights = htmlentities($footerData->getCopyrightsText());
 
     return <<<FOOTER
-        <footer class="bg-light mb-3">
+        <footer class="text-dark mb-3" style="background-color:rgba(13, 110, 253, 0.34)">
                 <div class="row">
                     <div class="col-sm-4 p-5">
                         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius deserunt eaque ipsam voluptate hic libero earum, temporibus accusamus dicta error, dolores repudiandae quaerat itaque iure odio dignissimos odit, distinctio obcaecati?
