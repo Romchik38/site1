@@ -52,6 +52,7 @@ return function ($container) {
         \Romchik38\Site1\Services\Http\Request::class,
         new \Romchik38\Site1\Services\Http\Request(
             $container->get(\Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestServiceInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface::class)
         )
     );

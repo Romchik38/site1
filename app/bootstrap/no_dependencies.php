@@ -194,7 +194,7 @@ return function ($container) {
         \Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory::class)
     );
-    
+
     $container->add(
         \Romchik38\Site1\Models\DTO\Sitemap\SitemapDTOFactory::class,
         new \Romchik38\Site1\Models\DTO\Sitemap\SitemapDTOFactory()
@@ -223,6 +223,14 @@ return function ($container) {
         $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
     );
 
+    $container(
+        \Romchik38\Server\Services\Request\Http\ServerRequestService::class,
+        new \Romchik38\Server\Services\Request\Http\ServerRequestService()
+    );
+    $container->add(
+        \Romchik38\Server\Api\Services\Request\Http\ServerRequestServiceInterface::class,
+        $container->get(\Romchik38\Server\Services\Request\Http\ServerRequestService::class)
+    );
 
     return $container;
 };
