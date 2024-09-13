@@ -39,6 +39,7 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
 
     public function sendRecoveryLink(string $email): void
     {
+        /** @todo replase failed message with real issue. Check all service and controller on output */
         try {
             $entity = $this->entityRepository->getById($this->entityId);
         } catch(NoSuchEntityException $e) {

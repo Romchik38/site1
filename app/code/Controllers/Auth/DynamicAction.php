@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Auth;
 
+use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
+use Romchik38\Server\Api\Services\LoggerServerInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
@@ -19,8 +21,10 @@ use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
+use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
-class DynamicAction extends Action implements DynamicActionInterface {
+class DynamicAction extends Action implements DynamicActionInterface
+{
     private array $methods = [
         'index',
         'logout',
@@ -46,9 +50,9 @@ class DynamicAction extends Action implements DynamicActionInterface {
         private readonly UserRecoveryEmailInterface $userRecoveryEmail,
         private readonly UserRepositoryInterface $userRepository,
         protected readonly RecaptchaInterface $recaptchaService,
+        protected LoggerServerInterface $logger,
         protected array $recaptchas = []
-    ) {
-    }
+    ) {}
 
     public function execute(string $action): string
     {
@@ -88,7 +92,8 @@ class DynamicAction extends Action implements DynamicActionInterface {
     /**
      * Action changepassword
      */
-    protected function changepassword() {
+    protected function changepassword()
+    {
         // 1 check auth
         $userId = $this->session->getUserId();
 
@@ -112,7 +117,7 @@ class DynamicAction extends Action implements DynamicActionInterface {
             return $this->technicalIssues;
         }
         return $this->changePasswordSuccessMessage;
-    } 
+    }
 
     /**
      * Action /auth/logout
@@ -134,40 +139,49 @@ class DynamicAction extends Action implements DynamicActionInterface {
      */
     protected function recovery()
     {
+        /** 1. Emeil present check */
         $email = $this->request->getEmail();
         if ($email === '') {
             return 'Bad request (email not present)';
         }
 
-        /** 
-         * recaptcha check 
-         * 
-         * */
+        /** 2. Recaptcha check */
         $recaptchas = $this->recaptchas['recovery'] ?? [];
-        if(count($recaptchas) !== 1) {
+        if (count($recaptchas) !== 1) {
             throw new MissingRequiredParameterInFileError(
                 'Check config for action auth/recovery: wrong count (expected 1)'
             );
         }
-        $result = $this->recaptchaService->checkReCaptcha($recaptchas[0]);
-        if($result === false) {
+        try {
+            $result = $this->recaptchaService->checkReCaptcha($recaptchas[0]);
+            if ($result === false) {
+                return $this->weWillSend($email);
+            }
+        } catch (RecaptchaException $e) {
+            $this->logger->log(LogLevel::ERROR, 'Error while checkin recaptcha. Service said - ' . $e->getMessage());
+            return $this->technicalIssues;
+        }
+
+        /* 3. Check if email is present in the database */
+        try {
+            $this->userRepository->getByEmail($email);
+        } catch (NoSuchEntityException $e) {
             return $this->weWillSend($email);
         }
 
-        // check if email is present in the database
-        try {
-            $this->userRepository->getByEmail($email);
-        } catch(NoSuchEntityException $e) {
-            return $this->weWillSend($email);
-        }
-        // send email
+        /*  4. Send an email */
         try {
             $this->userRecoveryEmail->sendRecoveryLink($email);
             return $this->weWillSend($email);
         } catch (CantSendRecoveryLinkException $e) {
-            return 'Error: ' . $e->getMessage();
+            $this->logger->log(
+                LogLevel::ERROR,
+                $this::class
+                    . ': Error while sending recovery email. Recovery Service said - '
+                    . $e->getMessage()
+            );
+            return $this->technicalIssues;
         }
-        
     }
 
     /**
@@ -204,7 +218,10 @@ class DynamicAction extends Action implements DynamicActionInterface {
         }
     }
 
-    protected function weWillSend($email): string {
-        return 'We will send recovery instructions to ' . $email . ' if it was provided during registration ( Please, check your email box )';
+    protected function weWillSend($email): string
+    {
+        return 'We will send recovery instructions to '
+            . $email
+            . ' if it was provided during registration ( Please, check your email box )';
     }
 }

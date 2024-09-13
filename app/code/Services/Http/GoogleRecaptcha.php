@@ -48,19 +48,54 @@ class GoogleRecaptcha implements RecaptchaInterface
             );
     }
 
+    /**
+     * Check recaptcha on success
+     * 
+     * @throws RecaptchaException
+     * @return bool
+     */
     public function checkReCaptcha(string $actionName): bool
     {
         $body = $this->request->getParsedBody();
         $tocken = $body['g-recaptcha-response'] ?? '';
         /** 1. no tocken in the request data */
-        if($tocken === '') {
+        if ($tocken === '') {
             return false;
         }
 
-        $dto = $this->getActiveRecaptchaDTOs([$actionName]);
-        $result = $this->getCheck($tocken, $dto[0]);
+        $dtos = $this->getActiveRecaptchaDTOs([$actionName]);
+        $dto = $dtos[0];
+        $result = $this->getCheck($tocken, $dto);
 
-        return true;
+        /** 2. check success */
+        $success = $result['success'] ?? null;
+        if ($success === null) {
+            throw new RecaptchaException('Field success not found in google response. check api');
+        }
+        if ($success === false) {
+            return false;
+        }
+
+        /** 3. Check action name */
+        $action = $result['action'] ?? null;
+        if ($action === null) {
+            throw new RecaptchaException('Field action not found in google response. check api');
+        }
+        if ($action !== $actionName) {
+            throw new RecaptchaException('Unexpected action name: ' . $action . '. Expecting: ' . $actionName);
+        }
+
+        /** 4. Check score */
+        $score = $result['score'] ?? null;
+        if ($score === null) {
+            throw new RecaptchaException('Field score not found in google response. check api');
+        }
+        if (
+            ((float)$score) >= $dto->getScore()
+        ) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -103,39 +138,54 @@ class GoogleRecaptcha implements RecaptchaInterface
         return $recaptchaDTO;
     }
 
-    protected function getCheck(string $tocken, GoogleReCaptchaDTOInterface $dto){
-        $url = 'https://recaptchaenterprise.googleapis.com/v1/projects/'
-            . $dto->getProjectName()
-            . '/assessments?key=' . $dto->getApiKey();
+    /**
+     * Not enterprise google reCaptcha check
+     * 
+     * @throws RecaptchaException if read errors occurs
+     */
+    protected function getCheck(string $tocken, GoogleReCaptchaDTOInterface $dto): array
+    {
+        // $url = 'https://recaptchaenterprise.googleapis.com/v1/projects/'
+        //     . $dto->getProjectName()
+        //     . '/assessments?key=' . $dto->getApiKey();
 
         $url = 'https://www.google.com/recaptcha/api/siteverify';
 
-        $data = array ('secret' => $dto->getSecretKey(), 'response' => $tocken);
+        $data = array('secret' => $dto->getSecretKey(), 'response' => $tocken);
         $data = http_build_query($data);
 
-        $context_options = array (
-                'http' => array (
-                    'method' => 'POST',
-                    'header'=> "Content-type: application/x-www-form-urlencoded\r\n"
-                        . "Content-Length: " . strlen($data) . "\r\n",
-                    'content' => $data
-                    )
-                );
+        $context_options = array(
+            'http' => array(
+                'method' => 'POST',
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n"
+                    . "Content-Length: " . strlen($data) . "\r\n",
+                'content' => $data
+            )
+        );
 
         $context = stream_context_create($context_options);
+        if ($context === null) {
+            throw new RecaptchaException('Can\'t create context for google recaptcha check');
+        }
         $fp = fopen($url, 'r', false, $context);
+        if ($fp === false) {
+            throw new RecaptchaException('Can\'t open url to read: ' . $url . ' while check google recaptcha');
+        }
         $string = '';
         $read = true;
-        while($read === true) {
+        while ($read === true) {
             $read = false;
             $line = fgets($fp);
-            if($line !== false) {
+            if ($line !== false) {
                 $read = true;
                 $string .= $line;
-            } 
+            }
         }
         fclose($fp);
-        $result = json_decode($string);
+        $result = json_decode($string, true);
+        if ($result === false || $result === null) {
+            throw new RecaptchaException('Unexpecting response from google server while checking recaptcha');
+        }
         return $result;
     }
 }
