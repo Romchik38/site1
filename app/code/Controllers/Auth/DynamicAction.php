@@ -147,19 +147,21 @@ class DynamicAction extends Action implements DynamicActionInterface
 
         /** 2. Recaptcha check */
         $recaptchas = $this->recaptchas['recovery'] ?? [];
-        if (count($recaptchas) !== 1) {
+        $countRecaptchas = count($recaptchas);
+        if ($countRecaptchas > 1) {
             throw new MissingRequiredParameterInFileError(
-                'Check config for action auth/recovery: wrong count (expected 1)'
+                'Check config for action auth/recovery: wrong count action names (expected 1 or 0)'
             );
-        }
-        try {
-            $result = $this->recaptchaService->checkReCaptcha($recaptchas[0]);
-            if ($result === false) {
-                return $this->weWillSend($email);
+        } elseif ($countRecaptchas === 1) {
+            try {
+                $result = $this->recaptchaService->checkReCaptcha($recaptchas[0]);
+                if ($result === false) {
+                    return $this->weWillSend($email);
+                }
+            } catch (RecaptchaException $e) {
+                $this->logger->log(LogLevel::ERROR, $this::class . ': Error while checking recaptcha. Service said - ' . $e->getMessage());
+                return $this->technicalIssues;
             }
-        } catch (RecaptchaException $e) {
-            $this->logger->log(LogLevel::ERROR, 'Error while checkin recaptcha. Service said - ' . $e->getMessage());
-            return $this->technicalIssues;
         }
 
         /* 3. Check if email is present in the database */
