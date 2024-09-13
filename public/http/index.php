@@ -2,28 +2,36 @@
 
 declare(strict_types=1);
 
+/**
+ * This is Romchik38 example site1
+ * 
+ * It demonstrates many futures. See the readme.md and doc/ folder
+ */
 require_once __DIR__ . '/../../vendor/autoload.php';
 
+/** 
+ * Init section
+ * 
+ * We do not catch error on this stage. If something went wrong, site should not work
+ * */
 $container = (require_once __DIR__ . '/../../app/bootstrap_http.php')();
+/** init section end */
 
 $server = $container->get(\Romchik38\Server\Api\Servers\Http\HttpServerInterface::class);
 
 /* 
-* At this place can be filter or something else
+* Upcoming features section
 *
 * $server->filter()
 * ...
-* ...
 */
 
-// Start app
-$server->run()->log();
-// End app
+ /**
+ * Execute section
+ * 
+ * All RuntimeExceptions are catched and logged. 
+ * User see a server error page based on a primary design
+ */
 
-//test
-// use Psr\Log\LoggerInterface;
-// use Psr\Log\LogLevel;
-/** @var LoggerInterface $logger */
-// $logger = $container->get(Psr\Log\LoggerInterface::class);
-// $logger->log(LogLevel::ERROR, 'some error from index');
-// $server->log();
+$server->run()->log();
+/** Execute section end */
