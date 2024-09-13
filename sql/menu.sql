@@ -65,6 +65,5 @@ SELECT menu_to_links.*,
 
         menu_to_links.menu_id = 1 AND
         menu_to_links.link_id = menu_links.link_id
-
 ;
 

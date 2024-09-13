@@ -9,7 +9,7 @@ CREATE table users
     email text UNIQUE NOT NULL 
 );
 
---PLEASE add your first user yourself
---  you can do this via /login/register page
+--PLEASE add your first user by yourself
+--  visit /login/register page
 
 SELECT * FROM users;

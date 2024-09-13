@@ -66,3 +66,7 @@ Uses MVC
   60 - white ( background )
   30 - bg-primary ( menu )
   10 - bg-secondary ( buttons etc )
+
+## Google Recaptcha 
+
+Visit `/login/recovery` page. Recovery button is protected by google recaptcha V3
