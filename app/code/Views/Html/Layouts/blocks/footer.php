@@ -77,7 +77,7 @@ return function(array $data = []){
                     </div>
                 </div>
                 <div class="row copyrights text-center">
-                    <div class="col">
+                    <div class="col  mb-3">
                         {$copyrights}
                     </div>
                 </div>
