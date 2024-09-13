@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
-use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Site1\Api\Services\RequestInterface as Site1RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface;
 use Romchik38\Server\Services\Request\Http\ServerRequest;
 
-class Request extends ServerRequest implements RequestInterface {
+class Request extends ServerRequest implements Site1RequestInterface {
 
     public function __construct(
         protected readonly UriFactoryInterface $uriFactory,
@@ -21,25 +20,25 @@ class Request extends ServerRequest implements RequestInterface {
 
     public function getEmail(): string
     {
-        return $_POST[RequestInterface::EMAIL_FIELD] 
-            ?? $_GET[RequestInterface::EMAIL_FIELD]
+        return $_POST[Site1RequestInterface::EMAIL_FIELD] 
+            ?? $_GET[Site1RequestInterface::EMAIL_FIELD]
             ?? '';
     }
 
     public function getEmailHash(): string {
-        return $_GET[RequestInterface::EMAIL_HASH_FIELD] ?? '';
+        return $_GET[Site1RequestInterface::EMAIL_HASH_FIELD] ?? '';
     }
 
     public function getMessage(): string
     {
-        return $_GET[RequestInterface::MESSAGE_FIELD] 
-            ?? $_POST[RequestInterface::MESSAGE_FIELD]
+        return $_GET[Site1RequestInterface::MESSAGE_FIELD] 
+            ?? $_POST[Site1RequestInterface::MESSAGE_FIELD]
             ?? '';
     }
 
     public function getPassword(): string
     {
-        return $_POST[RequestInterface::PASSWORD_FIELD] ?? '';
+        return $_POST[Site1RequestInterface::PASSWORD_FIELD] ?? '';
     }
 
     /**
@@ -65,6 +64,6 @@ class Request extends ServerRequest implements RequestInterface {
      */
     public function getUserName(): string
     {
-        return $_POST[RequestInterface::USERNAME_FIELD] ?? '';
+        return $_POST[Site1RequestInterface::USERNAME_FIELD] ?? '';
     }
 }
