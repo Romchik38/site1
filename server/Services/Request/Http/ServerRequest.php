@@ -12,16 +12,15 @@ class ServerRequest extends Request implements ServerRequestInterface
 {
     public function __construct(
         protected readonly UriFactoryInterface $uriFactory,
-        protected readonly ServerRequestServiceInterface $serverRequestHeadersService
+        protected readonly ServerRequestServiceInterface $serverRequestService
     )
     {
-        parent::__construct($uriFactory);
     }
 
     public function getParsedBody()
     {
         /** 1. retriving $_POST */
-        $headers = $this->serverRequestHeadersService->getRequestHeaders();
+        $headers = $this->serverRequestService->getRequestHeaders();
         if ($headers !== false) {
             $contentType = $headers['Content-Type'] ?? '';
             if (
@@ -33,6 +32,6 @@ class ServerRequest extends Request implements ServerRequestInterface
         }
 
         /** 2. No post data was provided, so sending body content */
-        return $this->serverRequestHeadersService->getBodyContent();
+        return $this->serverRequestService->getBodyContent();
     }
 }
