@@ -31,31 +31,31 @@ class GoogleRecaptcha implements RecaptchaInterface
         protected GoogleReCaptchaDTOFactoryInterface $reCaptchaDTOFactory,
         protected readonly RequestInterface $request
     ) {
-        $this->siteKey = $configData[GoogleReCaptchaDTOInterface::SITE_KEY_FIELD] ??
+        /** required options */
+        $this->type = $configData[GoogleReCaptchaDTOInterface::TYPE] ??
             throw new RecaptchaException(
                 'Check config data: '
-                    . GoogleReCaptchaDTOInterface::SITE_KEY_FIELD
+                    . GoogleReCaptchaDTOInterface::TYPE
             );
         $this->secretKey = $configData[GoogleReCaptchaDTOInterface::SECRET_KEY_FIELD] ??
             throw new RecaptchaException(
                 'Check config data: '
                     . GoogleReCaptchaDTOInterface::SECRET_KEY_FIELD
             );
-        $this->apiKey = $configData[GoogleReCaptchaDTOInterface::API_KEY_FIELD] ??
-            throw new RecaptchaException(
-                'Check config data: '
-                    . GoogleReCaptchaDTOInterface::API_KEY_FIELD
-            );
-        $this->projectName = $configData[GoogleReCaptchaDTOInterface::PROJECT_NAME_FIELD] ??
-            throw new RecaptchaException(
-                'Check config data: '
-                    . GoogleReCaptchaDTOInterface::PROJECT_NAME_FIELD
-            );
-        $this->type = $configData[GoogleReCaptchaDTOInterface::TYPE] ??
-            throw new RecaptchaException(
-                'Check config data: '
-                    . GoogleReCaptchaDTOInterface::TYPE
-            );
+        /** only for enterprise */
+        $this->apiKey = $configData[GoogleReCaptchaDTOInterface::API_KEY_FIELD] ?? '';
+        $this->projectName = $configData[GoogleReCaptchaDTOInterface::PROJECT_NAME_FIELD] ?? '';
+        if ($this->type === GoogleReCaptchaDTOInterface::ENTERPRISE_TYPE) {
+            if ($this->apiKey === '' || $this->projectName === '') {
+                throw new RecaptchaException(
+                    'Check config data: '
+                        . GoogleReCaptchaDTOInterface::API_KEY_FIELD
+                        . ' or ' . GoogleReCaptchaDTOInterface::PROJECT_NAME_FIELD
+                );
+            }
+        }
+        /** optional */
+        $this->siteKey = $configData[GoogleReCaptchaDTOInterface::SITE_KEY_FIELD] ?? '';
     }
 
     /**
