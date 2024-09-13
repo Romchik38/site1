@@ -57,6 +57,9 @@ class GoogleRecaptcha implements RecaptchaInterface
             return false;
         }
 
+        $dto = $this->getActiveRecaptchaDTOs([$actionName]);
+        $result = $this->getCheck($tocken, $dto[0]);
+
         return true;
     }
 
@@ -98,5 +101,41 @@ class GoogleRecaptcha implements RecaptchaInterface
             $this->apiKey
         );
         return $recaptchaDTO;
+    }
+
+    protected function getCheck(string $tocken, GoogleReCaptchaDTOInterface $dto){
+        $url = 'https://recaptchaenterprise.googleapis.com/v1/projects/'
+            . $dto->getProjectName()
+            . '/assessments?key=' . $dto->getApiKey();
+
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+
+        $data = array ('secret' => $dto->getSecretKey(), 'response' => $tocken);
+        $data = http_build_query($data);
+
+        $context_options = array (
+                'http' => array (
+                    'method' => 'POST',
+                    'header'=> "Content-type: application/x-www-form-urlencoded\r\n"
+                        . "Content-Length: " . strlen($data) . "\r\n",
+                    'content' => $data
+                    )
+                );
+
+        $context = stream_context_create($context_options);
+        $fp = fopen($url, 'r', false, $context);
+        $string = '';
+        $read = true;
+        while($read === true) {
+            $read = false;
+            $line = fgets($fp);
+            if($line !== false) {
+                $read = true;
+                $string .= $line;
+            } 
+        }
+        fclose($fp);
+        $result = json_decode($string);
+        return $result;
     }
 }
