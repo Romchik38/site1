@@ -19,11 +19,11 @@ INSERT INTO entities VALUES (2, 'Html_metadata');
 
 INSERT INTO entity_field (field_name, entity_id, value)
     VALUES 
-        ('email_contact_recovery', 1, 'ser@ozone.com.ua'),
-        ('email_contact_main', 1, 'office@ozone.com.ua'),
+        ('email_contact_recovery', 1, 'ser@site1.com'),
+        ('email_contact_main', 1, 'office@site1.com'),
         ('url_domain', 1, 'http://site1.com'),
         ('url_recovery', 1, '/changepassword'),
-        ('phone_number_text', 2, '0-800-500-00-00'),
+        ('phone_number_text', 2, '0-800-500-00-xx'),
         ('address_text', 2, 'Mazepy street 10, Kiev, Ukraine'),
         ('notice', 2, 'free from mobile'),
         ('copyrights_text', 2, '© 2024, Site1.com, LLC.'),
