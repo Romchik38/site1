@@ -6,7 +6,7 @@ declare(strict_types=1);
  * A bootstrap file.
  * 
  * Classes features: 
- *   - do not have dependencies or they are primitive
+ *   - do not have any dependencies or they are primitive
  *   - used in other classes as dependencies
  * 
  */

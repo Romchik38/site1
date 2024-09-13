@@ -2,26 +2,35 @@
 
 declare(strict_types=1);
 
+use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
 use Romchik38\Server\Models\DTO\Email\EmailDTOFactory;
 
 return function ($container) {
     // LOGGERS
+    $configLog = require_once(__DIR__ . '/../config/private/logger.php');
+    $configEmeilRecipient = $configLog['recipient'] ??
+        throw new MissingRequiredParameterInFileError('Check config for logger email recipient');
+    $configEmeilSender = $configLog['sender'] ??
+        throw new MissingRequiredParameterInFileError('Check config for logger email sender');
+
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\EmailLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\EmailLogger(
             4,
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $container->get(\Romchik38\Server\Api\Models\DTO\Email\EmailDTOFactoryInterface::class),
-            'pomahehko.c@gmail.com',
-            'ser@ozone.com.ua',
+            $configEmeilRecipient,
+            $configEmeilSender,
             null
         )
     );
     
+    $configLogFilePath = $configLog['log_file_path'] ??
+        throw new MissingRequiredParameterInFileError('Check config for logger file path');
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
-            __DIR__ . '/../var/default.log',
+            __DIR__ . $configLogFilePath,
             7,
             \Romchik38\Server\Api\Services\Loggers\FileLoggerInterface::DEFAULT_PROTOCOL,
             false,

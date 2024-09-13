@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
-use SebastianBergmann\Diff\ConfigurationException;
 
 return function ($container) {
 
@@ -121,7 +120,7 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Controllers\PageNotFound\DefaultAction::class,
         new \Romchik38\Site1\Controllers\PageNotFound\DefaultAction(
-            $container->get('page-view-404'),
+            $container->get('page-view-404'), // the name doesn't matter
             $container->get(\Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
         )
     );
