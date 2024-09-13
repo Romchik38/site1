@@ -12,6 +12,10 @@ use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
+/**
+ * Not enterprise google reCaptcha check
+ * For enterprise recaptcha redefine getCheck with new logic
+ */
 class GoogleRecaptcha implements RecaptchaInterface
 {
 
@@ -19,6 +23,7 @@ class GoogleRecaptcha implements RecaptchaInterface
     protected string $secretKey;
     protected string $apiKey;
     protected string $projectName;
+    protected string $type;
 
     public function __construct(
         protected VirtualGoogleReCaptchaModelRepositoryInterface $reCaptchaRepository,
@@ -46,6 +51,11 @@ class GoogleRecaptcha implements RecaptchaInterface
                 'Check config data: '
                     . GoogleReCaptchaDTOInterface::PROJECT_NAME_FIELD
             );
+        $this->type = $configData[GoogleReCaptchaDTOInterface::TYPE] ??
+            throw new RecaptchaException(
+                'Check config data: '
+                    . GoogleReCaptchaDTOInterface::TYPE
+            );
     }
 
     /**
@@ -63,11 +73,20 @@ class GoogleRecaptcha implements RecaptchaInterface
             return false;
         }
 
+        /** 2. get DTO */
         $dtos = $this->getActiveRecaptchaDTOs([$actionName]);
         $dto = $dtos[0];
-        $result = $this->getCheck($tocken, $dto);
 
-        /** 2. check success */
+        /** 3. check type */
+        if ($this->type === GoogleReCaptchaDTOInterface::NON_ENTERPRISE_TYPE) {
+            $result = $this->getCheck($tocken, $dto);
+        } elseif ($this->type === GoogleReCaptchaDTOInterface::ENTERPRISE_TYPE) {
+            $result = $this->getCheckEnterprise($tocken, $dto);
+        } else {
+            throw new RecaptchaException('Wrong google recaptcha type. Check config');
+        }
+
+        /** 4. check success */
         $success = $result['success'] ?? null;
         if ($success === null) {
             throw new RecaptchaException('Field success not found in google response. check api');
@@ -76,7 +95,7 @@ class GoogleRecaptcha implements RecaptchaInterface
             return false;
         }
 
-        /** 3. Check action name */
+        /** 5. Check action name */
         $action = $result['action'] ?? null;
         if ($action === null) {
             throw new RecaptchaException('Field action not found in google response. check api');
@@ -85,7 +104,7 @@ class GoogleRecaptcha implements RecaptchaInterface
             throw new RecaptchaException('Unexpected action name: ' . $action . '. Expecting: ' . $actionName);
         }
 
-        /** 4. Check score */
+        /** 6. Check score */
         $score = $result['score'] ?? null;
         if ($score === null) {
             throw new RecaptchaException('Field score not found in google response. check api');
@@ -141,13 +160,13 @@ class GoogleRecaptcha implements RecaptchaInterface
     /**
      * Not enterprise google reCaptcha check
      * 
+     * Expecting in the __construct:
+     *   $this->url = 'https://www.google.com/recaptcha/api/siteverify';
+     * 
      * @throws RecaptchaException if read errors occurs
      */
     protected function getCheck(string $tocken, GoogleReCaptchaDTOInterface $dto): array
     {
-        // $url = 'https://recaptchaenterprise.googleapis.com/v1/projects/'
-        //     . $dto->getProjectName()
-        //     . '/assessments?key=' . $dto->getApiKey();
 
         $url = 'https://www.google.com/recaptcha/api/siteverify';
 
@@ -163,7 +182,32 @@ class GoogleRecaptcha implements RecaptchaInterface
             )
         );
 
-        $context = stream_context_create($context_options);
+        return $this->readData($context_options, $url);
+    }
+
+    /**
+     * Read data for enterprise recaptchas
+     */
+    protected function getCheckEnterprise(string $tocken, GoogleReCaptchaDTOInterface $dto): array
+    {
+        // $url = 'https://recaptchaenterprise.googleapis.com/v1/projects/'
+        //     . $dto->getProjectName()
+        //     . '/assessments?key=' . $dto->getApiKey();
+
+        /** @todo implement this */
+
+        return [];
+    }
+
+    /** 
+     * Make the request to google service an get a response
+     * 
+     * @throws RecaptchaException on errors
+     * @return array parsed json data response
+     */
+    protected function readData(array $context, string $url): array
+    {
+        $context = stream_context_create($context);
         if ($context === null) {
             throw new RecaptchaException('Can\'t create context for google recaptcha check');
         }
