@@ -1,5 +1,10 @@
 'use strict';
 
+/** 
+ * This file is loaded on all pages.
+ * It is responsible to render  Login | Register 
+ */
+
 (() => {
     function escapeHTML(str) {
 
@@ -36,7 +41,6 @@
                             for (var elem of usernameElems) {
                                 elem.innerText = username;
                             }
-
                             for (var elem of notloggedinElems) {
                                 elem.style.display = 'none';
                             }
@@ -47,13 +51,10 @@
                     }
                 }, (err) => {
                     console.log(err);
-
                 })
             }
-
         }, function (error) {
             console.log(error);
-
         });
     });
 })();
