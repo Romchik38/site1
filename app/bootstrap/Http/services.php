@@ -14,7 +14,6 @@ return function ($container) {
             );
         }
     );
-
     $container->add(
         \Romchik38\Server\Api\Services\Redirect\Http\RedirectInterface::class,
         $container->get(Romchik38\Server\Services\Redirect\Http\Redirect::class)
