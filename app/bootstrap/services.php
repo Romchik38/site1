@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
 use Romchik38\Server\Models\DTO\Email\EmailDTOFactory;
+use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 
 return function ($container) {
     // LOGGERS
@@ -77,14 +78,20 @@ return function ($container) {
     );
 
     // USERRECOVERYEMAIL
+    /** config data - we do not make a check here, because it's a shared config */
+    $configRecoveryEmail = require_once(__DIR__ . '/../config/shared/services/user_recovery_email.php');
+    $configRecoveryEmailEntity = $configRecoveryEmail[UserRecoveryEmailInterface::ENTITY_ID_FIELD];
+    $configRecoveryEmailSender = $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_EMAIL_FIELD]; 
+    $configRecoveryEmailDomain = $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_URL_DOMAIN_FIELD];
+    $configRecoveryEmailUrl = $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_URL_FIELD];          
     $container->add(
         \Romchik38\Site1\Services\UserRecoveryEmail::class,
         new \Romchik38\Site1\Services\UserRecoveryEmail(
             $container->get(\Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class),
-            1,
-            'email_contact_recovery',
-            'url_domain',
-            'url_recovery',
+            $configRecoveryEmailEntity,
+            $configRecoveryEmailSender,
+            $configRecoveryEmailDomain,
+            $configRecoveryEmailUrl,
             $container->get(EmailDTOFactory::class),
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
