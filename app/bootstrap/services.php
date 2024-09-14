@@ -13,11 +13,15 @@ return function ($container) {
         throw new MissingRequiredParameterInFileError('Check config for logger email recipient');
     $configEmeilSender = $configLog['sender'] ??
         throw new MissingRequiredParameterInFileError('Check config for logger email sender');
+    $configLogLevelEmail = $configLog['log_level_email'] ??
+        throw new MissingRequiredParameterInFileError('Check config for email log level');
+    $configLogLevelFile = $configLog['log_level_file'] ??
+        throw new MissingRequiredParameterInFileError('Check config for file log level');
 
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\EmailLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\EmailLogger(
-            4,
+            $configLogLevelEmail,
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $container->get(\Romchik38\Server\Api\Models\DTO\Email\EmailDTOFactoryInterface::class),
             $configEmeilRecipient,
@@ -32,7 +36,7 @@ return function ($container) {
         \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\FileLogger(
             __DIR__ . $configLogFilePath,
-            7,
+            $configLogLevelFile,
             \Romchik38\Server\Api\Services\Loggers\FileLoggerInterface::DEFAULT_PROTOCOL,
             false,
             null,
