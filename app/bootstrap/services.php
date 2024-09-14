@@ -8,14 +8,16 @@ use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 
 return function ($container) {
     // LOGGERS
-    $configLog = require_once(__DIR__ . '/../config/private/logger.php');
-    $configEmeilRecipient = $configLog['recipient'] ??
+    $configLogPrivate = require_once(__DIR__ . '/../config/private/logger.php');
+    $configEmeilRecipient = $configLogPrivate['recipient'] ??
         throw new MissingRequiredParameterInFileError('Check config for logger email recipient');
-    $configEmeilSender = $configLog['sender'] ??
+    $configEmeilSender = $configLogPrivate['sender'] ??
         throw new MissingRequiredParameterInFileError('Check config for logger email sender');
-    $configLogLevelEmail = $configLog['log_level_email'] ??
+
+    $configLogShared = require_once(__DIR__ . '/../config/shared/services/logger.php');
+    $configLogLevelEmail = $configLogShared['log_level_email'] ??
         throw new MissingRequiredParameterInFileError('Check config for email log level');
-    $configLogLevelFile = $configLog['log_level_file'] ??
+    $configLogLevelFile = $configLogShared['log_level_file'] ??
         throw new MissingRequiredParameterInFileError('Check config for file log level');
 
     $container->add(
@@ -30,7 +32,7 @@ return function ($container) {
         )
     );
     
-    $configLogFilePath = $configLog['log_file_path'] ??
+    $configLogFilePath = $configLogShared['log_file_path'] ??
         throw new MissingRequiredParameterInFileError('Check config for logger file path');
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
