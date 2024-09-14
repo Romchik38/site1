@@ -77,33 +77,29 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Services\UserRegister::class)
     );
 
-    // USERRECOVERYEMAIL
+    // USER RECOVERY EMAIL
     /** config data - we do not make a check here, because it's a shared config */
-    $configRecoveryEmail = require_once(__DIR__ . '/../config/shared/services/user_recovery_email.php');
-    $configRecoveryEmailEntity = $configRecoveryEmail[UserRecoveryEmailInterface::ENTITY_ID_FIELD];
-    $configRecoveryEmailSender = $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_EMAIL_FIELD]; 
-    $configRecoveryEmailDomain = $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_URL_DOMAIN_FIELD];
-    $configRecoveryEmailUrl = $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_URL_FIELD];          
+    $configRecoveryEmail = require_once(__DIR__ . '/../config/shared/services/user_recovery_email.php');        
     $container->add(
         \Romchik38\Site1\Services\UserRecoveryEmail::class,
         new \Romchik38\Site1\Services\UserRecoveryEmail(
             $container->get(\Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class),
-            $configRecoveryEmailEntity,
-            $configRecoveryEmailSender,
-            $configRecoveryEmailDomain,
-            $configRecoveryEmailUrl,
+            $configRecoveryEmail[UserRecoveryEmailInterface::ENTITY_ID_FIELD],
+            $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_EMAIL_FIELD],
+            $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_URL_DOMAIN_FIELD],
+            $configRecoveryEmail[UserRecoveryEmailInterface::RECOVERY_URL_FIELD],
             $container->get(EmailDTOFactory::class),
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
-
     $container->add(
         \Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class,
         $container->get(\Romchik38\Site1\Services\UserRecoveryEmail::class)
     );
 
+    // STATIC MENU       
     $container->add(
         \Romchik38\Site1\Services\Menu\StaticMenuService::class,
         new \Romchik38\Site1\Services\Menu\StaticMenuService(
