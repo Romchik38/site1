@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 return function ($container) {
+    
     // SERVICES
     $container->add(
         \Romchik38\Server\Services\Session\Http\Session::class,
@@ -30,7 +31,6 @@ return function ($container) {
             /** default response, headers, statusCode */
         )
     );
-
     $container->add(
         \Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class,
         $container->get(\Romchik38\Server\Results\Http\HttpRouterResult::class)
@@ -47,7 +47,16 @@ return function ($container) {
     );
 
 
-    // REQUEST  depends only on this file
+    // REQUEST  depends only on this file or on no_dependencies global
+    $container->add(
+        \Romchik38\Server\Services\Request\Http\ServerRequestService::class,
+        new \Romchik38\Server\Services\Request\Http\ServerRequestService()
+    );
+    $container->add(
+        \Romchik38\Server\Api\Services\Request\Http\ServerRequestServiceInterface::class,
+        $container->get(\Romchik38\Server\Services\Request\Http\ServerRequestService::class)
+    );
+
     $container->add(
         \Romchik38\Site1\Services\Http\Request::class,
         new \Romchik38\Site1\Services\Http\Request(
