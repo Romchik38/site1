@@ -112,7 +112,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\ServerError\DefaultAction::class,
         new \Romchik38\Site1\Controllers\ServerError\DefaultAction(
             $container->get(\Romchik38\Site1\Api\Views\DefaultPageViewInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
+            $container->get(\Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
         )
     );
 
@@ -121,7 +121,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\PageNotFound\DefaultAction::class,
         new \Romchik38\Site1\Controllers\PageNotFound\DefaultAction(
             $container->get('page-view-404'), // the name doesn't matter
-            $container->get(\Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
+            $container->get(\Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class)
         )
     );
 

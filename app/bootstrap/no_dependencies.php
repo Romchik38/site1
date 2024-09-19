@@ -187,12 +187,12 @@ return function ($container) {
     );
 
     $container->add(
-        \Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory::class,
-        new \Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory()
+        \Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTOFactory::class,
+        new \Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTOFactory()
     );
     $container->add(
-        \Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class,
-        $container->get(\Romchik38\Site1\Models\DTO\DefaultView\DefaultViewDTOFactory::class)
+        \Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface::class,
+        $container->get(\Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTOFactory::class)
     );
 
     $container->add(

@@ -4,7 +4,7 @@ namespace Romchik38\Site1\Models\DTO\Login;
 
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Server\Models\DTO;
-use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
+use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;
 

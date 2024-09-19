@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Api\Models\DTO\Sitemap;
 
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
-use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
+use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;
 
 interface SitemapDTOInterface extends DefaultViewDTOInterface

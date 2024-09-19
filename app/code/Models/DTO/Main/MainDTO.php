@@ -4,7 +4,7 @@ namespace Romchik38\Site1\Models\DTO\Main;
 
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
 use Romchik38\Server\Models\DTO;
-use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
+use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Site1\Api\Models\Page\PageModelInterface;
 
 class MainDTO extends DTO implements MainDTOInterface

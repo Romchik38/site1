@@ -9,7 +9,6 @@ use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
 use Romchik38\Server\Api\Services\SitemapInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
-use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOFactoryInterface;

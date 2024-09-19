@@ -6,7 +6,7 @@ namespace Romchik38\Site1\Controllers\ServerError;
 
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
-use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
+use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 
 class DefaultAction extends Action implements DefaultActionInterface

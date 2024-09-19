@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Views\Html\Classes;
 
 use Romchik38\Server\Views\Http\PageView;
-use Romchik38\Site1\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
+use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 use Romchik38\Site1\Api\Views\MetadataInterface;
 
