@@ -1,6 +1,6 @@
 # Todo
 
-[-] session  
+[+] session  
 [-] update app to php-server v1.3.0
 
 ## Session
