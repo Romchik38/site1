@@ -13,13 +13,13 @@ use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 return function (DefaultViewDTOInterface $data) {
 
     /** @var $content we do not escape, because it's alreade html */
-    $content = $data->getContent();
+    $description = htmlentities($data->getDescription());
 
     $html = <<<HTML
     <div class="row">
         <article>
             <div class="container">
-                {$content}
+                {$description}
             </div>
         </article>
     </div>

@@ -11,7 +11,7 @@ use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
  */
 return function (DefaultViewDTOInterface $data) {
     /** @var string $content text of this var must be escaped, because it is a plane message, not html*/
-    $content = $data->getContent();
+    $content = $data->getDescription();
     $contentHtml = htmlspecialchars($content);
 
     $html = <<<HTML

@@ -10,12 +10,16 @@ use Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOInterface;
 
 class SitemapDTOFactory implements SitemapDTOFactoryInterface
 {
-    public function create(string $name, string $description, ControllerDTOInterface $rootControllerDTO, array $menuLinks, string $content = ''): SitemapDTOInterface
+    public function create(
+        string $name, 
+        string $description, 
+        ControllerDTOInterface $rootControllerDTO, 
+        array $menuLinks, 
+    ): SitemapDTOInterface
     {
         return new SitemapDTO(
             $name,
             $description,
-            $content,
             $rootControllerDTO,
             $menuLinks
         );

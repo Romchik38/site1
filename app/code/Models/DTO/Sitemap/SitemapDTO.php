@@ -15,11 +15,9 @@ class SitemapDTO extends DefaultViewDTO implements SitemapDTOInterface
     public function __construct(
         string $name,
         string $description,
-        string $content,
         ControllerDTOInterface $rootControllerDTO,
         array $menuLinks
     ) {
-        $this->data[DefaultViewDTOInterface::DEFAULT_CONTENT_FIELD] = $content;
         $this->data[DefaultViewDTOInterface::DEFAULT_DESCRIPTION_FIELD] = $description;
         $this->data[DefaultViewDTOInterface::DEFAULT_NAME_FIELD] = $name;
         $this->data[SitemapDTOInterface::ROOT_CONTROLLER_DTO_FIELD] = $rootControllerDTO;

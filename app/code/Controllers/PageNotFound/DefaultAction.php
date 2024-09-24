@@ -22,7 +22,7 @@ class DefaultAction extends Action implements DefaultActionInterface
 
         $defaultDTO = $this->defaultViewDTOFactory->create(
             'Page Not Found',
-            '404 Page ( not found on the server )',
+            '404 Error - the page you are requested was not found on the server',
             $responseText
         );
         return $this->defaultPageView

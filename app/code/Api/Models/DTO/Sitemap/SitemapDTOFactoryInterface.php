@@ -12,7 +12,6 @@ interface SitemapDTOFactoryInterface
         string $name,
         string $description,
         ControllerDTOInterface $rootControllerDTO,
-        array $menuLinks,
-        string $content = '',
+        array $menuLinks
     ): SitemapDTOInterface;
 }

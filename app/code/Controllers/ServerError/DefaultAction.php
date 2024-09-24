@@ -18,12 +18,10 @@ class DefaultAction extends Action implements DefaultActionInterface
 
     public function execute(): string
     {
-        $responseText = 'We are sorry. There is an error on our site. Please Try Again later. Or Contact us via email: admin@site1.com';
 
         $defaultDTO = $this->defaultViewDTOFactory->create(
             'Server Error',
-            'Server Error Page',
-            $responseText
+            'We are sorry. There is an error on our site. Please Try Again later or contact us admin@site1.com'
         );
         return $this->defaultPageView
             ->setControllerData($defaultDTO)
