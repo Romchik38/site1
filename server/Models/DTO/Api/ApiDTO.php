@@ -26,4 +26,5 @@ class ApiDTO extends DTO implements ApiDTOInterface
     {
         return $this->data[$this::RESULT_FIELD];
     }
+
 }

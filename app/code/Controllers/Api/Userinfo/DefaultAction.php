@@ -5,6 +5,10 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Controllers\Api\Userinfo;
 
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
+use Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface;
+use Romchik38\Server\Api\Models\DTO\Api\ApiDTOInterface;
+use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
+use Romchik38\Server\Api\Views\ViewInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
@@ -45,7 +49,10 @@ class DefaultAction extends Action implements DefaultActionInterface
 
     public function __construct(
         protected SessionInterface $session,
-        protected UserRepositoryInterface $userRepository
+        protected UserRepositoryInterface $userRepository,
+        protected ApiDTOFactoryInterface $apiDTOFactory,
+        protected DefaultViewDTOFactoryInterface $defaultViewDTOFactory,
+        protected ViewInterface $view
     ) {}
 
     public function execute(): string
@@ -57,11 +64,24 @@ class DefaultAction extends Action implements DefaultActionInterface
         }
 
         try {
+            // 1. Success response
             /** @var UserModelInterface $user */
             $user = $this->userRepository->getById($userId);
             $this->data[$this::USERNAME_FIELD] = $user->getFirstName();
-            return $this->createSuccess($this->data);
+            $apiDTO = $this->apiDTOFactory->create(
+                $this->data,
+                ApiDTOInterface::STATUS_SUCCESS
+            );
+            $viewDTO = $this->defaultViewDTOFactory->create(
+                'User Api point',
+                'Request result. Status: error/success. Result: error description/ success username ',
+                $apiDTO
+            );
+
+            return $this->view->setControllerData($viewDTO)->toString();
+            //return $this->createSuccess($this->data);
         } catch (NoSuchEntityException $e) {
+            // 2. Error response
             return $this->createError($this::SERVER_ERROR);
         }
     }
