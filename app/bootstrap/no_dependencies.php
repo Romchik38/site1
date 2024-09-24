@@ -232,5 +232,11 @@ return function ($container) {
         $container->get(\Romchik38\Server\Services\Mailer\PhpMail::class)
     );
 
+    // VIEWS
+    $container->add(
+        \Romchik38\Server\Views\JsonView::class,
+        new \Romchik38\Server\Views\JsonView()
+    );
+
     return $container;
 };

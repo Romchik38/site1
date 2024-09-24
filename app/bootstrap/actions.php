@@ -104,7 +104,8 @@ return function ($container) {
         new \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction(
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
-            $container->get(\Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface::class)
+            $container->get(\Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface::class),
+            $container->get(\Romchik38\Server\Views\JsonView::class)
         )
     );
 

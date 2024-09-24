@@ -41,7 +41,6 @@ class DefaultAction extends Action implements DefaultActionInterface
         protected SessionInterface $session,
         protected UserRepositoryInterface $userRepository,
         protected ApiDTOFactoryInterface $apiDTOFactory,
-        protected DefaultViewDTOFactoryInterface $defaultViewDTOFactory,
         protected ViewInterface $view
     ) {}
 
