@@ -20,6 +20,7 @@ return function ($container) {
     $configLogLevelFile = $configLogShared['log_level_file'] ??
         throw new MissingRequiredParameterInFileError('Check config for file log level');
 
+    // EMAIL
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\EmailLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\EmailLogger(
@@ -31,7 +32,7 @@ return function ($container) {
             null
         )
     );
-    
+    // FILE
     $configLogFilePath = $configLogShared['log_file_path'] ??
         throw new MissingRequiredParameterInFileError('Check config for logger file path');
     $container->add(
