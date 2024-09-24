@@ -211,11 +211,13 @@ class DynamicAction extends Action implements DynamicActionInterface
         try {
             $user = $this->userRegister->register($userRegisterDTO);
             $this->session->setUserId($user->getId());
+            $this->logger->log(LogLevel::DEBUG, $this::class . ': user with id ' . $user->getId() . ' successfully registered');
             return 'You are successfully registered. Please login';
         } catch (CouldNotSaveException $e) {
-            // do  some log
-
-            // send answer
+            $this->logger->log(
+                LogLevel::ERROR,
+                $this::class . ': Error while saving new user - ' . $e->getMessage()
+            );
             return 'Could not register. Please try later';
         }
     }
