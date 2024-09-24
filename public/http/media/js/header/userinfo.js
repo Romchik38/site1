@@ -33,22 +33,26 @@
             if (response.status === 200) {
                 response.json().then((data) => {
                     var dataKeys = Object.keys(data);
-                    if (dataKeys.indexOf('success') > -1) {
-                        var success = data['success'];
-                        var successKeys = Object.keys(success);
-                        if (successKeys.indexOf('username') > -1) {
-                            var username = success['username'];
-                            for (var elem of usernameElems) {
-                                elem.innerText = username;
-                            }
-                            for (var elem of notloggedinElems) {
-                                elem.style.display = 'none';
-                            }
-                            for (var elem of loggedinElems) {
-                                elem.style.display = 'flex';
+                    if (dataKeys.indexOf('status') > -1) {
+                        if(data['status'] === 'success') {
+                            var result = data['result'];
+                            var resultKeys = Object.keys(result);
+                            if (resultKeys.indexOf('username') > -1) {
+                                var username = result['username'];
+                                for (var elem of usernameElems) {
+                                    elem.innerText = username;
+                                }
+                                for (var elem of notloggedinElems) {
+                                    elem.style.display = 'none';
+                                }
+                                for (var elem of loggedinElems) {
+                                    elem.style.display = 'flex';
+                                }
                             }
                         }
-                    }
+                    } else {
+                        // Unauthorized reques
+                    }   
                 }, (err) => {
                     console.log(err);
                 })

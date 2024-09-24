@@ -7,7 +7,6 @@ namespace Romchik38\Site1\Controllers\Api\Userinfo;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOInterface;
-use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
@@ -17,9 +16,7 @@ use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 
 /**
  * return info about rigistered user 
- * json format:
- * 
- * @todo add more description here
+ * see docs/api/userinfo.md
  * 
  * @api v0.0.2
  * 
@@ -72,14 +69,14 @@ class DefaultAction extends Action implements DefaultActionInterface
             );
             return $this->view->setControllerData($apiDTO)->toString();
         } catch (NoSuchEntityException $e) {
-            // 3. Error response
+            // 3. Error response (session exist, but user was deleted from database)
             $apiDTO = $this->apiDTOFactory->create(
                 $this->apiName,
                 $this->apiDescription,
                 ApiDTOInterface::STATUS_ERROR,
                 $this::SERVER_ERROR,
             );
-
+            $this->session->logout();
             return $this->view->setControllerData($apiDTO)->toString();
         }
     }
