@@ -8,7 +8,6 @@ use Romchik38\Server\Views\Errors\CantCreateViewException;
 
 class JsonView extends View
 {
-    /** @todo test this */
     public function toString(): string
     {
         // 1. To early

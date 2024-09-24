@@ -5,6 +5,7 @@ declare(strict_types=1);
 use PHPUnit\Framework\TestCase;
 use Romchik38\Server\Views\View;
 use Romchik38\Server\Controllers\Controller;
+use Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTO;
 
 class ViewTest extends TestCase
 {
@@ -64,5 +65,23 @@ class ViewTest extends TestCase
         $view->setController($controller, $actionName);
 
         $this->assertSame($actionName, $view->toString());
+    }
+
+    public function testConrollerData()
+    {
+        $view = new class() extends View {
+            public function toString(): string
+            {
+                return $this->controllerData->getName();
+            }
+        };
+
+        $name = 'some name';
+        $description = 'some description';
+        $dto = new DefaultViewDTO($name, $description);
+
+        $view->setControllerData($dto);
+
+        $this->assertSame($name, $view->toString());
     }
 }
