@@ -11,6 +11,10 @@ return function ($container) {
     );
 
     $container->add(
+        \Romchik38\Site1\Api\Services\SessionInterface::class,
+        $container->get(\Romchik38\Site1\Services\Http\Session::class)
+    );
+    $container->add(
         \Romchik38\Server\Api\Services\SessionInterface::class,
         $container->get(\Romchik38\Site1\Services\Http\Session::class)
     );

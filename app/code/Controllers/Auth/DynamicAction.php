@@ -11,7 +11,7 @@ use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Services\PasswordCheckInterface;
-use Romchik38\Server\Api\Services\SessionInterface;
+use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;

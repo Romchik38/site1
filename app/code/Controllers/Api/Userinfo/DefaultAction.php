@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Controllers\Api\Userinfo;
 
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
-use Romchik38\Server\Api\Services\SessionInterface;
+use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;
