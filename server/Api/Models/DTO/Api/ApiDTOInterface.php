@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Server\Api\Models\DTO\Api;
 
-use Romchik38\Server\Api\Models\DTO\DTOInterface;
+use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 
-interface ApiDTOInterface extends DTOInterface
+interface ApiDTOInterface extends DefaultViewDTOInterface
 {
     const STATUS_SUCCESS = 'success';
     const STATUS_ERROR = 'error';

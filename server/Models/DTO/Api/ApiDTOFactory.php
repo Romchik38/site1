@@ -9,8 +9,17 @@ use Romchik38\Server\Api\Models\DTO\Api\ApiDTOInterface;
 
 class ApiDTOFactory implements ApiDTOFactoryInterface
 {
-    public function create(mixed $result, string $status): ApiDTOInterface
-    {
-        return new ApiDTO($result, $status);
+    public function create(
+        string $name,
+        string $description,
+        string $status,
+        mixed $result
+    ): ApiDTOInterface {
+        return new ApiDTO(
+            $name,
+            $description,
+            $status,
+            $result
+        );
     }
 }

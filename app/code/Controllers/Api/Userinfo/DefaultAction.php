@@ -19,23 +19,13 @@ use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
  * return info about rigistered user 
  * json format:
  * 
- * {
- *      "success": [
- *          "username": string
- *      ],
- * }
+ * @todo add more description here
  * 
- * {
- *      "error": string
- * }
- * 
- * @api v0.0.1
+ * @api v0.0.2
  * 
  */
 class DefaultAction extends Action implements DefaultActionInterface
 {
-    const SUCCESS_FIELD = 'success';
-    const ERROR_FIELD = 'error';
     const USERNAME_FIELD = 'username';
 
     const MUST_BE_LOGGED_IN_ERROR = 'You must be logged in to make a request';
@@ -43,8 +33,8 @@ class DefaultAction extends Action implements DefaultActionInterface
 
 
     protected array $data = [];
-    protected array $failedResponse = [];
-    protected array $successResponse = [];
+    protected string $apiName = 'User Api point';
+    protected string $apiDescription = 'Check user data. Status: error/success. Result: error description/ success username ';
 
 
     public function __construct(
@@ -57,44 +47,41 @@ class DefaultAction extends Action implements DefaultActionInterface
 
     public function execute(): string
     {
-
+        // 1. Unauthorized request
         $userId = $this->session->getUserId();
         if ($userId === 0) {
-            return $this->createError($this::MUST_BE_LOGGED_IN_ERROR);
+            $apiDTO = $this->apiDTOFactory->create(
+                $this->apiName,
+                $this->apiDescription,
+                ApiDTOInterface::STATUS_ERROR,
+                $this::MUST_BE_LOGGED_IN_ERROR,
+            );
+
+            return $this->view->setControllerData($apiDTO)->toString();
         }
 
         try {
-            // 1. Success response
+            // 2. Success response
             /** @var UserModelInterface $user */
             $user = $this->userRepository->getById($userId);
             $this->data[$this::USERNAME_FIELD] = $user->getFirstName();
             $apiDTO = $this->apiDTOFactory->create(
+                $this->apiName,
+                $this->apiDescription,
+                ApiDTOInterface::STATUS_SUCCESS,
                 $this->data,
-                ApiDTOInterface::STATUS_SUCCESS
             );
-            $viewDTO = $this->defaultViewDTOFactory->create(
-                'User Api point',
-                'Request result. Status: error/success. Result: error description/ success username ',
-                $apiDTO
-            );
-
-            return $this->view->setControllerData($viewDTO)->toString();
-            //return $this->createSuccess($this->data);
+            return $this->view->setControllerData($apiDTO)->toString();
         } catch (NoSuchEntityException $e) {
-            // 2. Error response
-            return $this->createError($this::SERVER_ERROR);
+            // 3. Error response
+            $apiDTO = $this->apiDTOFactory->create(
+                $this->apiName,
+                $this->apiDescription,
+                ApiDTOInterface::STATUS_ERROR,
+                $this::SERVER_ERROR,
+            );
+
+            return $this->view->setControllerData($apiDTO)->toString();
         }
-    }
-
-    protected function createSuccess(array $data): string
-    {
-        $this->successResponse[$this::SUCCESS_FIELD] = $data;
-        return json_encode($this->successResponse);
-    }
-
-    protected function createError(string $error): string
-    {
-        $this->failedResponse[$this::ERROR_FIELD] = $error;
-        return json_encode($this->failedResponse);
     }
 }
