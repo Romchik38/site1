@@ -212,6 +212,15 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactory::class)
     );
 
+    $container->add(
+        \Romchik38\Server\Models\DTO\Api\ApiDTOFactory::class,
+        new \Romchik38\Server\Models\DTO\Api\ApiDTOFactory()
+    );
+    $container->add(
+        \Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface::class,
+        $container->get(\Romchik38\Server\Models\DTO\Api\ApiDTOFactory::class)
+    );
+
     // SERVICES
     $container->add(
         \Romchik38\Server\Services\Mailer\PhpMail::class,
