@@ -28,10 +28,18 @@ return function (Container $container) {
         )
     );
 
+    $container->add(
+        \Romchik38\Site1\Router\Http\RouterHeaders\Api\Userinfo::class,
+        new \Romchik38\Site1\Router\Http\RouterHeaders\Api\Userinfo(
+            SitemapInterface::ROOT_NAME . $s . 'api' . $s . 'userinfo',
+            HttpRouterInterface::REQUEST_METHOD_GET
+        )
+    );
 
     $headersList = [
         $container->get(\Romchik38\Site1\Router\Http\RouterHeaders\Changepassword::class),
-        $container->get(\Romchik38\Site1\Router\Http\RouterHeaders\Auth::class)
+        $container->get(\Romchik38\Site1\Router\Http\RouterHeaders\Auth::class),
+        $container->get(\Romchik38\Site1\Router\Http\RouterHeaders\Api\Userinfo::class)
     ];
 
     $container->add(
