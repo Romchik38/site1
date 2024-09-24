@@ -50,9 +50,6 @@ class DefaultAction extends Action implements DefaultActionInterface
 
     public function execute(): string
     {
-        $data = [
-            'username' => 'ser'
-        ];
 
         $userId = $this->session->getUserId();
         if ($userId === 0) {
