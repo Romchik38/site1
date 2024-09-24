@@ -20,6 +20,7 @@ class MainDTO extends DTO implements MainDTOInterface
         $this->data[DefaultViewDTOInterface::DEFAULT_DESCRIPTION_FIELD] = $description;
     }
 
+    /** @todo this is null */
     public function getContent(): string
     {
         return $this->getData(DefaultViewDTOInterface::DEFAULT_CONTENT_FIELD);
@@ -40,6 +41,7 @@ class MainDTO extends DTO implements MainDTOInterface
         return $this->getData($this::PAGE_FIELD);
     }
 
+    /** todo this is null */
     public function getActionName(): string
     {
         return $this->getData($this::ACTION_FIELD_NAME);

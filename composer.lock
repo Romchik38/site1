@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4f19a37cc966d79b1a7e4e9cbb4019f4",
+    "content-hash": "ea0d738ac0bd04b7065616b104d5abc9",
     "packages": [
         {
             "name": "psr/container",
@@ -153,16 +153,16 @@
         },
         {
             "name": "romchik38/php-server",
-            "version": "v1.3.0",
+            "version": "v1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Romchik38/server.git",
-                "reference": "3681e70b2b07a5917f2b75f449fa9ad8eee89b44"
+                "reference": "59b2e745b95a368f656dded8ce24f52ef87615de"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Romchik38/server/zipball/3681e70b2b07a5917f2b75f449fa9ad8eee89b44",
-                "reference": "3681e70b2b07a5917f2b75f449fa9ad8eee89b44",
+                "url": "https://api.github.com/repos/Romchik38/server/zipball/59b2e745b95a368f656dded8ce24f52ef87615de",
+                "reference": "59b2e745b95a368f656dded8ce24f52ef87615de",
                 "shasum": ""
             },
             "require": {
@@ -188,10 +188,10 @@
             ],
             "description": "Php files to create a web app under php-fpm ",
             "support": {
-                "source": "https://github.com/Romchik38/server/tree/v1.3.0",
+                "source": "https://github.com/Romchik38/server/tree/v1.4.0",
                 "issues": "https://github.com/Romchik38/server/issues"
             },
-            "time": "2024-09-22T17:20:06+00:00"
+            "time": "2024-09-24T12:58:16+00:00"
         }
     ],
     "packages-dev": [
