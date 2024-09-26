@@ -36,13 +36,13 @@ class DefaultPageView extends PageView implements DefaultPageViewInterface
         }
     }
 
-    protected function prepareMetaData(DefaultViewDTOInterface $data): void
+    protected function prepareMetaData(): void
     {
         /** Header */
-        $this->createHeader($data);
+        $this->createHeader($this->controllerData);
         /** Menu */
-        $this->createNav($data);
+        $this->createNav($this->controllerData);
         /** Footer */
-        $this->createFooter($data);
+        $this->createFooter($this->controllerData);
     }
 }
