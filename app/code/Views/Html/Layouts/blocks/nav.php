@@ -15,8 +15,8 @@ return function (array $data = []) {
     }
 
     /**
-     * shows whick link is active 
-     * checke in braedcumbs
+     * shows which link is active 
+     * check in breadcumbs
      * used in menu
      */
     $activeUrl = '';
@@ -133,7 +133,7 @@ return function (array $data = []) {
                             <a class="link-notloggedin-create text-white-50" href="/login/register">Register</a>
                         </div>
                         <div class="header-user-loggedin justify-content-center text-white-50">
-                            <span>Hello,&nbsp</span><a class="text-white-50" href="/login/index"><span class="user-name-field me-3">User_name</span></a>
+                            <span>Hello,&nbsp;</span><a class="text-white-50" href="/login/index"><span class="user-name-field me-3">User_name</span></a>
                             <form action="/auth/logout" method="post">
                                 <button class="btn btn-light py-0 align-top px-1" type="submit">Log out</button>
                             </form>
