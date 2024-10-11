@@ -1,3 +1,4 @@
 # Todo
 
-- check html syntax for all pages
+[-] check html syntax for all pages  
+[-] phpstan  
