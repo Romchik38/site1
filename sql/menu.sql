@@ -6,7 +6,7 @@ CREATE table menu
 
 CREATE table menu_links
 (
-    -- link with id 0 is a default parent lonk and shouldn't be displayed
+    -- link with id 0 is a default parent link and shouldn't be displayed
     -- so 0 can't be in menu_to_links.link_id
     link_id serial PRIMARY KEY,
     name text NOT NULL UNIQUE, 
