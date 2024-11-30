@@ -123,14 +123,14 @@ return function ($container) {
 
     // Sitemap
     $container->add(
-        \Romchik38\Server\Services\Sitemap\Sitemap::class,
-        new \Romchik38\Server\Services\Sitemap\Sitemap(
+        \Romchik38\Server\Services\Mappers\Sitemap\Sitemap::class,
+        new \Romchik38\Server\Services\Mappers\Sitemap\Sitemap(
             $container->get(Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOFactoryInterface::class)
         )
     );
     $container->add(
-        \Romchik38\Server\Api\Services\SitemapInterface::class,
-        $container->get(\Romchik38\Server\Services\Sitemap\Sitemap::class)
+        \Romchik38\Server\Api\Services\Mappers\SitemapInterface::class,
+        $container->get(\Romchik38\Server\Services\Mappers\Sitemap\Sitemap::class)
     );
 
     // GoogleReCaptcha
@@ -156,23 +156,24 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)
         )
     );
+
     $container->add(
-        \Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface::class,
+        \Romchik38\Server\Api\Models\DTO\Http\Link\LinkDTOCollectionInterface::class,
         $container->get(\Romchik38\Site1\Services\Mappers\LinkDTOCollection::class)
     );
     
     // Breadcumb
     $container->add(
-        \Romchik38\Server\Services\Breadcrumb\Http\Breadcrumb::class,
-        new \Romchik38\Server\Services\Breadcrumb\Http\Breadcrumb(
-            $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class),
-            $container->get(\Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface::class),
-            $container->get(\Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface::class)            
+        \Romchik38\Server\Services\Mappers\Breadcrumb\Http\Breadcrumb::class,
+        new \Romchik38\Server\Services\Mappers\Breadcrumb\Http\Breadcrumb(
+            $container->get(\Romchik38\Server\Api\Services\Mappers\SitemapInterface::class),
+            $container->get(\Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactoryInterface::class),
+            $container->get(\Romchik38\Server\Api\Models\DTO\Http\Link\LinkDTOCollectionInterface::class)            
         )
     );
     $container->add(
-        \Romchik38\Server\Api\Services\Breadcrumb\Http\BreadcrumbInterface::class,
-        $container->get(\Romchik38\Server\Services\Breadcrumb\Http\Breadcrumb::class)
+        \Romchik38\Server\Api\Services\Mappers\Breadcrumb\Http\BreadcrumbInterface::class,
+        $container->get(\Romchik38\Server\Services\Mappers\Breadcrumb\Http\Breadcrumb::class)
     );
 
     return $container;

@@ -10,13 +10,13 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
-use Romchik38\Server\Api\Services\SitemapInterface;
+use Romchik38\Server\Api\Services\Mappers\SitemapInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Views\Http\Errors\CannotCreateMetadataError;
-use Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface;
-use Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOInterface;
-use Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface;
-use Romchik38\Server\Api\Services\Breadcrumb\Http\BreadcrumbInterface;
+use Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactoryInterface;
+use Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOInterface;
+use Romchik38\Server\Api\Models\DTO\Http\Link\LinkDTOCollectionInterface;
+use Romchik38\Server\Api\Services\Mappers\Breadcrumb\Http\BreadcrumbInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface;
@@ -117,5 +117,4 @@ class Metadata implements MetadataInterface
             $copyrights
         );
     }
-
 }

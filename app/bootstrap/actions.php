@@ -90,7 +90,7 @@ return function ($container) {
     $container->add(
         Romchik38\Site1\Controllers\Sitemap\DefaultAction::class,
         new Romchik38\Site1\Controllers\Sitemap\DefaultAction(
-            $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class),
+            $container->get(\Romchik38\Server\Api\Services\Mappers\SitemapInterface::class),
             $container->get(\Romchik38\Site1\Api\Views\SitemapViewInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOFactoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)

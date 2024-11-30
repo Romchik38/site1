@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Views\Html\Tamplates\Sitemap;
 
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
-use Romchik38\Server\Api\Services\SitemapInterface;
+use Romchik38\Server\Api\Services\Mappers\SitemapInterface;
 use Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOInterface;
 
 /**

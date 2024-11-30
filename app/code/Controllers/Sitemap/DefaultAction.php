@@ -6,7 +6,7 @@ namespace Romchik38\Site1\Controllers\Sitemap;
 
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
-use Romchik38\Server\Api\Services\SitemapInterface;
+use Romchik38\Server\Api\Services\Mappers\SitemapInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksInterface;

@@ -178,12 +178,13 @@ return function ($container) {
     );
 
     $container->add(
-        \Romchik38\Server\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactory::class,
-        new \Romchik38\Server\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactory
+        
+        \Romchik38\Server\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactory::class,
+        new \Romchik38\Server\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactory
     );
     $container->add(
-        \Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface::class,
-        $container->get(\Romchik38\Server\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactory::class)
+        \Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactoryInterface::class,
+        $container->get(\Romchik38\Server\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactory::class)
     );
 
     
