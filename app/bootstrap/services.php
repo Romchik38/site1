@@ -180,7 +180,8 @@ return function ($container) {
     $container->add(
         \Romchik38\Server\Services\Mappers\LinkTree\Http\LinkTree::class,
         new \Romchik38\Server\Services\Mappers\LinkTree\Http\LinkTree(
-            new Romchik38\Server\Models\DTO\Http\LinkTree\LinkTreeDTOFactory
+            new Romchik38\Server\Models\DTO\Http\LinkTree\LinkTreeDTOFactory,
+            $container->get(\Romchik38\Server\Api\Models\DTO\Http\Link\LinkDTOCollectionInterface::class)
         )
     );
     $container->add(

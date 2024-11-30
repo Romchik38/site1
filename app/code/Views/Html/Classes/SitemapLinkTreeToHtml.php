@@ -34,40 +34,39 @@ final class SitemapLinkTreeToHtml implements SitemapLinkTreeInterface
         $rootControllerDTO = $this->controllerTreeService->getRootControllerDTO($controller);
         $linkTreeDTO = $this->linkTreeService->getLinkTreeDTO($rootControllerDTO);
 
-        return 'hey';
-        //return $this->buildHtml($linkTreeDTO);
+        return $this->buildHtml($linkTreeDTO);
     }
 
-    // protected function buildHtml(LinkTreeDTOInterface $linkTreeDTO): string
-    // {
-    //     return '<ul>' . $this->createRow($linkTreeDTO) . '</ul>';
-    // }
+    protected function buildHtml(LinkTreeDTOInterface $linkTreeDTO): string
+    {
+        return '<ul>' . $this->createRow($linkTreeDTO) . '</ul>';
+    }
 
-    // /** 
-    //  * Recursively creates html <li> and <ul> tags
-    //  * 
-    //  * @return string <li>inner html</li>
-    //  */
-    // protected function createRow(LinkTreeDTOInterface $element): string
-    // {
-    //     $children = $element->getChildren();
-    //     $description = $element->getDescription();
-    //     $url = $element->getUrl();
+    /** 
+     * Recursively creates html <li> and <ul> tags
+     * 
+     * @return string <li>inner html</li>
+     */
+    protected function createRow(LinkTreeDTOInterface $element): string
+    {
+        $children = $element->getChildren();
+        $description = $element->getDescription();
+        $url = $element->getUrl();
 
-    //     // 1. the element has not children
-    //     if (count($children) === 0) {
-    //         $elemNameHtml = '<a href="' . htmlspecialchars($url) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($description) . '</a>';
-    //         $lastElementHtml = '<li>' . $elemNameHtml . '</li>';
-    //         return $lastElementHtml;
-    //     }
+        // 1. the element has not children
+        if (count($children) === 0) {
+            $elemNameHtml = '<a href="' . htmlspecialchars($url) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($description) . '</a>';
+            $lastElementHtml = '<li>' . $elemNameHtml . '</li>';
+            return $lastElementHtml;
+        }
 
-    //     // 2. the element has children
-    //     $rowNameHtml = '<a href="' . htmlspecialchars($url) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($description) . '</a>';
-    //     $rowElementsHtml = [];
-    //     foreach ($children as $child) {
-    //         $rowElemHtml = $this->createRow($child);
-    //         $rowElementsHtml[] = $rowElemHtml;
-    //     }
-    //     return '<li>' . $rowNameHtml . '<ul>' . implode('', $rowElementsHtml) . '</ul></li>';
-    // }
+        // 2. the element has children
+        $rowNameHtml = '<a href="' . htmlspecialchars($url) . '" title="' . htmlspecialchars($description) . '">' . htmlspecialchars($description) . '</a>';
+        $rowElementsHtml = [];
+        foreach ($children as $child) {
+            $rowElemHtml = $this->createRow($child);
+            $rowElementsHtml[] = $rowElemHtml;
+        }
+        return '<li>' . $rowNameHtml . '<ul>' . implode('', $rowElementsHtml) . '</ul></li>';
+    }
 }

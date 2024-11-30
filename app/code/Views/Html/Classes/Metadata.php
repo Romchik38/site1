@@ -9,12 +9,9 @@ use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
-use Romchik38\Server\Api\Services\Mappers\SitemapInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Views\Http\Errors\CannotCreateMetadataError;
-use Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOInterface;
-use Romchik38\Server\Api\Models\DTO\Http\Link\LinkDTOCollectionInterface;
 use Romchik38\Server\Api\Services\Mappers\Breadcrumb\Http\BreadcrumbInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
@@ -23,7 +20,6 @@ use Romchik38\Site1\Api\Views\MetadataInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Nav\NavDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Nav\NavDTOInterface;
-use Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface;
 use Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface;
 use Romchik38\Site1\Services\Errors\Menu\CouldNotCreateMenu;
 
@@ -42,10 +38,6 @@ class Metadata implements MetadataInterface
         int $entityId,
         protected LoggerInterface $logger,
         protected StaticMenuServiceInterface $staticMenuService,
-        protected SitemapInterface $sitemapService,
-        protected BreadcrumbDTOFactoryInterface $breadcrumbDTOFactory,
-        protected readonly MenuLinksRepositoryInterface $menuLinksRepository,
-        protected readonly LinkDTOCollectionInterface $linkDTOCollection,
         protected readonly BreadcrumbInterface $breadcrumbService
     ) {
         // Header
