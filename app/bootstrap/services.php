@@ -152,7 +152,9 @@ return function ($container) {
     // Link DTO Collection
     $container->add(
         \Romchik38\Site1\Services\Mappers\LinkDTOCollection::class,
-        new \Romchik38\Site1\Services\Mappers\LinkDTOCollection
+        new \Romchik38\Site1\Services\Mappers\LinkDTOCollection(
+            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)
+        )
     );
     $container->add(
         \Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface::class,
@@ -167,6 +169,10 @@ return function ($container) {
             $container->get(\Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface::class),
             $container->get(\Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface::class)            
         )
+    );
+    $container->add(
+        \Romchik38\Server\Api\Services\Breadcrumb\Http\BreadcrumbInterface::class,
+        $container->get(\Romchik38\Server\Services\Breadcrumb\Http\Breadcrumb::class)
     );
 
     return $container;

@@ -16,6 +16,7 @@ use Romchik38\Server\Views\Http\Errors\CannotCreateMetadataError;
 use Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOInterface;
 use Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface;
+use Romchik38\Server\Api\Services\Breadcrumb\Http\BreadcrumbInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface;
@@ -45,7 +46,8 @@ class Metadata implements MetadataInterface
         protected SitemapInterface $sitemapService,
         protected BreadcrumbDTOFactoryInterface $breadcrumbDTOFactory,
         protected readonly MenuLinksRepositoryInterface $menuLinksRepository,
-        protected readonly LinkDTOCollectionInterface $linkDTOCollection
+        protected readonly LinkDTOCollectionInterface $linkDTOCollection,
+        protected readonly BreadcrumbInterface $breadcrumbService
     ) {
         // Header
         try {
@@ -59,23 +61,7 @@ class Metadata implements MetadataInterface
 
     public function getBreadcrumbs(ControllerInterface $controller, string $action): BreadcrumbDTOInterface
     {
-
-        $controllerDTO = $this->sitemapService->getOnlyLineRootControllerDTO($controller, $action);
-
-
-        $menuLinks = $this->linkDTOCollection->getLinksByPaths([]);
-
-        /** @var MenuLinksInterface[] $menuLinks */
-        $menuLinks = $this->menuLinksRepository->list('', []);
-        $menuLinksHash = [];
-        foreach ($menuLinks as $menuLink) {
-            $menuLinksHash[$menuLink->getUrl()] = $menuLink;
-        }
-
-
-        $breadcrumbDTO = $this->mapControllerDTOtoBreadcrumbDTO($controllerDTO, null, $menuLinksHash);
-
-        return $breadcrumbDTO;
+        return $this->breadcrumbService->getBreadcrumbDTO($controller, $action);
     }
 
     public function getHeaderData(): HeaderDTOInterface
@@ -132,49 +118,4 @@ class Metadata implements MetadataInterface
         );
     }
 
-    protected function mapControllerDTOtoBreadcrumbDTO(
-        ControllerDTOInterface $controllerDTO,
-        BreadcrumbDTOInterface|null $prev,
-        array $hash
-    ): BreadcrumbDTOInterface {
-
-        $name = $controllerDTO->getName();
-        $path = $controllerDTO->getPath();
-
-        array_push($path, $name);
-
-        $firstPath = $path[0] ?? null;
-        if ($firstPath === SitemapInterface::ROOT_NAME) {
-            $path = array_slice($path, 1);
-        }
-
-        if ($name === SitemapInterface::ROOT_NAME) {
-            $name = 'home';
-        }
-
-        $url = '/' . implode('/', $path);
-
-        /** @var MenuLinksInterface $menuLink */
-        $menuLink = $hash[$url] ?? null;
-        $description = '';
-        if ($menuLink !== null) {
-            $name = $menuLink->getName();
-            $description = $menuLink->getDescription();
-        }
-
-        $element = $this->breadcrumbDTOFactory->create(
-            $name,
-            $description,
-            $url,
-            $prev
-        );
-
-        $children = $controllerDTO->getChildren();
-        if (count($children) > 0) {
-            $child = $children[0];
-            return $this->mapControllerDTOtoBreadcrumbDTO($child, $element, $hash);
-        } else {
-            return $element;
-        }
-    }
 }
