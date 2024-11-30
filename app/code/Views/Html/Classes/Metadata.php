@@ -15,6 +15,7 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Views\Http\Errors\CannotCreateMetadataError;
 use Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOInterface;
+use Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\Header\HeaderDTOFactoryInterface;
@@ -43,7 +44,8 @@ class Metadata implements MetadataInterface
         protected StaticMenuServiceInterface $staticMenuService,
         protected SitemapInterface $sitemapService,
         protected BreadcrumbDTOFactoryInterface $breadcrumbDTOFactory,
-        protected readonly MenuLinksRepositoryInterface $menuLinksRepository
+        protected readonly MenuLinksRepositoryInterface $menuLinksRepository,
+        protected readonly LinkDTOCollectionInterface $linkDTOCollection
     ) {
         // Header
         try {
@@ -59,6 +61,9 @@ class Metadata implements MetadataInterface
     {
 
         $controllerDTO = $this->sitemapService->getOnlyLineRootControllerDTO($controller, $action);
+
+
+        $menuLinks = $this->linkDTOCollection->getLinksByPaths([]);
 
         /** @var MenuLinksInterface[] $menuLinks */
         $menuLinks = $this->menuLinksRepository->list('', []);

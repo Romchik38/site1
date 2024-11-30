@@ -149,5 +149,25 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Services\Http\GoogleRecaptcha::class)
     );
 
+    // Link DTO Collection
+    $container->add(
+        \Romchik38\Site1\Services\Mappers\LinkDTOCollection::class,
+        new \Romchik38\Site1\Services\Mappers\LinkDTOCollection
+    );
+    $container->add(
+        \Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface::class,
+        $container->get(\Romchik38\Site1\Services\Mappers\LinkDTOCollection::class)
+    );
+    
+    // Breadcumb
+    $container->add(
+        \Romchik38\Server\Services\Breadcrumb\Http\Breadcrumb::class,
+        new \Romchik38\Server\Services\Breadcrumb\Http\Breadcrumb(
+            $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class),
+            $container->get(\Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface::class),
+            $container->get(\Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface::class)            
+        )
+    );
+
     return $container;
 };

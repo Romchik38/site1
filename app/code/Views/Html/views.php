@@ -17,7 +17,8 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Services\Menu\StaticMenuServiceInterface::class),
             $container->get(\Romchik38\Server\Api\Services\SitemapInterface::class),
             $container->get(\Romchik38\Server\Api\Models\DTO\Html\Breadcrumb\BreadcrumbDTOFactoryInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)
+            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class),
+            $container->get(\Romchik38\Server\Api\Models\DTO\Html\Link\LinkDTOCollectionInterface::class)
         )
     );
     $container->add(
