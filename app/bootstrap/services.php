@@ -176,5 +176,18 @@ return function ($container) {
         $container->get(\Romchik38\Server\Services\Mappers\Breadcrumb\Http\Breadcrumb::class)
     );
 
+    // LinkTree
+    $container->add(
+        \Romchik38\Server\Services\Mappers\LinkTree\Http\LinkTree::class,
+        new \Romchik38\Server\Services\Mappers\LinkTree\Http\LinkTree(
+            new Romchik38\Server\Models\DTO\Http\LinkTree\LinkTreeDTOFactory
+        )
+    );
+    $container->add(
+        \Romchik38\Server\Api\Services\Mappers\LinkTree\Http\LinkTreeInterface::class,
+        $container->get(\Romchik38\Server\Services\Mappers\LinkTree\Http\LinkTree::class)
+
+    );
+
     return $container;
 };

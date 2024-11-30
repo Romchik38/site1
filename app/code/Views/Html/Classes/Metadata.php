@@ -7,7 +7,6 @@ namespace Romchik38\Site1\Views\Html\Classes;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
-use Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Server\Api\Services\Mappers\SitemapInterface;

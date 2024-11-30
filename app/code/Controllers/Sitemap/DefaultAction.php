@@ -23,13 +23,16 @@ class DefaultAction extends Action implements DefaultActionInterface
         protected readonly SitemapInterface $sitemapService,
         protected readonly DefaultPageViewInterface $view,
         protected readonly SitemapDTOFactoryInterface $sitemapDTOFactory,
-        protected readonly MenuLinksRepositoryInterface $menuLinksRepository
+        protected readonly MenuLinksRepositoryInterface $menuLinksRepository,
+        protected readonly SitemapLinkTreeInterface $sitemapLinkTree
     ) {}
 
     public function execute(): string
     {
         $result = $this->sitemapService
             ->getRootControllerDTO($this->getController());
+
+        $output = $this->sitemapLinkTree->getSitemapLinkTree($this->getController());
 
         /** @var MenuLinksInterface[] $menuLinks */
         $menuLinks = $this->menuLinksRepository->list('', []);

@@ -15,7 +15,7 @@ final class LinkDTOCollection implements LinkDTOCollectionInterface
         protected readonly MenuLinksRepositoryInterface $menuLinksRepository
     ) {}
 
-    public function getLinksByPaths(array $paths): array
+    public function getLinksByPaths(array $paths = []): array
     {
         $menuLinks = $this->menuLinksRepository->list('', []);
         $linkDTOs = [];

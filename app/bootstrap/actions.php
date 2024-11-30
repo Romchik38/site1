@@ -93,7 +93,8 @@ return function ($container) {
             $container->get(\Romchik38\Server\Api\Services\Mappers\SitemapInterface::class),
             $container->get(\Romchik38\Site1\Api\Views\SitemapViewInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Sitemap\SitemapDTOFactoryInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)
+            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Controllers\Sitemap\SitemapLinkTreeInterface::class)
         )
     );
 
