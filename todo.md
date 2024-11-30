@@ -6,6 +6,7 @@
   - Controller replace `RequestInterface` with `ServerRequestInterface`
   - Refactor all files, that uses `RequestInterface` consts
   - Remove `RequestInterface`
+- registration with the same login shows an error on frontend `duplicate key users_email_key`
 
 ## Next
 

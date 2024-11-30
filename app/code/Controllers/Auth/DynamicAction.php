@@ -14,13 +14,16 @@ use Romchik38\Site1\Api\Services\PasswordCheckInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
+use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
-use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
+use Romchik38\Site1\Application\UserPasswordCheck\Credentials;
+use Romchik38\Site1\Application\UserPasswordCheck\PasswordCheckService;
+use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 class DynamicAction extends Action implements DynamicActionInterface
@@ -44,7 +47,7 @@ class DynamicAction extends Action implements DynamicActionInterface
 
     public function __construct(
         private readonly RequestInterface $request,
-        private readonly PasswordCheckInterface $passwordCheck,
+        private readonly PasswordCheckService $passwordCheck,
         private readonly SessionInterface $session,
         private readonly UserRegisterInterface $userRegister,
         private readonly UserRecoveryEmailInterface $userRecoveryEmail,
@@ -73,14 +76,13 @@ class DynamicAction extends Action implements DynamicActionInterface
      */
     protected function index()
     {
-        // 1. Get Request Data
-        $password = $this->request->getPassword();
-        $userName = $this->request->getUserName();
-        if ($userName === '' || $password === '') {
+        $command = Credentials::fromRequest($this->request->getQueryParams());
+        try {
+            $userId = $this->passwordCheck->checkCredentials($command);
+        } catch (InvalidArgumentException) {
             return $this->failedMessage;
         }
 
-        $userId = $this->passwordCheck->checkCredentials($userName, $password);
         if ($userId > 0) {
             $this->session->setUserId($userId);
             return $this->successMessage;

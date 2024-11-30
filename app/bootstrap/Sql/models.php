@@ -38,14 +38,15 @@ return function ($container) {
         function ($container) {
             return new \Romchik38\Site1\Models\Sql\User\UserRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Api\Models\User\UserFactoryInterface::class),
+                $container->get(\Romchik38\Site1\Domain\User\UserFactoryInterface::class),
                 'users',
                 'user_id'
             );
         }
     );
+    
     $container->add(
-        \Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class,
+        \Romchik38\Site1\Domain\User\UserRepositoryInterface::class,
         $container->get(\Romchik38\Site1\Models\Sql\User\UserRepository::class)
     );
 

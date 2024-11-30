@@ -57,24 +57,11 @@ return function ($container) {
         $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class)
     );
 
-    // PASSWORDCHECK
-    $container->add(
-        \Romchik38\Site1\Services\PasswordCheck::class,
-        new \Romchik38\Site1\Services\PasswordCheck(
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
-        )
-    );
-
-    $container->add(
-        \Romchik38\Site1\Api\Services\PasswordCheckInterface::class,
-        $container->get(\Romchik38\Site1\Services\PasswordCheck::class)
-    );
-
     // USERREGISTER
     $container->add(
         \Romchik38\Site1\Services\UserRegister::class,
         new \Romchik38\Site1\Services\UserRegister(
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
     );

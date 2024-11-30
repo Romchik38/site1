@@ -5,11 +5,10 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Models\Sql\User;
 
 use Romchik38\Server\Models\Sql\Repository;
-use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;
-use Romchik38\Site1\Api\Models\User\UserFactoryInterface;
-use Romchik38\Server\Api\Models\DatabaseInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Domain\User\UserRepositoryInterface;
+use Romchik38\Site1\Domain\User\VO\Username;
 
 class UserRepository extends Repository implements UserRepositoryInterface
 {
@@ -37,16 +36,16 @@ class UserRepository extends Repository implements UserRepositoryInterface
         return array_shift($arr);
     }
 
-    public function getByUserName(string $userName): UserModelInterface
+    public function getByUserName(Username $username): UserModelInterface
     {
         $arr = $this->list(
             'WHERE ' 
             . UserModelInterface::USER_NAME_FIELD 
             .' = $1', 
-            [$userName]
+            [$username()]
         );
         if (count($arr) === 0) {
-            throw new NoSuchEntityException('row with user_name ' . $userName
+            throw new NoSuchEntityException('row with user_name ' . $username()
                 . ' do not present in the ' . $this->table . ' table');
         }
 

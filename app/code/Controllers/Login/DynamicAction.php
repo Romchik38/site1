@@ -11,7 +11,7 @@ use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
-use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
+use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\ReCaptcha\ReCaptchaDTOInterface;

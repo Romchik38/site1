@@ -31,6 +31,10 @@ return function(){
     $servicesHttp = require_once(__DIR__ . '/bootstrap/Http/services.php');
     $servicesHttp($container);
     
+    //Applications
+    $applications = require_once(__DIR__ . '/bootstrap/applications.php');
+    $applications($container);
+
     // VIEWS
     $views = require_once(__DIR__ . '/code/Views/Html/views.php');
     $views($container);

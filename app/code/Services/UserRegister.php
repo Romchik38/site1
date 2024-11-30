@@ -8,12 +8,13 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Site1\Api\Services\UserRegisterInterface;
-use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
+use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Models\User\UserModelInterface;
+use Romchik38\Site1\Domain\User\VO\Username;
 
 class UserRegister implements UserRegisterInterface {
 
@@ -55,7 +56,7 @@ class UserRegister implements UserRegisterInterface {
     public function checkAvailableUsername(string $username): bool
     {
         try {
-            $user = $this->userRepository->getByUserName($username);
+            $this->userRepository->getByUserName(new Username($username));
             // username is not available
             return false;
         } catch (NoSuchEntityException $e){

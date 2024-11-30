@@ -35,7 +35,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class)
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class)
         )
     );
 
@@ -49,7 +49,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
             $configLoginDynamicGoogleReCaptchas
         )
@@ -63,11 +63,11 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Auth\DynamicAction::class,
         new \Romchik38\Site1\Controllers\Auth\DynamicAction(
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
-            $container->get(\Romchik38\Site1\Api\Services\PasswordCheckInterface::class),
+            $container->get(\Romchik38\Site1\Application\UserPasswordCheck\PasswordCheckService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\UserRegisterInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
             $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class),
             $configAuthDynamicGoogleReCaptchas
@@ -81,7 +81,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
@@ -101,7 +101,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction::class,
         new \Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction(
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\User\UserRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface::class),
             $container->get(\Romchik38\Server\Views\JsonView::class)
         )

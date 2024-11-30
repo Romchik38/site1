@@ -12,7 +12,8 @@ use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Models\User\UserRepositoryInterface;
+use Romchik38\Site1\Domain\User\UserRepositoryInterface;
+
 use Psr\Log\LogLevel;
 
 class DefaultAction extends Action implements DefaultActionInterface
