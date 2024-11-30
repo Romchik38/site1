@@ -11,7 +11,7 @@ use Romchik38\Server\Api\Views\ViewInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Models\User\UserModelInterface;
+use Romchik38\Site1\Domain\User\UserModelInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 
 /**

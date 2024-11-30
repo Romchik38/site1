@@ -3,7 +3,7 @@
 namespace Romchik38\Site1\Api\Services;
 
 use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
-use Romchik38\Site1\Api\Models\User\UserModelInterface;
+use Romchik38\Site1\Domain\User\UserModelInterface;
 
 interface UserRegisterInterface
 {

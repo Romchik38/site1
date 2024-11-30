@@ -6,7 +6,7 @@ use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTO;
 use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Site1\Api\Models\User\UserModelInterface;
+use Romchik38\Site1\Domain\User\UserModelInterface;
 
 class LoginDTO extends DefaultViewDTO implements LoginDTOInterface
 {

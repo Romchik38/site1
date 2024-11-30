@@ -2,7 +2,7 @@
 
 namespace Romchik38\Site1\Api\Models\DTO\Login;
 
-use Romchik38\Site1\Api\Models\User\UserModelInterface;
+use Romchik38\Site1\Domain\User\UserModelInterface;
 
 interface LoginDTOFactoryInterface {
     public function create(

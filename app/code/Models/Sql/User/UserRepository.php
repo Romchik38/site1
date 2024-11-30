@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Models\Sql\User;
 
 use Romchik38\Server\Models\Sql\Repository;
-use Romchik38\Site1\Api\Models\User\UserModelInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Domain\User\UserModelInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Username;
 

@@ -7,7 +7,7 @@ namespace Romchik38\Site1\Models\DTO\Login;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Models\DTO\Login\LoginDTO;
-use Romchik38\Site1\Api\Models\User\UserModelInterface;
+use Romchik38\Site1\Domain\User\UserModelInterface;
 
 class LoginDTOFactory implements LoginDTOFactoryInterface
 {
