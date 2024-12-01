@@ -20,7 +20,7 @@ final class Firstname
 
         $check = preg_match($this::PATTERN, $firstname);
         if ($check === 0 || $check === false) {
-            throw new InvalidArgumentException('Check field: ' . $this::ERROR_MESSAGE);
+            throw new InvalidArgumentException($this::ERROR_MESSAGE);
         }
     }
 

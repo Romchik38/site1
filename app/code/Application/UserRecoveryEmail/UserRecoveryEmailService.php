@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Services;
+namespace Romchik38\Site1\Application\UserRecoveryEmail;
 
+use InvalidArgumentException;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
@@ -19,8 +20,10 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
+use Romchik38\Site1\Domain\User\UserRepositoryInterface;
+use Romchik38\Site1\Domain\User\VO\Email;
 
-class UserRecoveryEmail implements UserRecoveryEmailInterface {
+class UserRecoveryEmailService {
 
     const FAILED_MESSAGE = 'Recovery message can not be send via technical issues';
 
@@ -33,13 +36,31 @@ class UserRecoveryEmail implements UserRecoveryEmailInterface {
         protected EmailDTOFactoryInterface $emailDTOFactory,
         protected MailerInterface $mailer,
         protected RepositoryInterface $recoveryRepository,
-        protected LoggerInterface $logger
+        protected LoggerInterface $logger,
+        protected readonly UserRepositoryInterface $userRepository
     ){        
     }
 
-    public function sendRecoveryLink(string $email): void
+    /**
+     * @throws InvalidArgumentException
+     */
+    public function sendRecoveryLink(RecoveryEmail $command): void
     {
-        /** @todo replase failed message with real issue. Check all service and controller on output */
+        $email = new Email($command->email);
+
+        /* 3. Check if email is present in the database */
+        try {
+            $this->userRepository->getByEmail($email());
+        } catch (NoSuchEntityException $e) {
+            throw new NoSuchEmailException(sprintf(
+                'Email %s do not exist',
+                $command->email
+            ));
+        }
+        
+        /** 
+         * @todo replase failed message with real issue. Check all service and controller on output 
+         * */
         try {
             $entity = $this->entityRepository->getById($this->entityId);
         } catch(NoSuchEntityException $e) {

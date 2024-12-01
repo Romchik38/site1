@@ -12,10 +12,8 @@ use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
-use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
@@ -24,10 +22,13 @@ use Romchik38\Site1\Application\UserChangePassword\CouldNonChangePassword;
 use Romchik38\Site1\Application\UserChangePassword\UserChangePassword;
 use Romchik38\Site1\Application\UserPasswordCheck\Credentials;
 use Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService;
+use Romchik38\Site1\Application\UserRecoveryEmail\NoSuchEmailException;
+use Romchik38\Site1\Application\UserRecoveryEmail\RecoveryEmail;
+use Romchik38\Site1\Application\UserRecoveryEmail\SendEmail;
+use Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService;
 use Romchik38\Site1\Application\UserRegister\CouldNotRegisterException;
 use Romchik38\Site1\Application\UserRegister\Register;
 use Romchik38\Site1\Application\UserRegister\UsernameAlreadyInUseException;
-use Romchik38\Site1\Application\UserRegister\UsernameAvailability;
 use Romchik38\Site1\Application\UserRegister\UserRegisterService;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
@@ -56,7 +57,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         private readonly UserPasswordCheckService $passwordCheck,
         private readonly SessionInterface $session,
         private readonly UserRegisterService $userRegister,
-        private readonly UserRecoveryEmailInterface $userRecoveryEmail,
+        private readonly UserRecoveryEmailService $userRecoveryEmail,
         private readonly UserRepositoryInterface $userRepository,
         protected readonly RecaptchaInterface $recaptchaService,
         protected LoggerServerInterface $logger,
@@ -144,11 +145,8 @@ class DynamicAction extends Action implements DynamicActionInterface
      */
     protected function recovery()
     {
-        /** 1. Emeil present check */
-        $email = $this->request->getEmail();
-        if ($email === '') {
-            return 'Bad request (email not present)';
-        }
+        /** 1. Email present check */
+        $command = RecoveryEmail::fromRequest($this->request->getQueryParams());
 
         /** 2. Recaptcha check */
         $recaptchas = $this->recaptchas['recovery'] ?? [];
@@ -161,7 +159,7 @@ class DynamicAction extends Action implements DynamicActionInterface
             try {
                 $result = $this->recaptchaService->checkReCaptcha($recaptchas[0]);
                 if ($result === false) {
-                    return $this->weWillSend($email);
+                    return $this->weWillSend($command->email);
                 }
             } catch (RecaptchaException $e) {
                 $this->logger->log(LogLevel::ERROR, $this::class . ': Error while checking recaptcha. Service said - ' . $e->getMessage());
@@ -169,17 +167,14 @@ class DynamicAction extends Action implements DynamicActionInterface
             }
         }
 
-        /* 3. Check if email is present in the database */
-        try {
-            $this->userRepository->getByEmail($email);
-        } catch (NoSuchEntityException $e) {
-            return $this->weWillSend($email);
-        }
-
         /*  4. Send an email */
         try {
-            $this->userRecoveryEmail->sendRecoveryLink($email);
-            return $this->weWillSend($email);
+            $this->userRecoveryEmail->sendRecoveryLink($command);
+            return $this->weWillSend($command->email);
+        } catch(InvalidArgumentException $e){
+            return 'Check recovery parameters: ' . $e->getMessage();
+        } catch(NoSuchEmailException) {
+            return $this->weWillSend($command->email);
         } catch (CantSendRecoveryLinkException $e) {
             $this->logger->log(
                 LogLevel::ERROR,

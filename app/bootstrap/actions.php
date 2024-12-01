@@ -66,7 +66,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Application\UserRegister\UserRegisterService::class),
-            $container->get(\Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class),
+            $container->get(\Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService::class),
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
             $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class),
