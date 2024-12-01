@@ -8,8 +8,8 @@ return function ($container) {
     
     // PASSWORDCHECK
     $container->add(
-        \Romchik38\Site1\Application\UserPasswordCheck\PasswordCheckService::class,
-        new \Romchik38\Site1\Application\UserPasswordCheck\PasswordCheckService(
+        \Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class,
+        new \Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService(
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class)
         )
     );

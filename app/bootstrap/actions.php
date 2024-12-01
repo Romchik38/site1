@@ -63,7 +63,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Auth\DynamicAction::class,
         new \Romchik38\Site1\Controllers\Auth\DynamicAction(
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
-            $container->get(\Romchik38\Site1\Application\UserPasswordCheck\PasswordCheckService::class),
+            $container->get(\Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Application\UserRegister\UserRegisterService::class),
             $container->get(\Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class),

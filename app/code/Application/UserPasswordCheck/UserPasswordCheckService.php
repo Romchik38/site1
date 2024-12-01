@@ -9,7 +9,7 @@ use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Password;
 use Romchik38\Site1\Domain\User\VO\Username;
 
-class PasswordCheckService
+class UserPasswordCheckService
 {
     public function __construct(private UserRepositoryInterface $userRepository) {}
 

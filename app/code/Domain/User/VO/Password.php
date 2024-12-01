@@ -8,11 +8,19 @@ use Romchik38\Server\Models\Errors\InvalidArgumentException;
 
 final class Password
 {
+    protected const PATTERN = '/^(?=.*[_`$%^*\'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*\']{8,}$/';
+    protected const ERROR_MESSAGE = 'Password must be at least 8 characters long, contain at least one lowercase, uppercase letter, number and a specal character from _`$%^*\'';
+
     public function __construct(
         public readonly string $password
     ) {
         if (strlen($password) === 0) {
             throw new InvalidArgumentException('param password is empty');
+        }
+
+        $check = preg_match($this::PATTERN, $password);
+        if ($check === 0 || $check === false) {
+            throw new InvalidArgumentException('Check field: ' . $this::ERROR_MESSAGE);
         }
     }
 

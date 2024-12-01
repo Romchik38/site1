@@ -12,7 +12,7 @@ final class Id
         public readonly int $id
     ) {
         if ($id === 0) {
-            throw new InvalidArgumentException('param id is invalid');
+            throw new InvalidArgumentException('id is invalid');
         }
     }
 
