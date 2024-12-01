@@ -12,7 +12,7 @@ final class Password
         public readonly string $password
     ) {
         if (strlen($password) === 0) {
-            throw new InvalidArgumentException('param password is empy');
+            throw new InvalidArgumentException('param password is empty');
         }
     }
 

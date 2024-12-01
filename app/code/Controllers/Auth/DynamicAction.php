@@ -10,19 +10,22 @@ use Romchik38\Server\Api\Services\LoggerServerInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
-use Romchik38\Site1\Api\Services\PasswordCheckInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Services\UserRegisterInterface;
 use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Site1\Application\UserPasswordCheck\Credentials;
 use Romchik38\Site1\Application\UserPasswordCheck\PasswordCheckService;
+use Romchik38\Site1\Application\UserRegister\CouldNotRegisterException;
+use Romchik38\Site1\Application\UserRegister\Register;
+use Romchik38\Site1\Application\UserRegister\UsernameAlreadyInUseException;
+use Romchik38\Site1\Application\UserRegister\UsernameAvailability;
+use Romchik38\Site1\Application\UserRegister\UserRegisterService;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
@@ -49,7 +52,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         private readonly RequestInterface $request,
         private readonly PasswordCheckService $passwordCheck,
         private readonly SessionInterface $session,
-        private readonly UserRegisterInterface $userRegister,
+        private readonly UserRegisterService $userRegister,
         private readonly UserRecoveryEmailInterface $userRecoveryEmail,
         private readonly UserRepositoryInterface $userRepository,
         protected readonly RecaptchaInterface $recaptchaService,
@@ -194,33 +197,26 @@ class DynamicAction extends Action implements DynamicActionInterface
     protected function register()
     {
         // 1 Check username availability
-        $userName = $this->request->getUserName();
-        if ($userName === '') {
-            return 'Bad request (username not present)';
-        }
-        $isAvailable = $this->userRegister->checkAvailableUsername($userName);
-        if ($isAvailable === false) {
-            return 'Sorry, username ' . $userName . '  already in use';
-        }
+        $command = Register::fromRequest($this->request->getQueryParams());
         // 2 If Error
-        $userRegisterDTO = $this->request->getUserRegisterData();
-        try {
-            $this->userRegister->checkUserInformation($userRegisterDTO);
-        } catch (IncorrectFieldError $e) {
-            return $e->getMessage();
-        }
+        // $userRegisterDTO = $this->request->getUserRegisterData();
+        // try {
+        //     $this->userRegister->checkUserInformation($userRegisterDTO);
+        // } catch (IncorrectFieldError $e) {
+        //     return $e->getMessage();
+        // }
         // 3 Ok
         try {
-            $user = $this->userRegister->register($userRegisterDTO);
-            $this->session->setUserId($user->getId());
-            $this->logger->log(LogLevel::DEBUG, $this::class . ': user with id ' . $user->getId() . ' successfully registered');
+            $userId = $this->userRegister->register($command);
+            $this->session->setUserId($userId());
+            $this->logger->log(LogLevel::DEBUG, $this::class . ': user with id ' . $userId() . ' successfully registered');
             return 'You are successfully registered. Please login';
-        } catch (CouldNotSaveException $e) {
-            $this->logger->log(
-                LogLevel::ERROR,
-                $this::class . ': Error while saving new user - ' . $e->getMessage()
-            );
-            return 'Could not register. Please try later';
+        } catch(InvalidArgumentException) {
+            return 'Bad request';
+        } catch(UsernameAlreadyInUseException) {
+            return 'Sorry, username ' . $command->username . '  already in use';
+        } catch (CouldNotRegisterException $e) {
+            return 'Could not register. Check provided information: ' . $e->getMessage();
         }
     }
 

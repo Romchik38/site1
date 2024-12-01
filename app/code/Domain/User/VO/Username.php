@@ -12,7 +12,7 @@ final class Username
         public readonly string $username
     ) {
         if (strlen($username) === 0) {
-            throw new InvalidArgumentException('param username is empy');
+            throw new InvalidArgumentException('param username is empty');
         }
     }
 
