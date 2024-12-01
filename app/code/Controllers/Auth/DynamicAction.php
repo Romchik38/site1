@@ -19,6 +19,9 @@ use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
+use Romchik38\Site1\Application\UserChangePassword\Change;
+use Romchik38\Site1\Application\UserChangePassword\CouldNonChangePassword;
+use Romchik38\Site1\Application\UserChangePassword\UserChangePassword;
 use Romchik38\Site1\Application\UserPasswordCheck\Credentials;
 use Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService;
 use Romchik38\Site1\Application\UserRegister\CouldNotRegisterException;
@@ -57,6 +60,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         private readonly UserRepositoryInterface $userRepository,
         protected readonly RecaptchaInterface $recaptchaService,
         protected LoggerServerInterface $logger,
+        protected readonly UserChangePassword $userChangePassword,
         protected array $recaptchas = []
     ) {}
 
@@ -97,7 +101,7 @@ class DynamicAction extends Action implements DynamicActionInterface
     /**
      * Action changepassword
      */
-    protected function changepassword()
+    protected function changepassword(): string
     {
         // 1 check auth
         $userId = $this->session->getUserId();
@@ -106,21 +110,17 @@ class DynamicAction extends Action implements DynamicActionInterface
             return $this->changepasswordFailedMessage;
         }
         // 2 check if field is present
-        $password = $this->request->getPassword();
-        if ($password === '') {
-            return $this->changepasswordBadRequest;
-        }
+        $command = Change::fromRequest($userId, $this->request->getQueryParams());
         // 3 check password requirements
         try {
-            $this->userRegister->checkPasswordChange($password);
-        } catch (IncorrectFieldError $e) {
-            return $e->getMessage();
-        }
-        // 4 set new password
-        $changeResult = $this->userRegister->changepassword($userId, $password);
-        if ($changeResult === false) {
+            // $this->userRegister->checkPasswordChange($password);
+            $this->userChangePassword->changepassword($command);
+        } catch (InvalidArgumentException) {
+            return $this->changepasswordBadRequest;
+        } catch (CouldNonChangePassword $e) {
             return $this->technicalIssues;
         }
+
         return $this->changePasswordSuccessMessage;
     }
 
