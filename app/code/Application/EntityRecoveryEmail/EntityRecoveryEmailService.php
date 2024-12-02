@@ -23,73 +23,49 @@ use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Email;
 
-class UserRecoveryEmailService {
+class UserRecoveryEmailService
+{
 
     const FAILED_MESSAGE = 'Recovery message can not be send via technical issues';
 
+    protected readonly string $sender;
+    protected readonly string $urlDomain;
+    protected readonly string $url;
+
     public function __construct(
         protected EntityRepositoryInterface $entityRepository,
-        protected int $entityId,
-        protected string $recoveryFieldName,
-        protected string $recoveryUrlDomain,
-        protected string $recoveryUrl,
+        int $entityId,
+        string $recoveryFieldName,
+        string $recoveryUrlDomain,
+        string $recoveryUrl,
         protected EmailDTOFactoryInterface $emailDTOFactory,
         protected MailerInterface $mailer,
         protected RepositoryInterface $recoveryRepository,
-        protected LoggerInterface $logger,
-        protected readonly UserRepositoryInterface $userRepository
-    ){        
+        protected LoggerInterface $logger
+    ) {
+        $entity = $this->entityRepository->getById($entityId);
+        $this->sender = $entity->$recoveryFieldName;
+        $this->urlDomain = $entity->$recoveryUrlDomain;
+        $this->url = $entity->$recoveryUrl;
+
+        if (
+            is_null($this->sender) ||
+            is_null($this->urlDomain) ||
+            is_null($this->url)
+        ) {
+            throw new \RuntimeException('Error while init Entity Recovery Email Service');
+        }
     }
 
     /**
-     * @throws InvalidArgumentException
+     * @throws CantCreateRecoveryEmailTemplate On storage errors
      */
-    public function sendRecoveryLink(RecoveryEmail $command): void
+    public function createEmailTemplate(CreateEmailTemplate $command): void
     {
-        // $email = new Email($command->email);
-
-        // /* 3. Check if email is present in the database */
-        // try {
-        //     $this->userRepository->getByEmail($email());
-        // } catch (NoSuchEntityException $e) {
-        //     throw new NoSuchEmailException(sprintf(
-        //         'Email %s do not exist',
-        //         $command->email
-        //     ));
-        // }
-        
-        /** 
-         * @todo replase failed message with real issue. Check all service and controller on output 
-         * */
-        try {
-            $entity = $this->entityRepository->getById($this->entityId);
-        } catch(NoSuchEntityException $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage());
-            throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
-        }
-        
-        $recoverySender = $entity->{$this->recoveryFieldName};
-        $recoveryUrlDomain = $entity->{$this->recoveryUrlDomain};
-        $recoveryUrl = $entity->{$this->recoveryUrl};
-
-        if ($recoverySender === null || 
-            $recoveryUrlDomain === null || 
-            $recoveryUrl === null
-        ) {
-            $this->logger->log(LogLevel::ERROR, 'Entity fields (sender, domain, url) for email do not configured correctly. A message can\'t be send.');
-            throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
-        }
-
-        try {
-            $hash = $this->createLink($email);
-        } catch (CantCreateHashException $e) {
-            $this->logger->log(LogLevel::ERROR, $e->getMessage());
-            throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
-        }
 
         $subject = 'Recovery link to create a new password';
-        $message = '<p>Hello, user. <br>This is a recovery email. Link below. <br><a href="' 
-            . $recoveryUrlDomain . $recoveryUrl . '?' . RequestInterface::EMAIL_HASH_FIELD 
+        $message = '<p>Hello, user. <br>This is a recovery email. Link below. <br><a href="'
+            . $recoveryUrlDomain . $recoveryUrl . '?' . RequestInterface::EMAIL_HASH_FIELD
             . '=' . $hash . '&'
             . RequestInterface::EMAIL_FIELD . '=' . urlencode($email)
             . '">Click here to recovery your password</a></p>'
@@ -115,10 +91,10 @@ class UserRecoveryEmailService {
             $this->logger->log(LogLevel::ERROR, 'Recovery email to <' . $email . '> was not sent. Mailer said: ' . $e->getMessage());
             throw new CantSendRecoveryLinkException($this::FAILED_MESSAGE);
         }
-
     }
 
-    protected function createLink(string $email): string {        
+    protected function createLink(string $email): string
+    {
         $hash = base64_encode(random_bytes(RecoveryEmailInterface::HASH_LENGTH));
         try {
             /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
@@ -127,11 +103,11 @@ class UserRecoveryEmailService {
             $recoveryEmail->setHash($hash);
             try {
                 $this->recoveryRepository->save($recoveryEmail);
-            } catch (CouldNotSaveException $e){
+            } catch (CouldNotSaveException $e) {
                 $this->logger->log(LogLevel::ERROR, $e->getMessage());
                 throw new CantCreateHashException('Could not save hash to database for email' . $email);
             }
-        } catch (NoSuchEntityException $e) {            
+        } catch (NoSuchEntityException $e) {
             /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail */
             $recoveryEmail = $this->recoveryRepository->create();
             $recoveryEmail->setEmail($email);
@@ -139,7 +115,7 @@ class UserRecoveryEmailService {
             $recoveryEmail->setHash($hash);
             try {
                 $this->recoveryRepository->add($recoveryEmail);
-            } catch (CouldNotAddException $e){
+            } catch (CouldNotAddException $e) {
                 $this->logger->log(LogLevel::ERROR, $e->getMessage());
                 throw new CantCreateHashException('Could not add a hash to database for email' . $email);
             }
@@ -148,7 +124,8 @@ class UserRecoveryEmailService {
         return urlencode($hash);
     }
 
-    public function checkHash(string $email, string $hash): bool {
+    public function checkHash(string $email, string $hash): bool
+    {
         try {
             /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
             $recoveryEmail = $this->recoveryRepository->getById($email);
@@ -160,7 +137,7 @@ class UserRecoveryEmailService {
             if (($now - $hashTime) > RecoveryEmailInterface::VALID_TIME) {
                 return false;
             }
-        } catch (NoSuchEntityException $e) {  
+        } catch (NoSuchEntityException $e) {
             return false;
         }
 

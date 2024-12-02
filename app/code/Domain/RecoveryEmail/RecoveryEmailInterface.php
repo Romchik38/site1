@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Api\Models\RecoveryEmail;
+namespace Romchik38\Site1\Domain\RecoveryEmail;
 
 use Romchik38\Server\Api\Models\ModelInterface;
 

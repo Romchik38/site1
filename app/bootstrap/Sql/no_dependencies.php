@@ -40,7 +40,7 @@ return function ($container) {
         new Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory()
     );
     $container->add(
-        \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailFactoryInterface::class,
+        \Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class)
     );
     

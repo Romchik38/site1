@@ -74,14 +74,14 @@ return function ($container) {
         function ($container) {
             return new \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailFactoryInterface::class),
+                $container->get(\Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailFactoryInterface::class),
                 'recovery_email',
                 'email'
             );
         }
     );
     $container->add(
-        \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailRepositoryInterface::class,
+        \Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailRepositoryInterface::class,
         $container->get(\Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailRepository::class)
     );
 

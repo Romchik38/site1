@@ -39,7 +39,7 @@ return function ($container) {
             $configRecoveryEmail['recovery_url'],
             $container->get(EmailDTOFactory::class),
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
