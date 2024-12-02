@@ -24,7 +24,7 @@ use Romchik38\Site1\Application\UserRecoveryEmail\Views\RecoveryEmail;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Email;
 
-class UserRecoveryEmailService
+class EntityRecoveryEmailService
 {
     public const EMAIL_HASH_FIELD = 'email_hash';
     public const FAILED_MESSAGE = 'Recovery message can not be send via technical issues';

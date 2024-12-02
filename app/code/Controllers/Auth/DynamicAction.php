@@ -29,7 +29,7 @@ use Romchik38\Site1\Application\UserEmail\UserEmailService;
 use Romchik38\Site1\Application\UserPasswordCheck\Credentials;
 use Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService;
 use Romchik38\Site1\Application\UserRecoveryEmail\CreateEmailTemplate;
-use Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService;
+use Romchik38\Site1\Application\UserRecoveryEmail\EntityRecoveryEmailService;
 use Romchik38\Site1\Application\UserRegister\CouldNotRegisterException;
 use Romchik38\Site1\Application\UserRegister\Register;
 use Romchik38\Site1\Application\UserRegister\UsernameAlreadyInUseException;
@@ -60,7 +60,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         private readonly UserPasswordCheckService $passwordCheck,
         private readonly SessionInterface $session,
         private readonly UserRegisterService $userRegister,
-        private readonly UserRecoveryEmailService $userRecoveryEmail,
+        private readonly EntityRecoveryEmailService $entityRecoveryEmailService,
         protected readonly RecaptchaInterface $recaptchaService,
         protected LoggerServerInterface $logger,
         protected readonly UserChangePassword $userChangePassword,
@@ -191,7 +191,7 @@ class DynamicAction extends Action implements DynamicActionInterface
             return $this->technicalIssues;
         }
 
-        $template = $this->userRecoveryEmail->createEmailTemplate(
+        $template = $this->entityRecoveryEmailService->createEmailTemplate(
             new CreateEmailTemplate(
                 $user->email,
                 $user->firstname,

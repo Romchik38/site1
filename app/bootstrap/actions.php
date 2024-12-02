@@ -40,8 +40,8 @@ return function ($container) {
     );
 
     $configLoginDynamicGoogleReCaptchas = $configGoogleReCaptchas[\Romchik38\Site1\Controllers\Login\DynamicAction::class] ??
-        throw new MissingRequiredParameterInFileError('Check config for action class: ' 
-        . \Romchik38\Site1\Controllers\Login\DynamicAction::class);
+        throw new MissingRequiredParameterInFileError('Check config for action class: '
+            . \Romchik38\Site1\Controllers\Login\DynamicAction::class);
     $container->add(
         \Romchik38\Site1\Controllers\Login\DynamicAction::class,
         new \Romchik38\Site1\Controllers\Login\DynamicAction(
@@ -57,8 +57,8 @@ return function ($container) {
 
     // Auth
     $configAuthDynamicGoogleReCaptchas = $configGoogleReCaptchas[\Romchik38\Site1\Controllers\Auth\DynamicAction::class] ??
-        throw new MissingRequiredParameterInFileError('Check config for action class: ' 
-        . \Romchik38\Site1\Controllers\Auth\DynamicAction::class);
+        throw new MissingRequiredParameterInFileError('Check config for action class: '
+            . \Romchik38\Site1\Controllers\Auth\DynamicAction::class);
     $container->add(
         \Romchik38\Site1\Controllers\Auth\DynamicAction::class,
         new \Romchik38\Site1\Controllers\Auth\DynamicAction(
@@ -66,10 +66,13 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Application\UserRegister\UserRegisterService::class),
-            $container->get(\Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService::class),
-            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
+            $container->get(\Romchik38\Site1\Application\UserRecoveryEmail\EntityRecoveryEmailService::class),
             $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
             $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class),
+            $container->get(\Romchik38\Site1\Application\UserChangePassword\UserChangePassword::class),
+            $container->get(\Romchik38\Site1\Application\UserEmail\UserEmailService::class),
+            $container->get(\Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService::class),
+            $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $configAuthDynamicGoogleReCaptchas
         )
     );
