@@ -11,7 +11,6 @@ interface RecoveryEmailInterface extends ModelInterface {
     const HASH_FIELD = 'hash';
     const UPDATED_AT_FIELD = 'updated_at';
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
-    const HASH_LENGTH = 20;
     const VALID_TIME = 1800; // 30 min
 
     public function getEmail(): string;

@@ -93,36 +93,36 @@ class UserRecoveryEmailService
         }
     }
 
-    protected function createLink(string $email): string
-    {
-        $hash = base64_encode(random_bytes(RecoveryEmailInterface::HASH_LENGTH));
-        try {
-            /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
-            $recoveryEmail = $this->recoveryRepository->getById($email);
-            $recoveryEmail->setUpdatedAt();
-            $recoveryEmail->setHash($hash);
-            try {
-                $this->recoveryRepository->save($recoveryEmail);
-            } catch (CouldNotSaveException $e) {
-                $this->logger->log(LogLevel::ERROR, $e->getMessage());
-                throw new CantCreateHashException('Could not save hash to database for email' . $email);
-            }
-        } catch (NoSuchEntityException $e) {
-            /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail */
-            $recoveryEmail = $this->recoveryRepository->create();
-            $recoveryEmail->setEmail($email);
-            $recoveryEmail->setUpdatedAt();
-            $recoveryEmail->setHash($hash);
-            try {
-                $this->recoveryRepository->add($recoveryEmail);
-            } catch (CouldNotAddException $e) {
-                $this->logger->log(LogLevel::ERROR, $e->getMessage());
-                throw new CantCreateHashException('Could not add a hash to database for email' . $email);
-            }
-        }
+    // protected function createLink(string $email): string
+    // {
+    //     $hash = base64_encode(random_bytes(RecoveryEmailInterface::HASH_LENGTH));
+    //     try {
+    //         /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail*/
+    //         $recoveryEmail = $this->recoveryRepository->getById($email);
+    //         $recoveryEmail->setUpdatedAt();
+    //         $recoveryEmail->setHash($hash);
+    //         try {
+    //             $this->recoveryRepository->save($recoveryEmail);
+    //         } catch (CouldNotSaveException $e) {
+    //             $this->logger->log(LogLevel::ERROR, $e->getMessage());
+    //             throw new CantCreateHashException('Could not save hash to database for email' . $email);
+    //         }
+    //     } catch (NoSuchEntityException $e) {
+    //         /** @var \Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface $recoveryEmail */
+    //         $recoveryEmail = $this->recoveryRepository->create();
+    //         $recoveryEmail->setEmail($email);
+    //         $recoveryEmail->setUpdatedAt();
+    //         $recoveryEmail->setHash($hash);
+    //         try {
+    //             $this->recoveryRepository->add($recoveryEmail);
+    //         } catch (CouldNotAddException $e) {
+    //             $this->logger->log(LogLevel::ERROR, $e->getMessage());
+    //             throw new CantCreateHashException('Could not add a hash to database for email' . $email);
+    //         }
+    //     }
 
-        return urlencode($hash);
-    }
+    //     return urlencode($hash);
+    // }
 
     public function checkHash(string $email, string $hash): bool
     {
