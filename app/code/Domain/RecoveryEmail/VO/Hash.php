@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Domain\RecoveryEmail\VO;
 
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
-use Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailInterface;
 
 final class Hash
 { 

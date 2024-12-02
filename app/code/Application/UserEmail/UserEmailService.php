@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Application\UserEmail;
 
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Application\UserEmail\Views\RecoveryDTO;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Email;
 use Romchik38\Site1\Domain\User\VO\Firstname;
@@ -20,7 +21,7 @@ final class UserEmailService
      * @throws InvalidArgumentException
      * @throws NoSuchEmailException
      */
-    public function checkEmailForRecovery(FindEmail $command): Firstname
+    public function checkEmailForRecovery(FindEmail $command): RecoveryDTO
     {
         $email = new Email($command->email);
 
@@ -34,6 +35,9 @@ final class UserEmailService
             ));
         }
 
-        return new Firstname($user->getFirstName());
+        return new RecoveryDTO(
+            $user->getEmail(),
+            $user->getFirstName()
+        );
     }
 }

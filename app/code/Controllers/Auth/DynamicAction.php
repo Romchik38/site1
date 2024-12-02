@@ -17,6 +17,9 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
+use Romchik38\Site1\Application\RecoveryEmailService\CantCreateHashException;
+use Romchik38\Site1\Application\RecoveryEmailService\Create;
+use Romchik38\Site1\Application\RecoveryEmailService\RecoveryEmailService;
 use Romchik38\Site1\Application\UserChangePassword\Change;
 use Romchik38\Site1\Application\UserChangePassword\CouldNonChangePassword;
 use Romchik38\Site1\Application\UserChangePassword\UserChangePassword;
@@ -65,6 +68,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         protected LoggerServerInterface $logger,
         protected readonly UserChangePassword $userChangePassword,
         protected readonly UserEmailService $userEmailService,
+        protected readonly RecoveryEmailService $recoveryEmailService,
         protected array $recaptchas = []
     ) {}
 
@@ -171,13 +175,27 @@ class DynamicAction extends Action implements DynamicActionInterface
 
         /*  Email check */
         try {
-            $userFirstName = $this->userEmailService->checkEmailForRecovery($command);
-        } catch(InvalidArgumentException $e){
+            $user = $this->userEmailService->checkEmailForRecovery($command);
+        } catch (InvalidArgumentException $e) {
             return 'Check recovery parameters: ' . $e->getMessage();
-        } catch(NoSuchEmailException) {
+        } catch (NoSuchEmailException) {
             return $this->weWillSend($command->email);
         }
 
+        try {
+
+            $hash = $this->recoveryEmailService->createHash(
+                new Create($$user->email)
+            );
+        } catch (InvalidArgumentException $e) {
+            'Check recovery parameters: ' . $e->getMessage();
+        } catch (CantCreateHashException $e) {
+            return $this->technicalIssues;
+        }
+
+        $user;  //  email, firstname 
+        $hash;
+        
         // try {
         //     $this->userRecoveryEmail->sendRecoveryLink($command);
         //     return $this->weWillSend($command->email);

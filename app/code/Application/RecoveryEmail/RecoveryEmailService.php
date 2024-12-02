@@ -26,7 +26,7 @@ final class RecoveryEmailService
      * @throws InvalidArgumentException
      * @throws CantCreateHashException
      */
-    protected function createHash(Create $command): Hash
+    public function createHash(Create $command): Hash
     {
         $hash = Hash::create();
         $email = new Email($command->email);

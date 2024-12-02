@@ -52,5 +52,14 @@ return function ($container) {
         )
     );
 
+    // Recovery Email Service (hash)
+    $container->add(
+        \Romchik38\Site1\Application\RecoveryEmailService\RecoveryEmailService::class,
+        new \Romchik38\Site1\Application\RecoveryEmailService\RecoveryEmailService(
+            $container->get(\Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
+            $container->get(\Psr\Log\LoggerInterface::class)
+        )
+    );
+
     return $container;
 };
