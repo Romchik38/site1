@@ -69,7 +69,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Application\UserRecoveryEmail\EntityRecoveryEmailService::class),
             $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
             $container->get(\Romchik38\Server\Api\Services\LoggerServerInterface::class),
-            $container->get(\Romchik38\Site1\Application\UserChangePassword\UserChangePassword::class),
+            $container->get(\Romchik38\Site1\Application\UserChangePassword\UserChangePasswordService::class),
             $container->get(\Romchik38\Site1\Application\UserEmail\UserEmailService::class),
             $container->get(\Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService::class),
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
@@ -82,7 +82,7 @@ return function ($container) {
         \Romchik38\Site1\Controllers\Changepassword\DefaultAction::class,
         new \Romchik38\Site1\Controllers\Changepassword\DefaultAction(
             $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class),
-            $container->get(\Romchik38\Site1\Api\Services\UserRecoveryEmailInterface::class),
+            $container->get(\Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)

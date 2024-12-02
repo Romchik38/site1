@@ -22,7 +22,7 @@ use Romchik38\Site1\Application\RecoveryEmail\Create;
 use Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService;
 use Romchik38\Site1\Application\UserChangePassword\Change;
 use Romchik38\Site1\Application\UserChangePassword\CouldNonChangePassword;
-use Romchik38\Site1\Application\UserChangePassword\UserChangePassword;
+use Romchik38\Site1\Application\UserChangePassword\UserChangePasswordService;
 use Romchik38\Site1\Application\UserEmail\FindEmail;
 use Romchik38\Site1\Application\UserEmail\NoSuchEmailException;
 use Romchik38\Site1\Application\UserEmail\UserEmailService;
@@ -63,7 +63,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         private readonly EntityRecoveryEmailService $entityRecoveryEmailService,
         protected readonly RecaptchaInterface $recaptchaService,
         protected LoggerServerInterface $logger,
-        protected readonly UserChangePassword $userChangePassword,
+        protected readonly UserChangePasswordService $userChangePassword,
         protected readonly UserEmailService $userEmailService,
         protected readonly RecoveryEmailService $recoveryEmailService,
         protected MailerInterface $mailer,

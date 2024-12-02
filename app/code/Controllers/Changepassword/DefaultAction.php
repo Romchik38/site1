@@ -15,12 +15,15 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 
 use Psr\Log\LogLevel;
+use Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService;
+use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 
+/** @todo Refactor */
 class DefaultAction extends Action implements DefaultActionInterface
 {
 
     protected $failedMessage = 'Sorry, provided recovery link does\'nt work. It is valid for '
-        . (RecoveryEmailInterface::VALID_TIME / 60) . ' minutes';
+        . (Hash::VALID_TIME / 60) . ' minutes';
 
     protected $successMessage = 'You are already logged in. Please change a password';
     protected $alreadyLoggedIn = 'You are already logged in';
@@ -28,7 +31,7 @@ class DefaultAction extends Action implements DefaultActionInterface
 
     public function __construct(
         protected RequestInterface $request,
-        protected UserRecoveryEmailInterface $userRecoveryEmail,
+        protected RecoveryEmailService $userRecoveryEmail,
         protected SessionInterface $session,
         protected UserRepositoryInterface $userRepository,
         protected LoggerInterface $logger

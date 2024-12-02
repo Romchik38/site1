@@ -7,6 +7,7 @@
   - Refactor all files, that uses `RequestInterface` consts
   - Remove `RequestInterface`
   - Remove `UserRegisterDTOInterface`, factories, DTOs after romoving `request`
+  - refactor default action `Changepassword`
 - registration with the same login shows an error on frontend `duplicate key users_email_key`
 
 ## Next
