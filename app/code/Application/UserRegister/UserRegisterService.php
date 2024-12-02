@@ -10,9 +10,6 @@ use Romchik38\Server\Models\Errors\CouldNotSaveException;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Site1\Services\Errors\UserRegister\IncorrectFieldError;
 use Romchik38\Site1\Domain\User\UserModelInterface;
 use Romchik38\Site1\Domain\User\VO\Email;
 use Romchik38\Site1\Domain\User\VO\Firstname;
@@ -69,9 +66,6 @@ class UserRegisterService
         /** @var UserModelInterface $newUser */
         $newUser = $this->userRepository->create();
 
-        /** @todo remove userRegisterDTO */
-        //$providedUserData = $userRegisterDTO->getAllData();
-
         try {
             $newUser
                 ->setUserName($username())
@@ -84,8 +78,8 @@ class UserRegisterService
             $savedUser = $this->userRepository->add($newUser);
         } catch (CouldNotSaveException $e) {
             $this->logger->log(
-                sprintf('Error while registering new user: %s'),
-                $e->getMessage()
+                LogLevel::ERROR,
+                sprintf('Error while registering new user: %s', $e->getMessage())
             );
             throw new CouldNotRegisterException('Error while registering new user');
         }

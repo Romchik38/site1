@@ -36,10 +36,15 @@ return function ($container) {
         )
     );
 
+    // User Email Service
+    $container->add(
+        \Romchik38\Site1\Application\UserEmail\UserEmailService::class,
+        new \Romchik38\Site1\Application\UserEmail\UserEmailService(
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class)
+        )
+    );
 
-
-    
-    // PASSWORDCHECK
+    // User Password Check
     $container->add(
         \Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class,
         new \Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService(
@@ -47,21 +52,12 @@ return function ($container) {
         )
     );
 
-
-    // USERREGISTER
+    // user Register
     $container->add(
         \Romchik38\Site1\Application\UserRegister\UserRegisterService::class,
         new \Romchik38\Site1\Application\UserRegister\UserRegisterService(
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
-        )
-    );
-
-    // User Email Service
-    $container->add(
-        \Romchik38\Site1\Application\UserEmail\UserEmailService::class,
-        new \Romchik38\Site1\Application\UserEmail\UserEmailService(
-            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class)
         )
     );
 

@@ -8,8 +8,6 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Application\UserEmail\Views\RecoveryDTO;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Email;
-use Romchik38\Site1\Domain\User\VO\Firstname;
-use Romchik38\Site1\Domain\User\VO\Id;
 
 final class UserEmailService
 {

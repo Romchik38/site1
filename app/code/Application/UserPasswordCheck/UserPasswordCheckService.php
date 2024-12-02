@@ -9,9 +9,11 @@ use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Password;
 use Romchik38\Site1\Domain\User\VO\Username;
 
-class UserPasswordCheckService
+final class UserPasswordCheckService
 {
-    public function __construct(private UserRepositoryInterface $userRepository) {}
+    public function __construct(
+        protected readonly UserRepositoryInterface $userRepository
+    ) {}
 
     /**
      * Return User Id or 0 on fail
