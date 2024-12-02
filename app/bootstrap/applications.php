@@ -18,6 +18,27 @@ return function ($container) {
         )
     );
 
+    // Recovery Email Service (hash)
+    $container->add(
+        \Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService::class,
+        new \Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService(
+            $container->get(\Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
+            $container->get(\Psr\Log\LoggerInterface::class)
+        )
+    );
+
+    // User Change Password
+    $container->add(
+        \Romchik38\Site1\Application\UserChangePassword\UserChangePasswordService::class,
+        new \Romchik38\Site1\Application\UserChangePassword\UserChangePasswordService(
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
+            $container->get(\Psr\Log\LoggerInterface::class)
+        )
+    );
+
+
+
+    
     // PASSWORDCHECK
     $container->add(
         \Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class,
@@ -41,15 +62,6 @@ return function ($container) {
         \Romchik38\Site1\Application\UserEmail\UserEmailService::class,
         new \Romchik38\Site1\Application\UserEmail\UserEmailService(
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class)
-        )
-    );
-
-    // Recovery Email Service (hash)
-    $container->add(
-        \Romchik38\Site1\Application\RecoveryEmailService\RecoveryEmailService::class,
-        new \Romchik38\Site1\Application\RecoveryEmailService\RecoveryEmailService(
-            $container->get(\Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
-            $container->get(\Psr\Log\LoggerInterface::class)
         )
     );
 
