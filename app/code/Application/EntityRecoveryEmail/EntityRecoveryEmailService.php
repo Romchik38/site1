@@ -4,25 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Application\UserRecoveryEmail;
 
-use InvalidArgumentException;
-use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
-use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
-use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Server\Models\Errors\CouldNotSaveException;
-use Romchik38\Server\Models\Errors\CouldNotAddException;
-use Romchik38\Server\Api\Models\DTO\Email\EmailDTOFactoryInterface;
-use Romchik38\Server\Services\Errors\CantSendEmailException;
-use Romchik38\Server\Api\Services\MailerInterface;
-use Romchik38\Server\Api\Models\RepositoryInterface;
-use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantCreateHashException;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
 use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 use Romchik38\Site1\Application\UserRecoveryEmail\Views\RecoveryEmail;
-use Romchik38\Site1\Domain\User\UserRepositoryInterface;
-use Romchik38\Site1\Domain\User\VO\Email;
 
 class EntityRecoveryEmailService
 {
@@ -38,11 +22,7 @@ class EntityRecoveryEmailService
         int $entityId,
         string $recoveryFieldName,
         string $recoveryUrlDomain,
-        string $recoveryUrl,
-        protected EmailDTOFactoryInterface $emailDTOFactory,
-        protected MailerInterface $mailer,
-        protected RepositoryInterface $recoveryRepository,
-        protected LoggerInterface $logger
+        string $recoveryUrl
     ) {
         $entity = $this->entityRepository->getById($entityId);
         $this->sender = $entity->$recoveryFieldName;
@@ -58,9 +38,6 @@ class EntityRecoveryEmailService
         }
     }
 
-    /**
-     * @throws CantCreateRecoveryEmailTemplate On storage errors
-     */
     public function createEmailTemplate(CreateEmailTemplate $command): RecoveryEmail
     {
 
@@ -84,5 +61,4 @@ class EntityRecoveryEmailService
             $headers
         );
     }
-
 }
