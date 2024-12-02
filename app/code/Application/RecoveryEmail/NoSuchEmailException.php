@@ -4,4 +4,4 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Application\RecoveryEmail;
 
-class NoSuchHashException extends \RuntimeException {}
+class NoSuchEmailException extends \RuntimeException {}

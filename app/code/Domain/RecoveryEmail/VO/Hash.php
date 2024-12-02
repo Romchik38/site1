@@ -9,6 +9,7 @@ use Romchik38\Server\Models\Errors\InvalidArgumentException;
 final class Hash
 {
     public const HASH_LENGTH = 20;
+    public const VALID_TIME = 1800;
 
     protected function __construct(
         public readonly string $hash

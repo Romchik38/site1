@@ -8,21 +8,18 @@ use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
 use Romchik38\Server\Api\Services\MailerInterface;
-use Romchik38\Server\Controllers\Actions\Action;
-use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Server\Controllers\Errors\NotFoundException;
-use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
+use Romchik38\Server\Controllers\Actions\Action;
+use Romchik38\Server\Controllers\Errors\DynamicActionNotFoundException;
 use Romchik38\Server\Models\DTO\Email\EmailDTO;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
-use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Server\Services\Errors\CantSendEmailException;
-use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
-use Romchik38\Site1\Services\Errors\UserRecoveryEmail\CantSendRecoveryLinkException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
-use Romchik38\Site1\Application\RecoveryEmailService\CantCreateHashException;
-use Romchik38\Site1\Application\RecoveryEmailService\Create;
-use Romchik38\Site1\Application\RecoveryEmailService\RecoveryEmailService;
+use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Site1\Api\Services\SessionInterface;
+use Romchik38\Site1\Application\RecoveryEmail\CantCreateHashException;
+use Romchik38\Site1\Application\RecoveryEmail\Create;
+use Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService;
 use Romchik38\Site1\Application\UserChangePassword\Change;
 use Romchik38\Site1\Application\UserChangePassword\CouldNonChangePassword;
 use Romchik38\Site1\Application\UserChangePassword\UserChangePassword;
@@ -32,14 +29,11 @@ use Romchik38\Site1\Application\UserEmail\UserEmailService;
 use Romchik38\Site1\Application\UserPasswordCheck\Credentials;
 use Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService;
 use Romchik38\Site1\Application\UserRecoveryEmail\CreateEmailTemplate;
-use Romchik38\Site1\Application\UserRecoveryEmail\RecoveryEmail;
-use Romchik38\Site1\Application\UserRecoveryEmail\SendEmail;
 use Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService;
 use Romchik38\Site1\Application\UserRegister\CouldNotRegisterException;
 use Romchik38\Site1\Application\UserRegister\Register;
 use Romchik38\Site1\Application\UserRegister\UsernameAlreadyInUseException;
 use Romchik38\Site1\Application\UserRegister\UserRegisterService;
-use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 class DynamicAction extends Action implements DynamicActionInterface
@@ -67,7 +61,6 @@ class DynamicAction extends Action implements DynamicActionInterface
         private readonly SessionInterface $session,
         private readonly UserRegisterService $userRegister,
         private readonly UserRecoveryEmailService $userRecoveryEmail,
-        private readonly UserRepositoryInterface $userRepository,
         protected readonly RecaptchaInterface $recaptchaService,
         protected LoggerServerInterface $logger,
         protected readonly UserChangePassword $userChangePassword,
@@ -82,7 +75,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         if (array_search($action, $this->methods) !== false) {
             return $this->$action();
         } else {
-            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
+            throw new DynamicActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
     }
 
@@ -94,7 +87,7 @@ class DynamicAction extends Action implements DynamicActionInterface
     /**
      * Action /auth/index
      */
-    protected function index()
+    protected function index(): string
     {
         $command = Credentials::fromRequest($this->request->getQueryParams());
         try {
@@ -126,11 +119,10 @@ class DynamicAction extends Action implements DynamicActionInterface
         $command = Change::fromRequest($userId, $this->request->getQueryParams());
         // 3 check password requirements
         try {
-            // $this->userRegister->checkPasswordChange($password);
             $this->userChangePassword->changepassword($command);
         } catch (InvalidArgumentException) {
             return $this->changepasswordBadRequest;
-        } catch (CouldNonChangePassword $e) {
+        } catch (CouldNonChangePassword) {
             return $this->technicalIssues;
         }
 
@@ -187,19 +179,17 @@ class DynamicAction extends Action implements DynamicActionInterface
             return $this->weWillSend($command->email);
         }
 
+        /** Create a hash */
         try {
 
             $hash = $this->recoveryEmailService->createHash(
-                new Create($$user->email)
+                new Create($user->email)
             );
         } catch (InvalidArgumentException $e) {
             return 'Check recovery parameters: ' . $e->getMessage();
         } catch (CantCreateHashException $e) {
             return $this->technicalIssues;
         }
-
-        $user;  //  email, firstname 
-        $hash;
 
         $template = $this->userRecoveryEmail->createEmailTemplate(
             new CreateEmailTemplate(

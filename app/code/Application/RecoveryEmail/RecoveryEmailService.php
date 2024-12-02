@@ -65,7 +65,8 @@ final class RecoveryEmailService
 
     /** 
      * @throws InvalidArgumentException
-     * @throws CantCheckHashException
+     * @throws HashNoValidException
+     * @throws NoSuchEmailException
      */
     public function checkHash(Check $command): bool
     {
@@ -75,17 +76,17 @@ final class RecoveryEmailService
 
         try {
             /** @var RecoveryEmailInterface $model*/
-            $model = $this->recoveryEmailRepository->getById($command->email);
-            if ($command->hash !== $model->getHash()) {
-                return false;
+            $model = $this->recoveryEmailRepository->getById($email());
+            if ($hash() !== $model->getHash()) {
+                throw new HashNoValidException('hash not exist');
             }
             $hashTime = (int)(new \DateTime($model->getUpdatedAt()))->format('U');
             $now = (int)(new \DateTime())->format('U');
-            if (($now - $hashTime) > RecoveryEmailInterface::VALID_TIME) {
-                return false;
+            if (($now - $hashTime) > Hash::VALID_TIME) {
+                throw new HashNoValidException('hash not valid');
             }
         } catch (NoSuchEntityException $e) {
-            throw new CantCheckHashException('');
+            throw new NoSuchEmailException('Email %s is not exist');
         }
 
         return true;
