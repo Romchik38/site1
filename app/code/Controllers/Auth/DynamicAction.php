@@ -20,9 +20,11 @@ use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Site1\Application\UserChangePassword\Change;
 use Romchik38\Site1\Application\UserChangePassword\CouldNonChangePassword;
 use Romchik38\Site1\Application\UserChangePassword\UserChangePassword;
+use Romchik38\Site1\Application\UserEmail\FindEmail;
+use Romchik38\Site1\Application\UserEmail\NoSuchEmailException;
+use Romchik38\Site1\Application\UserEmail\UserEmailService;
 use Romchik38\Site1\Application\UserPasswordCheck\Credentials;
 use Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService;
-use Romchik38\Site1\Application\UserRecoveryEmail\NoSuchEmailException;
 use Romchik38\Site1\Application\UserRecoveryEmail\RecoveryEmail;
 use Romchik38\Site1\Application\UserRecoveryEmail\SendEmail;
 use Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService;
@@ -62,6 +64,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         protected readonly RecaptchaInterface $recaptchaService,
         protected LoggerServerInterface $logger,
         protected readonly UserChangePassword $userChangePassword,
+        protected readonly UserEmailService $userEmailService,
         protected array $recaptchas = []
     ) {}
 
@@ -145,10 +148,9 @@ class DynamicAction extends Action implements DynamicActionInterface
      */
     protected function recovery()
     {
-        /** 1. Email present check */
-        $command = RecoveryEmail::fromRequest($this->request->getQueryParams());
+        $command = FindEmail::fromRequest($this->request->getQueryParams());
 
-        /** 2. Recaptcha check */
+        /** Recaptcha check */
         $recaptchas = $this->recaptchas['recovery'] ?? [];
         $countRecaptchas = count($recaptchas);
         if ($countRecaptchas > 1) {
@@ -167,23 +169,30 @@ class DynamicAction extends Action implements DynamicActionInterface
             }
         }
 
-        /*  4. Send an email */
+        /*  Email check */
         try {
-            $this->userRecoveryEmail->sendRecoveryLink($command);
-            return $this->weWillSend($command->email);
+            $userFirstName = $this->userEmailService->checkEmailForRecovery($command);
         } catch(InvalidArgumentException $e){
             return 'Check recovery parameters: ' . $e->getMessage();
         } catch(NoSuchEmailException) {
             return $this->weWillSend($command->email);
-        } catch (CantSendRecoveryLinkException $e) {
-            $this->logger->log(
-                LogLevel::ERROR,
-                $this::class
-                    . ': Error while sending recovery email. Recovery Service said - '
-                    . $e->getMessage()
-            );
-            return $this->technicalIssues;
         }
+
+        // try {
+        //     $this->userRecoveryEmail->sendRecoveryLink($command);
+        //     return $this->weWillSend($command->email);
+        // } catch (CantSendRecoveryLinkException $e) {
+        //     $this->logger->log(
+        //         LogLevel::ERROR,
+        //         $this::class
+        //             . ': Error while sending recovery email. Recovery Service said - '
+        //             . $e->getMessage()
+        //     );
+        //     return $this->technicalIssues;
+        // }
+
+
+
     }
 
     /**

@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Romchik38\Site1\Application\UserEmail;
+
+use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Site1\Domain\User\UserRepositoryInterface;
+use Romchik38\Site1\Domain\User\VO\Email;
+use Romchik38\Site1\Domain\User\VO\Firstname;
+use Romchik38\Site1\Domain\User\VO\Id;
+
+final class UserEmailService
+{
+    public function __construct(
+        protected readonly UserRepositoryInterface $userRepository
+    ) {}
+
+    /**
+     * @throws InvalidArgumentException
+     * @throws NoSuchEmailException
+     */
+    public function checkEmailForRecovery(FindEmail $command): Firstname
+    {
+        $email = new Email($command->email);
+
+        /* 3. Check if email is present in the database */
+        try {
+            $user = $this->userRepository->getByEmail($email());
+        } catch (NoSuchEntityException) {
+            throw new NoSuchEmailException(sprintf(
+                'Email %s do not exist',
+                $command->email
+            ));
+        }
+
+        return new Firstname($user->getFirstName());
+    }
+}

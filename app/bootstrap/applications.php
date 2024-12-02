@@ -7,7 +7,7 @@ use Romchik38\Server\Models\DTO\Email\EmailDTOFactory;
 use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 
 return function ($container) {
-    
+
     // PASSWORDCHECK
     $container->add(
         \Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class,
@@ -16,7 +16,7 @@ return function ($container) {
         )
     );
 
-    
+
     // USERREGISTER
     $container->add(
         \Romchik38\Site1\Application\UserRegister\UserRegisterService::class,
@@ -26,9 +26,9 @@ return function ($container) {
         )
     );
 
-        // USER RECOVERY EMAIL
+    // USER RECOVERY EMAIL
     /** config data - we do not make a check here, because it's a shared config */
-    $configRecoveryEmail = require_once(__DIR__ . '/../config/shared/services/user_recovery_email.php');        
+    $configRecoveryEmail = require_once(__DIR__ . '/../config/shared/services/user_recovery_email.php');
     $container->add(
         \Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService::class,
         new \Romchik38\Site1\Application\UserRecoveryEmail\UserRecoveryEmailService(
@@ -41,6 +41,14 @@ return function ($container) {
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailRepositoryInterface::class),
             $container->get(\Psr\Log\LoggerInterface::class)
+        )
+    );
+
+    // User Email Service
+    $container->add(
+        \Romchik38\Site1\Application\UserEmail\UserEmailService::class,
+        new \Romchik38\Site1\Application\UserEmail\UserEmailService(
+            $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class)
         )
     );
 

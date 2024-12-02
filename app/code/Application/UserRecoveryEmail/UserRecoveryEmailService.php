@@ -46,17 +46,17 @@ class UserRecoveryEmailService {
      */
     public function sendRecoveryLink(RecoveryEmail $command): void
     {
-        $email = new Email($command->email);
+        // $email = new Email($command->email);
 
-        /* 3. Check if email is present in the database */
-        try {
-            $this->userRepository->getByEmail($email());
-        } catch (NoSuchEntityException $e) {
-            throw new NoSuchEmailException(sprintf(
-                'Email %s do not exist',
-                $command->email
-            ));
-        }
+        // /* 3. Check if email is present in the database */
+        // try {
+        //     $this->userRepository->getByEmail($email());
+        // } catch (NoSuchEntityException $e) {
+        //     throw new NoSuchEmailException(sprintf(
+        //         'Email %s do not exist',
+        //         $command->email
+        //     ));
+        // }
         
         /** 
          * @todo replase failed message with real issue. Check all service and controller on output 
