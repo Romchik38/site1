@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Application\RecoveryEmailService;
+namespace Romchik38\Site1\Application\RecoveryEmail;
 
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -61,5 +61,33 @@ final class RecoveryEmailService
         }
 
         return $hash;
+    }
+
+    /** 
+     * @throws InvalidArgumentException
+     * @throws CantCheckHashException
+     */
+    public function checkHash(Check $command): bool
+    {
+
+        $hash = Hash::fromString($command->hash);
+        $email = new Email($command->email);
+
+        try {
+            /** @var RecoveryEmailInterface $model*/
+            $model = $this->recoveryEmailRepository->getById($command->email);
+            if ($command->hash !== $model->getHash()) {
+                return false;
+            }
+            $hashTime = (int)(new \DateTime($model->getUpdatedAt()))->format('U');
+            $now = (int)(new \DateTime())->format('U');
+            if (($now - $hashTime) > RecoveryEmailInterface::VALID_TIME) {
+                return false;
+            }
+        } catch (NoSuchEntityException $e) {
+            throw new CantCheckHashException('');
+        }
+
+        return true;
     }
 }
