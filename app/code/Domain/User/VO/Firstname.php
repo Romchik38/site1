@@ -8,8 +8,9 @@ use Romchik38\Server\Models\Errors\InvalidArgumentException;
 
 final class Firstname
 {
-    protected const PATTERN = '/^[\p{L}]{3,30}$/u';
-    protected const ERROR_MESSAGE = 'First name must be 3-30 characters long, can contain letters';
+    public const FIELD = 'first_name';
+    public const PATTERN = '^[\p{L}]{3,30}$';
+    public const ERROR_MESSAGE = 'First name must be 3-30 characters long, can contain letters';
 
     public function __construct(
         public readonly string $firstname
@@ -18,7 +19,7 @@ final class Firstname
             throw new InvalidArgumentException('firstname is empty');
         }
 
-        $check = preg_match($this::PATTERN, $firstname);
+        $check = preg_match('/' . $this::PATTERN . '/u', $firstname);
         if ($check === 0 || $check === false) {
             throw new InvalidArgumentException($this::ERROR_MESSAGE);
         }

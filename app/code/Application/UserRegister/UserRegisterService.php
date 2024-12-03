@@ -69,7 +69,7 @@ class UserRegisterService
         try {
             $newUser
                 ->setUserName($username())
-                ->setPassword($password())
+                ->setPassword(password_hash($password(), PASSWORD_DEFAULT))
                 ->setFirstName($firstName())
                 ->setLastName($lastName())
                 ->SetEmail($email());

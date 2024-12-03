@@ -6,24 +6,33 @@ namespace Romchik38\Site1\Views\Html\Tamplates\Login;
 
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Site1\Domain\User\VO\Email;
+use Romchik38\Site1\Domain\User\VO\Firstname;
+use Romchik38\Site1\Domain\User\VO\Lastname;
+use Romchik38\Site1\Domain\User\VO\Password;
+use Romchik38\Site1\Domain\User\VO\Username;
 
-return function(LoginDTOInterface $data){
+return function (LoginDTOInterface $data) {
 
-    $userNameHtml = htmlspecialchars(RequestInterface::USERNAME_FIELD);
-    $userNameErrorMessageHtml = htmlspecialchars(RequestInterface::USERNAME_ERROR_MESSAGE);
-    $userNamePatternHtml = htmlspecialchars(RequestInterface::USERNAME_PATTERN);
-    $passwordHtml = htmlspecialchars(RequestInterface::PASSWORD_FIELD);
-    $passwordErrorMessageHtml = htmlspecialchars(RequestInterface::PASSWORD_ERROR_MESSAGE);
-    $passwordPatternHtml = htmlspecialchars(RequestInterface::PASSWORD_PATTERN);
-    $firstNameHtml = htmlspecialchars(RequestInterface::FIRST_NAME_FIELD);
-    $firstNameErrorMessageHtml = htmlspecialchars(RequestInterface::FIRST_NAME_ERROR_MESSAGE);
-    $firstNamePatternHtml = htmlspecialchars(RequestInterface::FIRST_NAME_PATTERN);
-    $lastNameHtml = htmlspecialchars(RequestInterface::LAST_NAME_FIELD);
-    $lastNameErrorMessageHtml = htmlspecialchars(RequestInterface::LAST_NAME_ERROR_MESSAGE);
-    $lastNamePatternHtml = htmlspecialchars(RequestInterface::LAST_NAME_PATTERN);
-    $emailHtml = htmlspecialchars(RequestInterface::EMAIL_FIELD);
-    $emailPatternHtml = htmlspecialchars(RequestInterface::EMAIL_PATTERN);
-    $emailErrorMessageHtml = htmlspecialchars(RequestInterface::EMAIL_ERROR_MESSAGE);
+    $userNameHtml = htmlspecialchars(Username::FIELD);
+    $userNameErrorMessageHtml = htmlspecialchars(Username::ERROR_MESSAGE);
+    $userNamePatternHtml = htmlspecialchars(Username::PATTERN);
+
+    $passwordHtml = htmlspecialchars(Password::FIELD);
+    $passwordErrorMessageHtml = htmlspecialchars(Password::ERROR_MESSAGE);
+    $passwordPatternHtml = htmlspecialchars(Password::PATTERN);
+
+    $firstNameHtml = htmlspecialchars(Firstname::FIELD);
+    $firstNameErrorMessageHtml = htmlspecialchars(Firstname::ERROR_MESSAGE);
+    $firstNamePatternHtml = htmlspecialchars(Firstname::PATTERN);
+
+    $lastNameHtml = htmlspecialchars(Lastname::FIELD);
+    $lastNameErrorMessageHtml = htmlspecialchars(Lastname::ERROR_MESSAGE);
+    $lastNamePatternHtml = htmlspecialchars(Lastname::PATTERN);
+
+    $emailHtml = htmlspecialchars(Email::FIELD);
+    $emailPatternHtml = htmlspecialchars(Email::PATTERN);
+    $emailErrorMessageHtml = htmlspecialchars(Email::ERROR_MESSAGE);
 
     $user = $data->getUser();
 
@@ -117,7 +126,6 @@ return function(LoginDTOInterface $data){
             </form>
             HTML;
         }
-
     }
 
     $html = <<<HTML

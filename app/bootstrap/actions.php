@@ -85,7 +85,8 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
-            $container->get(\Psr\Log\LoggerInterface::class)
+            $container->get(\Psr\Log\LoggerInterface::class),
+            $container->get(\Romchik38\Site1\Application\UserEmail\UserEmailService::class)
         )
     );
 
