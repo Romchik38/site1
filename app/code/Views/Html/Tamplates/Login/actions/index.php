@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Views\Html\Tamplates\Login;
 
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
-use \Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Site1\Domain\User\VO\Password;
+use Romchik38\Site1\Domain\User\VO\Username;
 
 return function(LoginDTOInterface $data){
 
-    $userNameHtml = htmlentities(RequestInterface::USERNAME_FIELD);
-    $passwordHtml = htmlentities(RequestInterface::PASSWORD_FIELD);
+    $userNameHtml = htmlentities(Username::FIELD);
+    $passwordHtml = htmlentities(Password::FIELD);
     $messageHtml = htmlentities($data->getMessage()) ?? '';
 
     $html = '';

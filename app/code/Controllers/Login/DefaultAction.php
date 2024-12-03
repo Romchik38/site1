@@ -11,7 +11,7 @@ use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 
 class DefaultAction extends Action implements DefaultActionInterface
@@ -21,7 +21,7 @@ class DefaultAction extends Action implements DefaultActionInterface
         protected ViewInterface $view,
         protected SessionInterface $session,
         protected LoginDTOFactoryInterface $loginDtoFactory,
-        protected RequestInterface $request,
+        protected ServerRequestInterface $request,
         protected UserRepositoryInterface $userRepository
     ) {}
     public function execute(): string

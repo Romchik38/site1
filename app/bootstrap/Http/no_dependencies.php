@@ -69,12 +69,8 @@ return function ($container) {
         )
     );
     $container->add(
-        \Romchik38\Site1\Api\Services\RequestInterface::class,
-        $container->get(\Romchik38\Site1\Services\Http\Request::class)
-    );
-    $container->add(
         \Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class,
-        $container->get(\Romchik38\Site1\Api\Services\RequestInterface::class)
+        $container->get(\Romchik38\Site1\Services\Http\Request::class)
     );
     return $container;
 };

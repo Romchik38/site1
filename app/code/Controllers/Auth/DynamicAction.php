@@ -15,7 +15,7 @@ use Romchik38\Server\Models\DTO\Email\EmailDTO;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Services\Errors\CantSendEmailException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Site1\Application\RecoveryEmail\CantCreateHashException;
 use Romchik38\Site1\Application\RecoveryEmail\Create;
@@ -56,7 +56,7 @@ class DynamicAction extends Action implements DynamicActionInterface
     private $changePasswordSuccessMessage = 'Your password was changed successfully';
 
     public function __construct(
-        private readonly RequestInterface $request,
+        private readonly ServerRequestInterface $request,
         private readonly UserPasswordCheckService $passwordCheck,
         private readonly SessionInterface $session,
         private readonly UserRegisterService $userRegister,

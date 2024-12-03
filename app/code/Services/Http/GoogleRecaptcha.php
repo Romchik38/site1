@@ -9,7 +9,7 @@ use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelInterface;
 use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 /**
@@ -29,7 +29,7 @@ class GoogleRecaptcha implements RecaptchaInterface
         protected VirtualGoogleReCaptchaModelRepositoryInterface $reCaptchaRepository,
         array $configData,
         protected GoogleReCaptchaDTOFactoryInterface $reCaptchaDTOFactory,
-        protected readonly RequestInterface $request
+        protected readonly ServerRequestInterface $request
     ) {
         /** required options */
         $this->type = $configData[GoogleReCaptchaDTOInterface::TYPE] ??

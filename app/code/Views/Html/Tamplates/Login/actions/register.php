@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Views\Html\Tamplates\Login;
 
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
-use \Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Domain\User\VO\Email;
 use Romchik38\Site1\Domain\User\VO\Firstname;
 use Romchik38\Site1\Domain\User\VO\Lastname;

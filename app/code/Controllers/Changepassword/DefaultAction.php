@@ -7,7 +7,7 @@ namespace Romchik38\Site1\Controllers\Changepassword;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Psr\Log\LoggerInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
@@ -33,7 +33,7 @@ final class DefaultAction extends Action implements DefaultActionInterface
     protected $technicalProblemMessage = 'We are sorry, you can\'t recovery a password. There are some technical problems on our side.';
 
     public function __construct(
-        protected RequestInterface $request,
+        protected ServerRequestInterface $request,
         protected RecoveryEmailService $userRecoveryEmail,
         protected SessionInterface $session,
         protected UserRepositoryInterface $userRepository,

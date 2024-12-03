@@ -12,7 +12,7 @@ use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
+use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\ReCaptcha\ReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
@@ -30,7 +30,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         protected ViewInterface $view,
         protected SessionInterface $session,
         protected LoginDTOFactoryInterface $loginDtoFactory,
-        protected RequestInterface $request,
+        protected ServerRequestInterface $request,
         protected UserRepositoryInterface $userRepository,
         protected RecaptchaInterface $recaptchaService,
         protected array $recaptchas = []
