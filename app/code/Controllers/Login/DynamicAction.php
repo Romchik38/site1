@@ -60,14 +60,14 @@ class DynamicAction extends Action implements DynamicActionInterface
             }
         } 
 
+        $message = Message::fromRequest($this->request->getQueryParams());
         /** 
          * 3. Create a view's dto
-         * 
          * @var LoginDTOInterface $loginDTO 
          * */
         $loginDTO = $this->loginDtoFactory->create(
             $action,
-            $this->request->getMessage(),
+            $message(),
             $user,
             'Login - ' . $action,
             'Login page - ' . $action,

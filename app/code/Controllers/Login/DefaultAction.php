@@ -34,10 +34,12 @@ class DefaultAction extends Action implements DefaultActionInterface
             $user = null;
         }
 
+        $message = Message::fromRequest($this->request->getQueryParams());
+
         /** @var LoginDTOInterface $loginDTO */
         $loginDTO = $this->loginDtoFactory->create(
             $action,
-            $this->request->getMessage(),
+            $message(),
             $user,
             'Login',
             'Login page'
