@@ -32,12 +32,12 @@ class Request extends ServerRequest implements Site1RequestInterface {
         return $_GET[Site1RequestInterface::EMAIL_HASH_FIELD] ?? '';
     }
 
-    public function getMessage(): string
-    {
-        return $_GET[Site1RequestInterface::MESSAGE_FIELD] 
-            ?? $_POST[Site1RequestInterface::MESSAGE_FIELD]
-            ?? '';
-    }
+    // public function getMessage(): string
+    // {
+    //     return $_GET[Site1RequestInterface::MESSAGE_FIELD] 
+    //         ?? $_POST[Site1RequestInterface::MESSAGE_FIELD]
+    //         ?? '';
+    // }
 
     public function getPassword(): string
     {

@@ -35,7 +35,7 @@ interface RequestInterface extends ServerRequestInterface {
 
     public function getEmail(): string;
     public function getEmailHash(): string;
-    public function getMessage(): string;
+//    public function getMessage(): string;
     public function getPassword(): string;
     public function getUserName(): string;
     public function getUserRegisterData(): UserRegisterDTOInterface;
