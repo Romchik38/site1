@@ -14,7 +14,7 @@ final class Hash
     protected function __construct(
         public readonly string $hash
     ) {
-        if (strlen($hash) !== self::HASH_LENGTH) {
+        if (strlen($hash) === 0) {
             throw new InvalidArgumentException('email is empty');
         }
     }

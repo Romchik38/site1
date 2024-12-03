@@ -208,6 +208,7 @@ class DynamicAction extends Action implements DynamicActionInterface
                 $template->headers
             ));
             $this->logger->log(LogLevel::DEBUG, 'Recovery email for user ' . $user->email . ' was sent');
+            return 'Recovery email was sent. Please check your mailbox and follow instructions';
         } catch (CantSendEmailException $e) {
             $this->logger->log(LogLevel::ERROR, 'Recovery email to <' . $user->email . '> was not sent. Mailer said: ' . $e->getMessage());
             return $this->technicalIssues;
