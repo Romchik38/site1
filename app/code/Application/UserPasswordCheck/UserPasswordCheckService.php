@@ -24,7 +24,7 @@ final class UserPasswordCheckService
 
         try {
             $user = $this->userRepository
-                ->getByUserName(new Username($command->password));
+                ->getByUserName(new Username($command->username));
             if (password_verify($password(), $user->getPassword()) === true) {
                 return $user->getId();
             } else {

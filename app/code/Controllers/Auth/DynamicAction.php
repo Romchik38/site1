@@ -89,7 +89,8 @@ class DynamicAction extends Action implements DynamicActionInterface
      */
     protected function index(): string
     {
-        $command = Credentials::fromRequest($this->request->getQueryParams());
+        $hash = $this->request->getParsedBody();
+        $command = Credentials::fromRequest($hash);
         try {
             $userId = $this->passwordCheck->checkCredentials($command);
         } catch (InvalidArgumentException) {
