@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Api\Services;
 
-use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 
 interface RequestInterface extends ServerRequestInterface {
@@ -21,7 +20,7 @@ interface RequestInterface extends ServerRequestInterface {
     const LAST_NAME_PATTERN = '^[\p{L}]{3,30}$';
     const LAST_NAME_ERROR_MESSAGE = 'Last name must be 3-30 characters long, can contain letters';
 
-    const MESSAGE_FIELD = 'message';
+    //const MESSAGE_FIELD = 'message';
 
     const PASSWORD_FIELD = 'password';
     const PASSWORD_PATTERN = '^(?=.*[_`$%^*\'])(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[A-Za-z0-9_`$%^*\']{8,}$';
@@ -35,8 +34,6 @@ interface RequestInterface extends ServerRequestInterface {
 
     public function getEmail(): string;
     public function getEmailHash(): string;
-//    public function getMessage(): string;
     public function getPassword(): string;
     public function getUserName(): string;
-    public function getUserRegisterData(): UserRegisterDTOInterface;
 }

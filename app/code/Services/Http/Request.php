@@ -6,9 +6,7 @@ namespace Romchik38\Site1\Services\Http;
 
 use Romchik38\Server\Api\Services\Request\Http\ServerRequestServiceInterface;
 use Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface;
-use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOInterface;
 use Romchik38\Site1\Api\Services\RequestInterface as Site1RequestInterface;
-use Romchik38\Site1\Api\Models\DTO\UserRegister\UserRegisterDTOFactoryInterface;
 use Romchik38\Server\Services\Request\Http\ServerRequest;
 
 class Request extends ServerRequest implements Site1RequestInterface {
@@ -16,9 +14,7 @@ class Request extends ServerRequest implements Site1RequestInterface {
     public function __construct(
         protected readonly UriFactoryInterface $uriFactory,
         protected readonly ServerRequestServiceInterface $serverRequestService,
-        protected UserRegisterDTOFactoryInterface $userRegisterDTOFactory
     ) {  
-        //parent::__construct($uriFactory, $serverRequestService);
     }
 
     public function getEmail(): string
@@ -45,24 +41,7 @@ class Request extends ServerRequest implements Site1RequestInterface {
     }
 
     /**
-     * Returns DTO with register data for next checks
-     *
-     * @return UserRegisterDTOInterface
-     */
-    public function getUserRegisterData(): UserRegisterDTOInterface
-    {
-        return $this->userRegisterDTOFactory->create(
-            $_POST[$this::USERNAME_FIELD] ?? '',
-            $_POST[$this::PASSWORD_FIELD] ?? '',
-            $_POST[$this::FIRST_NAME_FIELD] ?? '',
-            $_POST[$this::LAST_NAME_FIELD] ?? '',
-            $_POST[$this::EMAIL_FIELD] ?? ''
-        );
-    }
-
-    /**
      * Returns username or ''
-     *
      * @return string
      */
     public function getUserName(): string

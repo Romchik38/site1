@@ -6,7 +6,6 @@
   - Controller replace `RequestInterface` with `ServerRequestInterface`
   - Refactor all files, that uses `RequestInterface` consts
   - Remove `RequestInterface`
-  - Remove `UserRegisterDTOInterface`, factories, DTOs after romoving `request`
 
 ## Next
 
