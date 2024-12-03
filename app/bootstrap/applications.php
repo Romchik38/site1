@@ -8,8 +8,8 @@ return function ($container) {
     /** config data - we do not make a check here, because it's a shared config */
     $configRecoveryEmail = require_once(__DIR__ . '/../config/shared/services/user_recovery_email.php');
     $container->add(
-        \Romchik38\Site1\Application\UserRecoveryEmail\EntityRecoveryEmailService::class,
-        new \Romchik38\Site1\Application\UserRecoveryEmail\EntityRecoveryEmailService(
+        \Romchik38\Site1\Application\EntityRecoveryEmail\EntityRecoveryEmailService::class,
+        new \Romchik38\Site1\Application\EntityRecoveryEmail\EntityRecoveryEmailService(
             $container->get(\Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface::class),
             $configRecoveryEmail['entityId'],
             $configRecoveryEmail['recovery_email'],
