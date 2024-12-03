@@ -8,9 +8,9 @@
   - Remove `RequestInterface`
   - Remove `UserRegisterDTOInterface`, factories, DTOs after romoving `request`
   - refactor dynamic action `auth`
-    - index
-    - changepassword
-    - logout
+    - [+] index
+    - [+] changepassword
+    - [+] logout
     - recovery
     - register
   - refactor default action `Changepassword`

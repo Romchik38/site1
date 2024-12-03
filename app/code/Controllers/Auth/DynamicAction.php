@@ -117,7 +117,7 @@ class DynamicAction extends Action implements DynamicActionInterface
             return $this->changepasswordFailedMessage;
         }
         // 2 check if field is present
-        $command = Change::fromRequest($userId, $this->request->getQueryParams());
+        $command = Change::fromRequest($userId, $this->request->getParsedBody());
         // 3 check password requirements
         try {
             $this->userChangePassword->changepassword($command);
@@ -150,7 +150,7 @@ class DynamicAction extends Action implements DynamicActionInterface
      */
     protected function recovery()
     {
-        $command = FindEmail::fromRequest($this->request->getQueryParams());
+        $command = FindEmail::fromRequest($this->request->getParsedBody());
 
         /** Recaptcha check */
         $recaptchas = $this->recaptchas['recovery'] ?? [];
@@ -219,7 +219,7 @@ class DynamicAction extends Action implements DynamicActionInterface
      */
     protected function register()
     {
-        $command = Register::fromRequest($this->request->getQueryParams());
+        $command = Register::fromRequest($this->request->getParsedBody());
 
         try {
             $userId = $this->userRegister->register($command);
