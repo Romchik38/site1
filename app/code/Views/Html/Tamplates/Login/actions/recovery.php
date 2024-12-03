@@ -7,7 +7,7 @@ namespace Romchik38\Site1\Views\Html\Tamplates\Login;
 use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOInterface;
 use \Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use \Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
+use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 
 return function(LoginDTOInterface $data){
     $user = $data->getUser();
@@ -21,7 +21,7 @@ return function(LoginDTOInterface $data){
 
     $emailHtml = RequestInterface::EMAIL_FIELD;
     $emailPatternHtml = RequestInterface::EMAIL_PATTERN;
-    $valid = (int)(RecoveryEmailInterface::VALID_TIME / 60);
+    $valid = (int)(Hash::VALID_TIME / 60);
 
     $message = $data->getMessage();
     $messageHtml = htmlentities($message);
