@@ -18,4 +18,9 @@ final class FindEmail
             $hash[self::EMAIL_FIELD] ?? '',
         );
     }
+
+    public static function fromString(string $email): self
+    {
+        return new self($email);
+    }
 }

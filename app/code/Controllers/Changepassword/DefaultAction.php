@@ -13,11 +13,16 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 
 use Psr\Log\LogLevel;
+use Romchik38\Server\Models\Errors\InvalidArgumentException;
+use Romchik38\Site1\Application\RecoveryEmail\Check;
+use Romchik38\Site1\Application\RecoveryEmail\HashNoValidException;
+use Romchik38\Site1\Application\RecoveryEmail\NoSuchEmailException;
 use Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService;
+use Romchik38\Site1\Application\UserEmail\FindEmail;
+use Romchik38\Site1\Application\UserEmail\UserEmailService;
 use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 
-/** @todo Refactor */
-class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends Action implements DefaultActionInterface
 {
 
     protected $failedMessage = 'Sorry, provided recovery link does\'nt work. It is valid for '
@@ -32,7 +37,8 @@ class DefaultAction extends Action implements DefaultActionInterface
         protected RecoveryEmailService $userRecoveryEmail,
         protected SessionInterface $session,
         protected UserRepositoryInterface $userRepository,
-        protected LoggerInterface $logger
+        protected LoggerInterface $logger,
+        protected readonly UserEmailService $userEmailService
     ) {}
 
     public function execute(): string
@@ -43,27 +49,33 @@ class DefaultAction extends Action implements DefaultActionInterface
             return $this->alreadyLoggedIn;
         }
         // 2 it's a guest, so let's check recovery link
-        $emailHash = $this->request->getEmailHash();
-        $email = $this->request->getEmail();
-        if ($emailHash === '' || $email === '') {
-            return 'Bad request (email hash or email not present)';
-        }
-        // 3 check hash
-        $isValid = $this->userRecoveryEmail->checkHash($email, $emailHash);
-        if ($isValid === false) {
-            return $this->failedMessage;
-        }
-        // 4 auth user
+        $check = Check::fromRequest($this->request->getParsedBody());
         try {
-            $user = $this->userRepository->getByEmail($email);
+            $this->userRecoveryEmail->checkHash($check);
+        } catch (InvalidArgumentException) {
+            return 'Bad request. Please visit recovery page and try again.';
+        } catch (HashNoValidException) {
+            return $this->failedMessage;
+        } catch (NoSuchEmailException) {
+            return 'Provided email doesn\'t exist';
+        }
+        // 3 auth user
+        try {
+            $user = $this->userEmailService->checkEmailForAuth(
+                FindEmail::fromString($check->email)
+            );
         } catch (NoSuchEntityException $e) {
             // there is a problem. Because a recovery row exist, but user do not exist.
-            $this->logger->log(LogLevel::ERROR, 'user with email ' . $email . ' does\'nt exist. But recovery row the email is present.');
+            $this->logger->log(
+                LogLevel::ERROR,
+                sprintf(
+                    'user with email %s does\'nt exist. But recovery row the email is present.',
+                    $check->email
+                )
+            );
             return $this->technicalProblemMessage;
         }
-
-        $this->session->setUserId($user->getId());
-        // 5 redirect to /changepassword/index to change a password
+        $this->session->setUserId($user->id);
         return $this->successMessage;
     }
 }

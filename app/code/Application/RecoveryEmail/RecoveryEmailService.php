@@ -68,9 +68,8 @@ final class RecoveryEmailService
      * @throws HashNoValidException
      * @throws NoSuchEmailException
      */
-    public function checkHash(Check $command): bool
+    public function checkHash(Check $command): void
     {
-
         $hash = Hash::fromString($command->hash);
         $email = new Email($command->email);
 
@@ -88,7 +87,5 @@ final class RecoveryEmailService
         } catch (NoSuchEntityException $e) {
             throw new NoSuchEmailException('Email %s is not exist');
         }
-
-        return true;
     }
 }

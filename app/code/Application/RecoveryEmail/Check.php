@@ -10,4 +10,11 @@ final class Check
         public readonly string $email,
         public readonly string $hash
     ) {}
+
+    public static function fromRequest(array $hash): self{
+        return new self(
+            $hash['email'] ?? '',
+            $hash['email_hash'] ?? ''
+        );
+    }
 }
