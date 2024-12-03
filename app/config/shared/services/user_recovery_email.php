@@ -10,9 +10,9 @@ return [
      * 
      * config_name => database value 
      * see entity.sql file for postgresql database
-    */
-    UserRecoveryEmailInterface::ENTITY_ID_FIELD => 1,
-    UserRecoveryEmailInterface::RECOVERY_EMAIL_FIELD => 'email_contact_recovery',
-    UserRecoveryEmailInterface::RECOVERY_URL_DOMAIN_FIELD => 'url_domain',
-    UserRecoveryEmailInterface::RECOVERY_URL_FIELD => 'url_recovery'
+     */
+    'entityId' => 1,
+    'recovery_email' => 'email_contact_recovery',
+    'recovery_url_domain' => 'url_domain',
+    'recovery_url' => 'url_recovery'
 ];

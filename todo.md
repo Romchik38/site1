@@ -13,7 +13,6 @@
     - logout
     - recovery
     - register
-
   - refactor default action `Changepassword`
 - registration with the same login shows an error on frontend `duplicate key users_email_key`
 

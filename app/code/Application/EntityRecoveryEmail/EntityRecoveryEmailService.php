@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Application\UserRecoveryEmail;
+namespace Romchik38\Site1\Application\EntityRecoveryEmail;
 
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Site1\Application\UserRecoveryEmail\Views\RecoveryEmail;
+use Romchik38\Site1\Application\EntityRecoveryEmail\Views\RecoveryEmail;
 
 class EntityRecoveryEmailService
 {

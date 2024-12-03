@@ -8,8 +8,6 @@ use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Psr\Log\LoggerInterface;
 use Romchik38\Site1\Api\Services\RequestInterface;
-use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
-use Romchik38\Site1\Api\Models\RecoveryEmail\RecoveryEmailInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;

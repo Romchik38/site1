@@ -3,8 +3,6 @@
 declare(strict_types=1);
 
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
-use Romchik38\Server\Models\DTO\Email\EmailDTOFactory;
-use Romchik38\Site1\Api\Services\UserRecoveryEmailInterface;
 
 return function ($container) {
     // LOGGERS
