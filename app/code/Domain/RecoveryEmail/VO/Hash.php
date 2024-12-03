@@ -8,6 +8,7 @@ use Romchik38\Server\Models\Errors\InvalidArgumentException;
 
 final class Hash
 {
+    public const FIELD = 'recovery_hash';
     public const HASH_LENGTH = 20;
     public const VALID_TIME = 1800;
 

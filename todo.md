@@ -7,7 +7,6 @@
   - Refactor all files, that uses `RequestInterface` consts
   - Remove `RequestInterface`
   - Remove `UserRegisterDTOInterface`, factories, DTOs after romoving `request`
-  - refactor default action `Changepassword`
 
 ## Next
 

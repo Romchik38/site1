@@ -49,7 +49,7 @@ final class DefaultAction extends Action implements DefaultActionInterface
             return $this->alreadyLoggedIn;
         }
         // 2 it's a guest, so let's check recovery link
-        $check = Check::fromRequest($this->request->getParsedBody());
+        $check = Check::fromRequest($this->request->getQueryParams());
         try {
             $this->userRecoveryEmail->checkHash($check);
         } catch (InvalidArgumentException) {

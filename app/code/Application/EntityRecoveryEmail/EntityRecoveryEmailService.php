@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Application\EntityRecoveryEmail;
 
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
-use Romchik38\Site1\Api\Services\RequestInterface;
 use Romchik38\Site1\Application\EntityRecoveryEmail\Views\RecoveryEmail;
+use Romchik38\Site1\Domain\RecoveryEmail\VO\Email;
+use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 
 class EntityRecoveryEmailService
 {
@@ -42,12 +43,16 @@ class EntityRecoveryEmailService
     {
 
         $subject = 'Recovery link to create a new password';
-        $message = '<p>Hello, user. <br>This is a recovery email. Link below. <br><a href="'
-            . $this->urlDomain . $this->url . '?' . self::EMAIL_HASH_FIELD
-            . '=' . $command->hash . '&'
-            . RequestInterface::EMAIL_FIELD . '=' . urlencode($command->email)
-            . '">Click here to recovery your password</a></p>'
-            . '<p>If you do not request a password changing, please do nothing.</p>';
+        $message = sprintf(
+            '<p>Hello, %s. <br>This is a recovery email. Link below. <br><a href="%s%s?%s=%s&%s=%s">Click here to recovery your password</a></p><p>If you do not request a password changing, please do nothing.</p>',
+            $command->firstname,
+            $this->urlDomain,
+            $this->url,
+            Hash::FIELD,
+            $command->hash,
+            Email::EMAIL_FIELD,
+            urlencode($command->email)
+        );
         $headers = array(
             'From' => $this->sender,
             'Reply-To' => $this->sender,
