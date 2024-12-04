@@ -9,6 +9,10 @@
   - implement description of `Root` action:
     - `getDynamicRoutes`
     - `getDescription`
+  - ControllerTree -> LinkTree -> Next
+  - ....  -> Breadcrumb -> Next
+  - ? Remover `LinkDTOCollection`
+  - look at *LinkTreeDTO - __construct now throws InvalidArgumentException, tests*
 
 ## Next
 

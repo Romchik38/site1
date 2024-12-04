@@ -158,26 +158,6 @@ return function ($container) {
         \Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class,
         $container->get(\Romchik38\Server\Results\Controller\ControllerResultFactory::class)
     );
-
-    $container->add(
-        \Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory::class,
-        new \Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory()
-    );
-    $container->add(
-        \Romchik38\Server\Api\Models\DTO\Controller\ControllerDTOFactoryInterface::class,
-        $container->get(\Romchik38\Server\Models\DTO\Controller\ControllerDTOFactory::class)
-    );
-
-    $container->add(
-        
-        \Romchik38\Server\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactory::class,
-        new \Romchik38\Server\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactory
-    );
-    $container->add(
-        \Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactoryInterface::class,
-        $container->get(\Romchik38\Server\Models\DTO\Http\Breadcrumb\BreadcrumbDTOFactory::class)
-    );
-
     
     $container->add(
         \Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTOFactory::class,
