@@ -7,7 +7,7 @@ namespace Romchik38\Site1\Views\Html\Classes;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Models\DTO\Http\LinkTree\LinkTreeDTOInterface;
 use Romchik38\Server\Api\Services\Mappers\LinkTree\Http\LinkTreeInterface;
-use Romchik38\Server\Api\Services\Mappers\SitemapInterface;
+use Romchik38\Server\Services\Mappers\ControllerTree\ControllerTree;
 use Romchik38\Site1\Controllers\Sitemap\SitemapLinkTreeInterface;
 
 /**
@@ -20,7 +20,7 @@ use Romchik38\Site1\Controllers\Sitemap\SitemapLinkTreeInterface;
 final class SitemapLinkTreeToHtml implements SitemapLinkTreeInterface
 {
     public function __construct(
-        protected SitemapInterface $controllerTreeService,
+        protected ControllerTree $controllerTreeService,
         protected LinkTreeInterface $linkTreeService
     ) {}
 

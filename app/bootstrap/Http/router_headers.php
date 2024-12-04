@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Romchik38\Container;
 use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Routers\Http\HttpRouterInterface;
-use Romchik38\Server\Api\Services\Mappers\SitemapInterface;
+use Romchik38\Server\Api\Services\Mappers\ControllerTreeInterface;
 
 return function (Container $container) {
 
@@ -15,7 +15,7 @@ return function (Container $container) {
     $container->add(
         \Romchik38\Site1\Router\Http\RouterHeaders\Auth::class,
         new \Romchik38\Site1\Router\Http\RouterHeaders\Auth(
-            SitemapInterface::ROOT_NAME . $s . 'auth' . $s . $a,
+            ControllerTreeInterface::ROOT_NAME . $s . 'auth' . $s . $a,
             HttpRouterInterface::REQUEST_METHOD_POST
         )
     );
@@ -23,7 +23,7 @@ return function (Container $container) {
     $container->add(
         \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword::class,
         new \Romchik38\Site1\Router\Http\RouterHeaders\Changepassword(
-            SitemapInterface::ROOT_NAME . $s . 'changepassword',
+            ControllerTreeInterface::ROOT_NAME . $s . 'changepassword',
             HttpRouterInterface::REQUEST_METHOD_GET
         )
     );
@@ -31,7 +31,7 @@ return function (Container $container) {
     $container->add(
         \Romchik38\Site1\Router\Http\RouterHeaders\Api\Userinfo::class,
         new \Romchik38\Site1\Router\Http\RouterHeaders\Api\Userinfo(
-            SitemapInterface::ROOT_NAME . $s . 'api' . $s . 'userinfo',
+            ControllerTreeInterface::ROOT_NAME . $s . 'api' . $s . 'userinfo',
             HttpRouterInterface::REQUEST_METHOD_GET
         )
     );
