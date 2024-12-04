@@ -95,19 +95,6 @@ return function ($container) {
         \Romchik38\Site1\Api\Services\RecaptchaInterface::class,
         $container->get(\Romchik38\Site1\Services\Http\GoogleRecaptcha::class)
     );
-
-    // Link DTO Collection
-    $container->add(
-        \Romchik38\Site1\Services\Mappers\LinkDTOCollection::class,
-        new \Romchik38\Site1\Services\Mappers\LinkDTOCollection(
-            $container->get(\Romchik38\Site1\Api\Models\MenuLinks\MenuLinksRepositoryInterface::class)
-        )
-    );
-
-    $container->add(
-        \Romchik38\Server\Api\Models\DTO\Http\Link\LinkDTOCollectionInterface::class,
-        $container->get(\Romchik38\Site1\Services\Mappers\LinkDTOCollection::class)
-    );
     
     // Breadcumb
     $container->add(
