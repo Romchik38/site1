@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Romchik38\Site1\Models\Sql\User;
+namespace Romchik38\Site1\Domain\User;
 
 use Romchik38\Server\Models\ModelFactory;
 use Romchik38\Site1\Domain\User\UserFactoryInterface;

@@ -20,15 +20,6 @@ return function ($container) {
         \Romchik38\Site1\Models\Redirect\RedirectFactory::class,
         new \Romchik38\Site1\Models\Redirect\RedirectFactory()
     );
-    
-    $container->add(
-        \Romchik38\Site1\Models\Sql\User\UserFactory::class,
-        new \Romchik38\Site1\Models\Sql\User\UserFactory
-    );
-    $container->add(
-        \Romchik38\Site1\Domain\User\UserFactoryInterface::class,
-        $container->get(\Romchik38\Site1\Models\Sql\User\UserFactory::class)
-    );
 
     $container->add(
         \Romchik38\Site1\Models\Sql\RecoveryEmail\RecoveryEmailFactory::class,

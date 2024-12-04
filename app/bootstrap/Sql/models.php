@@ -38,7 +38,7 @@ return function ($container) {
         function ($container) {
             return new \Romchik38\Site1\Models\Sql\User\UserRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Domain\User\UserFactoryInterface::class),
+                new Romchik38\Site1\Domain\User\UserFactory,
                 'users',
                 'user_id'
             );
