@@ -74,7 +74,8 @@ class DynamicAction extends Action implements DynamicActionInterface
 
     public function execute(string $action): string
     {
-        if (array_search($action, $this->methods) !== false) {
+        $routes = array_keys($this->methods);
+        if (array_search($action, $routes) !== false) {
             return $this->$action();
         } else {
             throw new DynamicActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
