@@ -41,11 +41,11 @@ use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 class DynamicAction extends Action implements DynamicActionInterface
 {
     private array $methods = [
-        'index' => 'Login page',
-        'logout' => 'Logout page',
-        'register' => 'Register page',
-        'recovery' => 'Recovery page',
-        'changepassword' => 'Change password page'
+        'index' => 'Check login/password',
+        'logout' => 'Logout',
+        'register' => 'Register new user',
+        'recovery' => 'Recovery password',
+        'changepassword' => 'Change password'
     ];
 
     private $successMessage = 'Authentication success';
