@@ -61,5 +61,13 @@ return function ($container) {
         )
     );
 
+    //Page View
+    $container->add(
+        \Romchik38\Site1\Application\PageView\PageViewService::class,
+        new \Romchik38\Site1\Application\PageView\PageViewService(
+            $container->get(\Romchik38\Site1\Domain\Page\PageRepositoryInterface::class)
+        )
+    );
+
     return $container;
 };

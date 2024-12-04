@@ -10,22 +10,26 @@ use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
+use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
-use Romchik38\Site1\Domain\Page\PageModelInterface;
+use Romchik38\Site1\Application\PageView\CantFindException;
+use Romchik38\Site1\Application\PageView\FindByUrl;
+use Romchik38\Site1\Application\PageView\PageViewService;
 use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
 
-class DynamicAction extends Action implements DynamicActionInterface
+final class DynamicAction extends Action implements DynamicActionInterface
 {
     public function __construct(
         protected ViewInterface $view,
         protected PageRepositoryInterface $pageRepository,
-        protected MainDTOFactoryInterface $mainDTOFactory
+        protected MainDTOFactoryInterface $mainDTOFactory,
+        protected readonly PageViewService $pageViewService
     ) {}
 
     public function execute(string $action): string
     {
 
-        $arr = $this->pageRepository->getByUrl($action);
+        $page = $this->pageViewService->searchNameByUrl(new FindByUrl($action));
 
         if (count($arr) === 0) {
             throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
@@ -40,20 +44,35 @@ class DynamicAction extends Action implements DynamicActionInterface
     /** @todo implement description */
     public function getDynamicRoutes(): array
     {
-        $rows = $this->pageRepository->getUrls();
-        foreach ($rows as $row) {
-            $name = $row[PageModelInterface::PAGE_URL_FIELD];
+        $pages = $this->pageViewService->listAllUrlsAndNames();
+        foreach ($pages as $page) {
             $routes[] = new DynamicRouteDTO(
-                $name,
-                $name . ' description'
+                $page->url,
+                $page->name
             );
         }
         return $routes;
     }
 
-    /** @todo implement description */
     public function getDescription(string $dynamicRoute): string
     {
-        return $dynamicRoute . ' description';
+        try {
+            $pageName = $this->pageViewService->searchNameByUrl(new FindByUrl($dynamicRoute));
+            return $pageName();
+        } catch (InvalidArgumentException $e) {
+            throw new DynamicActionLogicException(
+                sprintf(
+                    'Route %s value is invalid',
+                    $dynamicRoute
+                )
+            );
+        } catch (CantFindException) {
+            throw new DynamicActionLogicException(
+                sprintf(
+                    'Description for route %s not exist',
+                    $dynamicRoute
+                )
+            );
+        }
     }
 }
