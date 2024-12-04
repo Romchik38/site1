@@ -9,8 +9,8 @@ use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
-use Romchik38\Site1\Api\Models\Page\PageRepositoryInterface;
 use Romchik38\Site1\Api\Models\Page\PageModelInterface;
+use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
 
 class DefaultAction extends Action implements DefaultActionInterface
 {

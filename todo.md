@@ -6,6 +6,7 @@
   - implement description of `Root` action:
     - `getDynamicRoutes`
     - `getDescription`
+  - move User Model and Factory to `Domain` folder
 
 ## Next
 

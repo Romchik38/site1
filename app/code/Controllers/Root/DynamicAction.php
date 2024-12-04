@@ -12,7 +12,7 @@ use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\Page\PageModelInterface;
-use Romchik38\Site1\Api\Models\Page\PageRepositoryInterface;
+use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
 
 class DynamicAction extends Action implements DynamicActionInterface
 {

@@ -10,14 +10,14 @@ return function ($container) {
         function ($container) {
             return new \Romchik38\Site1\Models\Sql\Page\PageRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Models\Sql\Page\PageFactory::class),
+                $container->get(\Romchik38\Site1\Domain\Page\PageFactory::class),
                 'pages',
                 'page_id'
             );
         }
     );
     $container->add(
-        \Romchik38\Site1\Api\Models\Page\PageRepositoryInterface::class,
+        \Romchik38\Site1\Domain\Page\PageRepositoryInterface::class,
         $container->get(\Romchik38\Site1\Models\Sql\Page\PageRepository::class)
     );
 
