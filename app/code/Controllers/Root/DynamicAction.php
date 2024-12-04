@@ -28,16 +28,19 @@ final class DynamicAction extends Action implements DynamicActionInterface
 
     public function execute(string $action): string
     {
-
-        $page = $this->pageViewService->searchNameByUrl(new FindByUrl($action));
-
-        if (count($arr) === 0) {
-            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
-        } else {
-            $page = $arr[0];
-            $mainDTO = $this->mainDTOFactory->create($page, $page->getName(), $page->getName());
+        try {
+            $page = $this->pageViewService->searchPageByUrl(new FindByUrl($action));
+            $mainDTO = $this->mainDTOFactory->create(
+                $page,
+                $page->name,
+                $page->name
+            );
             $this->view->setController($this->getController(), $action)->setControllerData($mainDTO);
             return $this->view->toString();
+        } catch (InvalidArgumentException) {
+            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
+        } catch (CantFindException) {
+            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
     }
 

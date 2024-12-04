@@ -5,13 +5,13 @@ namespace Romchik38\Site1\Models\DTO\Main;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
 use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTO;
-use Romchik38\Site1\Domain\Page\PageModelInterface;
+use Romchik38\Site1\Application\PageView\Views\Page;
 
 class MainDTO extends DefaultViewDTO implements MainDTOInterface
 {
 
     public function __construct(
-        PageModelInterface $page,
+        Page $page,
         string $name,
         string $description
     ) {
@@ -20,7 +20,7 @@ class MainDTO extends DefaultViewDTO implements MainDTOInterface
         $this->data[DefaultViewDTOInterface::DEFAULT_DESCRIPTION_FIELD] = $description;
     }
 
-    public function getPage(): PageModelInterface
+    public function getPage(): Page
     {
         return $this->getData($this::PAGE_FIELD);
     }

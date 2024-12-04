@@ -10,8 +10,8 @@ return function(MainDTOInterface $data) {
     $page = $data->getPage();
 
     /** @var $content html for the page's body*/
-    $contentHtml = $page->getContent();
-    $nameHtml = htmlentities($page->getName());
+    $contentHtml = $page->content;
+    $nameHtml = htmlentities($page->name);
     $html = <<<HTML
     <div class="row">
         <article>

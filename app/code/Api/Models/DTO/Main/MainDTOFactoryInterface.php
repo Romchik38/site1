@@ -2,12 +2,12 @@
 
 namespace Romchik38\Site1\Api\Models\DTO\Main;
 
-use Romchik38\Site1\Domain\Page\PageModelInterface;
+use Romchik38\Site1\Application\PageView\Views\Page;
 
 interface MainDTOFactoryInterface
 {
     public function create(
-        PageModelInterface $page,
+        Page $page,
         string $name,
         string $description
     ): MainDTOInterface;

@@ -6,13 +6,13 @@ namespace Romchik38\Site1\Models\DTO\Main;
 
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
-use Romchik38\Site1\Domain\Page\PageModelInterface;
+use Romchik38\Site1\Application\PageView\Views\Page;
 
 class MainDTOFactory implements MainDTOFactoryInterface
 {
 
     public function create(
-        PageModelInterface $page,
+        Page $page,
         string $name,
         string $description
     ): MainDTOInterface {

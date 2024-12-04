@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Application\PageView;
 
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
+use Romchik38\Server\Views\Http\PageView;
 use Romchik38\Site1\Application\PageView\Views\NameUrl;
+use Romchik38\Site1\Application\PageView\Views\Page;
 use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
+use Romchik38\Site1\Domain\Page\VO\Content;
+use Romchik38\Site1\Domain\Page\VO\Id;
 use Romchik38\Site1\Domain\Page\VO\Name;
 use Romchik38\Site1\Domain\Page\VO\Url;
 
@@ -43,6 +47,30 @@ final class PageViewService
         try {
             $page = $this->pageRepository->getByUrl($url());
             return new Name($page->getName());
+        } catch (NoSuchEntityException) {
+            throw new CantFindException(sprintf('page url %s not exist', $url()));
+        }
+    }
+
+    /** 
+     * @throws InvalidArgumentException
+     * @throws CantFindException 
+     * */
+    public function searchPageByUrl(FindByUrl $command): Page
+    {
+        $url = new Url($command->url);
+
+        try {
+            $page = $this->pageRepository->getByUrl($url());
+            $name = new Name($page->getName());
+            $content = new Content($page->getContent());
+            $id = new Id($page->getId());
+            return new Page(
+                $content(),
+                $id(),
+                $name(),
+                $url()
+            );
         } catch (NoSuchEntityException) {
             throw new CantFindException(sprintf('page url %s not exist', $url()));
         }
