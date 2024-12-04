@@ -6,7 +6,9 @@
   - test all descriptions and routes via sitemap and breadcrumb
     - Default Action
     - Dynamic Action
-
+  - implement description of `Root` action:
+    - `getDynamicRoutes`
+    - `getDescription`
 
 ## Next
 
