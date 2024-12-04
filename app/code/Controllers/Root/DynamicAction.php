@@ -37,21 +37,12 @@ class DynamicAction extends Action implements DynamicActionInterface
         }
     }
 
-    public function getRoutes(): array
-    {
-        $routes = [];
-        $rows = $this->pageRepository->getUrls();
-        foreach ($rows as $row) {
-            $routes[] = $row[PageModelInterface::PAGE_URL_FIELD];
-        }
-        return $routes;
-    }
-
     /** @todo implement description */
     public function getDynamicRoutes(): array
     {
         $rows = $this->pageRepository->getUrls();
-        foreach ($rows as $name) {
+        foreach ($rows as $row) {
+            $name = $row[PageModelInterface::PAGE_URL_FIELD];
             $routes[] = new DynamicRouteDTO(
                 $name,
                 $name . ' description'
