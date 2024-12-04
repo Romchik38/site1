@@ -10,7 +10,7 @@ return function ($container) {
         function ($container) {
             return new \Romchik38\Site1\Models\Sql\Page\PageRepository(
                 $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Domain\Page\PageFactory::class),
+                new \Romchik38\Site1\Domain\Page\PageFactory,
                 'pages',
                 'page_id'
             );

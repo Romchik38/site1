@@ -6,7 +6,7 @@ namespace Romchik38\Site1\Models\DTO\Main;
 
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOInterface;
-use Romchik38\Site1\Api\Models\Page\PageModelInterface;
+use Romchik38\Site1\Domain\Page\PageModelInterface;
 
 class MainDTOFactory implements MainDTOFactoryInterface
 {

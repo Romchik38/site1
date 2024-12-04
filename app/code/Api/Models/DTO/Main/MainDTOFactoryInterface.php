@@ -2,7 +2,7 @@
 
 namespace Romchik38\Site1\Api\Models\DTO\Main;
 
-use Romchik38\Site1\Api\Models\Page\PageModelInterface;
+use Romchik38\Site1\Domain\Page\PageModelInterface;
 
 interface MainDTOFactoryInterface
 {

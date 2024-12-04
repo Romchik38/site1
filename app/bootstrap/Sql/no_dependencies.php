@@ -15,11 +15,6 @@ return function ($container) {
         \Romchik38\Server\Api\Models\DatabaseInterface::class,
         $container->get(\Romchik38\Server\Models\Sql\DatabasePostgresql::class)
     );
-    
-    $container->add(
-        \Romchik38\Site1\Models\Sql\Page\PageFactory::class,
-        new Romchik38\Site1\Models\Sql\Page\PageFactory()
-    );
 
     $container->add(
         \Romchik38\Site1\Models\Redirect\RedirectFactory::class,
