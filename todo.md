@@ -3,10 +3,7 @@
 ## Current
 
 - update to php-server v1.11.1
-  - implement description of `Root` action:
-    - `getDynamicRoutes`
-    - `getDescription`
-  - move User Model and Factory to `Domain` folder
+- move User Model and Factory to `Domain` folder
 
 ## Next
 

@@ -14,7 +14,8 @@ return function ($container) {
         new \Romchik38\Site1\Controllers\Root\DefaultAction(
             $container->get(\Romchik38\Site1\Api\Views\MainPageViewInterface::class),
             $container->get(\Romchik38\Site1\Domain\Page\PageRepositoryInterface::class),
-            $container->get(\Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface::class)
+            $container->get(\Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface::class),
+            $container->get(\Romchik38\Site1\Application\PageView\PageViewService::class)
         )
     );
 
