@@ -13,6 +13,8 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
+use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
+use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\ReCaptcha\ReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
@@ -20,10 +22,10 @@ use Romchik38\Site1\Api\Services\RecaptchaInterface;
 class DynamicAction extends Action implements DynamicActionInterface
 {
     private array $methods = [
-        'index',
-        'register',
-        'recovery',
-        'changepassword'
+        'index' => 'Login page',
+        'register' => 'Register page',
+        'recovery' => 'Password recovery page',
+        'changepassword' => 'Change password page'
     ];
 
     public function __construct(
@@ -81,8 +83,25 @@ class DynamicAction extends Action implements DynamicActionInterface
             ->toString();
     }
 
-    public function getRoutes(): array
+    public function getDynamicRoutes(): array
     {
-        return $this->methods;
+        $routes = [];
+        foreach ($this->methods as $name => $description) {
+            $routes[] = new DynamicRouteDTO($name, $description);
+        }
+        return $routes;
     }
+
+    public function getDescription(string $dynamicRoute): string
+    {
+        $description = $this->methods[$dynamicRoute] ?? null;
+        if (is_null($description)) {
+            throw new DynamicActionLogicException(
+                sprintf('Route %s not found', $dynamicRoute)
+            );
+        }
+        return $description;
+    }
+
+
 }
