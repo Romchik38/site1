@@ -8,18 +8,18 @@ use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Server\Controllers\Actions\Action;
-use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
+use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\ReCaptcha\ReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 
-class DynamicAction extends Action implements DynamicActionInterface
+final class DynamicAction extends Action implements DynamicActionInterface
 {
     private array $methods = [
         'index' => 'Login page',
@@ -29,12 +29,12 @@ class DynamicAction extends Action implements DynamicActionInterface
     ];
 
     public function __construct(
-        protected ViewInterface $view,
-        protected SessionInterface $session,
-        protected LoginDTOFactoryInterface $loginDtoFactory,
-        protected ServerRequestInterface $request,
-        protected UserRepositoryInterface $userRepository,
-        protected RecaptchaInterface $recaptchaService,
+        protected readonly ViewInterface $view,
+        protected readonly SessionInterface $session,
+        protected readonly LoginDTOFactoryInterface $loginDtoFactory,
+        protected readonly ServerRequestInterface $request,
+        protected readonly UserRepositoryInterface $userRepository,
+        protected readonly RecaptchaInterface $recaptchaService,
         protected array $recaptchas = []
     ) {}
     public function execute(string $action): string
@@ -42,7 +42,9 @@ class DynamicAction extends Action implements DynamicActionInterface
         /** 0. Check if dynamic action is repesent */
         $routes = array_keys($this->methods);
         if (array_search($action, $routes) === false) {
-            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
+            throw new ActionNotFoundException(
+                sprintf('Sorry, requested resource %s not found', $action)
+            );
         }
 
         /** 1. Get user identity for DTO */
@@ -58,10 +60,10 @@ class DynamicAction extends Action implements DynamicActionInterface
         if (count($recaptchaNames) > 0) {
             $reCaptchaDTOs = $this->recaptchaService->getActiveRecaptchaDTOs($recaptchaNames);
             /** @var ReCaptchaDTOInterface $reCaptchaDTO */
-            foreach($reCaptchaDTOs as $reCaptchaDTO) {
+            foreach ($reCaptchaDTOs as $reCaptchaDTO) {
                 $reCaptchaHash[$reCaptchaDTO->getActionName()] = $reCaptchaDTO;
             }
-        } 
+        }
 
         $message = Message::fromRequest($this->request->getQueryParams());
         /** 
@@ -103,6 +105,4 @@ class DynamicAction extends Action implements DynamicActionInterface
         }
         return $description;
     }
-
-
 }

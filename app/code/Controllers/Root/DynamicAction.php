@@ -7,8 +7,8 @@ namespace Romchik38\Site1\Controllers\Root;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Server\Controllers\Actions\Action;
+use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
-use Romchik38\Server\Controllers\Errors\NotFoundException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
@@ -38,9 +38,9 @@ final class DynamicAction extends Action implements DynamicActionInterface
             $this->view->setController($this->getController(), $action)->setControllerData($mainDTO);
             return $this->view->toString();
         } catch (InvalidArgumentException) {
-            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
+            throw new ActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
         } catch (CantFindException) {
-            throw new NotFoundException('Sorry, requested resource ' . $action . ' not found');
+            throw new ActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
     }
 

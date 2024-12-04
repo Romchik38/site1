@@ -10,12 +10,12 @@ use Romchik38\Server\Api\Services\LoggerServerInterface;
 use Romchik38\Server\Api\Services\MailerInterface;
 use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
 use Romchik38\Server\Controllers\Actions\Action;
-use Romchik38\Server\Controllers\Errors\DynamicActionNotFoundException;
 use Romchik38\Server\Models\DTO\Email\EmailDTO;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Services\Errors\CantSendEmailException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
+use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
 use Romchik38\Site1\Api\Services\SessionInterface;
@@ -78,7 +78,7 @@ class DynamicAction extends Action implements DynamicActionInterface
         if (array_search($action, $routes) !== false) {
             return $this->$action();
         } else {
-            throw new DynamicActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
+            throw new ActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
     }
 
