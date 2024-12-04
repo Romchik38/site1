@@ -78,4 +78,8 @@ final class DefaultAction extends Action implements DefaultActionInterface
         $this->session->setUserId($user->id);
         return $this->successMessage;
     }
+
+    public function getDescription(): string {
+        return 'Change password page';
+    }
 }

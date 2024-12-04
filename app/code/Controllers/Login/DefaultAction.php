@@ -49,4 +49,8 @@ class DefaultAction extends Action implements DefaultActionInterface
             ->setControllerData($loginDTO);
         return $this->view->toString();
     }
+
+    public function getDescription(): string {
+        return 'Login pages';
+    }
 }

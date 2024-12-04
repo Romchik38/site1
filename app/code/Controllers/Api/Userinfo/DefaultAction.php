@@ -80,4 +80,8 @@ class DefaultAction extends Action implements DefaultActionInterface
             return $this->view->setControllerData($apiDTO)->toString();
         }
     }
+
+    public function getDescription(): string {
+        return 'User data (api endpoint)';
+    }
 }

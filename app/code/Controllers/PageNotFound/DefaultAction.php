@@ -29,4 +29,8 @@ class DefaultAction extends Action implements DefaultActionInterface
             ->setControllerData($defaultDTO)
             ->toString();
     }
+
+    public function getDescription(): string {
+        return 'Page not found';
+    }
 }

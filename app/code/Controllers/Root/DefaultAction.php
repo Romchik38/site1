@@ -41,4 +41,8 @@ class DefaultAction extends Action implements DefaultActionInterface
             return $this->view->toString();
         }
     }
+
+    public function getDescription(): string {
+        return 'Home page';
+    }
 }

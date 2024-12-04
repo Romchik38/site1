@@ -27,4 +27,8 @@ class DefaultAction extends Action implements DefaultActionInterface
             ->setControllerData($defaultDTO)
             ->toString();
     }
+
+    public function getDescription(): string {
+        return 'Server error page';
+    }
 }
