@@ -45,14 +45,14 @@ return function (array $data = []) {
                 $withouLink++;
                 array_unshift(
                     $line,
-                    '<li class="breadcrumb-item active" aria-current="page">' . htmlentities($name) . '</li>'
+                    '<li class="breadcrumb-item active" aria-current="page">' . htmlentities($description) . '</li>'
                 );
                 $activeUrl = $url;
             } else {
                 array_unshift(
                     $line,
                     '<li class="breadcrumb-item"><a href="' . htmlentities($url)
-                        . '" title="' . htmlentities($description) . '">' . htmlentities($name) . '</a></li>'
+                        . '" title="' . htmlentities($description) . '">' . htmlentities($description) . '</a></li>'
                 );
             }
         }
