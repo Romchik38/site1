@@ -16,6 +16,8 @@ use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Services\Errors\CantSendEmailException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
+use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
+use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
 use Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Site1\Application\RecoveryEmail\CantCreateHashException;
 use Romchik38\Site1\Application\RecoveryEmail\Create;
@@ -39,11 +41,11 @@ use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 class DynamicAction extends Action implements DynamicActionInterface
 {
     private array $methods = [
-        'index',
-        'logout',
-        'register',
-        'recovery',
-        'changepassword'
+        'index' => 'Login page',
+        'logout' => 'Logout page',
+        'register' => 'Register page',
+        'recovery' => 'Recovery page',
+        'changepassword' => 'Change password page'
     ];
 
     private $successMessage = 'Authentication success';
@@ -77,11 +79,6 @@ class DynamicAction extends Action implements DynamicActionInterface
         } else {
             throw new DynamicActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
         }
-    }
-
-    public function getRoutes(): array
-    {
-        return $this->methods;
     }
 
     /**
@@ -241,5 +238,25 @@ class DynamicAction extends Action implements DynamicActionInterface
         return 'We will send recovery instructions to '
             . $email
             . ' if it was provided during registration ( Please, check your email box )';
+    }
+
+    public function getDynamicRoutes(): array
+    {
+        $routes = [];
+        foreach ($this->methods as $name => $description) {
+            $routes[] = new DynamicRouteDTO($name, $description);
+        }
+        return $routes;
+    }
+
+    public function getDescription(string $dynamicRoute): string
+    {
+        $description = $this->methods[$dynamicRoute] ?? null;
+        if (is_null($description)) {
+            throw new DynamicActionLogicException(
+                sprintf('Route %s not found', $dynamicRoute)
+            );
+        }
+        return $description;
     }
 }
