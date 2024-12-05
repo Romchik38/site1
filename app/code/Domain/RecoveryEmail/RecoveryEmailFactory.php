@@ -6,7 +6,7 @@ namespace Romchik38\Site1\Domain\RecoveryEmail;
 
 use Romchik38\Site1\Domain\RecoveryEmail\RecoveryEmailInterface;
 
-final class RecoveryEmailFactory
+final class RecoveryEmailFactory implements RecoveryEmailFactoryInterface
 {
     public function create(): RecoveryEmailInterface
     {
