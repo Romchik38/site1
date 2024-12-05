@@ -6,6 +6,7 @@ namespace Romchik38\Site1\Domain\User;
 
 use Romchik38\Server\Api\Models\ModelFactoryInterface;
 
-interface UserFactoryInterface extends ModelFactoryInterface {
+interface UserFactoryInterface extends ModelFactoryInterface
+{
     public function create(): UserModelInterface;
 }

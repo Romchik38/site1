@@ -6,9 +6,8 @@ namespace Romchik38\Site1\Domain\Page;
 
 use Romchik38\Server\Models\Model;
 
-class PageModel extends Model implements PageModelInterface
+final class PageModel extends Model implements PageModelInterface
 {
-
     public function getContent(): string
     {
         return $this->getData($this::PAGE_CONTENT_FIELD);

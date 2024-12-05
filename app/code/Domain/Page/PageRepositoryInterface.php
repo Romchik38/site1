@@ -14,8 +14,6 @@ interface PageRepositoryInterface extends RepositoryInterface
      * @throws \RuntimeException on duplicate
      */
     public function getByUrl(string $url): PageModelInterface;
-    
-    public function getUrls(string $expression = '', array $param = []): array;
 
     /** @return array<int,PageModelInterface> */
     public function listAll(): array;

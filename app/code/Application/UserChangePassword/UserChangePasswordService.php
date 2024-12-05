@@ -17,8 +17,8 @@ use Romchik38\Site1\Domain\User\VO\Password;
 final class UserChangePasswordService
 {
     public function __construct(
-        protected UserRepositoryInterface $userRepository,
-        protected LoggerInterface $logger
+        protected readonly UserRepositoryInterface $userRepository,
+        protected readonly LoggerInterface $logger
     ) {}
 
     /**

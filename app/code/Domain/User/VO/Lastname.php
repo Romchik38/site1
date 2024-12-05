@@ -12,6 +12,7 @@ final class Lastname
     public const PATTERN = '^[\p{L}]{3,30}$';
     public const ERROR_MESSAGE = 'Last name must be 3-30 characters long, can contain letters';
 
+    /** @throws InvalidArgumentExceptions */
     public function __construct(
         public readonly string $lastname
     ) {

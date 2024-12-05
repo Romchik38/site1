@@ -9,7 +9,7 @@ use Romchik38\Site1\Application\EntityRecoveryEmail\Views\RecoveryEmail;
 use Romchik38\Site1\Domain\RecoveryEmail\VO\Email;
 use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 
-class EntityRecoveryEmailService
+final class EntityRecoveryEmailService
 {
     public const EMAIL_HASH_FIELD = 'email_hash';
     public const FAILED_MESSAGE = 'Recovery message can not be send via technical issues';
@@ -19,7 +19,7 @@ class EntityRecoveryEmailService
     protected readonly string $url;
 
     public function __construct(
-        protected EntityRepositoryInterface $entityRepository,
+        protected readonly EntityRepositoryInterface $entityRepository,
         int $entityId,
         string $recoveryFieldName,
         string $recoveryUrlDomain,

@@ -33,11 +33,11 @@ final class DefaultAction extends Action implements DefaultActionInterface
     protected $technicalProblemMessage = 'We are sorry, you can\'t recovery a password. There are some technical problems on our side.';
 
     public function __construct(
-        protected ServerRequestInterface $request,
-        protected RecoveryEmailService $userRecoveryEmail,
-        protected SessionInterface $session,
-        protected UserRepositoryInterface $userRepository,
-        protected LoggerInterface $logger,
+        protected readonly ServerRequestInterface $request,
+        protected readonly RecoveryEmailService $userRecoveryEmail,
+        protected readonly SessionInterface $session,
+        protected readonly UserRepositoryInterface $userRepository,
+        protected readonly LoggerInterface $logger,
         protected readonly UserEmailService $userEmailService
     ) {}
 

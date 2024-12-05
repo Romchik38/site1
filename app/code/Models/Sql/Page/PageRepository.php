@@ -10,7 +10,7 @@ use Romchik38\Server\Models\Sql\Repository;
 use Romchik38\Site1\Domain\Page\PageModelInterface;
 use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
 
-class PageRepository extends Repository implements PageRepositoryInterface
+final class PageRepository extends Repository implements PageRepositoryInterface
 {
     public function getByUrl(string $url): PageModelInterface
     {
@@ -24,13 +24,6 @@ class PageRepository extends Repository implements PageRepositoryInterface
         } else {
             throw new RepositoryConsistencyException(sprintf('Page with url %s has duplicate', $url));
         }
-    }
-
-    public function getUrls(string $expression = '', array $param = []): array
-    {
-        $query = 'SELECT ' . $this->table . '.url FROM ' . $this->table
-            . $expression;
-        return $this->database->queryParams($query, $param);
     }
 
     public function listAll(): array

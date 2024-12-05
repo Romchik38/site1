@@ -9,7 +9,7 @@ use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
 
-class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends Action implements DefaultActionInterface
 {
     public function __construct(
         protected readonly DefaultPageViewInterface $defaultPageView,
@@ -30,7 +30,8 @@ class DefaultAction extends Action implements DefaultActionInterface
             ->toString();
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return 'Page not found';
     }
 }

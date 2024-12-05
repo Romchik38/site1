@@ -9,6 +9,7 @@ use Romchik38\Site1\Domain\User\VO\Username;
 
 interface UserRepositoryInterface extends RepositoryInterface
 {
+    /** @throws NoSuchEntityException */
     public function getByUserName(Username $username): UserModelInterface;
 
     /** @throws NoSuchEntityException */

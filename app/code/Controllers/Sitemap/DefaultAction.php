@@ -12,7 +12,7 @@ use Romchik38\Site1\Controllers\Sitemap\DefaultAction\SitemapDTO;
 /**
  * Creates a sitemap tree of public controllers's actions
  */
-class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends Action implements DefaultActionInterface
 {
 
     public function __construct(
@@ -34,8 +34,9 @@ class DefaultAction extends Action implements DefaultActionInterface
 
         return $this->view->toString();
     }
-    
-    public function getDescription(): string {
+
+    public function getDescription(): string
+    {
         return 'Sitemap page';
     }
 }

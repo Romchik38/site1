@@ -17,12 +17,12 @@ use Romchik38\Site1\Domain\User\VO\Id;
 use Romchik38\Site1\Domain\User\VO\Password;
 use Romchik38\Site1\Domain\User\VO\Username;
 
-class UserRegisterService
+final class UserRegisterService
 {
 
     public function __construct(
-        protected UserRepositoryInterface $userRepository,
-        protected LoggerInterface $logger
+        protected readonly UserRepositoryInterface $userRepository,
+        protected readonly LoggerInterface $logger
     ) {}
 
     /**

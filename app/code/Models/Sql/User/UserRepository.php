@@ -10,7 +10,7 @@ use Romchik38\Site1\Domain\User\UserModelInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Site1\Domain\User\VO\Username;
 
-class UserRepository extends Repository implements UserRepositoryInterface
+final class UserRepository extends Repository implements UserRepositoryInterface
 {
 
     /**

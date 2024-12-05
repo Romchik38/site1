@@ -17,11 +17,8 @@ use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 /**
  * return info about rigistered user 
  * see docs/api/userinfo.md
- * 
- * @api v0.0.2
- * 
  */
-class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends Action implements DefaultActionInterface
 {
     const USERNAME_FIELD = 'username';
 
@@ -35,10 +32,10 @@ class DefaultAction extends Action implements DefaultActionInterface
 
 
     public function __construct(
-        protected SessionInterface $session,
-        protected UserRepositoryInterface $userRepository,
-        protected ApiDTOFactoryInterface $apiDTOFactory,
-        protected ViewInterface $view
+        protected readonly SessionInterface $session,
+        protected readonly UserRepositoryInterface $userRepository,
+        protected readonly ApiDTOFactoryInterface $apiDTOFactory,
+        protected readonly ViewInterface $view
     ) {}
 
     public function execute(): string
@@ -81,7 +78,8 @@ class DefaultAction extends Action implements DefaultActionInterface
         }
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return 'User data (api endpoint)';
     }
 }

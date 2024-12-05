@@ -2,7 +2,7 @@
 
 ## Current
 
-- update to php-server v1.11.1
+- move recovery email model to domain
 
 ## Next
 

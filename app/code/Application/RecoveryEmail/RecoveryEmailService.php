@@ -18,8 +18,8 @@ use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 final class RecoveryEmailService
 {
     public function __construct(
-        protected RecoveryEmailRepositoryInterface $recoveryEmailRepository,
-        protected LoggerInterface $logger
+        protected readonly RecoveryEmailRepositoryInterface $recoveryEmailRepository,
+        protected readonly LoggerInterface $logger
     ) {}
 
     /** 

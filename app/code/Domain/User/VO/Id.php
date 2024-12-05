@@ -8,6 +8,7 @@ use Romchik38\Server\Models\Errors\InvalidArgumentException;
 
 final class Id
 {
+    /** @throws InvalidArgumentExceptions */
     public function __construct(
         public readonly int $id
     ) {

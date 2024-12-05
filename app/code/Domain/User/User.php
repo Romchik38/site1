@@ -7,9 +7,8 @@ namespace Romchik38\Site1\Domain\User;
 use Romchik38\Server\Models\Model;
 use Romchik38\Site1\Domain\User\UserModelInterface;
 
-class User extends Model implements UserModelInterface
+final class User extends Model implements UserModelInterface
 {
-
     public function getActive(): bool
     {
         return $this->getData(UserModelInterface::ACTIVE_FIELD);
@@ -86,5 +85,4 @@ class User extends Model implements UserModelInterface
         $this->setData(UserModelInterface::USER_NAME_FIELD, $userName);
         return $this;
     }
-
 }

@@ -6,7 +6,8 @@ namespace Romchik38\Site1\Domain\User;
 
 use Romchik38\Server\Api\Models\ModelInterface;
 
-interface UserModelInterface extends ModelInterface {
+interface UserModelInterface extends ModelInterface
+{
     const USER_ID_FIELD = 'user_id';
     const USER_NAME_FIELD = 'user_name';
     const FIRST_NAME_FIELD = 'first_name';
@@ -21,7 +22,7 @@ interface UserModelInterface extends ModelInterface {
     public function getFirstName(): string;
     public function getLastName(): string;
     public function getPassword(): string;
-    public function getUserName(): string;    
+    public function getUserName(): string;
 
     public function setActive(bool $active): UserModelInterface;
     public function setId(int $id): UserModelInterface;

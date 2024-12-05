@@ -20,9 +20,9 @@ use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
 final class DynamicAction extends Action implements DynamicActionInterface
 {
     public function __construct(
-        protected ViewInterface $view,
-        protected PageRepositoryInterface $pageRepository,
-        protected MainDTOFactoryInterface $mainDTOFactory,
+        protected readonly ViewInterface $view,
+        protected readonly PageRepositoryInterface $pageRepository,
+        protected readonly MainDTOFactoryInterface $mainDTOFactory,
         protected readonly PageViewService $pageViewService
     ) {}
 

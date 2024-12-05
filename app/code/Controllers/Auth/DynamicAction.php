@@ -38,7 +38,7 @@ use Romchik38\Site1\Application\UserRegister\UsernameAlreadyInUseException;
 use Romchik38\Site1\Application\UserRegister\UserRegisterService;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
-class DynamicAction extends Action implements DynamicActionInterface
+final class DynamicAction extends Action implements DynamicActionInterface
 {
     private array $methods = [
         'index' => 'Check login/password',
@@ -64,11 +64,11 @@ class DynamicAction extends Action implements DynamicActionInterface
         private readonly UserRegisterService $userRegister,
         private readonly EntityRecoveryEmailService $entityRecoveryEmailService,
         protected readonly RecaptchaInterface $recaptchaService,
-        protected LoggerServerInterface $logger,
+        protected readonly LoggerServerInterface $logger,
         protected readonly UserChangePasswordService $userChangePassword,
         protected readonly UserEmailService $userEmailService,
         protected readonly RecoveryEmailService $recoveryEmailService,
-        protected MailerInterface $mailer,
+        protected readonly MailerInterface $mailer,
         protected array $recaptchas = []
     ) {}
 

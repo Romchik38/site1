@@ -8,10 +8,11 @@ use Romchik38\Server\Models\Errors\InvalidArgumentException;
 
 final class Username
 {
-    public const FIELD = 'user_name'; 
+    public const FIELD = 'user_name';
     public const PATTERN = '[A-Za-z0-9_]{3,20}$';
     public const ERROR_MESSAGE = 'Username must be 3-20 characters long, can contain lowercase, uppercase letter, number and underscore. Case-Sensitive';
 
+    /** @throws InvalidArgumentExceptions */
     public function __construct(
         public readonly string $username
     ) {

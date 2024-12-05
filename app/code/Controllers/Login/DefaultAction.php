@@ -14,15 +14,14 @@ use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 
-class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends Action implements DefaultActionInterface
 {
-
     public function __construct(
-        protected ViewInterface $view,
-        protected SessionInterface $session,
-        protected LoginDTOFactoryInterface $loginDtoFactory,
-        protected ServerRequestInterface $request,
-        protected UserRepositoryInterface $userRepository
+        protected readonly ViewInterface $view,
+        protected readonly SessionInterface $session,
+        protected readonly LoginDTOFactoryInterface $loginDtoFactory,
+        protected readonly ServerRequestInterface $request,
+        protected readonly UserRepositoryInterface $userRepository
     ) {}
     public function execute(): string
     {
@@ -50,7 +49,8 @@ class DefaultAction extends Action implements DefaultActionInterface
         return $this->view->toString();
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return 'Login pages';
     }
 }
