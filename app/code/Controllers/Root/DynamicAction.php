@@ -44,7 +44,6 @@ final class DynamicAction extends Action implements DynamicActionInterface
         }
     }
 
-    /** @todo implement description */
     public function getDynamicRoutes(): array
     {
         $pages = $this->pageViewService->listAllUrlsAndNames();

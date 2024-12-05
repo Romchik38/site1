@@ -2,9 +2,6 @@
 
 ## Current
 
-- move recovery email model to domain
-- @todo
-
 ## Next
 
 [-] opdate google recapcha
