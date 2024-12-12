@@ -1,0 +1,38 @@
+name: site1
+
+services:
+  nginx:
+    image: nginx:stable-perl
+    volumes:
+      - ./public/http:/usr/share/nginx/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - "8000:80"
+    depends_on:
+     - php-fpm
+    networks:
+      - backend
+  
+  php-fpm: 
+    image: php:8.3-fpm
+    volumes:
+      - ./app:/app
+      - ./public/http:/public/http
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:latest
+    volumes: 
+      - ./docker/postgres/home:/home/postgres
+    environment:
+      POSTGRES_PASSWORD: 82Df93a_a
+    ports:
+      - "9999:5432"
+    networks:
+      - backend
+  
+networks:
+  backend:
