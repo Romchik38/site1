@@ -25,7 +25,7 @@ services:
       - backend
 
   postgres:
-    image: postgres:latest
+    build: ./docker/postgres
     volumes: 
       - ./docker/postgres/home:/home/postgres
     environment:
