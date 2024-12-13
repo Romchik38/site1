@@ -13,8 +13,12 @@ See [live preview](https://site1.romanenko-studio.dev) site.
 - [design](/docs/html_design.md)
 - [google recaptcha](/docs/recaptcha.md)
 
-## Install
+## Install (Docker)
 
 1. run `docker compose up`
-2. create a database from sql [see](./docker/postgres/home/readme.md)
-3. in browser localhost:8000
+2. open in a browser url - localhost:8000
+
+## Install (Manual)
+
+1. use nginx [config](./nginx/simple.conf)
+2. create a database with [sql](./sql/site1-empty-users.sql)
