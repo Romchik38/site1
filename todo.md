@@ -2,9 +2,6 @@
 
 ## Current
 
-- docker
-  - php.ini
-
 ## Next
 
 [-] opdate google recapcha
