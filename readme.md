@@ -18,6 +18,12 @@ See [live preview](https://site1.romanenko-studio.dev) site.
 1. run `docker compose up`
 2. open in a browser url - localhost:8000
 
+### X-debug
+
+- Copy xdebug.ini.back to xdebug.ini in *docker/php-fpm/php/conf.d*
+- uncomment settings
+- make change in your IDE
+
 ## Install (Manual)
 
 1. use nginx [config](./nginx/simple.conf)
