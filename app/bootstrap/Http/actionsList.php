@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Romchik38\Server\Api\Routers\Http\HttpRouterInterface;
 use Romchik38\Server\Controllers\Controller;
 use Romchik38\Server\Api\Services\Mappers\ControllerTreeInterface;
+use Romchik38\Server\Routers\Http\ControllersCollection;
 
 return function ($container) {
 
@@ -69,8 +70,9 @@ return function ($container) {
     
     $rootPost->setChild($authPost);
 
-    return [
-        HttpRouterInterface::REQUEST_METHOD_GET => $root,
-        HttpRouterInterface::REQUEST_METHOD_POST => $rootPost
-    ];
+    $collection = new ControllersCollection;
+    $collection->setController($root, HttpRouterInterface::REQUEST_METHOD_GET)
+        ->setController($rootPost, HttpRouterInterface::REQUEST_METHOD_POST);
+
+    return $collection;
 };
