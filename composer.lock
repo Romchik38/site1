@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09854e003ffe9c323fa2a7f20227ec5d",
+    "content-hash": "0ac34afb38d02af315339d072496124c",
     "packages": [
         {
             "name": "psr/container",
@@ -153,16 +153,16 @@
         },
         {
             "name": "romchik38/php-server",
-            "version": "v1.11.1",
+            "version": "v1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Romchik38/server.git",
-                "reference": "97b9dd5da5d6acecefc182e34e5395ca92dc1c8a"
+                "reference": "636e75e89bba6ddb812c308b6ac06e8abfba3cc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Romchik38/server/zipball/97b9dd5da5d6acecefc182e34e5395ca92dc1c8a",
-                "reference": "97b9dd5da5d6acecefc182e34e5395ca92dc1c8a",
+                "url": "https://api.github.com/repos/Romchik38/server/zipball/636e75e89bba6ddb812c308b6ac06e8abfba3cc0",
+                "reference": "636e75e89bba6ddb812c308b6ac06e8abfba3cc0",
                 "shasum": ""
             },
             "require": {
@@ -189,25 +189,25 @@
             ],
             "description": "Php files to create a web app under php-fpm ",
             "support": {
-                "source": "https://github.com/Romchik38/server/tree/v1.11.1",
+                "source": "https://github.com/Romchik38/server/tree/v1.12.0",
                 "issues": "https://github.com/Romchik38/server/issues"
             },
-            "time": "2024-11-29T18:58:27+00:00"
+            "time": "2025-02-17T16:04:32+00:00"
         }
     ],
     "packages-dev": [
         {
             "name": "myclabs/deep-copy",
-            "version": "1.12.1",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/myclabs/DeepCopy.git",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845"
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/123267b2c49fbf30d78a7b2d333f6be754b94845",
-                "reference": "123267b2c49fbf30d78a7b2d333f6be754b94845",
+                "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/024473a478be9df5fdaca2c793f2232fe788e414",
+                "reference": "024473a478be9df5fdaca2c793f2232fe788e414",
                 "shasum": ""
             },
             "require": {
@@ -246,7 +246,7 @@
             ],
             "support": {
                 "issues": "https://github.com/myclabs/DeepCopy/issues",
-                "source": "https://github.com/myclabs/DeepCopy/tree/1.12.1"
+                "source": "https://github.com/myclabs/DeepCopy/tree/1.13.0"
             },
             "funding": [
                 {
@@ -254,7 +254,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-11-08T17:47:46+00:00"
+            "time": "2025-02-12T12:17:51+00:00"
         },
         {
             "name": "nikic/php-parser",
