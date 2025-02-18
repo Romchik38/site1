@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Services\Http;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface;
 use Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelInterface;
 use Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
-use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 /**

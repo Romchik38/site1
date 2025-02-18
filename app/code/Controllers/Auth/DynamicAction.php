@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Auth;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
@@ -14,7 +15,6 @@ use Romchik38\Server\Models\DTO\Email\EmailDTO;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Services\Errors\CantSendEmailException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
-use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;

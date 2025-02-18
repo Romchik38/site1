@@ -36,7 +36,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Views\LoginPageViewInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class),
+            $container->get(\Psr\Http\Message\ServerRequestInterface::class),
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class)
         )
     );
@@ -50,7 +50,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Views\LoginPageViewInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface::class),
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class),
+            $container->get(\Psr\Http\Message\ServerRequestInterface::class),
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),
             $container->get(\Romchik38\Site1\Api\Services\RecaptchaInterface::class),
             $configLoginDynamicGoogleReCaptchas
@@ -64,7 +64,7 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Controllers\Auth\DynamicAction::class,
         new \Romchik38\Site1\Controllers\Auth\DynamicAction(
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class),
+            $container->get(\Psr\Http\Message\ServerRequestInterface::class),
             $container->get(\Romchik38\Site1\Application\UserPasswordCheck\UserPasswordCheckService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Application\UserRegister\UserRegisterService::class),
@@ -83,7 +83,7 @@ return function ($container) {
     $container->add(
         \Romchik38\Site1\Controllers\Changepassword\DefaultAction::class,
         new \Romchik38\Site1\Controllers\Changepassword\DefaultAction(
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class),
+            $container->get(\Psr\Http\Message\ServerRequestInterface::class),
             $container->get(\Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService::class),
             $container->get(\Romchik38\Site1\Api\Services\SessionInterface::class),
             $container->get(\Romchik38\Site1\Domain\User\UserRepositoryInterface::class),

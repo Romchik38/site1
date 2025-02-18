@@ -88,7 +88,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Api\Models\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepositoryInterface::class),
             $google_reCAPTCHA,
             $container->get(\Romchik38\Site1\Api\Models\DTO\GoogleReCaptcha\GoogleReCaptchaDTOFactoryInterface::class),
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class)
+            $container->get(\Psr\Http\Message\ServerRequestInterface::class)
         )
     );
     $container->add(

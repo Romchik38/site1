@@ -19,15 +19,6 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Services\Http\Session::class)
     );
 
-    $container->add(
-        \Romchik38\Server\Services\Request\Http\UriFactory::class,
-        new \Romchik38\Server\Services\Request\Http\UriFactory()
-    );
-    $container->add(
-        \Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface::class,
-        $container->get(\Romchik38\Server\Services\Request\Http\UriFactory::class)
-    );
-
     // ROUTER
     $container->add(
         \Romchik38\Server\Results\Http\HttpRouterResult::class,
@@ -53,24 +44,18 @@ return function ($container) {
 
     // REQUEST  depends only on this file or on no_dependencies global
     $container->add(
-        \Romchik38\Server\Services\Request\Http\ServerRequestService::class,
-        new \Romchik38\Server\Services\Request\Http\ServerRequestService()
-    );
-    $container->add(
-        \Romchik38\Server\Api\Services\Request\Http\ServerRequestServiceInterface::class,
-        $container->get(\Romchik38\Server\Services\Request\Http\ServerRequestService::class)
-    );
-
-    $container->add(
-        \Romchik38\Site1\Services\Http\Request::class,
-        new \Romchik38\Site1\Services\Http\Request(
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\UriFactoryInterface::class),
-            $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestServiceInterface::class)
+        Laminas\Diactoros\ServerRequest::class,
+        Laminas\Diactoros\ServerRequestFactory::fromGlobals(
+            $_SERVER,
+            $_GET,
+            $_POST,
+            $_COOKIE,
+            $_FILES
         )
     );
     $container->add(
-        \Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class,
-        $container->get(\Romchik38\Site1\Services\Http\Request::class)
+        Psr\Http\Message\ServerRequestInterface::class,
+        $container->get(Laminas\Diactoros\ServerRequest::class)
     );
     return $container;
 };

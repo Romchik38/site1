@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Changepassword;
 
+use Psr\Http\Message\ServerRequestInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Psr\Log\LoggerInterface;
-use Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
-
 use Psr\Log\LogLevel;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Application\RecoveryEmail\Check;

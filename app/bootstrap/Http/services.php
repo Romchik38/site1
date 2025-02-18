@@ -10,7 +10,7 @@ return function ($container) {
             return new Romchik38\Server\Services\Redirect\Http\Redirect(
                 $container->get(\Romchik38\Site1\Models\Sql\Redirect\RedirectRepository::class),
                 $container->get(\Romchik38\Server\Api\Models\DTO\RedirectResult\Http\RedirectResultDTOFactoryInterface::class),
-                $container->get(\Romchik38\Server\Api\Services\Request\Http\ServerRequestInterface::class)
+                $container->get(\Psr\Http\Message\ServerRequestInterface::class)
             );
         }
     );
