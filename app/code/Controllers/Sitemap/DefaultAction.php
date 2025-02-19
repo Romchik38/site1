@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Sitemap;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
@@ -20,7 +22,7 @@ final class DefaultAction extends Action implements DefaultActionInterface
         protected readonly SitemapLinkTreeInterface $sitemapLinkTree
     ) {}
 
-    public function execute(): string
+    public function execute(): ResponseInterface
     {
         $output = $this->sitemapLinkTree->getSitemapLinkTree($this->getController());
 
@@ -31,8 +33,10 @@ final class DefaultAction extends Action implements DefaultActionInterface
         );
         $this->view->setController($this->getController())
             ->setControllerData($sitemapDTO);
-
-        return $this->view->toString();
+        $response = new Response();
+        $responseBody = $response->getBody();
+        $responseBody->write($this->view->toString());
+        return $response->withBody($responseBody);
     }
 
     public function getDescription(): string

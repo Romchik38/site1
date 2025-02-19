@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Root;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Server\Controllers\Actions\Action;
@@ -26,7 +28,7 @@ final class DynamicAction extends Action implements DynamicActionInterface
         protected readonly PageViewService $pageViewService
     ) {}
 
-    public function execute(string $action): string
+    public function execute(string $action): ResponseInterface
     {
         try {
             $page = $this->pageViewService->searchPageByUrl(new FindByUrl($action));
@@ -35,8 +37,13 @@ final class DynamicAction extends Action implements DynamicActionInterface
                 $page->name,
                 $page->name
             );
-            $this->view->setController($this->getController(), $action)->setControllerData($mainDTO);
-            return $this->view->toString();
+            $this->view
+                ->setController($this->getController(), $action)
+                ->setControllerData($mainDTO);
+            $response = new Response();
+            $responseBody = $response->getBody();
+            $responseBody->write($this->view->toString());
+            return $response->withBody($responseBody);
         } catch (InvalidArgumentException) {
             throw new ActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
         } catch (CantFindException) {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\PageNotFound;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
@@ -16,7 +18,7 @@ final class DefaultAction extends Action implements DefaultActionInterface
         protected readonly DefaultViewDTOFactoryInterface $defaultViewDTOFactory,
     ) {}
 
-    public function execute(): string
+    public function execute(): ResponseInterface
     {
         $responseText = '404 Error - the page you are requested was not found on the server.';
 
@@ -25,9 +27,14 @@ final class DefaultAction extends Action implements DefaultActionInterface
             '404 Error - the page you are requested was not found on the server',
             $responseText
         );
-        return $this->defaultPageView
+        $html = $this->defaultPageView
             ->setControllerData($defaultDTO)
             ->toString();
+
+        $response = new Response();
+        $responseBody = $response->getBody();
+        $responseBody->write($html);
+        return $response->withBody($responseBody);
     }
 
     public function getDescription(): string

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Changepassword;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
@@ -19,6 +21,7 @@ use Romchik38\Site1\Application\RecoveryEmail\NoSuchEmailException;
 use Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService;
 use Romchik38\Site1\Application\UserEmail\FindEmail;
 use Romchik38\Site1\Application\UserEmail\UserEmailService;
+use Romchik38\Site1\Controllers\Login\Message;
 use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 
 final class DefaultAction extends Action implements DefaultActionInterface
@@ -40,8 +43,34 @@ final class DefaultAction extends Action implements DefaultActionInterface
         protected readonly UserEmailService $userEmailService
     ) {}
 
-    public function execute(): string
+    public function execute(): ResponseInterface
     {
+        $response = new Response();
+        $responseBody = $response->getBody();
+        $message = $this->change();
+        $responseBody->write($message);
+        $uri = $this->request->getUri();
+        $url = sprintf(
+            '%s://%s%s?%s=%s', 
+            $uri->getScheme(),
+            $uri->getHost(),
+            '/login/changepassword',
+            Message::FIELD,
+            /** @todo check on frontend without urlencode. Must be encoded auto */
+            urlencode($message)
+        );
+        return $response
+            ->withHeader('Location', $url)
+            ->withStatus(301)
+            ->withBody($responseBody);
+    }
+
+    public function getDescription(): string {
+        return 'Change password page';
+    }
+
+    /** @return string Text message (success or fail) */
+    private function change(): string {
         // 1 check user auth
         $userId = $this->session->getUserId();
         if ($userId !== 0) {
@@ -63,7 +92,7 @@ final class DefaultAction extends Action implements DefaultActionInterface
             $user = $this->userEmailService->checkEmailForAuth(
                 FindEmail::fromString($check->email)
             );
-        } catch (NoSuchEntityException $e) {
+        } catch (NoSuchEntityException) {
             // there is a problem. Because a recovery row exist, but user do not exist.
             $this->logger->log(
                 LogLevel::ERROR,
@@ -76,9 +105,5 @@ final class DefaultAction extends Action implements DefaultActionInterface
         }
         $this->session->setUserId($user->id);
         return $this->successMessage;
-    }
-
-    public function getDescription(): string {
-        return 'Change password page';
     }
 }

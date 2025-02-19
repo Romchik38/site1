@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Login;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Site1\Api\Services\SessionInterface;
@@ -37,7 +39,7 @@ final class DynamicAction extends Action implements DynamicActionInterface
         protected readonly RecaptchaInterface $recaptchaService,
         protected array $recaptchas = []
     ) {}
-    public function execute(string $action): string
+    public function execute(string $action): ResponseInterface
     {
         /** 0. Check if dynamic action is repesent */
         $routes = array_keys($this->methods);
@@ -80,10 +82,15 @@ final class DynamicAction extends Action implements DynamicActionInterface
         );
 
         /** 4. Exec view */
-        return $this->view
+        $html = $this->view
             ->setController($this->getController(), $action)
             ->setControllerData($loginDTO)
             ->toString();
+            
+        $response = new Response();
+        $responseBody = $response->getBody();
+        $responseBody->write($html);
+        return $response->withBody($responseBody);
     }
 
     public function getDynamicRoutes(): array

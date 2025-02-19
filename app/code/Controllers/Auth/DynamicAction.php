@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Auth;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
@@ -36,6 +38,7 @@ use Romchik38\Site1\Application\UserRegister\CouldNotRegisterException;
 use Romchik38\Site1\Application\UserRegister\Register;
 use Romchik38\Site1\Application\UserRegister\UsernameAlreadyInUseException;
 use Romchik38\Site1\Application\UserRegister\UserRegisterService;
+use Romchik38\Site1\Controllers\Login\Message;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
 final class DynamicAction extends Action implements DynamicActionInterface
@@ -72,13 +75,41 @@ final class DynamicAction extends Action implements DynamicActionInterface
         protected array $recaptchas = []
     ) {}
 
-    public function execute(string $action): string
+    public function execute(string $action): ResponseInterface
     {
         $routes = array_keys($this->methods);
         if (array_search($action, $routes) !== false) {
-            return $this->$action();
+            $message = $this->$action();
+            $arr = [
+                'index' => '/login/index',
+                'logout' => '/login/index',
+                'register' => '/login/register',
+                'recovery' => '/login/recovery',
+                'changepassword' => '/login/index',
+            ];
+            $path = $arr[$action] ?? '';
+            $response = new Response();
+            $responseBody = $response->getBody();
+            $responseBody->write($message);
+            $response = $response->withBody($responseBody);
+            if ($path !== '') {
+                $uri = $this->request->getUri();
+                $url = sprintf(
+                    '%s://%s%s?%s=%s', 
+                    $uri->getScheme(),
+                    $uri->getHost(),
+                    $path,
+                    Message::FIELD,
+                    /** @todo check on frontend without urlencode. Must be encoded auto */
+                    urlencode($message)
+                );
+                $response = $response->withHeader('Location', $url)->withStatus(301);
+            }
+            return $response;
         } else {
-            throw new ActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
+            throw new ActionNotFoundException(
+                sprintf('Sorry, requested resource %s not found', $action)
+            );
         }
     }
 

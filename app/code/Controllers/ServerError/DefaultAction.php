@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\ServerError;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOFactoryInterface;
@@ -16,16 +18,21 @@ final class DefaultAction extends Action implements DefaultActionInterface
         protected readonly DefaultViewDTOFactoryInterface $defaultViewDTOFactory,
     ) {}
 
-    public function execute(): string
+    public function execute(): ResponseInterface
     {
 
         $defaultDTO = $this->defaultViewDTOFactory->create(
             'Server Error',
             'We are sorry. There is an error on our site. Please Try Again later or contact us admin@site1.com'
         );
-        return $this->defaultPageView
+        $html = $this->defaultPageView
             ->setControllerData($defaultDTO)
             ->toString();
+
+        $response = new Response();
+        $responseBody = $response->getBody();
+        $responseBody->write($html);
+        return $response->withBody($responseBody);
     }
 
     public function getDescription(): string

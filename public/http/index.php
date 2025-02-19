@@ -16,7 +16,7 @@ require_once __DIR__ . '/../../vendor/autoload.php';
  * */
 $container = (require_once __DIR__ . '/../../app/bootstrap_http.php')();
 /** init section end */
-exit('hello world');
+
 $server = $container->get(\Romchik38\Server\Api\Servers\Http\HttpServerInterface::class);
 
 /* 

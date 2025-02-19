@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Api\Userinfo;
 
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\JsonResponse;
+use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOInterface;
@@ -36,9 +39,11 @@ final class DefaultAction extends Action implements DefaultActionInterface
         protected readonly UserRepositoryInterface $userRepository,
         protected readonly ApiDTOFactoryInterface $apiDTOFactory,
         protected readonly ViewInterface $view
-    ) {}
+    ) {
+    }
 
-    public function execute(): string
+    /** @todo remove view comments */
+    public function execute(): ResponseInterface
     {
         // 1. Unauthorized request
         $userId = $this->session->getUserId();
@@ -50,7 +55,8 @@ final class DefaultAction extends Action implements DefaultActionInterface
                 $this::MUST_BE_LOGGED_IN_ERROR,
             );
 
-            return $this->view->setControllerData($apiDTO)->toString();
+            // $this->view->setControllerData($apiDTO)->toString()
+            return new JsonResponse($apiDTO);
         }
 
         try {
@@ -64,8 +70,8 @@ final class DefaultAction extends Action implements DefaultActionInterface
                 ApiDTOInterface::STATUS_SUCCESS,
                 $this->data,
             );
-            return $this->view->setControllerData($apiDTO)->toString();
-        } catch (NoSuchEntityException $e) {
+            //return $this->view->setControllerData($apiDTO)->toString();
+        } catch (NoSuchEntityException) {
             // 3. Error response (session exist, but user was deleted from database)
             $apiDTO = $this->apiDTOFactory->create(
                 $this->apiName,
@@ -74,8 +80,8 @@ final class DefaultAction extends Action implements DefaultActionInterface
                 $this::SERVER_ERROR,
             );
             $this->session->logout();
-            return $this->view->setControllerData($apiDTO)->toString();
         }
+        return new JsonResponse($apiDTO);
     }
 
     public function getDescription(): string

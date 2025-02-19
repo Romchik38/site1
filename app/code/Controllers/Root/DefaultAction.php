@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Root;
 
+use Laminas\Diactoros\Response;
+use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
 use Romchik38\Server\Controllers\Actions\Action;
@@ -24,7 +26,7 @@ final class DefaultAction extends Action implements DefaultActionInterface
         protected readonly PageViewService $pageViewService
     ) {}
 
-    public function execute(): string
+    public function execute(): ResponseInterface
     {
         $action = 'index';
 
@@ -36,7 +38,11 @@ final class DefaultAction extends Action implements DefaultActionInterface
                 $page->name
             );
             $this->view->setController($this->getController(), $action)->setControllerData($mainDTO);
-            return $this->view->toString();
+            $response = new Response();
+            $responseBody = $response->getBody();
+            $responseBody->write($this->view->toString());
+            return $response->withBody($responseBody);
+
         } catch (InvalidArgumentException) {
             throw new ActionNotFoundException('Sorry, requested resource ' . $action . ' not found');
         } catch (CantFindException) {
