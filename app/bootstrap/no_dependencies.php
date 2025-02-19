@@ -149,15 +149,6 @@ return function ($container) {
         \Romchik38\Site1\Api\Models\DTO\Nav\NavDTOFactoryInterface::class,
         $container->get(\Romchik38\Site1\Models\DTO\Nav\NavDTOFactory::class)
     );
-
-    $container->add(
-        \Romchik38\Server\Results\Controller\ControllerResultFactory::class,
-        new \Romchik38\Server\Results\Controller\ControllerResultFactory()
-    );
-    $container->add(
-        \Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class,
-        $container->get(\Romchik38\Server\Results\Controller\ControllerResultFactory::class)
-    );
     
     $container->add(
         \Romchik38\Server\Models\DTO\DefaultView\DefaultViewDTOFactory::class,

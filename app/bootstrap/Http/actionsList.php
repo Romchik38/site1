@@ -13,7 +13,6 @@ return function ($container) {
     $root = new Controller(
         ControllerTreeInterface::ROOT_NAME,
         true,
-        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         $container->get(\Romchik38\Site1\Controllers\Root\DefaultAction::class),
         $container->get(\Romchik38\Site1\Controllers\Root\DynamicAction::class),
     );
@@ -21,7 +20,6 @@ return function ($container) {
     $login = new Controller(
         'login',
         true,
-        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         $container->get(\Romchik38\Site1\Controllers\Login\DefaultAction::class),
         $container->get(\Romchik38\Site1\Controllers\Login\DynamicAction::class)
     );
@@ -29,14 +27,12 @@ return function ($container) {
     $changepassword = new Controller(
         'changepassword',
         false,
-        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         $container->get(\Romchik38\Site1\Controllers\Changepassword\DefaultAction::class)
     );
 
     $sitemap = new Controller(
         'sitemap',
         true,
-        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         $container->get(Romchik38\Site1\Controllers\Sitemap\DefaultAction::class)
     );
 
@@ -49,7 +45,6 @@ return function ($container) {
     $userinfo = new Controller(
         'userinfo',
         false,
-        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         $container->get(\Romchik38\Site1\Controllers\Api\Userinfo\DefaultAction::class)
     );
 
@@ -63,15 +58,14 @@ return function ($container) {
     $authPost = new Controller(
         'auth',
         false,
-        $container->get(\Romchik38\Server\Api\Results\Controller\ControllerResultFactoryInterface::class),
         null,
         $container->get(\Romchik38\Site1\Controllers\Auth\DynamicAction::class)
     );
     
     $rootPost->setChild($authPost);
 
-    $collection = new ControllersCollection;
-    $collection->setController($root, HttpRouterInterface::REQUEST_METHOD_GET)
+    $collection = (new ControllersCollection)
+        ->setController($root, HttpRouterInterface::REQUEST_METHOD_GET)
         ->setController($rootPost, HttpRouterInterface::REQUEST_METHOD_POST);
 
     return $collection;

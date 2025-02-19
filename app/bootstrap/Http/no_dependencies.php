@@ -19,18 +19,6 @@ return function ($container) {
         $container->get(\Romchik38\Site1\Services\Http\Session::class)
     );
 
-    // ROUTER
-    $container->add(
-        \Romchik38\Server\Results\Http\HttpRouterResult::class,
-        new \Romchik38\Server\Results\Http\HttpRouterResult(
-            /** default response, headers, statusCode */
-        )
-    );
-    $container->add(
-        \Romchik38\Server\Api\Results\Http\HttpRouterResultInterface::class,
-        $container->get(\Romchik38\Server\Results\Http\HttpRouterResult::class)
-    );
-
     // DTO
     $container->add(
         \Romchik38\Server\Models\DTO\RedirectResult\Http\RedirectResultDTOFactory::class,
