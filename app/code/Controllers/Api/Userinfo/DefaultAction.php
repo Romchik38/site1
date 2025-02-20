@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Api\Userinfo;
 
-use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOInterface;
-use Romchik38\Server\Api\Views\ViewInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
@@ -37,12 +35,10 @@ final class DefaultAction extends Action implements DefaultActionInterface
     public function __construct(
         protected readonly SessionInterface $session,
         protected readonly UserRepositoryInterface $userRepository,
-        protected readonly ApiDTOFactoryInterface $apiDTOFactory,
-        protected readonly ViewInterface $view
+        protected readonly ApiDTOFactoryInterface $apiDTOFactory
     ) {
     }
 
-    /** @todo remove view comments */
     public function execute(): ResponseInterface
     {
         // 1. Unauthorized request
@@ -54,8 +50,6 @@ final class DefaultAction extends Action implements DefaultActionInterface
                 ApiDTOInterface::STATUS_ERROR,
                 $this::MUST_BE_LOGGED_IN_ERROR,
             );
-
-            // $this->view->setControllerData($apiDTO)->toString()
             return new JsonResponse($apiDTO);
         }
 
@@ -70,7 +64,6 @@ final class DefaultAction extends Action implements DefaultActionInterface
                 ApiDTOInterface::STATUS_SUCCESS,
                 $this->data,
             );
-            //return $this->view->setControllerData($apiDTO)->toString();
         } catch (NoSuchEntityException) {
             // 3. Error response (session exist, but user was deleted from database)
             $apiDTO = $this->apiDTOFactory->create(
