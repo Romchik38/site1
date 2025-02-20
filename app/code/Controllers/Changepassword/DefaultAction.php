@@ -53,7 +53,7 @@ final class DefaultAction extends Action implements DefaultActionInterface
         $url = sprintf(
             '%s://%s%s?%s=%s', 
             $uri->getScheme(),
-            $uri->getHost(),
+            $uri->getAuthority(),
             '/login/changepassword',
             Message::FIELD,
             /** @todo check on frontend without urlencode. Must be encoded auto */

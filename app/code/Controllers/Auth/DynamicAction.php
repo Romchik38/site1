@@ -97,7 +97,7 @@ final class DynamicAction extends Action implements DynamicActionInterface
                 $url = sprintf(
                     '%s://%s%s?%s=%s', 
                     $uri->getScheme(),
-                    $uri->getHost(),
+                    $uri->getAuthority(),
                     $path,
                     Message::FIELD,
                     /** @todo check on frontend without urlencode. Must be encoded auto */
