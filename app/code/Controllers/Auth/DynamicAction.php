@@ -100,8 +100,7 @@ final class DynamicAction extends Action implements DynamicActionInterface
                     $uri->getAuthority(),
                     $path,
                     Message::FIELD,
-                    /** @todo check on frontend without urlencode. Must be encoded auto */
-                    urlencode($message)
+                    $message
                 );
                 $response = $response->withHeader('Location', $url)->withStatus(301);
             }

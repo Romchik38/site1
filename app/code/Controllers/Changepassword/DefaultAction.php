@@ -56,7 +56,6 @@ final class DefaultAction extends Action implements DefaultActionInterface
             $uri->getAuthority(),
             '/login/changepassword',
             Message::FIELD,
-            /** @todo check on frontend without urlencode. Must be encoded auto */
             urlencode($message)
         );
         return $response
