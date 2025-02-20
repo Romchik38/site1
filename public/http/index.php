@@ -12,10 +12,15 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 /** 
  * Init section
  * 
- * We do not catch error on this stage. If something went wrong, site should not work
  * */
-$container = (require_once __DIR__ . '/../../app/bootstrap_http.php')();
+try{
+    $container = (require_once __DIR__ . '/../../app/bootstrap_http.php')();
+} catch(Exception $e) {
+    error_log($e->getMessage());
+    exit(1);
+}
 /** init section end */
+
 
 $server = $container->get(\Romchik38\Server\Api\Servers\Http\HttpServerInterface::class);
 
