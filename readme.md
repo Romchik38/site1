@@ -28,3 +28,7 @@ See [live preview](https://site1.romanenko-studio.dev) site.
 
 1. use nginx [config](./nginx/simple.conf)
 2. create a database with [sql](./sql/site1-empty-users.sql)
+
+## Production
+
+- Docker is not ready
