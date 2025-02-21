@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Views\Html\Classes;
 
+use Closure;
 use Romchik38\Server\Views\Http\PageView;
 use Romchik38\Server\Api\Models\DTO\DefaultView\DefaultViewDTOInterface;
 use Romchik38\Site1\Api\Views\DefaultPageViewInterface;
@@ -12,8 +13,8 @@ use Romchik38\Site1\Api\Views\MetadataInterface;
 class DefaultPageView extends PageView implements DefaultPageViewInterface
 {
     public function __construct(
-        protected $generateTemplate,
-        protected $controllerTemplate,
+        protected Closure $generateTemplate,
+        protected Closure $controllerTemplate,
         protected MetadataInterface $metadataService
     ) {
         $this->metaData[$this::HEADER_DATA] = $metadataService->getHeaderData();
