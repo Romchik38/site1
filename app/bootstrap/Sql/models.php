@@ -132,22 +132,6 @@ return function ($container) {
     );
 
     $container->add(
-        \Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository::class,
-        function ($container) {
-            return new \Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository(
-                $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
-                $container->get(\Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksFactoryInterface::class),
-                $container->get(\Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksIdDTOFactoryInterface::class),
-                'menu_to_links'
-            );
-        }
-    );
-    $container->add(
-        \Romchik38\Site1\Api\Models\MenuToLinks\MenuToLinksRepositoryInterface::class,
-        $container->get(\Romchik38\Site1\Models\Sql\MenuToLinks\MenuToLinksRepository::class)
-    );
-
-    $container->add(
         \Romchik38\Site1\Models\Sql\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepository::class,
         new \Romchik38\Site1\Models\Sql\Virtual\GoogleReCaptcha\VirtualGoogleReCaptchaModelRepository(
             $container->get(\Romchik38\Server\Api\Models\DatabaseInterface::class),
