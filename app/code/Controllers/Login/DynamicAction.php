@@ -10,7 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
-use Romchik38\Server\Controllers\Actions\Action;
+use Romchik38\Server\Controllers\Actions\AbstractAction;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOFactoryInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
@@ -21,7 +21,7 @@ use Romchik38\Site1\Api\Models\DTO\Login\LoginDTOInterface;
 use Romchik38\Site1\Api\Models\DTO\ReCaptcha\ReCaptchaDTOInterface;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 
-final class DynamicAction extends Action implements DynamicActionInterface
+final class DynamicAction extends AbstractAction implements DynamicActionInterface
 {
     private array $methods = [
         'index' => 'Login page',

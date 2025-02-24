@@ -8,7 +8,7 @@ use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
-use Romchik38\Server\Controllers\Actions\Action;
+use Romchik38\Server\Controllers\Actions\AbstractAction;
 use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
@@ -17,7 +17,7 @@ use Romchik38\Site1\Application\PageView\FindByUrl;
 use Romchik38\Site1\Application\PageView\PageViewService;
 use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
 
-final class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends AbstractAction implements DefaultActionInterface
 {
     public function __construct(
         protected readonly ViewInterface $view,

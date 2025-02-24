@@ -10,7 +10,7 @@ use Romchik38\Server\Api\Controllers\ControllerInterface;
 use Romchik38\Server\Api\Models\Entity\EntityModelInterface;
 use Romchik38\Server\Api\Models\Entity\EntityRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Server\Views\Http\Errors\CannotCreateMetadataError;
+use Romchik38\Server\Views\Http\Errors\CannotCreateMetadataErrorException;
 use Romchik38\Server\Api\Models\DTO\Http\Breadcrumb\BreadcrumbDTOInterface;
 use Romchik38\Server\Api\Services\Mappers\Breadcrumb\Http\BreadcrumbInterface;
 use Romchik38\Site1\Api\Models\DTO\Footer\FooterDTOFactoryInterface;
@@ -46,7 +46,7 @@ class Metadata implements MetadataInterface
         } catch (NoSuchEntityException $e) {
             // It's a problem, because site does not work as expected
             $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with id: ' . $entityId . ' was not found. Check config');
-            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+            throw new CannotCreateMetadataErrorException(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
     }
 
@@ -70,7 +70,7 @@ class Metadata implements MetadataInterface
                 . HeaderDTOInterface::ADDRESS_TEXT . ' or '
                 . HeaderDTOInterface::NOTICE
                 . ' was(ere) not found. Check config');
-            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+            throw new CannotCreateMetadataErrorException(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
         return $this->headerDTOFactory->create(
             $phone,
@@ -85,13 +85,13 @@ class Metadata implements MetadataInterface
         if ($menuId === null) {
             $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with field: '
                 . NavDTOInterface::NAV_MENU_ID_FIELD . ' was not found. Check config');
-            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+            throw new CannotCreateMetadataErrorException(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
         try {
             $menuDTO = $this->staticMenuService->getMenuById((int)$menuId);
         } catch (CouldNotCreateMenu $e) {
             $this->logger->log(LogLevel::ERROR, $this::class . ': ' . $e->getMessage());
-            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+            throw new CannotCreateMetadataErrorException(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
         return $this->navDTOFactory->create($menuDTO);
     }
@@ -102,7 +102,7 @@ class Metadata implements MetadataInterface
         if ($copyrights === null) {
             $this->logger->log(LogLevel::ERROR, $this::class . ': Entity with field: '
                 . FooterDTOInterface::COPYRIGHTS_TEXT . ' was not found. Check config');
-            throw new CannotCreateMetadataError(MetadataInterface::TECHNICAL_ISSUES_ERROR);
+            throw new CannotCreateMetadataErrorException(MetadataInterface::TECHNICAL_ISSUES_ERROR);
         }
         return $this->footerDTOFactory->create(
             $copyrights

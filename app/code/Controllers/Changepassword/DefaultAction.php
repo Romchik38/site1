@@ -8,12 +8,12 @@ use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
-use Romchik38\Server\Controllers\Actions\Action;
 use Psr\Log\LoggerInterface;
 use \Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Psr\Log\LogLevel;
+use Romchik38\Server\Controllers\Actions\AbstractAction;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Application\RecoveryEmail\Check;
 use Romchik38\Site1\Application\RecoveryEmail\HashNoValidException;
@@ -24,7 +24,7 @@ use Romchik38\Site1\Application\UserEmail\UserEmailService;
 use Romchik38\Site1\Controllers\Login\Message;
 use Romchik38\Site1\Domain\RecoveryEmail\VO\Hash;
 
-final class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends AbstractAction implements DefaultActionInterface
 {
 
     protected $failedMessage = 'Sorry, provided recovery link does\'nt work. It is valid for '

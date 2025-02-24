@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
+use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileErrorException;
 
 return function ($container) {
     // LOGGERS
     $configLogPrivate = require_once(__DIR__ . '/../config/private/logger.php');
     $configEmeilRecipient = $configLogPrivate['recipient'] ??
-        throw new MissingRequiredParameterInFileError('Check config for logger email recipient');
+        throw new MissingRequiredParameterInFileErrorException('Check config for logger email recipient');
     $configEmeilSender = $configLogPrivate['sender'] ??
-        throw new MissingRequiredParameterInFileError('Check config for logger email sender');
+        throw new MissingRequiredParameterInFileErrorException('Check config for logger email sender');
 
     $configLogShared = require_once(__DIR__ . '/../config/shared/services/logger.php');
     $configLogLevelEmail = $configLogShared['log_level_email'] ??
-        throw new MissingRequiredParameterInFileError('Check config for email log level');
+        throw new MissingRequiredParameterInFileErrorException('Check config for email log level');
     $configLogLevelFile = $configLogShared['log_level_file'] ??
-        throw new MissingRequiredParameterInFileError('Check config for file log level');
+        throw new MissingRequiredParameterInFileErrorException('Check config for file log level');
 
     // EMAIL
     $container->add(
@@ -32,7 +32,7 @@ return function ($container) {
     );
     // FILE
     $configLogFilePath = $configLogShared['log_file_path'] ??
-        throw new MissingRequiredParameterInFileError('Check config for logger file path');
+        throw new MissingRequiredParameterInFileErrorException('Check config for logger file path');
     $container->add(
         \Romchik38\Server\Services\Logger\Loggers\FileLogger::class,
         new \Romchik38\Server\Services\Logger\Loggers\FileLogger(

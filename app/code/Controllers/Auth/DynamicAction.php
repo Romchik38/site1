@@ -11,8 +11,8 @@ use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
 use Romchik38\Server\Api\Services\MailerInterface;
-use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
-use Romchik38\Server\Controllers\Actions\Action;
+use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileErrorException;
+use Romchik38\Server\Controllers\Actions\AbstractAction;
 use Romchik38\Server\Models\DTO\Email\EmailDTO;
 use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Server\Services\Errors\CantSendEmailException;
@@ -41,7 +41,7 @@ use Romchik38\Site1\Application\UserRegister\UserRegisterService;
 use Romchik38\Site1\Controllers\Login\Message;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
 
-final class DynamicAction extends Action implements DynamicActionInterface
+final class DynamicAction extends AbstractAction implements DynamicActionInterface
 {
     private array $methods = [
         'index' => 'Check login/password',
@@ -184,7 +184,7 @@ final class DynamicAction extends Action implements DynamicActionInterface
         $recaptchas = $this->recaptchas['recovery'] ?? [];
         $countRecaptchas = count($recaptchas);
         if ($countRecaptchas > 1) {
-            throw new MissingRequiredParameterInFileError(
+            throw new MissingRequiredParameterInFileErrorException(
                 'Check config for action auth/recovery: wrong count action names (expected 1 or 0)'
             );
         } elseif ($countRecaptchas === 1) {

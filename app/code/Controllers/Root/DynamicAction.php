@@ -8,7 +8,7 @@ use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Views\ViewInterface;
-use Romchik38\Server\Controllers\Actions\Action;
+use Romchik38\Server\Controllers\Actions\AbstractAction;
 use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
@@ -19,7 +19,7 @@ use Romchik38\Site1\Application\PageView\FindByUrl;
 use Romchik38\Site1\Application\PageView\PageViewService;
 use Romchik38\Site1\Domain\Page\PageRepositoryInterface;
 
-final class DynamicAction extends Action implements DynamicActionInterface
+final class DynamicAction extends AbstractAction implements DynamicActionInterface
 {
     public function __construct(
         protected readonly ViewInterface $view,

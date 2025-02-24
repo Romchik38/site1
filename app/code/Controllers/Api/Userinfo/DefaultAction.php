@@ -9,8 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DefaultActionInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOFactoryInterface;
 use Romchik38\Server\Api\Models\DTO\Api\ApiDTOInterface;
+use Romchik38\Server\Controllers\Actions\AbstractAction;
 use \Romchik38\Site1\Api\Services\SessionInterface;
-use Romchik38\Server\Controllers\Actions\Action;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserModelInterface;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
@@ -19,7 +19,7 @@ use Romchik38\Site1\Domain\User\UserRepositoryInterface;
  * return info about rigistered user 
  * see docs/api/userinfo.md
  */
-final class DefaultAction extends Action implements DefaultActionInterface
+final class DefaultAction extends AbstractAction implements DefaultActionInterface
 {
     const USERNAME_FIELD = 'username';
 

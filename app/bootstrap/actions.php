@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileError;
+use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileErrorException;
 
 return function ($container) {
 
@@ -42,7 +42,7 @@ return function ($container) {
     );
 
     $configLoginDynamicGoogleReCaptchas = $configGoogleReCaptchas[\Romchik38\Site1\Controllers\Login\DynamicAction::class] ??
-        throw new MissingRequiredParameterInFileError('Check config for action class: '
+        throw new MissingRequiredParameterInFileErrorException('Check config for action class: '
             . \Romchik38\Site1\Controllers\Login\DynamicAction::class);
     $container->add(
         \Romchik38\Site1\Controllers\Login\DynamicAction::class,
@@ -59,7 +59,7 @@ return function ($container) {
 
     // Auth
     $configAuthDynamicGoogleReCaptchas = $configGoogleReCaptchas[\Romchik38\Site1\Controllers\Auth\DynamicAction::class] ??
-        throw new MissingRequiredParameterInFileError('Check config for action class: '
+        throw new MissingRequiredParameterInFileErrorException('Check config for action class: '
             . \Romchik38\Site1\Controllers\Auth\DynamicAction::class);
     $container->add(
         \Romchik38\Site1\Controllers\Auth\DynamicAction::class,
