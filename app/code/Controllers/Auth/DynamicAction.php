@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Auth;
 
+use InvalidArgumentException;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -11,15 +12,13 @@ use Psr\Log\LogLevel;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
 use Romchik38\Server\Api\Services\LoggerServerInterface;
 use Romchik38\Server\Api\Services\MailerInterface;
-use Romchik38\Server\Config\Errors\MissingRequiredParameterInFileErrorException;
 use Romchik38\Server\Controllers\Actions\AbstractAction;
 use Romchik38\Server\Models\DTO\Email\EmailDTO;
-use Romchik38\Server\Models\Errors\InvalidArgumentException;
-use Romchik38\Server\Services\Errors\CantSendEmailException;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
+use Romchik38\Server\Services\Mailer\CantSendEmailException;
 use Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Site1\Application\RecoveryEmail\CantCreateHashException;
 use Romchik38\Site1\Application\RecoveryEmail\Create;
@@ -40,6 +39,7 @@ use Romchik38\Site1\Application\UserRegister\UsernameAlreadyInUseException;
 use Romchik38\Site1\Application\UserRegister\UserRegisterService;
 use Romchik38\Site1\Controllers\Login\Message;
 use Romchik38\Site1\Services\Errors\Recaptcha\RecaptchaException;
+use RuntimeException;
 
 final class DynamicAction extends AbstractAction implements DynamicActionInterface
 {
@@ -184,7 +184,7 @@ final class DynamicAction extends AbstractAction implements DynamicActionInterfa
         $recaptchas = $this->recaptchas['recovery'] ?? [];
         $countRecaptchas = count($recaptchas);
         if ($countRecaptchas > 1) {
-            throw new MissingRequiredParameterInFileErrorException(
+            throw new RuntimeException(
                 'Check config for action auth/recovery: wrong count action names (expected 1 or 0)'
             );
         } elseif ($countRecaptchas === 1) {

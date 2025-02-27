@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Changepassword;
 
+use InvalidArgumentException;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -14,7 +15,6 @@ use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Controllers\Actions\AbstractAction;
-use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Application\RecoveryEmail\Check;
 use Romchik38\Site1\Application\RecoveryEmail\HashNoValidException;
 use Romchik38\Site1\Application\RecoveryEmail\NoSuchEmailException;

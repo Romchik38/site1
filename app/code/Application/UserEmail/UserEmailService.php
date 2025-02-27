@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Application\UserEmail;
 
+use InvalidArgumentException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Application\UserEmail\Views\AuthDTO;
 use Romchik38\Site1\Application\UserEmail\Views\RecoveryDTO;

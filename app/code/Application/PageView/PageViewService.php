@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Application\PageView;
 
+use InvalidArgumentException;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Server\Views\Http\PageView;
 use Romchik38\Site1\Application\PageView\Views\NameUrl;
 use Romchik38\Site1\Application\PageView\Views\Page;
 use Romchik38\Site1\Domain\Page\PageRepositoryInterface;

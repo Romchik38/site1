@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Romchik38\Site1\Models\Sql\Page;
 
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
-use Romchik38\Server\Models\Errors\RepositoryConsistencyException;
 use Romchik38\Server\Models\Sql\Repository;
 use Romchik38\Site1\Domain\Page\PageModelInterface;
 use Romchik38\Site1\Domain\Page\PageRepositoryInterface;

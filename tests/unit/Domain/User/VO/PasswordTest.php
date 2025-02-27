@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use PHPUnit\Framework\TestCase;
-use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Domain\User\VO\Password;
 
 class PasswordTest extends TestCase

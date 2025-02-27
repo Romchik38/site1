@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Application\UserRegister;
 
+use InvalidArgumentException;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Romchik38\Server\Models\Errors\CouldNotSaveException;
-use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Domain\User\UserRepositoryInterface;
 use Romchik38\Server\Models\Errors\NoSuchEntityException;
 use Romchik38\Site1\Domain\User\UserModelInterface;

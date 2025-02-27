@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Domain\User\VO;
 
-use Romchik38\Server\Models\Errors\InvalidArgumentException;
+use InvalidArgumentException;
 
 final class Username
 {

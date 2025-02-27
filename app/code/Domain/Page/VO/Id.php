@@ -2,7 +2,7 @@
 
 namespace Romchik38\Site1\Domain\Page\VO;
 
-use Romchik38\Server\Models\Errors\InvalidArgumentException;
+use InvalidArgumentException;
 
 final class Id
 {

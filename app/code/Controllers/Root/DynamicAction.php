@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Romchik38\Site1\Controllers\Root;
 
+use InvalidArgumentException;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Romchik38\Server\Api\Controllers\Actions\DynamicActionInterface;
@@ -12,7 +13,6 @@ use Romchik38\Server\Controllers\Actions\AbstractAction;
 use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
-use Romchik38\Server\Models\Errors\InvalidArgumentException;
 use Romchik38\Site1\Api\Models\DTO\Main\MainDTOFactoryInterface;
 use Romchik38\Site1\Application\PageView\CantFindException;
 use Romchik38\Site1\Application\PageView\FindByUrl;
