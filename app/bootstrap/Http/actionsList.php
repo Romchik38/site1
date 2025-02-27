@@ -6,10 +6,15 @@ use Romchik38\Server\Api\Routers\Http\HttpRouterInterface;
 use Romchik38\Server\Controllers\Controller;
 use Romchik38\Server\Api\Services\Mappers\ControllerTreeInterface;
 use Romchik38\Server\Routers\Http\ControllersCollection;
+use Romchik38\Site1\Middlewares\Response\ApiContentTypeJson;
 
 return function ($container) {
 
-    // GET
+    //////////////////
+    //
+    //      GET
+    //
+    //////////////////
     $root = new Controller(
         ControllerTreeInterface::ROOT_NAME,
         true,
@@ -52,7 +57,14 @@ return function ($container) {
 
     $root->setChild($login)->setChild($changepassword)->setChild($sitemap)->setChild($api);
 
-    // POST
+    // Response Middlewares
+    $api->addResponseMiddleware(new ApiContentTypeJson);
+
+    //////////////////
+    //
+    //      POST
+    //
+    //////////////////
     $rootPost = new Controller(ControllerTreeInterface::ROOT_NAME);
 
     $authPost = new Controller(
