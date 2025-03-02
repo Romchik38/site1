@@ -73,6 +73,7 @@ return function ($container) {
             $container->get(\Romchik38\Site1\Application\UserEmail\UserEmailService::class),
             $container->get(\Romchik38\Site1\Application\RecoveryEmail\RecoveryEmailService::class),
             $container->get(\Romchik38\Server\Api\Services\MailerInterface::class),
+            $container->get(\Romchik38\Server\Services\Urlbuilder\UrlbuilderInterface::class),
             $configAuthDynamicGoogleReCaptchas
         )
     );

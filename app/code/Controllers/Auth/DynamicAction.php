@@ -17,8 +17,10 @@ use Romchik38\Server\Models\DTO\Email\EmailDTO;
 use Romchik38\Site1\Api\Services\RecaptchaInterface;
 use Romchik38\Server\Controllers\Errors\ActionNotFoundException;
 use Romchik38\Server\Controllers\Errors\DynamicActionLogicException;
+use Romchik38\Server\Controllers\Path;
 use Romchik38\Server\Models\DTO\DynamicRoute\DynamicRouteDTO;
 use Romchik38\Server\Services\Mailer\CantSendEmailException;
+use Romchik38\Server\Services\Urlbuilder\UrlbuilderInterface;
 use Romchik38\Site1\Api\Services\SessionInterface;
 use Romchik38\Site1\Application\RecoveryEmail\CantCreateHashException;
 use Romchik38\Site1\Application\RecoveryEmail\Create;
@@ -72,6 +74,7 @@ final class DynamicAction extends AbstractAction implements DynamicActionInterfa
         protected readonly UserEmailService $userEmailService,
         protected readonly RecoveryEmailService $recoveryEmailService,
         protected readonly MailerInterface $mailer,
+        protected readonly UrlbuilderInterface $urlbuilder,
         protected array $recaptchas = []
     ) {}
 
@@ -81,28 +84,24 @@ final class DynamicAction extends AbstractAction implements DynamicActionInterfa
         if (array_search($action, $routes) !== false) {
             $message = $this->$action();
             $arr = [
-                'index' => '/login/index',
-                'logout' => '/login/index',
-                'register' => '/login/register',
-                'recovery' => '/login/recovery',
-                'changepassword' => '/login/index',
+                'index' => ['login', 'index'],
+                'logout' => ['login', 'index'],
+                'register' => ['login', 'register'],
+                'recovery' => ['login', 'recovery'],
+                'changepassword' => ['login', 'index'],
             ];
-            $path = $arr[$action] ?? '';
+            $parts = $arr[$action] ?? null;
             $response = new Response();
             $responseBody = $response->getBody();
             $responseBody->write($message);
             $response = $response->withBody($responseBody);
-            if ($path !== '') {
-                $uri = $this->request->getUri();
-                $url = sprintf(
-                    '%s://%s%s?%s=%s', 
-                    $uri->getScheme(),
-                    $uri->getAuthority(),
+            if ($parts !== null) {
+                $path = new Path($parts);
+                $redirectTarget = $this->urlbuilder->fromPath(
                     $path,
-                    Message::FIELD,
-                    $message
+                    [Message::FIELD => $message]
                 );
-                $response = $response->withHeader('Location', $url)->withStatus(301);
+                $response = $response->withHeader('Location', $redirectTarget)->withStatus(301);
             }
             return $response;
         } else {

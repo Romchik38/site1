@@ -2,8 +2,10 @@
 
 ## Current
 
+- use urlbuilder to create targeturls
+
 ## Next
 
-[-] opdate google recapcha
+[-] update google recapcha
 [-] check html syntax for all pages  
 [-] phpstan  
