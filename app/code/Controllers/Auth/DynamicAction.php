@@ -99,7 +99,7 @@ final class DynamicAction extends AbstractAction implements DynamicActionInterfa
                 $path = new Path($parts);
                 $redirectTarget = $this->urlbuilder->fromPath(
                     $path,
-                    [Message::FIELD => $message]
+                    [Message::FIELD => urlencode($message)]
                 );
                 $response = $response->withHeader('Location', $redirectTarget)->withStatus(301);
             }
