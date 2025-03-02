@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Romchik38\Server\Services\Urlbuilder\Target;
+
 return function ($container) {
     // LOGGERS
     $configLogPrivate = require_once(__DIR__ . '/../config/private/logger.php');
@@ -115,6 +117,19 @@ return function ($container) {
         \Romchik38\Server\Api\Services\Mappers\LinkTree\Http\LinkTreeInterface::class,
         $container->get(\Romchik38\Server\Services\Mappers\LinkTree\Http\LinkTree::class)
 
+    );
+
+    //Urlbuilder
+    $container->add(
+        \Romchik38\Server\Services\Urlbuilder\Urlbuilder::class,
+        new \Romchik38\Server\Services\Urlbuilder\Urlbuilder(
+            $container->get(\Psr\Http\Message\ServerRequestInterface::class),
+            new Target
+        )
+    );
+    $container->add(
+        \Romchik38\Server\Services\Urlbuilder\UrlbuilderInterface::class,
+        $container->get(\Romchik38\Server\Services\Urlbuilder\Urlbuilder::class)
     );
 
     return $container;
