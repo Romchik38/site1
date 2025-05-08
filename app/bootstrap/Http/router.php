@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Laminas\Diactoros\ResponseFactory;
+use Romchik38\Server\Api\Routers\Http\HttpRouterInterface;
 
 return function ($container) {
     $controllersFn = require_once(__DIR__ . '/actionsList.php');
@@ -15,7 +16,7 @@ return function ($container) {
             $controllerCollection,
             $container->get(\Psr\Http\Message\ServerRequestInterface::class),
             new \Romchik38\Server\Controllers\Controller(
-                '404',      /** name doesn't matter */
+                HttpRouterInterface::NOT_FOUND_CONTROLLER_NAME,
                 false,
                 $container->get(Romchik38\Site1\Controllers\PageNotFound\DefaultAction::class)
             ), 
