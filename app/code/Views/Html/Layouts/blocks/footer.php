@@ -78,7 +78,7 @@ return function(array $data = []){
                 </div>
                 <div class="row copyrights text-center">
                     <div class="col  mb-3">
-                        {$copyrights}
+                        © 2024-2025, <a href="https://romanenko-studio.dev/" target="_blank">Romanenko Studio</a>, all rights reserved
                     </div>
                 </div>
         </footer>
