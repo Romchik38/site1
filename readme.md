@@ -1,8 +1,8 @@
 # Readme
 
-This is an example site to show how [php-server](https://github.com/Romchik38/server) works.
+This is an example site to show how [php-server](https://github.com/Romchik38/server) and [php-container](https://github.com/Romchik38/php-container) works.
 
-See [live preview](https://site1.romanenko-studio.dev) site.
+See [Live Site1 preview](https://site1.romanenko-studio.dev).
 
 ## Docs
 
@@ -32,3 +32,9 @@ See [live preview](https://site1.romanenko-studio.dev) site.
 ## Production
 
 - Docker is not ready
+
+## Other projects
+
+You can see a more complex version of the website with more functionality on the [Site2 github](https://github.com/Romchik38/site2) page. It demonstrates multilanguage system, twig view, Image Converter and other features.
+
+Look at [Live Site2 preview](https://site2.romanenko-studio.dev/en/about-this-site).
