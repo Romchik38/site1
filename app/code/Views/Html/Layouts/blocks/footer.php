@@ -22,7 +22,8 @@ return function(array $data = []){
         <footer class="text-dark mb-3" style="background-color:rgba(13, 110, 253, 0.34)">
                 <div class="row">
                     <div class="col-sm-4 p-5">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius deserunt eaque ipsam voluptate hic libero earum, temporibus accusamus dicta error, dolores repudiandae quaerat itaque iure odio dignissimos odit, distinctio obcaecati?
+                        <p>Site1 is an example of a simple multi-page website with a login system and a sitemap. The code for this website is available for free on <a href="https://github.com/Romchik38/site1" target="_blank">GitHub</a>. You can review it and download it for your personal needs. Please read the <a href="https://github.com/Romchik38/site1/blob/main/LICENSE.md" target="_blank">license</a> before use.</p>
+                        <p>If you need a more functional website, with multiple languages, a blog, and an administrative part, visit <a href="https://site2.romanenko-studio.dev/en/about-this-site" target="_blank">Site2 (Lawshield)</a>.</p>
                     </div>
                     <div class="col-sm-4 p-5">
                         <div class="row">
